@@ -17,9 +17,10 @@ class GildedRose {
 
     public static <T extends ItemType> ItemType builder(Item item) {
 
-        boolean isBackstage = item.name.equals("Backstage passes to a TAFKAL80ETC concert");
-        boolean isAgedBrie = item.name.equals("Aged Brie");
         boolean isSulfuras = item.name.equals("Sulfuras, Hand of Ragnaros");
+        boolean isBackstage = item.name.endsWith("Backstage passes to a TAFKAL80ETC concert");
+        boolean isAgedBrie = item.name.endsWith("Aged Brie");
+        boolean isConjured = item.name.startsWith("Conjured");
 
         if (isBackstage) {
             return new ItemBackstage();
@@ -27,6 +28,8 @@ class GildedRose {
             return new ItemAgedBrie();
         } else if (isSulfuras) {
             return new ItemSulfuras();
+        } else if (isConjured) {
+            return new ItemConjuredGeneric();
         }
         return new ItemGeneric();
 
