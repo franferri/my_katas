@@ -1,9 +1,12 @@
-
 ## Gilded Rose Kata
 
 https://github.com/emilybache/GildedRose-Refactoring-Kata
 
 http://codingdojo.org/kata/GildedRose/
+
+A great introduction to it was written by Rachel M. C., she nails in the article the spirit of this kata, with great references too. https://rachelcarmena.github.io/2019/04/13/refactoring.html (but she is far from finishing it and basically overuses the IDE build-in refactors)
+
+In this repo I did the Kata in oop and procedural, the key principles for me were to achive the simplest upgradable and redable code possible, as the kata states for future new items additions in the shop.
 
 ## If you are going to do it yourself, solo, to help you, follow the next instructions.
 
