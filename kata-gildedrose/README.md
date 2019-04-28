@@ -8,6 +8,8 @@ A great introduction to it was written by Rachel M. C., she nails in the article
 
 In this repo I did the Kata in oop and procedural, the key principles for me were to achive the simplest upgradable and redable code possible, as the kata states for future new items additions in the shop.
 
+Also I've covered all the existent business logic with tests for every single business case described on it.
+
 ## If you are going to do it yourself, solo, to help you, follow the next instructions.
 
 Start the Kata in your environment, and work on it for 25-45 minutes.
