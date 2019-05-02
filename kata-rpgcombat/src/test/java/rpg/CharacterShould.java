@@ -8,26 +8,26 @@ import rpg.characters.BaseCharacter;
 import rpg.characters.MeleeFighter;
 import rpg.characters.RangeFighter;
 
-public class RPGCombatKata {
+public class CharacterShould {
 
     // Iteration One ##########################################
 
     @Test
-    public void BaseCharacterDiesOverCriticalHit() {
+    public void aCharacterDiesOverCriticalHit() {
         BaseCharacter player = new BaseCharacter();
         player.receiveDamage(1001);
         assertEquals(0, player.health());
     }
 
     @Test
-    public void BaseCharacterDiesOnCriticalHit() {
+    public void aCharacterDiesOnCriticalHit() {
         BaseCharacter player = new BaseCharacter();
         player.receiveDamage(1000);
         assertEquals(0, player.health());
     }
 
     @Test
-    public void diedBaseCharacterCannotBeHealed() {
+    public void diedCharacterCannotBeHealed() {
         BaseCharacter player = new BaseCharacter();
         player.receiveDamage(1000);
         player.heal(1);
@@ -35,14 +35,14 @@ public class RPGCombatKata {
     }
 
     @Test
-    public void BaseCharacterGetDamage() {
+    public void aCharacterGetDamage() {
         BaseCharacter player = new BaseCharacter();
         player.receiveDamage(999);
         assertEquals(1, player.health());
     }
 
     @Test
-    public void BaseCharacterGetHeal() {
+    public void aCharacterGetHeal() {
         BaseCharacter player = new BaseCharacter();
         player.receiveDamage(1);
         player.heal(1);
@@ -50,14 +50,14 @@ public class RPGCombatKata {
     }
 
     @Test
-    public void healthyBaseCharacterCantBeHealed() {
+    public void healthyCharacterCannotBeHealed() {
         BaseCharacter player = new BaseCharacter();
         player.heal(1);
         assertEquals(1000, player.health());
     }
 
     @Test
-    public void BaseCharacterAttackEnemy() {
+    public void aCharacterCanAttackEnemy() {
         BaseCharacter player = new BaseCharacter();
         BaseCharacter enemy = new BaseCharacter();
         player.attack(100, enemy);
@@ -67,14 +67,14 @@ public class RPGCombatKata {
     // Iteration Two ##########################################
 
     @Test
-    public void BaseCharacterCannotAttackHimself() {
+    public void aCharacterCannotAttackHimself() {
         BaseCharacter player = new BaseCharacter();
         player.attack(100, player);
         assertEquals(1000, player.health());
     }
 
     @Test
-    public void BaseCharacterCannotHealEnemy() {
+    public void aCharacterCannotHealEnemy() {
         BaseCharacter player = new BaseCharacter();
         BaseCharacter enemy = new BaseCharacter();
 
@@ -150,6 +150,78 @@ public class RPGCombatKata {
         player.attack(100, enemy);
         assertEquals(50, player.range());
         assertEquals(1000, enemy.health());
+    }
+
+    // Iteration Four #########################################
+
+    @Test
+    public void charactersMayBelongToOneFaction() {
+    }
+
+    @Test
+    public void charactersMayBelongToMultipleFactions() {
+    }
+
+    @Test
+    public void newCharactersBelongToNoFaction() {
+    }
+
+    @Test
+    public void aCharacterMayJoinOneFaction() {
+    }
+
+    @Test
+    public void aCharacterMayJoinMultipleFactions() {
+    }
+
+    @Test
+    public void aCharacterMayLeaveOneFaction() {
+    }
+
+    @Test
+    public void aCharacterMayLeaveOneMultipleFactions() {
+    }
+
+    @Test
+    public void aCharacterBelongingToTheSameFactionAreConsideredAllies() {
+    }
+
+    @Test
+    public void alliesCannotDealDamageEachOther() {
+    }
+
+    @Test
+    public void alliesCanHealEachOther() {
+    }
+
+    // Iteration Five #########################################
+
+    @Test
+    public void charactersCanDamageThings() {
+    }
+
+    @Test
+    public void thingsThatHasHealthMayBeATarget() {
+    }
+
+    @Test
+    public void thingsCannotBeHealed() {
+    }
+
+    @Test
+    public void thingsDoNotDealDamage() {
+    }
+
+    @Test
+    public void thingsDoNotBelongToFactions() {
+    }
+
+    @Test
+    public void thingsAreDestroyedWhenZeroHealth() {
+    }
+
+    @Test
+    public void aNewTreeWillHave2000Health() {
     }
 
 }

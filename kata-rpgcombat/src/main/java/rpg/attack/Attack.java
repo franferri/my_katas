@@ -1,6 +1,4 @@
-package rpg.attacks;
-
-import rpg.GameData;
+package rpg.attack;
 
 public abstract class Attack {
 

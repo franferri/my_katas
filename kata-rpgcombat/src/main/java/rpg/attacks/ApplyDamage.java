@@ -1,6 +1,7 @@
 package rpg.attacks;
 
-import rpg.GameData;
+import rpg.attack.Attack;
+import rpg.attack.GameData;
 
 public class ApplyDamage extends Attack {
 
