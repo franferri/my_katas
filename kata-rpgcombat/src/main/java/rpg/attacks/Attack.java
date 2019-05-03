@@ -2,7 +2,7 @@ package rpg.attacks;
 
 import rpg.GameData;
 
-public abstract class Attack {
+public abstract class Attack { // Link of the chain
 
     protected Attack nextAttack;
     private boolean abortChain = false;
