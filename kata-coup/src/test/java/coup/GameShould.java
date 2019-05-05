@@ -22,7 +22,7 @@ public class GameShould {
     }
 
     @Test(expected = Exception.class)
-    public void a_game_can_have_only_4_players() throws Exception {
+    public void a_game_can_have_until_6_players() throws Exception {
 
         // given
         Player player1 = new Player();
@@ -30,9 +30,11 @@ public class GameShould {
         Player player3 = new Player();
         Player player4 = new Player();
         Player player5 = new Player();
+        Player player6 = new Player();
+        Player player7 = new Player();
 
         // then
-        new Game(player1, player2, player3, player4, player5);
+        new Game(player1, player2, player3, player4, player5, player6, player7);
 
     }
 
@@ -48,7 +50,7 @@ public class GameShould {
         int treasury = game.treasury();
 
         // then
-        assertEquals(16, treasury);
+        assertEquals(46, treasury);
 
     }
 
@@ -137,10 +139,8 @@ public class GameShould {
         Game game = new Game(player1, player2);
 
         // then
-        List<Player> players = game.players();
-        for (Player player : players) {
-            assertEquals(2, player.coins());
-        }
+        assertEquals(2, game.player(1).coins());
+        assertEquals(2, game.player(2).coins());
 
     }
 
@@ -175,10 +175,8 @@ public class GameShould {
         Game game = new Game(player1, player2);
 
         // then
-        List<Player> players = game.players();
-        for (Player player : players) {
-            assertEquals(2, player.cards().size());
-        }
+        assertEquals(2, game.player(1).cards().size());
+        assertEquals(2, game.player(2).cards().size());
 
     }
 
