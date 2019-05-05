@@ -3,9 +3,13 @@
 
 This is just a funny exercise of having a library able to play the game following all the rules and testing all possible combinations.
 
-### Iteration 1
+[The game description](https://boardgamegeek.com/boardgame/131357/coup)
+
+![The game assets](https://github.com/franferri/my-codingdojos-katas/blob/master/Coup/img/coup_the_game.jpg)
 
 You are head of a family in an Italian city-state, a city run by a weak and corrupt court. You need to manipulate, bluff and bribe your way to power. Your object is to destroy the influence of all the other families, forcing them into exile. Only one family will survive...
+
+### Iteration 1
 
 In Coup, you want to be the last player with influence in the game, with influence being represented by face-down character cards in your playing area.
 
