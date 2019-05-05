@@ -3,6 +3,8 @@
 
 This is just a funny exercise of having a library able to play the game following all the rules and testing all possible combinations.
 
+[Oficial web page](http://www.indieboardsandcards.com/index.php/games/coup/#1480828355170-55d598da-e40d00e9-c875)
+
 [The game description](https://boardgamegeek.com/boardgame/131357/coup)
 
 ![The game assets](https://github.com/franferri/my-codingdojos-katas/blob/master/Coup/img/coup_the_game.jpg)
