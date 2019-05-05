@@ -2,8 +2,9 @@ package coup;
 
 import org.junit.Before;
 import org.junit.Ignore;
+import org.junit.Test;
 
-public class PlayerPlaysTaxHandShould {
+public class PlayerPlaysMandatoryCoupHandShould {
 
     Game game;
 
@@ -17,6 +18,13 @@ public class PlayerPlaysTaxHandShould {
 
         game = new Game(player1, player2);
 
+    }
+
+
+    @Ignore
+    @Test
+    public void a_player_has_to_coup_another_player_when_reaches_10_coins() {
+        // TODO
     }
 
 }

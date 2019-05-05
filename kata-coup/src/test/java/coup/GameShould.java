@@ -1,6 +1,8 @@
 package coup;
 
 import coup.cards.*;
+import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -9,6 +11,19 @@ import java.util.List;
 import static org.junit.Assert.*;
 
 public class GameShould {
+
+    Game game;
+
+    @Before
+    public void before() throws Exception {
+
+        // given
+        Player player1 = new Player();
+        Player player2 = new Player();
+
+        game = new Game(player1, player2);
+
+    }
 
     @Test(expected = Exception.class)
     public void a_game_needs_2_players_at_least() throws Exception {
@@ -39,14 +54,9 @@ public class GameShould {
     }
 
     @Test
-    public void a_new_game_starts_with_a_treasury_of_10_coins_per_player() throws Exception {
-
-        // given
-        Player player1 = new Player();
-        Player player2 = new Player();
+    public void a_new_game_starts_with_a_treasury_of_10_coins_per_player() {
 
         // when
-        Game game = new Game(player1, player2);
         int treasury = game.treasury();
 
         // then
@@ -55,14 +65,9 @@ public class GameShould {
     }
 
     @Test
-    public void a_new_game_starts_with_a_deck() throws Exception {
-
-        // given
-        Player player1 = new Player();
-        Player player2 = new Player();
+    public void a_new_game_starts_with_a_deck() {
 
         // when
-        Game game = new Game(player1, player2);
         Deck deck = game.deck();
 
         // then
@@ -70,73 +75,9 @@ public class GameShould {
 
     }
 
-    @Test
-    public void a_new_deck_consist_in_three_copies_of_each_characters_card() {
-
-        // given
-        Deck deck = new Deck();
-
-        // when
-        List<Card> cards = deck.cards();
-
-        int ambassators = 0;
-        int assasins = 0;
-        int captains = 0;
-        int conptesas = 0;
-        int dukes = 0;
-
-        for (Card card : cards) {
-
-            if (card instanceof TheAmbassator) {
-                ++ambassators;
-            }
-            if (card instanceof TheAssassin) {
-                ++assasins;
-            }
-            if (card instanceof TheCaptain) {
-                ++captains;
-            }
-            if (card instanceof TheConptessa) {
-                ++conptesas;
-            }
-            if (card instanceof TheDuke) {
-                ++dukes;
-            }
-
-        }
-
-        // then
-        assertEquals(3, ambassators);
-        assertEquals(3, assasins);
-        assertEquals(3, captains);
-        assertEquals(3, conptesas);
-        assertEquals(3, dukes);
-
-    }
 
     @Test
-    public void a_new_deck_has_a_total_of_fifteen_cards() {
-
-        // given
-        Deck deck = new Deck();
-
-        // when
-        List<Card> cards = deck.cards();
-
-        // then
-        assertEquals(15, cards.size());
-
-    }
-
-    @Test
-    public void a_new_game_starts_with_two_coins_per_player() throws Exception {
-
-        // given
-        Player player1 = new Player();
-        Player player2 = new Player();
-
-        // when
-        Game game = new Game(player1, player2);
+    public void a_new_game_starts_with_two_coins_per_player() {
 
         // then
         assertEquals(2, game.player(1).coins());
@@ -145,13 +86,7 @@ public class GameShould {
     }
 
     @Test
-    public void a_game_can_shuffle_the_deck() throws Exception {
-
-        // given
-        Player player1 = new Player();
-        Player player2 = new Player();
-
-        Game game = new Game(player1, player2);
+    public void a_game_can_shuffle_the_deck() {
 
         // when
         Deck deck = game.deck();
@@ -165,18 +100,35 @@ public class GameShould {
     }
 
     @Test
-    public void a_new_game_starts_with_two_character_cards_per_player() throws Exception {
-
-        // given
-        Player player1 = new Player();
-        Player player2 = new Player();
-
-        // when
-        Game game = new Game(player1, player2);
+    public void a_new_game_starts_with_two_character_cards_per_player() {
 
         // then
         assertEquals(2, game.player(1).cards().size());
         assertEquals(2, game.player(2).cards().size());
+
+    }
+
+    @Test
+    public void a_player_dies_when_he_runs_out_of_cards() {
+
+        // when
+        game.player(1).dies();
+
+        // then
+        assertTrue(game.player(1).isDead());
+
+    }
+
+    @Test
+    public void a_player_wins_when_no_more_players_left_alive() {
+
+        // A player is dead when his cards are all visible
+
+        // when
+        game.killPlayer(1);
+
+        // then
+        assertNotNull(game.whoIsTheWinner());
 
     }
 

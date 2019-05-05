@@ -24,4 +24,13 @@ public class Player {
         return cards;
     }
 
+    public void dies() {
+        cards().get(0).setVisible(true);
+        cards().get(1).setVisible(true);
+    }
+
+    public boolean isDead() {
+        return cards().get(0).isVisible() && cards().get(1).isVisible();
+    }
+
 }

@@ -49,6 +49,10 @@ public class Game {
         return treasury;
     }
 
+    public void takeCoinFromTreasury() {
+        --treasury;
+    }
+
     public void addCoin(Player player) {
         player.addCoin();
         --treasury;
@@ -62,13 +66,17 @@ public class Game {
         return players.get(--player);
     }
 
-    public Game playerPlayingHand(int player) {
-        playerDoingAction = players.get(player);
+    // setActivePlayer
+    public Game setPlayerPlayingThisHand(int player) {
+        playerDoingAction = player(player);
         return this;
+    }
+    public Player playerPlayingHand() {
+        return playerDoingAction;
     }
 
     public void targetPlayer(int player) {
-        targetPlayer = players.get(player);
+        targetPlayer = player(player);
     }
 
     public void targetPlayerBlocksAction() {
@@ -79,8 +87,35 @@ public class Game {
         targetPlayerCallsBluff = targetPlayer;
     }
 
-    public void doAction(Action action) {
+    public void killPlayer (int player) {
+        player(player).dies();
+    }
+
+    public Player whoIsTheWinner() {
+
+        int playersAlive = players.size();
+        Player winner = null;
+        for (Player player : players) {
+
+            if (player.isDead()) {
+                --playersAlive;
+            } else {
+                winner = player;
+            }
+
+        }
+
+        if (playersAlive == 1) {
+            return winner;
+        } else return null;
 
     }
+
+    public void doAction(Action action) {
+
+        action.doAction(this);
+
+    }
+
 
 }

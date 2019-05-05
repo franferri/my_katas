@@ -1,11 +1,13 @@
 package coup;
 
 import org.junit.Before;
+import org.junit.Ignore;
 
 public class PlayerPlaysStealHandShould {
 
     Game game;
 
+    @Ignore
     @Before
     public void before() throws Exception {
 
