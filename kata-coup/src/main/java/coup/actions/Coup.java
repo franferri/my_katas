@@ -11,6 +11,24 @@ public class Coup extends Action {
 
     public void doAction(Game game) {
 
+        game.returnCoinToTreasury();
+        game.returnCoinToTreasury();
+        game.returnCoinToTreasury();
+        game.returnCoinToTreasury();
+        game.returnCoinToTreasury();
+        game.returnCoinToTreasury();
+        game.returnCoinToTreasury();
+
+        game.playerPlayingHand().looseCoin();
+        game.playerPlayingHand().looseCoin();
+        game.playerPlayingHand().looseCoin();
+        game.playerPlayingHand().looseCoin();
+        game.playerPlayingHand().looseCoin();
+        game.playerPlayingHand().looseCoin();
+        game.playerPlayingHand().looseCoin();
+
+        game.assasinatePlayer();
+
     }
 
     public void doBlockAction(Game game) {}

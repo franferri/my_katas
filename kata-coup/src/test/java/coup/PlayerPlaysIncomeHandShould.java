@@ -38,10 +38,10 @@ public class PlayerPlaysIncomeHandShould {
         // then
         Assert.assertEquals(45, game.treasury());
 
-        Assert.assertEquals(2, game.player(1).cards().size());
+        Assert.assertEquals(2, game.player(1).cardsInGame());
         Assert.assertEquals(3, game.player(1).coins());
 
-        Assert.assertEquals(2, game.player(2).cards().size());
+        Assert.assertEquals(2, game.player(2).cardsInGame());
         Assert.assertEquals(2, game.player(2).coins());
 
     }

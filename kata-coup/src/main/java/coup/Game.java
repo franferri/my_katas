@@ -11,7 +11,7 @@ public class Game {
     private Deck deck;
 
     private Player playerDoingAction;
-
+    private Player targetPlayerForAssasination;
     private Player targetPlayerBlockAction;
     private Player playerCallingTheBluff;
     private Player lastPlayerDoingAnAction;
@@ -80,6 +80,10 @@ public class Game {
         return playerDoingAction;
     }
 
+    public void setTargetPlayerForAssasination(int player) {
+        targetPlayerForAssasination = player(player);
+    }
+
     public void setPlayerBlocksAction(int player) {
         targetPlayerBlockAction = player(player);
     }
@@ -87,6 +91,10 @@ public class Game {
     public void setPlayerCallingTheBluffAndOnWho(int playerCallingTheBluff, int lastPlayerDoingAnAction) {
         this.playerCallingTheBluff = player(playerCallingTheBluff);
         this.lastPlayerDoingAnAction = player(lastPlayerDoingAnAction);
+    }
+
+    public void assasinatePlayer() {
+        targetPlayerForAssasination.assassinate();
     }
 
     public void killPlayer(int player) {
@@ -131,11 +139,11 @@ public class Game {
         if (lastPlayerDoingAnAction.canHeBlockAction(actionBeingCalledToBeABluff)) {
             // If the actioner wins the bluff
 
-            playerCallingTheBluff.looseCard(null);
+            playerCallingTheBluff.looseCard();
             //lastPlayerDoingAnAction.shuffleCard(actionBeingCalledToBeABluff);
         } else {
             // If the actinoer looses the bluff
-            lastPlayerDoingAnAction.looseCard(null);
+            lastPlayerDoingAnAction.looseCard();
             doAction(actionBeingCalledToBeABluff);
         }
 

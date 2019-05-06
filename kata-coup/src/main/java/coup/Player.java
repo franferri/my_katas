@@ -21,25 +21,8 @@ public class Player {
         --coins;
     }
 
-    public void looseCard(Action action) {
-        // We use the action, to identify the card. but sometimes the player loosing a card is just calling a bluff
-        // and we dont know what to discard, so we pick a random card if null
-
-        // if (action == null) {
-        int card = new Random().nextInt(2);
-        cards().get(card).setVisible(true);
-        //} else {
-
-        //  for (Card card: cards            ) {
-
-        //    if (card.canDoAction(action)) {
-        //      card.setVisible(true);
-        //  }
-
-        //}
-
-        //}
-
+    public void looseCard() {
+        assassinate();
     }
 
     public int coins() {
@@ -48,6 +31,11 @@ public class Player {
 
     public List<Card> cards() {
         return cards;
+    }
+
+    public void assassinate() {
+        int card = new Random().nextInt(2);
+        cards().get(card).setVisible(true);
     }
 
     public void dies() {
