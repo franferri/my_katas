@@ -11,9 +11,10 @@ public class Game {
     private Deck deck;
 
     private Player playerDoingAction;
-    private Player targetPlayer;
+
     private Player targetPlayerBlockAction;
-    private Player targetPlayerCallsBluff;
+    private Player playerCallingTheBluff;
+    private Player lastPlayerDoingAnAction;
 
     public Game(Player... players) throws Exception {
 
@@ -53,6 +54,10 @@ public class Game {
         --treasury;
     }
 
+    public void returnCoinToTreasury() {
+        ++treasury;
+    }
+
     public void addCoin(Player player) {
         player.addCoin();
         --treasury;
@@ -67,27 +72,24 @@ public class Game {
     }
 
     // setActivePlayer
-    public Game setPlayerPlayingThisHand(int player) {
+    public void setPlayerPlayingThisHand(int player) {
         playerDoingAction = player(player);
-        return this;
     }
+
     public Player playerPlayingHand() {
         return playerDoingAction;
     }
 
-    public void targetPlayer(int player) {
-        targetPlayer = player(player);
+    public void setPlayerBlocksAction(int player) {
+        targetPlayerBlockAction = player(player);
     }
 
-    public void targetPlayerBlocksAction() {
-        targetPlayerBlockAction = targetPlayer;
+    public void setPlayerCallingTheBluffAndOnWho(int playerCallingTheBluff, int lastPlayerDoingAnAction) {
+        this.playerCallingTheBluff = player(playerCallingTheBluff);
+        this.lastPlayerDoingAnAction = player(lastPlayerDoingAnAction);
     }
 
-    public void targetPlayerCallsBluff() {
-        targetPlayerCallsBluff = targetPlayer;
-    }
-
-    public void killPlayer (int player) {
+    public void killPlayer(int player) {
         player(player).dies();
     }
 
@@ -112,8 +114,30 @@ public class Game {
     }
 
     public void doAction(Action action) {
-
         action.doAction(this);
+    }
+
+    public void doBlockAction(Action action) {
+        action.doBlockAction(this);
+    }
+
+    public void doCallTheBluff(Action actionBeingCalledToBeABluff) {
+
+        // The player calling the bluff will loose 1 card if fails
+        // The player who did the last action (and accused to be bluffing) has to have the card with the action
+        // If he does, he reshuffle his card (because everyone knows it now) and the block is effective, we dont undo action
+        // If he don't, he looses one card and the action will happen
+
+        if (lastPlayerDoingAnAction.canHeBlockAction(actionBeingCalledToBeABluff)) {
+            // If the actioner wins the bluff
+
+            playerCallingTheBluff.looseCard(null);
+            //lastPlayerDoingAnAction.shuffleCard(actionBeingCalledToBeABluff);
+        } else {
+            // If the actinoer looses the bluff
+            lastPlayerDoingAnAction.looseCard(null);
+            doAction(actionBeingCalledToBeABluff);
+        }
 
     }
 

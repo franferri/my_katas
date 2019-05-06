@@ -11,4 +11,6 @@ public class MandatoryCoup extends Action {
 
     }
 
+    public void doBlockAction(Game game) {}
+
 }

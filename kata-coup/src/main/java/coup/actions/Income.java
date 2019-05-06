@@ -14,4 +14,11 @@ public class Income extends Action {
 
     }
 
+    public void doBlockAction(Game game) {
+
+        game.returnCoinToTreasury();
+        game.playerPlayingHand().looseCoin();
+
+    }
+
 }

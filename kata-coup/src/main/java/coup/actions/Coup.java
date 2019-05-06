@@ -13,4 +13,6 @@ public class Coup extends Action {
 
     }
 
+    public void doBlockAction(Game game) {}
+
 }

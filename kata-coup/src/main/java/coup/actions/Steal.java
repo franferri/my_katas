@@ -9,4 +9,6 @@ public class Steal extends Action {
 
     }
 
+    public void doBlockAction(Game game) {}
+
 }

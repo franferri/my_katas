@@ -9,4 +9,6 @@ public class Tax extends Action {
 
     }
 
+    public void doBlockAction(Game game) {}
+
 }

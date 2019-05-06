@@ -1,15 +1,10 @@
 package coup;
 
 import coup.actions.Assassinate;
-import coup.actions.BlocksAssasination;
-import coup.actions.Income;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
 
 public class PlayerPlaysAssassinateHandShould {
 
@@ -40,7 +35,7 @@ public class PlayerPlaysAssassinateHandShould {
         Action assassinate = new Assassinate();
 
         // when
-        game.setPlayerPlayingThisHand(1).targetPlayer(2);
+        //game.setPlayerPlayingThisHand(1).targetPlayer(2);
         game.doAction(assassinate);
 
         // then
@@ -64,9 +59,9 @@ public class PlayerPlaysAssassinateHandShould {
         Action assassinate = new Assassinate();
 
         // when
-        game.setPlayerPlayingThisHand(1).targetPlayer(2);
+        //game.setPlayerPlayingThisHand(1).targetPlayer(2);
         game.doAction(assassinate);
-        game.targetPlayerBlocksAction();
+        //game.targetPlayerBlocksAction();
 
         // then
         Assert.assertEquals(2, game.player(1).cards().size());

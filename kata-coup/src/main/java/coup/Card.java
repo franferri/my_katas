@@ -16,4 +16,20 @@ public class Card {
         this.visible = visible;
     }
 
+    protected Action action;
+    protected Action blocks;
+
+    public Action doAction() {
+        return action;
+    }
+
+    public Action blocksAction() {
+        return blocks;
+    }
+
+    public boolean canDoAction(Action action) {
+        return this.action == action;
+    }
+
+
 }

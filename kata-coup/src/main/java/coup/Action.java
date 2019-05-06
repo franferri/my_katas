@@ -4,4 +4,6 @@ public abstract class Action {
 
     public abstract void doAction(Game game);
 
+    public abstract void doBlockAction(Game game);
+
 }

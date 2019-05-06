@@ -11,4 +11,6 @@ public class Assassinate extends Action {
 
     }
 
+    public void doBlockAction(Game game) {}
+
 }

@@ -1,11 +1,8 @@
 package coup;
 
-import coup.actions.Assassinate;
-import coup.actions.BlocksAssasination;
 import coup.actions.Income;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 public class PlayerPlaysIncomeHandShould {

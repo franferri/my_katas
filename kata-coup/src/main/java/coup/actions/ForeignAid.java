@@ -9,6 +9,22 @@ public class ForeignAid extends Action {
 
     public void doAction(Game game) {
 
+        game.takeCoinFromTreasury();
+        game.takeCoinFromTreasury();
+
+        game.playerPlayingHand().addCoin();
+        game.playerPlayingHand().addCoin();
+
+    }
+
+    public void doBlockAction(Game game) {
+
+        game.returnCoinToTreasury();
+        game.returnCoinToTreasury();
+
+        game.playerPlayingHand().looseCoin();
+        game.playerPlayingHand().looseCoin();
+
     }
 
 }
