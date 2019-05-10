@@ -33,7 +33,7 @@ public class Player {
         return cards;
     }
 
-    public void assassinate() {
+    public void assassinate() { // What if there are no cards visible left?
         int card = new Random().nextInt(2);
         cards().get(card).setVisible(true);
     }
