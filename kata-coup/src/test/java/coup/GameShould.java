@@ -158,12 +158,18 @@ public class GameShould {
     @Test
     public void a_new_game_starts_with_two_character_cards_per_player() {
 
+        // given
+        int amountOfCardsAvailableInTheCourtDeck = game.deck().cards().size();
+        int cardsTakenFromTheDeck = game.players().size() * 2;
+
         // when
         game.startGame();
 
         // then
         assertEquals(2, game.player(1).cardsInGame());
         assertEquals(2, game.player(2).cardsInGame());
+
+        assertEquals(amountOfCardsAvailableInTheCourtDeck - cardsTakenFromTheDeck, game.deck().cards().size());
 
     }
 
@@ -240,7 +246,5 @@ public class GameShould {
         assertTrue(game.player(1).isDead());
 
     }
-
-    
 
 }

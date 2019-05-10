@@ -1,16 +1,16 @@
-package coup;
+package coup.actions;
 
-import coup.actions.Coup7;
+import coup.Action;
+import coup.Game;
+import coup.Player;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
-public class PlayerPlaysCoupHandShould {
+public class ActionCoup7Should {
 
     Game game;
 
-    @Ignore
     @Before
     public void before() throws Exception {
 
@@ -19,16 +19,14 @@ public class PlayerPlaysCoupHandShould {
         Player player2 = new Player();
 
         game = new Game(player1, player2);
+        game.startGame();
 
     }
 
-    // Coup hand
+    // Action: Pay 7 cons, choose the player to lose Influence
 
     @Test
-    public void a_player_does_action_coup() {
-
-        // Player 1 has 7 coins and does action coup
-        // Player 2 can't block
+    public void a_player_does_action_coup_7() {
 
         // given
         Action action = new Coup7();
@@ -52,13 +50,47 @@ public class PlayerPlaysCoupHandShould {
         game.doAction(action);
 
         // then
-        Assert.assertEquals(41, game.treasury());
+        Assert.assertEquals(48, game.treasury());
 
         Assert.assertEquals(2, game.player(1).cardsInGame());
         Assert.assertEquals(0, game.player(1).coins());
 
         Assert.assertEquals(1, game.player(2).cardsInGame());
         Assert.assertEquals(2, game.player(2).coins());
+
+    }
+
+
+    // Block: Cannot be blocked
+
+    @Test(expected = Exception.class)
+    public void a_player_tries_to_block_action_coup_7() throws Exception {
+
+        // given
+        Action action = new Coup7();
+
+        // when
+        game.setPlayerPlayingThisHand(1);
+        game.doAction(action);
+
+        game.setPlayerBlocksAction(2);
+        game.doBlockAction(action);
+
+    }
+
+    // Bluff: Cannot be challenged
+
+    @Test(expected = Exception.class)
+    public void a_player_calls_the_bluff_over_action_coup_7() throws Exception {
+
+        // given
+        Action action = new Coup7();
+
+        // when
+        game.setPlayerPlayingThisHand(1);
+        game.doAction(action);
+
+        game.doPlayerCallingTheBluffOnTheAction(2, 1, action);
 
     }
 

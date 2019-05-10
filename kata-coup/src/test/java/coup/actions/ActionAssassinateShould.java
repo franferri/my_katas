@@ -1,15 +1,18 @@
-package coup;
+package coup.actions;
 
-import coup.actions.Assassinate;
+import coup.Action;
+import coup.Game;
+import coup.Player;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
-public class PlayerPlaysAssassinateHandShould {
+public class ActionAssassinateShould {
 
     Game game;
 
+    @Ignore
     @Before
     public void before() throws Exception {
 
@@ -18,6 +21,7 @@ public class PlayerPlaysAssassinateHandShould {
         Player player2 = new Player();
 
         game = new Game(player1, player2);
+        game.startGame();
 
     }
 

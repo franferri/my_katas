@@ -21,6 +21,29 @@ public class Tax extends Action {
 
     }
 
-    public void doBlockAction(Game game) {}
+    public void doBlockAction(Game game) throws Exception {
+
+        throw new Exception("This action can't be blocked");
+
+    }
+
+    public boolean canThisBlockActionBeChallenged() {
+        return false;
+    }
+
+    @Override
+    public void doCallTheBluffOnTheAction(Game game) throws Exception {
+
+    }
+
+    public void doCallTheBluffOnTheBlockAction(Game game) throws Exception {
+
+        if (!canThisBlockActionBeChallenged()) {
+            throw new Exception("This blockaction can't be challenged");
+        }
+
+        doCallTheBluff(game);
+
+    }
 
 }

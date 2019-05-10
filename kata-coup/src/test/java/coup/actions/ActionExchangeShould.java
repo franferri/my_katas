@@ -1,9 +1,11 @@
-package coup;
+package coup.actions;
 
+import coup.Game;
+import coup.Player;
 import org.junit.Before;
 import org.junit.Ignore;
 
-public class PlayerPlaysTaxHandShould {
+public class ActionExchangeShould {
 
     Game game;
 
@@ -16,6 +18,7 @@ public class PlayerPlaysTaxHandShould {
         Player player2 = new Player();
 
         game = new Game(player1, player2);
+        game.startGame();
 
     }
 

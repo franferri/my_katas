@@ -1,18 +1,18 @@
-package coup;
+package coup.actions;
 
-import coup.actions.ForeignAid;
+import coup.Action;
+import coup.Game;
+import coup.Player;
 import coup.cards.TheAmbassator;
 import coup.cards.TheDuke;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
-public class PlayerPlaysForeignAidHandShould {
+public class ActionForeignAidShould {
 
     Game game;
 
-    @Ignore
     @Before
     public void before() throws Exception {
 
@@ -21,16 +21,14 @@ public class PlayerPlaysForeignAidHandShould {
         Player player2 = new Player();
 
         game = new Game(player1, player2);
+        game.startGame();
 
     }
 
-    // Foreign Aid hand
+    // Action: Take two coins from the treasury
 
     @Test
-    public void a_player_does_action_foreign_aid() {
-
-        // Player 1 does action foreign aid
-        // Player 2 don't block
+    public void player_1_does_action_foreign_aid_and_dont_get_blocked() {
 
         // given
         Action action = new ForeignAid();
@@ -50,15 +48,17 @@ public class PlayerPlaysForeignAidHandShould {
 
     }
 
-    @Test
-    public void a_player_does_action_foreign_aid_but_other_player_blocks_successfully() {
+    // Block: Can be blocked by a player claiming the Duke
 
-        // Player 1 does action foreign aid
-        // Player 2 blocks successfully
-        // Player 1 don't call the bluff, accepts the block
+    @Test
+    public void player_1_does_action_foreign_aid_but_player_2_blocks_successfully_because_he_has_the_duke_and_player_1_dont_call_the_bluff() throws Exception {
 
         // given
         Action action = new ForeignAid();
+
+        game.player(2).cards().clear();
+        game.player(2).cards().add(0, new TheDuke());
+        game.player(2).cards().add(0, new TheAmbassator());
 
         // when
         game.setPlayerPlayingThisHand(1);
@@ -79,30 +79,24 @@ public class PlayerPlaysForeignAidHandShould {
     }
 
     @Test
-    public void a_player_does_action_foreign_aid_but_other_player_blocks_but_player_1_calls_the_bluff_on_the_block_successfully() {
-
-        // Player 1 does action foreign aid
-        // Player 2 blocks (but don't have any TheDuke to block)
-        // Player 1 calls the bluff and win
+    public void player_1_does_action_foreign_aid_but_player_2_blocks_BUT_player_1_calls_the_bluff_on_the_block_AND_WINS_the_call() throws Exception {
 
         // given
 
         Action action = new ForeignAid();
 
-        // when
-        game.setPlayerPlayingThisHand(1);
-        game.doAction(action);
-
-        // We make sure the player is bluffing
         game.player(2).cards().clear();
         game.player(2).cards().add(0, new TheAmbassator());
         game.player(2).cards().add(1, new TheAmbassator());
 
+        // when
+        game.setPlayerPlayingThisHand(1);
+        game.doAction(action);
+
         game.setPlayerBlocksAction(2);
         game.doBlockAction(action);
 
-        game.setPlayerCallingTheBluffAndOnWho(1, 2);
-        game.doCallTheBluff(action);
+        game.doPlayerCallingTheBluffOnTheBlockAction(1, 2, action);
 
         // then
 
@@ -117,11 +111,7 @@ public class PlayerPlaysForeignAidHandShould {
     }
 
     @Test
-    public void a_player_does_action_foreign_aid_but_other_player_blocks_but_player_1_calls_the_bluff_on_the_block_and_looses() {
-
-        // Player 1 does action foreign aid
-        // Player 2 blocks (and has TheDuke to block successfully)
-        // Player 1 calls the bluff and looses
+    public void player_1_does_action_foreign_aid_but_player_2_blocks_BUT_player_1_calls_the_bluff_on_the_block_AND_LOSES_the_call() throws Exception {
 
         // given
 
@@ -139,9 +129,7 @@ public class PlayerPlaysForeignAidHandShould {
         game.setPlayerBlocksAction(2);
         game.doBlockAction(action);
 
-        game.setPlayerCallingTheBluffAndOnWho(1, 2);
-        game.doCallTheBluff(action);
-
+        game.doPlayerCallingTheBluffOnTheBlockAction(1, 2, action);
 
         // then
 
@@ -155,6 +143,20 @@ public class PlayerPlaysForeignAidHandShould {
 
     }
 
+    // Bluff: Cannot be challenged
+
+    @Test(expected = Exception.class)
+    public void player_1_does_action_foreign_aid_and_player_2_calls_the_bluff() throws Exception {
+
+        // given
+        Action action = new ForeignAid();
+
+        // when
+        game.setPlayerPlayingThisHand(1);
+        game.doAction(action);
+
+        game.doPlayerCallingTheBluffOnTheAction(2,1,action);
+
+    }
 
 }
-

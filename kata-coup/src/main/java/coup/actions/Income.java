@@ -16,7 +16,38 @@ public class Income extends Action {
 
     }
 
-    public void doBlockAction(Game game) {
+    public boolean canThisActionBeChallenged() {
+        return false;
+    }
+
+    public void doCallTheBluffOnTheAction(Game game) throws Exception {
+
+        if (!canThisActionBeChallenged()) {
+            throw new Exception("This action can't be challenged");
+        }
+
+        doCallTheBluff(game);
+
+    }
+
+    public void doBlockAction(Game game) throws Exception {
+
+        throw new Exception("This action can't be blocked");
+
+    }
+
+    public boolean canThisBlockActionBeChallenged() {
+        return false;
+    }
+
+    public void doCallTheBluffOnTheBlockAction(Game game) throws Exception {
+
+        if (!canThisBlockActionBeChallenged()) {
+            throw new Exception("This blockaction can't be challenged");
+        }
+
+        doCallTheBluff(game);
+
     }
 
 }

@@ -11,14 +11,6 @@ public class Coup7 extends Action {
 
     public void doAction(Game game) {
 
-        game.returnCoinToTreasury();
-        game.returnCoinToTreasury();
-        game.returnCoinToTreasury();
-        game.returnCoinToTreasury();
-        game.returnCoinToTreasury();
-        game.returnCoinToTreasury();
-        game.returnCoinToTreasury();
-
         game.playerPlayingHand().looseCoin();
         game.playerPlayingHand().looseCoin();
         game.playerPlayingHand().looseCoin();
@@ -27,10 +19,50 @@ public class Coup7 extends Action {
         game.playerPlayingHand().looseCoin();
         game.playerPlayingHand().looseCoin();
 
-        game.assasinatePlayer();
+        game.returnCoinToTreasury();
+        game.returnCoinToTreasury();
+        game.returnCoinToTreasury();
+        game.returnCoinToTreasury();
+        game.returnCoinToTreasury();
+        game.returnCoinToTreasury();
+        game.returnCoinToTreasury();
+
+        game.assassinatePlayer();
 
     }
 
-    public void doBlockAction(Game game) {}
+    public boolean canThisActionBeChallenged() {
+        return false;
+    }
+
+    public void doCallTheBluffOnTheAction(Game game) throws Exception {
+
+        if (!canThisActionBeChallenged()) {
+            throw new Exception("This action can't be challenged");
+        }
+
+        doCallTheBluff(game);
+
+    }
+
+    public void doBlockAction(Game game) throws Exception {
+
+        throw new Exception("This action can't be blocked");
+
+    }
+
+    public boolean canThisBlockActionBeChallenged() {
+        return false;
+    }
+
+    public void doCallTheBluffOnTheBlockAction(Game game) throws Exception {
+
+        if (!canThisBlockActionBeChallenged()) {
+            throw new Exception("This blockaction can't be challenged");
+        }
+
+        doCallTheBluff(game);
+
+    }
 
 }

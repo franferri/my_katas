@@ -12,9 +12,9 @@ public class Game {
 
     private Player playerDoingAction;
     private Player targetPlayerForAssasination;
-    private Player targetPlayerBlockAction;
-    private Player playerCallingTheBluff;
-    private Player lastPlayerDoingAnAction;
+    public Player targetPlayerBlockAction;
+    public Player playerCallingTheBluff;
+    public Player lastPlayerDoingAnAction;
 
     public Game(Player... players) throws Exception {
 
@@ -42,8 +42,11 @@ public class Game {
 
         for (Player player : players) {
 
-            addCoin(player);
-            addCoin(player);
+            player.addCoin();
+            player.addCoin();
+
+            takeCoinFromTreasury();
+            takeCoinFromTreasury();
 
             dealCard(player);
             dealCard(player);
@@ -69,10 +72,7 @@ public class Game {
         ++treasury;
     }
 
-    public void addCoin(Player player) {
-        player.addCoin();
-        --treasury;
-    }
+
 
     public void dealCard(Player player) {
         player.cards().add(deck.cards().remove(1));
@@ -99,16 +99,23 @@ public class Game {
         targetPlayerForAssasination = player(player);
     }
 
-    public void setPlayerBlocksAction(int player) {
-        targetPlayerBlockAction = player(player);
+    public void setPlayerBlocksAction(int playerBlocking) {
+        this.targetPlayerBlockAction = player(playerBlocking);
     }
 
-    public void setPlayerCallingTheBluffAndOnWho(int playerCallingTheBluff, int lastPlayerDoingAnAction) {
+    public void doPlayerCallingTheBluffOnTheAction(int playerCallingTheBluff, int lastPlayerDoingAnAction, Action action) throws Exception {
         this.playerCallingTheBluff = player(playerCallingTheBluff);
         this.lastPlayerDoingAnAction = player(lastPlayerDoingAnAction);
+        action.doCallTheBluffOnTheAction(this);
     }
 
-    public void assasinatePlayer() {
+    public void doPlayerCallingTheBluffOnTheBlockAction(int playerCallingTheBluff, int lastPlayerDoingAnAction, Action action) throws Exception {
+        this.playerCallingTheBluff = player(playerCallingTheBluff);
+        this.lastPlayerDoingAnAction = player(lastPlayerDoingAnAction);
+        action.doCallTheBluffOnTheBlockAction(this);
+    }
+
+    public void assassinatePlayer() {
         targetPlayerForAssasination.assassinate();
     }
 
@@ -131,7 +138,7 @@ public class Game {
         }
 
         if (playersAlive == 1) {
-            return players().indexOf(winner)+1;
+            return players().indexOf(winner) + 1;
         } else return -1;
 
     }
@@ -140,29 +147,12 @@ public class Game {
         action.doAction(this);
     }
 
-    public void doBlockAction(Action action) {
+    public void doBlockAction(Action action) throws Exception {
         action.doBlockAction(this);
     }
 
-    public void doCallTheBluff(Action actionBeingCalledToBeABluff) {
-
-        // The player calling the bluff will loose 1 card if fails
-        // The player who did the last action (and accused to be bluffing) has to have the card with the action
-        // If he does, he reshuffle his card (because everyone knows it now) and the block is effective, we dont undo action
-        // If he don't, he looses one card and the action will happen
-
-        if (lastPlayerDoingAnAction.canHeBlockAction(actionBeingCalledToBeABluff)) {
-            // If the actioner wins the bluff
-
-            playerCallingTheBluff.looseCard();
-            //lastPlayerDoingAnAction.shuffleCard(actionBeingCalledToBeABluff);
-        } else {
-            // If the actinoer looses the bluff
-            lastPlayerDoingAnAction.looseCard();
-            doAction(actionBeingCalledToBeABluff);
-        }
-
+    public void doCallTheBluff(Action action) throws Exception {
+        action.doCallTheBluff(this);
     }
-
 
 }

@@ -27,7 +27,4 @@ public class Card {
         return blocks;
     }
 
-
-
-
 }

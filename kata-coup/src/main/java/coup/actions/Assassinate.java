@@ -13,6 +13,13 @@ public class Assassinate extends Action {
 
     }
 
-    public void doBlockAction(Game game) {}
+    public void doCallTheBluffOnTheBlockAction(Game game) throws Exception {
+    }
 
+    public void doBlockAction(Game game) {
+    }
+
+    public void doCallTheBluffOnTheAction(Game game) throws Exception {
+
+    }
 }

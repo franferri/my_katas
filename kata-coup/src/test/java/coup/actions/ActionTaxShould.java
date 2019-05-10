@@ -1,14 +1,13 @@
-package coup;
+package coup.actions;
 
+import coup.Game;
+import coup.Player;
 import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
 
-public class PlayerPlaysMandatoryCoupHandShould {
+public class ActionTaxShould {
 
     Game game;
 
-    @Ignore
     @Before
     public void before() throws Exception {
 
@@ -17,14 +16,10 @@ public class PlayerPlaysMandatoryCoupHandShould {
         Player player2 = new Player();
 
         game = new Game(player1, player2);
+        game.startGame();
 
     }
 
 
-    @Ignore
-    @Test
-    public void a_player_has_to_coup_another_player_when_reaches_10_coins() {
-        // TODO
-    }
 
 }
