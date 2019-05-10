@@ -26,12 +26,21 @@ public class Game {
             throw new Exception("Only 4 players allowed");
         }
 
-        this.deck = new Deck();
         treasury = 50;
+
+        this.deck = new Deck();
 
         for (Player player : players) {
 
             this.players.add(player);
+
+        }
+
+    }
+
+    public void startGame() {
+
+        for (Player player : players) {
 
             addCoin(player);
             addCoin(player);
@@ -39,6 +48,8 @@ public class Game {
             dealCard(player);
             dealCard(player);
         }
+
+        this.deck.shuffle();
 
     }
 
@@ -65,6 +76,10 @@ public class Game {
 
     public void dealCard(Player player) {
         player.cards().add(deck.cards().remove(1));
+    }
+
+    public List<Player> players() {
+        return players;
     }
 
     public Player player(int player) {
@@ -101,7 +116,7 @@ public class Game {
         player(player).dies();
     }
 
-    public Player whoIsTheWinner() {
+    public int whoIsTheWinner() {
 
         int playersAlive = players.size();
         Player winner = null;
@@ -116,8 +131,8 @@ public class Game {
         }
 
         if (playersAlive == 1) {
-            return winner;
-        } else return null;
+            return players().indexOf(winner)+1;
+        } else return -1;
 
     }
 

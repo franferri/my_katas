@@ -5,7 +5,9 @@ import coup.Game;
 
 public class ForeignAid extends Action {
 
-    // Take two coins from the treasury.
+    // Action: Take two coins from the treasury
+    // Block: Can be blocked by a player claiming the Duke
+    // Bluff: Cannot be challenged
 
     public void doAction(Game game) {
 

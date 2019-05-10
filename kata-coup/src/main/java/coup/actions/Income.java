@@ -5,7 +5,9 @@ import coup.Game;
 
 public class Income extends Action {
 
-    // Take one coin from the treasury.
+    // Action: Take 1 coin from the treasury
+    // Block: Cannot be blocked
+    // Bluff: Cannot be challenged
 
     public void doAction(Game game) {
 
@@ -15,10 +17,6 @@ public class Income extends Action {
     }
 
     public void doBlockAction(Game game) {
-
-        game.returnCoinToTreasury();
-        game.playerPlayingHand().looseCoin();
-
     }
 
 }

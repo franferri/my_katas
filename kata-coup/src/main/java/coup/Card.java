@@ -27,9 +27,7 @@ public class Card {
         return blocks;
     }
 
-    public boolean canDoAction(Action action) {
-        return this.action == action;
-    }
+
 
 
 }

@@ -43,6 +43,14 @@ public class Player {
         cards().get(1).setVisible(true);
     }
 
+    public Card cardOne() {
+        return cards().get(0);
+    }
+
+    public Card cardTwo() {
+        return cards().get(1);
+    }
+
     public boolean isDead() {
         return cards().get(0).isVisible() && cards().get(1).isVisible();
     }

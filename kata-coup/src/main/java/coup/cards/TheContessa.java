@@ -3,9 +3,9 @@ package coup.cards;
 import coup.Card;
 import coup.actions.Assassinate;
 
-public class TheConptessa extends Card {
+public class TheContessa extends Card {
 
-    public TheConptessa() {
+    public TheContessa() {
 
         this.blocks = new Assassinate();
 

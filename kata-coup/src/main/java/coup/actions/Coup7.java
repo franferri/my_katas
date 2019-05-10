@@ -3,11 +3,11 @@ package coup.actions;
 import coup.Action;
 import coup.Game;
 
-public class Coup extends Action {
+public class Coup7 extends Action {
 
-    // Pay seven coins and launch a coup against an opponent,
-    // forcing that player to lose an influence.
-    // (If you have ten coins or more, you must take this action.)
+    // Action: Pay 7 cons, choose the player to lose Influence
+    // Block: Cannot be blocked
+    // Bluff: Cannot be challenged
 
     public void doAction(Game game) {
 

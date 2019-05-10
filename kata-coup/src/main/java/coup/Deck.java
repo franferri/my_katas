@@ -24,15 +24,13 @@ public class Deck {
         cards.add(new TheCaptain());
         cards.add(new TheCaptain());
 
-        cards.add(new TheConptessa());
-        cards.add(new TheConptessa());
-        cards.add(new TheConptessa());
+        cards.add(new TheContessa());
+        cards.add(new TheContessa());
+        cards.add(new TheContessa());
 
         cards.add(new TheDuke());
         cards.add(new TheDuke());
         cards.add(new TheDuke());
-
-        shuffle();
 
     }
 

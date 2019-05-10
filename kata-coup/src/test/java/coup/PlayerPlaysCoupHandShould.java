@@ -1,7 +1,6 @@
 package coup;
 
-import coup.actions.Coup;
-import coup.actions.Income;
+import coup.actions.Coup7;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Ignore;
@@ -32,7 +31,7 @@ public class PlayerPlaysCoupHandShould {
         // Player 2 can't block
 
         // given
-        Action action = new Coup();
+        Action action = new Coup7();
 
         game.takeCoinFromTreasury();
         game.takeCoinFromTreasury();

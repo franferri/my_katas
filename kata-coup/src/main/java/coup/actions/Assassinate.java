@@ -5,7 +5,9 @@ import coup.Game;
 
 public class Assassinate extends Action {
 
-    // User expends 3 coins to do this action
+    // Action: Pay 3 coins, choose the player to lose influence
+    // Block: Can be blocked by Contessa
+    // Bluff: Can be challenged
 
     public void doAction(Game game) {
 
