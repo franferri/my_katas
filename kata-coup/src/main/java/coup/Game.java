@@ -143,7 +143,7 @@ public class Game {
 
     }
 
-    public void doAction(Action action) {
+    public void doAction(Action action) throws Exception {
         action.doAction(this);
     }
 
@@ -151,8 +151,5 @@ public class Game {
         action.doBlockAction(this);
     }
 
-    public void doCallTheBluff(Action action) throws Exception {
-        action.doCallTheBluff(this);
-    }
 
 }

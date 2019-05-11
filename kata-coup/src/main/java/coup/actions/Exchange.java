@@ -9,11 +9,11 @@ public class Exchange extends Action {
     // Block: Cannot be blocked
     // Bluff: Can be challenged
 
-    public void doAction(Game game) {
+    public void doActionInternal(Game game) {
 
     }
 
-    public void doBlockAction(Game game) throws Exception {
+    public void doBlockActionInternal(Game game) throws Exception {
 
         throw new Exception("This action can't be blocked");
 
@@ -23,7 +23,6 @@ public class Exchange extends Action {
         return false;
     }
 
-    @Override
     public void doCallTheBluffOnTheAction(Game game) throws Exception {
 
     }
@@ -34,7 +33,7 @@ public class Exchange extends Action {
             throw new Exception("This blockaction can't be challenged");
         }
 
-        doCallTheBluff(game);
+        doCallTheBluffOnBlockAction(game);
 
     }
 

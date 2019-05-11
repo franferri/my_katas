@@ -10,7 +10,7 @@ public class Steal extends Action {
     // Block: Can be blocked by Ambassador
     // Bluff: Can be challenged
 
-    public void doAction(Game game) {
+    public void doActionInternal(Game game) {
 
     }
 
@@ -18,7 +18,7 @@ public class Steal extends Action {
 
     }
 
-    public void doBlockAction(Game game) {}
+    public void doBlockActionInternal(Game game) {}
 
     public void doCallTheBluffOnTheAction(Game game) throws Exception {
 

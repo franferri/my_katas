@@ -9,8 +9,9 @@ public class Tax extends Action {
     // Block: Cannot be blocked
     // Bluff: Can be challenged
 
-    public void doAction(Game game) {
 
+
+    public void doActionInternal(Game game) {
         game.takeCoinFromTreasury();
         game.takeCoinFromTreasury();
         game.takeCoinFromTreasury();
@@ -18,7 +19,6 @@ public class Tax extends Action {
         game.playerPlayingHand().addCoin();
         game.playerPlayingHand().addCoin();
         game.playerPlayingHand().addCoin();
-
     }
 
     public void doBlockAction(Game game) throws Exception {
@@ -27,12 +27,28 @@ public class Tax extends Action {
 
     }
 
+    public void doBlockActionInternal(Game game) {
+        game.returnCoinToTreasury();
+        game.returnCoinToTreasury();
+        game.returnCoinToTreasury();
+
+        game.playerPlayingHand().looseCoin();
+        game.playerPlayingHand().looseCoin();
+        game.playerPlayingHand().looseCoin();
+    }
+
+
     public boolean canThisBlockActionBeChallenged() {
         return false;
     }
 
-    @Override
     public void doCallTheBluffOnTheAction(Game game) throws Exception {
+
+        if (!canThisActionBeChallenged()) {
+            throw new Exception("This action can't be challenged");
+        }
+
+        doCallTheBluffOnAction(game);
 
     }
 
@@ -42,7 +58,7 @@ public class Tax extends Action {
             throw new Exception("This blockaction can't be challenged");
         }
 
-        doCallTheBluff(game);
+        doCallTheBluffOnBlockAction(game);
 
     }
 

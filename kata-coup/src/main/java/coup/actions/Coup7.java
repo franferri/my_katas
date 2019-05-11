@@ -9,7 +9,7 @@ public class Coup7 extends Action {
     // Block: Cannot be blocked
     // Bluff: Cannot be challenged
 
-    public void doAction(Game game) {
+    public void doActionInternal(Game game) {
 
         game.playerPlayingHand().looseCoin();
         game.playerPlayingHand().looseCoin();
@@ -41,11 +41,11 @@ public class Coup7 extends Action {
             throw new Exception("This action can't be challenged");
         }
 
-        doCallTheBluff(game);
+        doCallTheBluffOnAction(game);
 
     }
 
-    public void doBlockAction(Game game) throws Exception {
+    public void doBlockActionInternal(Game game) throws Exception {
 
         throw new Exception("This action can't be blocked");
 
@@ -61,7 +61,7 @@ public class Coup7 extends Action {
             throw new Exception("This blockaction can't be challenged");
         }
 
-        doCallTheBluff(game);
+        doCallTheBluffOnBlockAction(game);
 
     }
 

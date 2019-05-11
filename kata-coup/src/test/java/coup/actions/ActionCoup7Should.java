@@ -26,7 +26,7 @@ public class ActionCoup7Should {
     // Action: Pay 7 cons, choose the player to lose Influence
 
     @Test
-    public void a_player_does_action_coup_7() {
+    public void a_player_does_action_coup_7() throws Exception {
 
         // given
         Action action = new Coup7();

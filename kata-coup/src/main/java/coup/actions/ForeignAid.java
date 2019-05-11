@@ -9,13 +9,22 @@ public class ForeignAid extends Action {
     // Block: Can be blocked by a player claiming the Duke
     // Bluff: Cannot be challenged
 
-    public void doAction(Game game) {
 
+    public void doActionInternal(Game game) {
         game.takeCoinFromTreasury();
         game.takeCoinFromTreasury();
 
         game.playerPlayingHand().addCoin();
         game.playerPlayingHand().addCoin();
+    }
+
+    public void doBlockActionInternal(Game game) {
+
+        game.returnCoinToTreasury();
+        game.returnCoinToTreasury();
+
+        game.playerPlayingHand().looseCoin();
+        game.playerPlayingHand().looseCoin();
 
     }
 
@@ -29,19 +38,11 @@ public class ForeignAid extends Action {
             throw new Exception("This action can't be challenged");
         }
 
-        doCallTheBluff(game);
+        doCallTheBluffOnAction(game);
 
     }
 
-    public void doBlockAction(Game game) throws Exception {
 
-        game.returnCoinToTreasury();
-        game.returnCoinToTreasury();
-
-        game.playerPlayingHand().looseCoin();
-        game.playerPlayingHand().looseCoin();
-
-    }
 
     public void doCallTheBluffOnTheBlockAction(Game game) throws Exception {
 
@@ -49,7 +50,7 @@ public class ForeignAid extends Action {
             throw new Exception("This blockaction can't be challenged");
         }
 
-        doCallTheBluff(game);
+        doCallTheBluffOnBlockAction(game);
 
     }
 

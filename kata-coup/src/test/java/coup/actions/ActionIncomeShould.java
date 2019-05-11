@@ -26,7 +26,7 @@ public class ActionIncomeShould {
     // Action: Take 1 coin from the treasury
 
     @Test
-    public void a_player_does_action_income() {
+    public void player_1_does_action_income_and_dont_get_blocked() throws Exception {
 
         // given
         Action action = new Income();

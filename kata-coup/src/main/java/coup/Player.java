@@ -85,4 +85,22 @@ public class Player {
 
     }
 
+    public boolean doesHaveTheCardToDoTheAction(Action action) {
+
+        for (Card card : cards) {
+
+            Class classz = card.doAction().getClass();
+            if (classz == null) return false;
+
+            if (classz == action.getClass()) {
+                return true;
+            }
+
+        }
+
+        return false;
+
+
+    }
+
 }

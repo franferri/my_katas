@@ -9,14 +9,33 @@ public class Assassinate extends Action {
     // Block: Can be blocked by Contessa
     // Bluff: Can be challenged
 
-    public void doAction(Game game) {
+    public void doActionInternal(Game game) {
+
+        game.returnCoinToTreasury();
+        game.returnCoinToTreasury();
+        game.returnCoinToTreasury();
+
+        game.playerPlayingHand().looseCoin();
+        game.playerPlayingHand().looseCoin();
+        game.playerPlayingHand().looseCoin();
+
+        game.assassinatePlayer();
 
     }
 
     public void doCallTheBluffOnTheBlockAction(Game game) throws Exception {
     }
 
-    public void doBlockAction(Game game) {
+    public void doBlockActionInternal(Game game) {
+
+        game.takeCoinFromTreasury();
+        game.takeCoinFromTreasury();
+        game.takeCoinFromTreasury();
+
+        game.playerPlayingHand().addCoin();
+        game.playerPlayingHand().addCoin();
+        game.playerPlayingHand().addCoin();
+
     }
 
     public void doCallTheBluffOnTheAction(Game game) throws Exception {

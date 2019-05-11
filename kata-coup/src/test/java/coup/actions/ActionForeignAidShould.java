@@ -28,7 +28,7 @@ public class ActionForeignAidShould {
     // Action: Take two coins from the treasury
 
     @Test
-    public void player_1_does_action_foreign_aid_and_dont_get_blocked() {
+    public void player_1_does_action_foreign_aid_and_dont_get_blocked() throws Exception {
 
         // given
         Action action = new ForeignAid();
@@ -114,7 +114,6 @@ public class ActionForeignAidShould {
     public void player_1_does_action_foreign_aid_but_player_2_blocks_BUT_player_1_calls_the_bluff_on_the_block_AND_LOSES_the_call() throws Exception {
 
         // given
-
         Action action = new ForeignAid();
 
         // when

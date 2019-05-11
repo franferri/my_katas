@@ -25,56 +25,56 @@ public class ActionAssassinateShould {
 
     }
 
-    // Assassination hand
+    // Action: Pay 3 coins, choose the player to lose influence
 
-    @Ignore
     @Test
-    public void a_player_does_action_assassinate_and_succeed() {
-
-        // Player 1 does action assassinate
-        // Player 2 does not block
-        // Player 1 does win (Player 2 didn't had anything to block and accept assasination)
+    public void player1_does_action_assassinate_and_succeed() throws Exception {
 
         // given
-        Action assassinate = new Assassinate();
+        Action action = new Assassinate();
+        game.player(1).addCoin();
 
         // when
-        //game.setPlayerPlayingThisHand(1).targetPlayer(2);
-        game.doAction(assassinate);
+        game.setPlayerPlayingThisHand(1);
+        game.setTargetPlayerForAssasination(2);
+
+        game.doAction(action);
 
         // then
-        Assert.assertEquals(2, game.player(1).cards().size());
-        Assert.assertEquals(1000, game.player(1).coins());
+        Assert.assertEquals(2, game.player(1).cardsInGame());
+        Assert.assertEquals(0, game.player(1).coins());
 
-        Assert.assertEquals(1, game.player(2).cards().size());
-        Assert.assertEquals(1000, game.player(2).coins());
+        Assert.assertEquals(1, game.player(2).cardsInGame());
+        Assert.assertEquals(2, game.player(2).coins());
     }
 
-    @Ignore
+    // Block: Can be blocked by Contessa
     @Test
-    public void a_player_does_action_assassinate_and_gets_blocked() {
-
-        // Player 1 does action assassinate
-        // Player 2 does block assassinate
-        // Player 1 does not call call bluff
-        // Player 2 does block successfully
+    public void player_1_does_action_assassinate_and_gets_blocked_by_player_2_conptessa() throws Exception {
 
         // given
-        Action assassinate = new Assassinate();
+        Action action = new Assassinate();
+        game.player(1).addCoin();
 
         // when
-        //game.setPlayerPlayingThisHand(1).targetPlayer(2);
-        game.doAction(assassinate);
-        //game.targetPlayerBlocksAction();
+        game.setPlayerPlayingThisHand(1);
+        game.setTargetPlayerForAssasination(2);
+
+        game.doAction(action);
+
+        game.setPlayerBlocksAction(2);
+        game.doBlockAction(action);
 
         // then
         Assert.assertEquals(2, game.player(1).cards().size());
-        Assert.assertEquals(1000, game.player(1).coins());
+        Assert.assertEquals(3, game.player(1).coins());
 
         Assert.assertEquals(2, game.player(2).cards().size());
-        Assert.assertEquals(1000, game.player(2).coins());
+        Assert.assertEquals(2, game.player(2).coins());
     }
 
+
+    // Bluff: Can be challenged
     @Ignore
     @Test
     public void a_player_does_action_assassinate_and_target_player_calls_bluff_and_wins() {
