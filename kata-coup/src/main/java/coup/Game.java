@@ -119,6 +119,10 @@ public class Game {
         targetPlayerForAssasination.assassinate();
     }
 
+    public void recoverPlayer() {
+        targetPlayerForAssasination.recover();
+    }
+
     public void killPlayer(int player) {
         player(player).dies();
     }

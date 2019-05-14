@@ -1,36 +1,26 @@
 package coup.actions;
 
-import coup.Action;
-import coup.Game;
-import coup.Player;
+import coup.ActionTests;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-public class ActionIncomeShould {
+public class ActionIncomeShould extends ActionTests {
 
-    Game game;
+    // Action: Take 1 coin from the treasury
+    // Action cannot be challenged
+
+    // Block: Cannot be blocked
 
     @Before
     public void before() throws Exception {
-
-        // given
-        Player player1 = new Player();
-        Player player2 = new Player();
-
-        game = new Game(player1, player2);
-        game.startGame();
-
+        super.before();
+        action = new Income();
     }
 
-    // Action: Take 1 coin from the treasury
-
+    // Action
     @Test
-    public void player_1_does_action_income_and_dont_get_blocked() throws Exception {
-
-        // given
-        Action action = new Income();
-
+    public void player_does_action() throws Exception {
         // when
         game.setPlayerPlayingThisHand(1);
         game.doAction(action);
@@ -43,40 +33,28 @@ public class ActionIncomeShould {
 
         Assert.assertEquals(2, game.player(2).cardsInGame());
         Assert.assertEquals(2, game.player(2).coins());
-
     }
 
-    // Block: Cannot be blocked
-
+    // Action cannot be challenged
     @Test(expected = Exception.class)
-    public void a_player_tries_to_block_action_income() throws Exception {
-
-        // given
-        Action action = new Income();
-
-        // when
-        game.setPlayerPlayingThisHand(1);
-        game.doAction(action);
-
-        game.setPlayerBlocksAction(2);
-        game.doBlockAction(action);
-
-    }
-
-    // Bluff: Cannot be challenged
-
-    @Test(expected = Exception.class)
-    public void a_player_calls_the_bluff_over_action_income() throws Exception {
-
-        // given
-        Action action = new Income();
-
+    public void player_calls_the_bluff_over_action() throws Exception {
         // when
         game.setPlayerPlayingThisHand(1);
         game.doAction(action);
 
         game.doPlayerCallingTheBluffOnTheAction(2, 1, action);
 
+    }
+
+    // Action cannot be blocked
+    @Test(expected = Exception.class)
+    public void player_blocks_action() throws Exception {
+        // when
+        game.setPlayerPlayingThisHand(1);
+        game.doAction(action);
+
+        game.setPlayerBlocksAction(2);
+        game.doBlockAction(action);
     }
 
 }

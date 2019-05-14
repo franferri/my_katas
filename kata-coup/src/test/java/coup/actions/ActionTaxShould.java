@@ -1,38 +1,28 @@
 package coup.actions;
 
-import coup.Action;
-import coup.Game;
-import coup.Player;
+import coup.ActionTests;
 import coup.cards.TheAmbassator;
 import coup.cards.TheDuke;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-public class ActionTaxShould {
+public class ActionTaxShould extends ActionTests {
 
-    Game game;
+    // Action: Take 3 coins from the treasury
+    // Action can be challenged
+
+    // Block: Cannot be blocked
 
     @Before
     public void before() throws Exception {
-
-        // given
-        Player player1 = new Player();
-        Player player2 = new Player();
-
-        game = new Game(player1, player2);
-        game.startGame();
-
+        super.before();
+        action = new Tax();
     }
 
-    // Action: Take 3 coins from the treasury
-
+    // Action
     @Test
-    public void player_1_does_action_tax_and_dont_get_blocked() throws Exception {
-
-        // given
-        Action action = new Tax();
-
+    public void player_does_action() throws Exception {
         // when
         game.setPlayerPlayingThisHand(1);
         game.doAction(action);
@@ -45,34 +35,13 @@ public class ActionTaxShould {
 
         Assert.assertEquals(2, game.player(2).cardsInGame());
         Assert.assertEquals(2, game.player(2).coins());
-
     }
 
-    // Block: Cannot be blocked
-
-    @Test(expected = Exception.class)
-    public void player_1_does_action_tax_and_get_blocked() throws Exception {
-
-        // given
-        Action action = new Tax();
-
-        // when
-        game.setPlayerPlayingThisHand(1);
-        game.doAction(action);
-
-        game.setPlayerBlocksAction(2);
-        game.doBlockAction(action);
-
-    }
-
-    // Bluff: Can be challenged
-
+    // Action can be challenged
+    // Challenger (wins)
     @Test
-    public void player_1_does_action_tax_and_player_2_calls_the_bluff_AND_WINS_the_call() throws Exception {
-
+    public void player_does_action_and_other_player_calls_the_bluff_and_wins_the_call() throws Exception {
         // given
-        Action action = new Tax();
-
         game.player(1).cards().clear();
         game.player(1).cards().add(0, new TheAmbassator());
         game.player(1).cards().add(0, new TheAmbassator());
@@ -91,15 +60,13 @@ public class ActionTaxShould {
 
         Assert.assertEquals(2, game.player(2).cardsInGame());
         Assert.assertEquals(2, game.player(2).coins());
-
     }
 
+    // Action can be challenged
+    // Challenger (lose)
     @Test
-    public void player_1_does_action_tax_and_player_2_calls_the_bluff_AND_LOSE_the_call() throws Exception {
-
+    public void player_does_action_and_other_calls_the_bluff_and_lose_the_call() throws Exception {
         // given
-        Action action = new Tax();
-
         game.player(1).cards().clear();
         game.player(1).cards().add(0, new TheDuke());
         game.player(1).cards().add(0, new TheAmbassator());
@@ -118,7 +85,17 @@ public class ActionTaxShould {
 
         Assert.assertEquals(1, game.player(2).cardsInGame());
         Assert.assertEquals(2, game.player(2).coins());
+    }
 
+    // Action cannot be blocked
+    @Test(expected = Exception.class)
+    public void player_blocks_action() throws Exception {
+        // when
+        game.setPlayerPlayingThisHand(1);
+        game.doAction(action);
+
+        game.setPlayerBlocksAction(2);
+        game.doBlockAction(action);
     }
 
 }

@@ -2,17 +2,15 @@ package coup;
 
 public abstract class Action {
 
+    public abstract boolean canThisActionBeChallenged() ;
+
+    public abstract boolean canThisBlockActionBeChallenged();
+
     public void doAction(Game game) throws Exception {
 
         doActionInternal(game);
 
     }
-
-    public boolean canThisActionBeChallenged() {
-        return true;
-    }
-
-    public abstract void doCallTheBluffOnTheBlockAction(Game game) throws Exception;
 
     public void doBlockAction(Game game) throws Exception {
 
@@ -20,17 +18,11 @@ public abstract class Action {
 
     }
 
-    public boolean canThisBlockActionBeChallenged() {
-        return true;
-    }
-
-    public abstract void doCallTheBluffOnTheAction(Game game) throws Exception;
-
     public abstract void doActionInternal(Game game) throws Exception;
 
     public abstract void doBlockActionInternal(Game game) throws Exception;
 
-    public void doCallTheBluffOnBlockAction(Game game) throws Exception {
+    public void doCallTheBluffOnBlockActionInternal(Game game) throws Exception {
 
         // The player calling the bluff will loose 1 card if fails
         // The player who did the last action (and accused to be bluffing) has to have the card with the action
@@ -50,7 +42,7 @@ public abstract class Action {
 
     }
 
-    public void doCallTheBluffOnAction(Game game) throws Exception {
+    public void doCallTheBluffOnActionInternal(Game game) throws Exception {
 
         // Is the action legit?
 
@@ -63,6 +55,48 @@ public abstract class Action {
             // If the actioner looses the bluff
             game.lastPlayerDoingAnAction.looseCard();
             doBlockActionInternal(game);
+        }
+
+    }
+
+    public void doCallTheBluffOnTheAction(Game game) throws Exception {
+
+        if (!canThisActionBeChallenged()) {
+            throw new Exception("This action can't be challenged");
+        }
+
+        doCallTheBluffOnActionInternal(game);
+
+    }
+
+    public void doCallTheBluffOnTheBlockAction(Game game) throws Exception {
+
+        if (!canThisBlockActionBeChallenged()) {
+            throw new Exception("This blockaction can't be challenged");
+        }
+
+        doCallTheBluffOnBlockActionInternal(game);
+
+    }
+
+    protected void returnCoinsToTreasury(Game game, int coins) throws Exception {
+
+        if (game.playerPlayingHand().coins() < coins) {throw new Exception("Player don't have enough coins");}
+
+        for (int i = 0; i < coins; i++) {
+            game.playerPlayingHand().looseCoin();
+            game.returnCoinToTreasury();
+        }
+
+    }
+
+    protected void takeCoinsToTreasury(Game game, int coins) throws Exception {
+
+        if (game.treasury() < coins) {throw new Exception("Treasury don't have enough coins");}
+
+        for (int i = 0; i < coins; i++) {
+            game.takeCoinFromTreasury();
+            game.playerPlayingHand().addCoin();
         }
 
     }

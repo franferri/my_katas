@@ -6,48 +6,31 @@ import coup.Game;
 public class Income extends Action {
 
     // Action: Take 1 coin from the treasury
+    // Action cannot be challenged
+
     // Block: Cannot be blocked
-    // Bluff: Cannot be challenged
+    // --
 
-    public void doActionInternal(Game game) {
-
-        game.takeCoinFromTreasury();
-        game.playerPlayingHand().addCoin();
-
-    }
-
+    // Setup
     public boolean canThisActionBeChallenged() {
         return false;
     }
-
-    public void doCallTheBluffOnTheAction(Game game) throws Exception {
-
-        if (!canThisActionBeChallenged()) {
-            throw new Exception("This action can't be challenged");
-        }
-
-        doCallTheBluffOnAction(game);
-
-    }
-
-    public void doBlockActionInternal(Game game) throws Exception {
-
-        throw new Exception("This action can't be blocked");
-
-    }
-
     public boolean canThisBlockActionBeChallenged() {
         return false;
     }
 
-    public void doCallTheBluffOnTheBlockAction(Game game) throws Exception {
+    // Action
+    public void doActionInternal(Game game) throws Exception {
+        takeCoinsToTreasury(game, 1);
+    }
 
-        if (!canThisBlockActionBeChallenged()) {
-            throw new Exception("This blockaction can't be challenged");
-        }
+    // Block Action
+    public void doBlockAction(Game game) throws Exception {
+        throw new Exception("This action can't be blocked");
+    }
 
-        doCallTheBluffOnBlockAction(game);
-
+    public void doBlockActionInternal(Game game) throws Exception {
+        //
     }
 
 }

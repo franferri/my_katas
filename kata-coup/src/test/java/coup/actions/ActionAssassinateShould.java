@@ -1,37 +1,42 @@
 package coup.actions;
 
-import coup.Action;
-import coup.Game;
-import coup.Player;
+import coup.ActionTests;
+import coup.cards.TheAmbassator;
+import coup.cards.TheAssassin;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
-public class ActionAssassinateShould {
+import static org.junit.Assert.assertTrue;
 
-    Game game;
-
-    @Ignore
-    @Before
-    public void before() throws Exception {
-
-        // given
-        Player player1 = new Player();
-        Player player2 = new Player();
-
-        game = new Game(player1, player2);
-        game.startGame();
-
-    }
+public class ActionAssassinateShould extends ActionTests {
 
     // Action: Pay 3 coins, choose the player to lose influence
+    // Action can be challenged
 
+    // Block: Can be blocked by Contessa
+    // Block can be challenged
+
+    @Before
+    public void before() throws Exception {
+        super.before();
+        action = new Assassinate();
+    }
+
+    // Action costs money
+    @Test(expected = Exception.class)
+    public void player_needs_money_to_do_the_action() throws Exception {
+        // when
+        game.setPlayerPlayingThisHand(1);
+        game.setTargetPlayerForAssasination(2);
+
+        game.doAction(action);
+    }
+
+    // Action
     @Test
-    public void player1_does_action_assassinate_and_succeed() throws Exception {
-
+    public void player_does_action() throws Exception {
         // given
-        Action action = new Assassinate();
         game.player(1).addCoin();
 
         // when
@@ -48,131 +53,80 @@ public class ActionAssassinateShould {
         Assert.assertEquals(2, game.player(2).coins());
     }
 
-    // Block: Can be blocked by Contessa
+    // Action can be challenged
+    // Challenger (wins)
     @Test
-    public void player_1_does_action_assassinate_and_gets_blocked_by_player_2_conptessa() throws Exception {
-
+    public void player_does_action_and_other_player_calls_the_bluff_and_wins_the_call() throws Exception {
         // given
-        Action action = new Assassinate();
+        game.player(1).cards().clear();
+        game.player(1).cards().add(0, new TheAmbassator());
+        game.player(1).cards().add(0, new TheAmbassator());
         game.player(1).addCoin();
 
         // when
         game.setPlayerPlayingThisHand(1);
         game.setTargetPlayerForAssasination(2);
-
         game.doAction(action);
 
-        game.setPlayerBlocksAction(2);
-        game.doBlockAction(action);
+        game.doPlayerCallingTheBluffOnTheAction(2, 1, action);
 
         // then
-        Assert.assertEquals(2, game.player(1).cards().size());
-        Assert.assertEquals(3, game.player(1).coins());
+        Assert.assertEquals(49, game.treasury());
 
-        Assert.assertEquals(2, game.player(2).cards().size());
+        Assert.assertEquals(1, game.player(1).cardsInGame());
+        Assert.assertEquals(0, game.player(1).coins());
+
+        Assert.assertEquals(2, game.player(2).cardsInGame());
         Assert.assertEquals(2, game.player(2).coins());
     }
 
-
-    // Bluff: Can be challenged
-    @Ignore
+    // Action can be challenged
+    // Challenger (lose)
     @Test
-    public void a_player_does_action_assassinate_and_target_player_calls_bluff_and_wins() {
-
-        // Player 1 does action assassinate
-        // Player 2 does action call bluff
-        // Player 1 does loose (Player 2 discovered the bluff)
-
+    public void player_does_action_and_other_calls_the_bluff_and_lose_the_call() throws Exception {
         // given
+        game.player(1).cards().clear();
+        game.player(1).cards().add(0, new TheAssassin());
+        game.player(1).cards().add(0, new TheAmbassator());
+        game.player(1).addCoin();
 
         // when
+        game.setPlayerPlayingThisHand(1);
+        game.setTargetPlayerForAssasination(2);
+        game.doAction(action);
+
+        game.doPlayerCallingTheBluffOnTheAction(2, 1, action);
 
         // then
-        Assert.assertEquals(2, game.player(1).cards().size());
-        Assert.assertEquals(1000, game.player(1).coins());
+        Assert.assertEquals(49, game.treasury());
 
-        Assert.assertEquals(1, game.player(2).cards().size());
-        Assert.assertEquals(1000, game.player(2).coins());
+        Assert.assertEquals(2, game.player(1).cardsInGame());
+        Assert.assertEquals(0, game.player(1).coins());
 
+        Assert.assertEquals(0, game.player(2).cardsInGame());
+        Assert.assertTrue(game.player(2).isDead());
     }
 
-    @Ignore
+    // Action can be blocked
     @Test
-    public void a_player_does_action_assassinate_and_target_player_calls_bluff_and_looses() {
-
-        // Player 1 does action assassinate
-        // Player 2 does action call bluff
-        // Player 1 does win and kill Player 2 (The bluff makes player 1 loose 1 card + the assassination kill the last one)
-
-        // given
-
-        // when
-
-        // then
-        Assert.assertEquals(9999, game.player(1).cards().size());
-        Assert.assertEquals(9999, game.player(1).coins());
-        Assert.assertEquals(9999, game.player(2).cards().size());
-        Assert.assertEquals(9999, game.player(2).coins());
-
+    public void player_does_action_and_gets_block() throws Exception {
+        assertTrue(false);
     }
 
-    @Ignore
+    // Action can be blocked
+    // Block can be challenged
+    // Challenger wins
     @Test
-    public void a_player_does_action_assassinate_and_gets_blocked_but_call_bluff_on_the_block_and_wins() {
-
-        // Player 1 does action assassinate
-        // Player 2 does action block assassinate
-        // Player 1 does action call bluff
-        // Player 1 does win and kill Player 2 (Player 2 didn't had anything to block)
-        // (The bluff makes player 1 loose 1 card + the assassination kill the last one)
-
-        // given
-
-        // when
-
-        // then
-        Assert.assertEquals(9999, game.player(1).cards().size());
-        Assert.assertEquals(9999, game.player(1).coins());
-        Assert.assertEquals(9999, game.player(2).cards().size());
-        Assert.assertEquals(9999, game.player(2).coins());
-
+    public void player_does_action_and_gets_block_but_a_player_calls_the_bluff_on_the_block_and_wins_the_call() throws Exception {
+        assertTrue(false);
     }
 
-    @Ignore
+    // Action can be blocked
+    // Block can be challenged
+    // Challenger lose
     @Test
-    public void a_player_does_action_assassinate_and_gets_blocked_but_call_bluff_on_the_block_and_loose() {
-
-        // Player 1 does action assassinate
-        // Player 2 does action block assassinate
-        // Player 1 does action call bluff
-        // Player 1 does loose because Player 2 had the action to block
-
-        // given
-
-        // when
-
-        // then
-        Assert.assertEquals(9999, game.player(1).cards().size());
-        Assert.assertEquals(9999, game.player(1).coins());
-        Assert.assertEquals(9999, game.player(2).cards().size());
-        Assert.assertEquals(9999, game.player(2).coins());
-
-    }
-
-    @Ignore
-    @Test
-    public void a_player_does_action_assassinate_and_kills() {
-
-        // given
-
-        // when
-
-        // then
-        Assert.assertEquals(9999, game.player(1).cards().size());
-        Assert.assertEquals(9999, game.player(1).coins());
-        Assert.assertEquals(9999, game.player(2).cards().size());
-        Assert.assertEquals(9999, game.player(2).coins());
-
+    public void player_does_action_and_gets_block_but_a_player_calls_the_bluff_on_the_block_and_lose_the_call() throws Exception {
+        assertTrue(false);
     }
 
 }

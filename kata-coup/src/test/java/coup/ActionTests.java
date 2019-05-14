@@ -1,78 +1,47 @@
-package coup.actions;
+package coup;
 
-import coup.Action;
-import coup.ActionTests;
-import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
-public class ActionCoup7Should extends ActionTests {
+import static org.junit.Assert.assertTrue;
 
-    // Action: Pay 7 cons, choose the player to lose Influence
-    // Action cannot be challenged
+public class ActionTests {
 
-    // Block: Cannot be blocked
+    // TODO cuando un jugador tiene un challence y enseña la carta, tenemos q reshuflear y coger una nueva para ese player (player 1 si el challence es para la action, player 2 si el challence es para el blockeo de la acción)
 
-    @Before
-    public void before() throws Exception {
-        super.before();
-        action = new Coup7();
+    protected Game game;
+    protected Action action;
+
+    protected void before() throws Exception {
+
+        // given
+        Player player1 = new Player();
+        Player player2 = new Player();
+
+        game = new Game(player1, player2);
+        game.startGame();
+
     }
 
     // Action costs money
+    @Ignore
     @Test(expected = Exception.class)
     public void player_needs_money_to_do_the_action() throws Exception {
-        // when
-        game.setPlayerPlayingThisHand(1);
-        game.setTargetPlayerForAssasination(2);
-
-        game.doAction(action);
+        assertTrue(false);
     }
 
     // Action
+    @Ignore
     @Test
     public void player_does_action() throws Exception {
-        // given
-        game.takeCoinFromTreasury();
-        game.takeCoinFromTreasury();
-        game.takeCoinFromTreasury();
-        game.takeCoinFromTreasury();
-        game.takeCoinFromTreasury();
-
-        game.player(1).addCoin();
-        game.player(1).addCoin();
-        game.player(1).addCoin();
-        game.player(1).addCoin();
-        game.player(1).addCoin();
-
-        // when
-        game.setPlayerPlayingThisHand(1);
-        game.setTargetPlayerForAssasination(2);
-
-        game.doAction(action);
-
-        // then
-        Assert.assertEquals(48, game.treasury());
-
-        Assert.assertEquals(2, game.player(1).cardsInGame());
-        Assert.assertEquals(0, game.player(1).coins());
-
-        Assert.assertEquals(1, game.player(2).cardsInGame());
-        Assert.assertEquals(2, game.player(2).coins());
+        assertTrue(false);
     }
 
     // Action cannot be challenged
+    @Ignore
     @Test(expected = Exception.class)
     public void player_calls_the_bluff_over_action() throws Exception {
-        // given
-        Action action = new Coup7();
-
-        // when
-        game.setPlayerPlayingThisHand(1);
-        game.doAction(action);
-
-        game.doPlayerCallingTheBluffOnTheAction(2, 1, action);
+        assertTrue(false);
     }
 
     // Action can be challenged
@@ -80,7 +49,7 @@ public class ActionCoup7Should extends ActionTests {
     @Ignore
     @Test
     public void player_does_action_and_other_player_calls_the_bluff_and_wins_the_call() throws Exception {
-
+        assertTrue(false);
     }
 
     // Action can be challenged
@@ -88,28 +57,21 @@ public class ActionCoup7Should extends ActionTests {
     @Ignore
     @Test
     public void player_does_action_and_other_calls_the_bluff_and_lose_the_call() throws Exception {
-
+        assertTrue(false);
     }
 
     // Action cannot be blocked
+    @Ignore
     @Test(expected = Exception.class)
     public void player_blocks_action() throws Exception {
-        // given
-        Action action = new Coup7();
-
-        // when
-        game.setPlayerPlayingThisHand(1);
-        game.doAction(action);
-
-        game.setPlayerBlocksAction(2);
-        game.doBlockAction(action);
+        assertTrue(false);
     }
 
     // Action can be blocked
     @Ignore
     @Test
     public void player_does_action_and_gets_block() throws Exception {
-
+        assertTrue(false);
     }
 
     // Action can be blocked
@@ -118,7 +80,7 @@ public class ActionCoup7Should extends ActionTests {
     @Ignore
     @Test
     public void player_does_action_and_gets_block_but_a_player_calls_the_bluff_on_the_block_and_wins_the_call() throws Exception {
-
+        assertTrue(false);
     }
 
     // Action can be blocked
@@ -127,7 +89,7 @@ public class ActionCoup7Should extends ActionTests {
     @Ignore
     @Test
     public void player_does_action_and_gets_block_but_a_player_calls_the_bluff_on_the_block_and_lose_the_call() throws Exception {
-
+        assertTrue(false);
     }
 
     // Action can be blocked
@@ -135,7 +97,7 @@ public class ActionCoup7Should extends ActionTests {
     @Ignore
     @Test(expected = Exception.class)
     public void player_does_action_and_gets_block_but_a_player_calls_the_bluff_on_the_block() throws Exception {
-
+        assertTrue(false);
     }
 
 }

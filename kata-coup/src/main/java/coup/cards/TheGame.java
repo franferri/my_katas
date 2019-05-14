@@ -6,8 +6,6 @@ public class TheGame extends Card {
 
     public TheGame() {
 
-
-
     }
 
 }

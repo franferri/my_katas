@@ -6,35 +6,31 @@ import coup.Game;
 public class Exchange extends Action {
 
     // Action: Take 2 cards, return 2 cards to the Court Deck
+    // Action can be challenged
+
     // Block: Cannot be blocked
-    // Bluff: Can be challenged
+    // -
 
-    public void doActionInternal(Game game) {
-
+    // Setup
+    public boolean canThisActionBeChallenged() {
+        return true;
     }
-
-    public void doBlockActionInternal(Game game) throws Exception {
-
-        throw new Exception("This action can't be blocked");
-
-    }
-
     public boolean canThisBlockActionBeChallenged() {
         return false;
     }
 
-    public void doCallTheBluffOnTheAction(Game game) throws Exception {
+    // Action
+    public void doActionInternal(Game game) throws Exception {
 
     }
 
-    public void doCallTheBluffOnTheBlockAction(Game game) throws Exception {
+    // Block Action
+    public void doBlockAction(Game game) throws Exception {
+        throw new Exception("This action can't be blocked");
+    }
 
-        if (!canThisBlockActionBeChallenged()) {
-            throw new Exception("This blockaction can't be challenged");
-        }
-
-        doCallTheBluffOnBlockAction(game);
-
+    public void doBlockActionInternal(Game game) throws Exception {
+        //
     }
 
 }

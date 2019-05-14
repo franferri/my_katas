@@ -8,6 +8,7 @@ public class Player {
 
     private int coins = 0;
     private List<Card> cards = new ArrayList<>();
+    private int lastCardKilled = -1;
 
     public Player() {
 
@@ -34,8 +35,18 @@ public class Player {
     }
 
     public void assassinate() { // What if there are no cards visible left?
-        int card = new Random().nextInt(2);
-        cards().get(card).setVisible(true);
+
+        if (cardsInGame() == 2) {
+            int card = new Random().nextInt(2);
+            lastCardKilled = card;
+            cards().get(card).setVisible(true);
+        } else {
+            dies();
+        }
+    }
+
+    public void recover() {
+        cards().get(lastCardKilled).setVisible(false);
     }
 
     public void dies() {
@@ -99,7 +110,6 @@ public class Player {
         }
 
         return false;
-
 
     }
 

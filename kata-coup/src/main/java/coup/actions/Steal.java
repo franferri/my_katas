@@ -6,22 +6,29 @@ import coup.Game;
 public class Steal extends Action {
 
     // Action: Take 2 coins from another player
+    // Action can be challenged
+
     // Block: Can be blocked by Captain
+    // Block by Captain can be challenged
+
     // Block: Can be blocked by Ambassador
-    // Bluff: Can be challenged
+    // Block by Ambassador can be challenged
 
-    public void doActionInternal(Game game) {
-
+    // Setup
+    public boolean canThisActionBeChallenged() {
+        return true;
     }
 
-    public void doCallTheBluffOnTheBlockAction(Game game) throws Exception {
-
+    public boolean canThisBlockActionBeChallenged() {
+        return true;
     }
 
-    public void doBlockActionInternal(Game game) {}
+    // Action
+    public void doActionInternal(Game game) throws Exception {
+    }
 
-    public void doCallTheBluffOnTheAction(Game game) throws Exception {
-
+    // Block Action
+    public void doBlockActionInternal(Game game) throws Exception {
     }
 
 }
