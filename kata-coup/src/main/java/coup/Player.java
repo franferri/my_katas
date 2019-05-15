@@ -1,6 +1,7 @@
 package coup;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
@@ -22,10 +23,6 @@ public class Player {
         --coins;
     }
 
-    public void looseCard() {
-        assassinate();
-    }
-
     public int coins() {
         return coins;
     }
@@ -34,14 +31,16 @@ public class Player {
         return cards;
     }
 
-    public void assassinate() { // What if there are no cards visible left?
+    public Card looseCard() { // What if there are no cards visible left?
 
-        if (cardsInGame() == 2) {
+        if (cardsInGame() > 1) {
             int card = new Random().nextInt(2);
             lastCardKilled = card;
             cards().get(card).setVisible(true);
+            return cards().get(card);
         } else {
             dies();
+            return null;
         }
     }
 
@@ -111,6 +110,10 @@ public class Player {
 
         return false;
 
+    }
+
+    public void shuffleCardsInHand() {
+        Collections.shuffle(cards);
     }
 
 }

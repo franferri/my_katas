@@ -25,8 +25,15 @@ public class Assassinate extends Action {
         game.assassinatePlayer();
     }
 
+    // Action 2
+    @Override
+    public void doActionInternal2(Game game)  {
+        game.assassinatePlayer();
+    }
+
     // Block Action
     public void doBlockActionInternal(Game game) throws Exception {
+        //takeCoinsFromTreasury(game, 3);
         game.recoverPlayer();
     }
 

@@ -21,7 +21,7 @@ public class ForeignAid extends Action {
 
     // Action
     public void doActionInternal(Game game) throws Exception {
-        takeCoinsToTreasury(game, 2);
+        takeCoinsFromTreasury(game, 2);
     }
 
     // Block Action

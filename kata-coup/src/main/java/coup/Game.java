@@ -13,6 +13,7 @@ public class Game {
     private Player playerDoingAction;
     private Player targetPlayerForAssasination;
     public Player targetPlayerBlockAction;
+    public Player targetPlayerForStealing;
     public Player playerCallingTheBluff;
     public Player lastPlayerDoingAnAction;
 
@@ -91,6 +92,10 @@ public class Game {
         playerDoingAction = player(player);
     }
 
+    public void setTargetPlayerForStealing(int player) {
+        targetPlayerForStealing = player(player);
+    }
+
     public Player playerPlayingHand() {
         return playerDoingAction;
     }
@@ -115,8 +120,22 @@ public class Game {
         action.doCallTheBluffOnTheBlockAction(this);
     }
 
+    public void doPlayerCallingTheBluffOnTheBlockActionStealing(int playerCallingTheBluff, int lastPlayerDoingAnAction, Action action) throws Exception {
+        this.playerCallingTheBluff = player(playerCallingTheBluff);
+        this.lastPlayerDoingAnAction = player(lastPlayerDoingAnAction);
+        action.doCallTheBluffOnTheBlockActionOnStealing(this);
+    }
+
+
+
+    public void doPlayerCallingTheBluffOnTheBlockActionOnAssasination(int playerCallingTheBluff, int lastPlayerDoingAnAction, Action action) throws Exception {
+        this.playerCallingTheBluff = player(playerCallingTheBluff);
+        this.lastPlayerDoingAnAction = player(lastPlayerDoingAnAction);
+        action.doCallTheBluffOnTheBlockActionOnAssasination(this);
+    }
+
     public void assassinatePlayer() {
-        targetPlayerForAssasination.assassinate();
+        targetPlayerForAssasination.looseCard();
     }
 
     public void recoverPlayer() {
