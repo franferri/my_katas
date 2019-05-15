@@ -101,8 +101,8 @@ public abstract class Action {
             //lastPlayerDoingAnAction.shuffleCard(actionBeingCalledToBeABluff);
         } else {
             // If the actioner looses the bluff
-            game.lastPlayerDoingAnAction.looseCard();
             doBlockActionInternal(game);
+            game.lastPlayerDoingAnAction.looseCard();
         }
 
     }
