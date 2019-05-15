@@ -15,6 +15,7 @@ public class Tax extends Action {
     public boolean canThisActionBeChallenged() {
         return true;
     }
+
     public boolean canThisBlockActionBeChallenged() {
         return false;
     }

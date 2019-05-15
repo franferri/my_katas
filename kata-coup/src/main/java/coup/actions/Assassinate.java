@@ -15,6 +15,7 @@ public class Assassinate extends Action {
     public boolean canThisActionBeChallenged() {
         return true;
     }
+
     public boolean canThisBlockActionBeChallenged() {
         return true;
     }
@@ -27,7 +28,7 @@ public class Assassinate extends Action {
 
     // Action 2
     @Override
-    public void doActionInternal2(Game game)  {
+    public void doActionInternal2(Game game) {
         game.assassinatePlayer();
     }
 

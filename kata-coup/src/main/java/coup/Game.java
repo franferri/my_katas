@@ -73,8 +73,6 @@ public class Game {
         ++treasury;
     }
 
-
-
     public void dealCard(Player player) {
         player.cards().add(deck.cards().remove(1));
     }
@@ -126,8 +124,6 @@ public class Game {
         action.doCallTheBluffOnTheBlockActionOnStealing(this);
     }
 
-
-
     public void doPlayerCallingTheBluffOnTheBlockActionOnAssasination(int playerCallingTheBluff, int lastPlayerDoingAnAction, Action action) throws Exception {
         this.playerCallingTheBluff = player(playerCallingTheBluff);
         this.lastPlayerDoingAnAction = player(lastPlayerDoingAnAction);
@@ -173,6 +169,5 @@ public class Game {
     public void doBlockAction(Action action) throws Exception {
         action.doBlockAction(this);
     }
-
 
 }

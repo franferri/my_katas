@@ -78,6 +78,8 @@ public class Player {
         return leftCards;
     }
 
+
+
     public boolean canHeBlockAction(Action action) {
 
         for (Card card : cards) {

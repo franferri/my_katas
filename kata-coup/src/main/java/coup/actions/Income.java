@@ -15,6 +15,7 @@ public class Income extends Action {
     public boolean canThisActionBeChallenged() {
         return false;
     }
+
     public boolean canThisBlockActionBeChallenged() {
         return false;
     }
