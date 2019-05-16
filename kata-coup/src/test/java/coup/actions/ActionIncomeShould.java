@@ -1,18 +1,18 @@
 package coup.actions;
 
-import coup.ActionTests;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import coup.TestingActions;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-public class ActionIncomeShould extends ActionTests {
+public class ActionIncomeShould extends TestingActions {
 
     // Action: Take 1 coin from the treasury
     // Action cannot be challenged
 
     // Block: Cannot be blocked
 
-    @Before
+    @BeforeEach
     public void before() throws Exception {
         super.before();
         action = new Income();
@@ -26,36 +26,37 @@ public class ActionIncomeShould extends ActionTests {
         action.doAction(game);
 
         // then
-        Assert.assertEquals(45, game.treasury());
+        Assertions.assertEquals(45, game.treasury());
 
-        Assert.assertEquals(2, game.player(1).cardsInGame());
-        Assert.assertEquals(3, game.player(1).coins());
+        Assertions.assertEquals(2, game.player(1).cardsInGame());
+        Assertions.assertEquals(3, game.player(1).coins());
 
-        Assert.assertEquals(2, game.player(2).cardsInGame());
-        Assert.assertEquals(2, game.player(2).coins());
+        Assertions.assertEquals(2, game.player(2).cardsInGame());
+        Assertions.assertEquals(2, game.player(2).coins());
     }
 
     // Action cannot be challenged
-    @Test(expected = Exception.class)
+    @Test
     public void player_calls_the_bluff_over_action() throws Exception {
         // when
         game.playerDoingTheAction = game.player(1);
         action.doAction(game);
 
         game.playerCallingTheBluff = game.player(2);
-        action.doCallTheBluffOnActionInternal(game);
+        Assertions.assertThrows(Exception.class, () -> action.doCallTheBluffOnActionInternal(game));
 
     }
 
     // Action cannot be blocked
-    @Test(expected = Exception.class)
+    @Test
     public void player_blocks_action() throws Exception {
         // when
         game.playerDoingTheAction = game.player(1);
         action.doAction(game);
 
         game.playerBlockingTheAction = game.player(2);
-        action.doBlockAction(game);
+
+        Assertions.assertThrows(Exception.class, () -> action.doBlockAction(game));
     }
 
 }

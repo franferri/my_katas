@@ -1,19 +1,33 @@
 package coup;
 
 import coup.cards.*;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.*;
 
 public class GameShould {
 
     Game game;
 
-    @Before
+    // TODO: If the game only have 2 players the rules are different
+    // Mode 1 Normal (as with many players)
+    // Mode 2 The selected starting player (player 1) gets only 1 coin at the beginning of the game
+    // Mode 3 divide the cards in 3 sets of 5 (each set has 1 of each characters), Each player (player 1 and player 2) pick one of the sets and selects secretly a card and discard the rest.
+    // Shuffle the third set and deal 1 card to each player and then put the remaining 3 cards face down ad court deck
+
+
+    // TODO: If the game only have 2 players the rules are different
+    // The selected starting player (player 1) gets only 1 coin at the beginning of the game
+
+    // TODO: To cover 3 players or more, to choose who is doing the actions in the tests, we can just use random(), or the test repeats itself for all possible combinations in a loop (changing who does the action, who calls the bluff, who blocks the action, and who calls the bluff on the block action)
+
+
+
+    @BeforeEach
     public void before() throws Exception {
 
         // given
@@ -28,18 +42,16 @@ public class GameShould {
 
     // COUP game is a 2-6 players game
 
-    @Test(expected = Exception.class)
+    @Test
     public void a_game_needs_2_players_at_least() throws Exception {
-
         // given
         Player player1 = new Player();
 
         // then
-        new Game(player1);
-
+        Assertions.assertThrows(Exception.class, () -> new Game(player1));
     }
 
-    @Test(expected = Exception.class)
+    @Test
     public void a_game_can_have_until_6_players() throws Exception {
 
         // given
@@ -52,8 +64,7 @@ public class GameShould {
         Player player7 = new Player();
 
         // then
-        new Game(player1, player2, player3, player4, player5, player6, player7);
-
+        Assertions.assertThrows(Exception.class, () -> new Game(player1, player2, player3, player4, player5, player6, player7));
     }
 
     // The Treasury starts with 50 coins
@@ -65,7 +76,7 @@ public class GameShould {
         int treasury = game.treasury();
 
         // then
-        assertEquals(50, treasury);
+        Assertions.assertEquals(50, treasury);
 
     }
 
@@ -78,7 +89,7 @@ public class GameShould {
         Deck deck = game.deck();
 
         // then
-        assertNotNull(deck);
+        Assertions.assertNotNull(deck);
 
     }
 
@@ -89,7 +100,7 @@ public class GameShould {
         Deck deck = game.deck();
 
         // then
-        assertEquals(15, deck.cards().size());
+        Assertions.assertEquals(15, deck.cards().size());
 
     }
 
@@ -129,11 +140,11 @@ public class GameShould {
         }
 
         // then
-        assertEquals(3, ambassators);
-        assertEquals(3, assasins);
-        assertEquals(3, captains);
-        assertEquals(3, conptesas);
-        assertEquals(3, dukes);
+        Assertions.assertEquals(3, ambassators);
+        Assertions.assertEquals(3, assasins);
+        Assertions.assertEquals(3, captains);
+        Assertions.assertEquals(3, conptesas);
+        Assertions.assertEquals(3, dukes);
 
     }
 
@@ -151,7 +162,7 @@ public class GameShould {
         game.startGame();
 
         // then
-        assertNotEquals(originalOrderCards, deck.cards());
+        Assertions.assertNotEquals(originalOrderCards, deck.cards());
 
     }
 
@@ -166,10 +177,10 @@ public class GameShould {
         game.startGame();
 
         // then
-        assertEquals(2, game.player(1).cardsInGame());
-        assertEquals(2, game.player(2).cardsInGame());
+        Assertions.assertEquals(2, game.player(1).cardsInGame());
+        Assertions.assertEquals(2, game.player(2).cardsInGame());
 
-        assertEquals(amountOfCardsAvailableInTheCourtDeck - cardsTakenFromTheDeck, game.deck().cards().size());
+        Assertions.assertEquals(amountOfCardsAvailableInTheCourtDeck - cardsTakenFromTheDeck, game.deck().cards().size());
 
     }
 
@@ -182,8 +193,8 @@ public class GameShould {
         game.startGame();
 
         // then
-        assertEquals(2, game.player(1).coins());
-        assertEquals(2, game.player(2).coins());
+        Assertions.assertEquals(2, game.player(1).coins());
+        Assertions.assertEquals(2, game.player(2).coins());
 
     }
 
@@ -200,7 +211,7 @@ public class GameShould {
         game.player(1).dies();
 
         // then
-        assertEquals(2, game.whoIsTheWinner());
+        Assertions.assertEquals(2, game.whoIsTheWinner());
 
     }
 
@@ -215,8 +226,8 @@ public class GameShould {
 
         // then
         for (Player player : game.players) {
-            assertFalse(player.cards().get(0).isVisible());
-            assertFalse(player.cards().get(1).isVisible());
+            Assertions.assertFalse(player.cards().get(0).isVisible());
+            Assertions.assertFalse(player.cards().get(1).isVisible());
         }
 
     }
@@ -230,7 +241,7 @@ public class GameShould {
         game.player(1).looseCard();
 
         // then
-        assertEquals(1, game.player(1).cardsInGame());
+        Assertions.assertEquals(1, game.player(1).cardsInGame());
 
     }
     // When a player has lost all their influence they are exiled and out of the game
@@ -243,7 +254,7 @@ public class GameShould {
         game.player(1).dies();
 
         // then
-        assertTrue(game.player(1).isDead());
+        Assertions.assertTrue(game.player(1).isDead());
 
     }
 

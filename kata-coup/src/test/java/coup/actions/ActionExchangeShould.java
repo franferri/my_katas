@@ -1,13 +1,13 @@
 package coup.actions;
 
-import coup.ActionTests;
+import coup.TestingActions;
 import coup.cards.TheAmbassator;
 import coup.cards.TheDuke;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-public class ActionExchangeShould extends ActionTests {
+public class ActionExchangeShould extends TestingActions {
 
     // Action: Take 2 cards, return 2 cards to the Court Deck
     // Action can be challenged
@@ -15,7 +15,7 @@ public class ActionExchangeShould extends ActionTests {
     // Block: Cannot be blocked
     // -
 
-    @Before
+    @BeforeEach
     public void before() throws Exception {
         super.before();
         action = new Exchange();
@@ -29,13 +29,13 @@ public class ActionExchangeShould extends ActionTests {
         action.doAction(game);
 
         // then
-        Assert.assertEquals(46, game.treasury());
+        Assertions.assertEquals(46, game.treasury());
 
-        Assert.assertEquals(2, game.player(1).cardsInGame());
-        Assert.assertEquals(2, game.player(1).coins());
+        Assertions.assertEquals(2, game.player(1).cardsInGame());
+        Assertions.assertEquals(2, game.player(1).coins());
 
-        Assert.assertEquals(2, game.player(2).cardsInGame());
-        Assert.assertEquals(2, game.player(2).coins());
+        Assertions.assertEquals(2, game.player(2).cardsInGame());
+        Assertions.assertEquals(2, game.player(2).coins());
     }
 
     // Action can be challenged
@@ -55,13 +55,13 @@ public class ActionExchangeShould extends ActionTests {
         action.doCallTheBluffOnActionInternal(game);
 
         // then
-        Assert.assertEquals(46, game.treasury());
+        Assertions.assertEquals(46, game.treasury());
 
-        Assert.assertEquals(1, game.player(1).cardsInGame());
-        Assert.assertEquals(2, game.player(1).coins());
+        Assertions.assertEquals(1, game.player(1).cardsInGame());
+        Assertions.assertEquals(2, game.player(1).coins());
 
-        Assert.assertEquals(2, game.player(2).cardsInGame());
-        Assert.assertEquals(2, game.player(2).coins());
+        Assertions.assertEquals(2, game.player(2).cardsInGame());
+        Assertions.assertEquals(2, game.player(2).coins());
     }
 
     // Action can be challenged
@@ -81,24 +81,25 @@ public class ActionExchangeShould extends ActionTests {
         action.doCallTheBluffOnActionInternal(game);
 
         // then
-        Assert.assertEquals(46, game.treasury());
+        Assertions.assertEquals(46, game.treasury());
 
-        Assert.assertEquals(2, game.player(1).cardsInGame());
-        Assert.assertEquals(2, game.player(1).coins());
+        Assertions.assertEquals(2, game.player(1).cardsInGame());
+        Assertions.assertEquals(2, game.player(1).coins());
 
-        Assert.assertEquals(1, game.player(2).cardsInGame());
-        Assert.assertEquals(2, game.player(2).coins());
+        Assertions.assertEquals(1, game.player(2).cardsInGame());
+        Assertions.assertEquals(2, game.player(2).coins());
     }
 
     // Action cannot be blocked
-    @Test(expected = Exception.class)
+    @Test
     public void player_blocks_action() throws Exception {
         // when
         game.playerDoingTheAction = game.player(1);
         action.doAction(game);
 
         game.playerBlockingTheAction = game.player(2);
-        action.doBlockAction(game);
+
+        Assertions.assertThrows(Exception.class, () -> action.doBlockAction(game));
     }
 
 }

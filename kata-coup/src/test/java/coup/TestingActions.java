@@ -1,11 +1,10 @@
 package coup;
 
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertTrue;
-
-public class ActionTests {
+public class TestingActions {
 
     // TODO cuando un jugador tiene un challence y enseña la carta, tenemos q reshuflear y coger una nueva para ese player (player 1 si el challence es para la action, player 2 si el challence es para el blockeo de la acción)
 
@@ -24,80 +23,80 @@ public class ActionTests {
     }
 
     // Action costs money
-    @Ignore
-    @Test(expected = Exception.class)
-    public void player_needs_money_to_do_the_action() throws Exception {
-        assertTrue(false);
+    @Disabled
+    @Test
+    public void player_needs_money_to_do_the_action() {
+        Assertions.assertThrows(Exception.class, () -> new String());
     }
 
     // Action
-    @Ignore
+    @Disabled
     @Test
     public void player_does_action() throws Exception {
-        assertTrue(false);
+        Assertions.assertTrue(false);
     }
 
     // Action cannot be challenged
-    @Ignore
-    @Test(expected = Exception.class)
+    @Disabled
+    @Test
     public void player_calls_the_bluff_over_action() throws Exception {
-        assertTrue(false);
+        Assertions.assertThrows(Exception.class, () -> new String());
     }
 
     // Action can be challenged
     // Challenger (wins)
-    @Ignore
+    @Disabled
     @Test
     public void player_does_action_and_other_player_calls_the_bluff_and_wins_the_call() throws Exception {
-        assertTrue(false);
+        Assertions.assertTrue(false);
     }
 
     // Action can be challenged
     // Challenger (lose)
-    @Ignore
+    @Disabled
     @Test
     public void player_does_action_and_other_calls_the_bluff_and_lose_the_call() throws Exception {
-        assertTrue(false);
+        Assertions.assertTrue(false);
     }
 
     // Action cannot be blocked
-    @Ignore
-    @Test(expected = Exception.class)
+    @Disabled
+    @Test
     public void player_blocks_action() throws Exception {
-        assertTrue(false);
+        Assertions.assertThrows(Exception.class, () -> new String());
     }
 
     // Action can be blocked
-    @Ignore
+    @Disabled
     @Test
     public void player_does_action_and_gets_block() throws Exception {
-        assertTrue(false);
+        Assertions.assertTrue(false);
     }
 
     // Action can be blocked
     // Block can be challenged
     // Challenger wins
-    @Ignore
+    @Disabled
     @Test
     public void player_does_action_and_gets_block_but_a_player_calls_the_bluff_on_the_block_and_wins_the_call() throws Exception {
-        assertTrue(false);
+        Assertions.assertTrue(false);
     }
 
     // Action can be blocked
     // Block can be challenged
     // Challenger lose
-    @Ignore
+    @Disabled
     @Test
     public void player_does_action_and_gets_block_but_a_player_calls_the_bluff_on_the_block_and_lose_the_call() throws Exception {
-        assertTrue(false);
+        Assertions.assertTrue(false);
     }
 
     // Action can be blocked
     // Block cannot be challenged
-    @Ignore
-    @Test(expected = Exception.class)
+    @Disabled
+    @Test
     public void player_does_action_and_gets_block_but_a_player_calls_the_bluff_on_the_block() throws Exception {
-        assertTrue(false);
+        Assertions.assertThrows(Exception.class, () -> new String());
     }
 
 }

@@ -1,13 +1,13 @@
 package coup.actions;
 
-import coup.ActionTests;
+import coup.TestingActions;
 import coup.cards.TheAmbassator;
 import coup.cards.TheDuke;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-public class ActionForeignAidShould extends ActionTests {
+public class ActionForeignAidShould extends TestingActions {
 
     // Action: Take two coins from the treasury
     // Action cannot be challenged
@@ -15,7 +15,7 @@ public class ActionForeignAidShould extends ActionTests {
     // Block: Can be blocked by a player claiming the Duke
     // Block can be challenged
 
-    @Before
+    @BeforeEach
     public void before() throws Exception {
         super.before();
         action = new ForeignAid();
@@ -29,24 +29,25 @@ public class ActionForeignAidShould extends ActionTests {
         action.doAction(game);
 
         // then
-        Assert.assertEquals(44, game.treasury());
+        Assertions.assertEquals(44, game.treasury());
 
-        Assert.assertEquals(2, game.player(1).cardsInGame());
-        Assert.assertEquals(4, game.player(1).coins());
+        Assertions.assertEquals(2, game.player(1).cardsInGame());
+        Assertions.assertEquals(4, game.player(1).coins());
 
-        Assert.assertEquals(2, game.player(2).cardsInGame());
-        Assert.assertEquals(2, game.player(2).coins());
+        Assertions.assertEquals(2, game.player(2).cardsInGame());
+        Assertions.assertEquals(2, game.player(2).coins());
     }
 
     // Action cannot be challenged
-    @Test(expected = Exception.class)
+    @Test
     public void player_calls_the_bluff_over_action() throws Exception {
         // when
         game.playerDoingTheAction = game.player(1);
         action.doAction(game);
 
         game.playerCallingTheBluff = game.player(2);
-        action.doCallTheBluffOnActionInternal(game);
+
+        Assertions.assertThrows(Exception.class, () -> action.doCallTheBluffOnActionInternal(game));
     }
 
     // Action can be blocked
@@ -65,13 +66,13 @@ public class ActionForeignAidShould extends ActionTests {
         action.doBlockAction(game);
 
         // then
-        Assert.assertEquals(46, game.treasury());
+        Assertions.assertEquals(46, game.treasury());
 
-        Assert.assertEquals(2, game.player(1).cardsInGame());
-        Assert.assertEquals(2, game.player(1).coins());
+        Assertions.assertEquals(2, game.player(1).cardsInGame());
+        Assertions.assertEquals(2, game.player(1).coins());
 
-        Assert.assertEquals(2, game.player(2).cardsInGame());
-        Assert.assertEquals(2, game.player(2).coins());
+        Assertions.assertEquals(2, game.player(2).cardsInGame());
+        Assertions.assertEquals(2, game.player(2).coins());
     }
 
     // Action can be blocked
@@ -94,15 +95,14 @@ public class ActionForeignAidShould extends ActionTests {
         game.playerCallingTheBluff = game.player(1);
         action.doCallTheBluffOnBlockActionInternal(game);
 
-
         // then
-        Assert.assertEquals(44, game.treasury());
+        Assertions.assertEquals(44, game.treasury());
 
-        Assert.assertEquals(2, game.player(1).cardsInGame());
-        Assert.assertEquals(4, game.player(1).coins());
+        Assertions.assertEquals(2, game.player(1).cardsInGame());
+        Assertions.assertEquals(4, game.player(1).coins());
 
-        Assert.assertEquals(1, game.player(2).cardsInGame());
-        Assert.assertEquals(2, game.player(2).coins());
+        Assertions.assertEquals(1, game.player(2).cardsInGame());
+        Assertions.assertEquals(2, game.player(2).coins());
     }
 
     // Action can be blocked
@@ -127,13 +127,13 @@ public class ActionForeignAidShould extends ActionTests {
 
         // then
 
-        Assert.assertEquals(46, game.treasury());
+        Assertions.assertEquals(46, game.treasury());
 
-        Assert.assertEquals(1, game.player(1).cardsInGame());
-        Assert.assertEquals(2, game.player(1).coins());
+        Assertions.assertEquals(1, game.player(1).cardsInGame());
+        Assertions.assertEquals(2, game.player(1).coins());
 
-        Assert.assertEquals(2, game.player(2).cardsInGame());
-        Assert.assertEquals(2, game.player(2).coins());
+        Assertions.assertEquals(2, game.player(2).cardsInGame());
+        Assertions.assertEquals(2, game.player(2).coins());
     }
 
 }

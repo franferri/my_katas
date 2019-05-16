@@ -39,6 +39,7 @@ public class Player {
             dies();
             return null;
         }
+
     }
 
     public void restoreLostCard() throws Exception {

@@ -1,31 +1,31 @@
 package coup.actions;
 
-import coup.ActionTests;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import coup.TestingActions;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-public class ActionCoup10Should extends ActionTests {
+public class ActionCoup10Should extends TestingActions {
 
     // Action: If 10 or more coins, the player must coup
     // Action cannot be challenged
 
     // Block: Cannot be blocked
 
-    @Before
+    @BeforeEach
     public void before() throws Exception {
         super.before();
         action = new Coup10();
     }
 
     // Action costs money
-    @Test(expected = Exception.class)
-    public void player_needs_money_to_do_the_action() throws Exception {
+    @Test
+    public void player_needs_money_to_do_the_action() {
         // when
         game.playerDoingTheAction = game.player(1);
         game.targetPlayerForAssassination = game.player(2);
 
-        action.doAction(game);
+        Assertions.assertThrows(Exception.class, () -> action.doAction(game));
     }
 
     // Action
@@ -34,42 +34,47 @@ public class ActionCoup10Should extends ActionTests {
 
         // when
         game.playerDoingTheAction = game.player(1);
-        game.playerTakeCoinsFromTreasury(game.playerDoingTheAction,8);
+        game.playerTakeCoinsFromTreasury(game.playerDoingTheAction, 8);
 
         game.targetPlayerForAssassination = game.player(2);
 
         action.doAction(game);
 
         // then
-        Assert.assertEquals(48, game.treasury());
+        Assertions.assertEquals(48, game.treasury());
 
-        Assert.assertEquals(2, game.player(1).cardsInGame());
-        Assert.assertEquals(0, game.player(1).coins());
+        Assertions.assertEquals(2, game.player(1).cardsInGame());
+        Assertions.assertEquals(0, game.player(1).coins());
 
-        Assert.assertEquals(1, game.player(2).cardsInGame());
-        Assert.assertEquals(2, game.player(2).coins());
+        Assertions.assertEquals(1, game.player(2).cardsInGame());
+        Assertions.assertEquals(2, game.player(2).coins());
     }
 
     // Action cannot be challenged
-    @Test(expected = Exception.class)
+    @Test
     public void player_calls_the_bluff_over_action() throws Exception {
         // when
         game.playerDoingTheAction = game.player(1);
+        game.playerTakeCoinsFromTreasury(game.playerDoingTheAction, 8);
+        game.targetPlayerForAssassination = game.player(2);
         action.doAction(game);
 
         game.playerCallingTheBluff = game.player(2);
-        action.doCallTheBluffOnActionInternal(game);
+        Assertions.assertThrows(Exception.class, () -> action.doCallTheBluffOnActionInternal(game));
     }
 
     // Action cannot be blocked
-    @Test(expected = Exception.class)
+    @Test
     public void player_blocks_action() throws Exception {
         // when
         game.playerDoingTheAction = game.player(1);
+        game.playerTakeCoinsFromTreasury(game.playerDoingTheAction, 8);
+        game.targetPlayerForAssassination = game.player(2);
         action.doAction(game);
 
         game.playerBlockingTheAction = game.player(2);
-        action.doBlockAction(game);
+
+        Assertions.assertThrows(Exception.class, () -> action.doBlockAction(game));
     }
 
 }

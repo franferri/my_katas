@@ -6,7 +6,6 @@ import coup.actions.Steal;
 
 public class TheAmbassator extends Card {
 
-
     public TheAmbassator() {
         this.action = new Exchange();
         this.blocks = new Steal();

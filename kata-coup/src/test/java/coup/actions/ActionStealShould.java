@@ -1,16 +1,14 @@
 package coup.actions;
 
-import coup.ActionTests;
+import coup.TestingActions;
 import coup.cards.TheAmbassator;
 import coup.cards.TheCaptain;
 import coup.cards.TheDuke;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertTrue;
-
-public class ActionStealShould extends ActionTests {
+public class ActionStealShould extends TestingActions {
 
     // Action: Take 2 coins from another player
     // Action can be challenged
@@ -21,7 +19,7 @@ public class ActionStealShould extends ActionTests {
     // Block: Can be blocked by Ambassador
     // Block by Ambassador can be challenged
 
-    @Before
+    @BeforeEach
     public void before() throws Exception {
         super.before();
         action = new Steal();
@@ -29,14 +27,14 @@ public class ActionStealShould extends ActionTests {
 
 
     // Action steal more than other player has
-    @Test(expected = Exception.class)
-    public void player_does_action_to_a_poor_player() throws Exception {
+    @Test
+    public void player_does_action_to_a_poor_player() {
         // when
         game.playerDoingTheAction = game.player(1);
         game.targetPlayerForStealing = game.player(2);
         game.player(2).looseCoin();
 
-        action.doAction(game);
+        Assertions.assertThrows(Exception.class, () -> action.doAction(game));
     }
 
     // Action
@@ -48,13 +46,13 @@ public class ActionStealShould extends ActionTests {
         action.doAction(game);
 
         // then
-        Assert.assertEquals(46, game.treasury());
+        Assertions.assertEquals(46, game.treasury());
 
-        Assert.assertEquals(2, game.player(1).cardsInGame());
-        Assert.assertEquals(4, game.player(1).coins());
+        Assertions.assertEquals(2, game.player(1).cardsInGame());
+        Assertions.assertEquals(4, game.player(1).coins());
 
-        Assert.assertEquals(2, game.player(2).cardsInGame());
-        Assert.assertEquals(0, game.player(2).coins());
+        Assertions.assertEquals(2, game.player(2).cardsInGame());
+        Assertions.assertEquals(0, game.player(2).coins());
     }
 
     // Action can be challenged
@@ -75,13 +73,13 @@ public class ActionStealShould extends ActionTests {
         action.doCallTheBluffOnActionInternal(game);
 
         // then
-        Assert.assertEquals(46, game.treasury());
+        Assertions.assertEquals(46, game.treasury());
 
-        Assert.assertEquals(1, game.player(1).cardsInGame());
-        Assert.assertEquals(2, game.player(1).coins());
+        Assertions.assertEquals(1, game.player(1).cardsInGame());
+        Assertions.assertEquals(2, game.player(1).coins());
 
-        Assert.assertEquals(2, game.player(2).cardsInGame());
-        Assert.assertEquals(2, game.player(2).coins());
+        Assertions.assertEquals(2, game.player(2).cardsInGame());
+        Assertions.assertEquals(2, game.player(2).coins());
     }
 
     // Action can be challenged
@@ -102,13 +100,13 @@ public class ActionStealShould extends ActionTests {
         action.doCallTheBluffOnActionInternal(game);
 
         // then
-        Assert.assertEquals(46, game.treasury());
+        Assertions.assertEquals(46, game.treasury());
 
-        Assert.assertEquals(2, game.player(1).cardsInGame());
-        Assert.assertEquals(4, game.player(1).coins());
+        Assertions.assertEquals(2, game.player(1).cardsInGame());
+        Assertions.assertEquals(4, game.player(1).coins());
 
-        Assert.assertEquals(1, game.player(2).cardsInGame());
-        Assert.assertEquals(0, game.player(2).coins());
+        Assertions.assertEquals(1, game.player(2).cardsInGame());
+        Assertions.assertEquals(0, game.player(2).coins());
     }
 
     // Action can be blocked (by Captain)
@@ -128,13 +126,13 @@ public class ActionStealShould extends ActionTests {
         action.doBlockAction(game);
 
         // then
-        Assert.assertEquals(46, game.treasury());
+        Assertions.assertEquals(46, game.treasury());
 
-        Assert.assertEquals(2, game.player(1).cardsInGame());
-        Assert.assertEquals(2, game.player(1).coins());
+        Assertions.assertEquals(2, game.player(1).cardsInGame());
+        Assertions.assertEquals(2, game.player(1).coins());
 
-        Assert.assertEquals(2, game.player(2).cardsInGame());
-        Assert.assertEquals(2, game.player(2).coins());
+        Assertions.assertEquals(2, game.player(2).cardsInGame());
+        Assertions.assertEquals(2, game.player(2).coins());
     }
 
     // Action can be blocked (by Captain)
@@ -160,13 +158,13 @@ public class ActionStealShould extends ActionTests {
 
 
         // then
-        Assert.assertEquals(46, game.treasury());
+        Assertions.assertEquals(46, game.treasury());
 
-        Assert.assertEquals(2, game.player(1).cardsInGame());
-        Assert.assertEquals(4, game.player(1).coins());
+        Assertions.assertEquals(2, game.player(1).cardsInGame());
+        Assertions.assertEquals(4, game.player(1).coins());
 
-        Assert.assertEquals(1, game.player(2).cardsInGame());
-        Assert.assertEquals(0, game.player(2).coins());
+        Assertions.assertEquals(1, game.player(2).cardsInGame());
+        Assertions.assertEquals(0, game.player(2).coins());
     }
 
     // Action can be blocked (by Captain)
@@ -191,13 +189,13 @@ public class ActionStealShould extends ActionTests {
         action.doCallTheBluffOnBlockActionInternal(game);
 
         // then
-        Assert.assertEquals(46, game.treasury());
+        Assertions.assertEquals(46, game.treasury());
 
-        Assert.assertEquals(1, game.player(1).cardsInGame());
-        Assert.assertEquals(2, game.player(1).coins());
+        Assertions.assertEquals(1, game.player(1).cardsInGame());
+        Assertions.assertEquals(2, game.player(1).coins());
 
-        Assert.assertEquals(2, game.player(2).cardsInGame());
-        Assert.assertEquals(2, game.player(2).coins());
+        Assertions.assertEquals(2, game.player(2).cardsInGame());
+        Assertions.assertEquals(2, game.player(2).coins());
 
 
     }
@@ -219,13 +217,13 @@ public class ActionStealShould extends ActionTests {
         action.doBlockAction(game);
 
         // then
-        Assert.assertEquals(46, game.treasury());
+        Assertions.assertEquals(46, game.treasury());
 
-        Assert.assertEquals(2, game.player(1).cardsInGame());
-        Assert.assertEquals(2, game.player(1).coins());
+        Assertions.assertEquals(2, game.player(1).cardsInGame());
+        Assertions.assertEquals(2, game.player(1).coins());
 
-        Assert.assertEquals(2, game.player(2).cardsInGame());
-        Assert.assertEquals(2, game.player(2).coins());
+        Assertions.assertEquals(2, game.player(2).cardsInGame());
+        Assertions.assertEquals(2, game.player(2).coins());
     }
 
     // Action can be blocked (by Ambassador)
@@ -250,13 +248,13 @@ public class ActionStealShould extends ActionTests {
         action.doCallTheBluffOnBlockActionInternal(game);
 
         // then
-        Assert.assertEquals(46, game.treasury());
+        Assertions.assertEquals(46, game.treasury());
 
-        Assert.assertEquals(1, game.player(1).cardsInGame());
-        Assert.assertEquals(2, game.player(1).coins());
+        Assertions.assertEquals(1, game.player(1).cardsInGame());
+        Assertions.assertEquals(2, game.player(1).coins());
 
-        Assert.assertEquals(2, game.player(2).cardsInGame());
-        Assert.assertEquals(2, game.player(2).coins());
+        Assertions.assertEquals(2, game.player(2).cardsInGame());
+        Assertions.assertEquals(2, game.player(2).coins());
     }
 
 }

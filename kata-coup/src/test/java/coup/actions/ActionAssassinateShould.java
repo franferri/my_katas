@@ -1,14 +1,14 @@
 package coup.actions;
 
-import coup.ActionTests;
+import coup.TestingActions;
 import coup.cards.TheAmbassator;
 import coup.cards.TheAssassin;
 import coup.cards.TheContessa;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-public class ActionAssassinateShould extends ActionTests {
+public class ActionAssassinateShould extends TestingActions {
 
     // Action: Pay 3 coins, choose the player to lose influence
     // Action can be challenged
@@ -16,20 +16,20 @@ public class ActionAssassinateShould extends ActionTests {
     // Block: Can be blocked by Contessa
     // Block can be challenged
 
-    @Before
+    @BeforeEach
     public void before() throws Exception {
         super.before();
         action = new Assassinate();
     }
 
     // Action costs money
-    @Test(expected = Exception.class)
-    public void player_needs_money_to_do_the_action() throws Exception {
+    @Test
+    public void player_needs_money_to_do_the_action() {
         // when
         game.playerDoingTheAction = game.player(1);
         game.targetPlayerForAssassination = game.player(2);
 
-        action.doAction(game);
+        Assertions.assertThrows(Exception.class, () -> action.doAction(game));
     }
 
     // Action
@@ -45,11 +45,11 @@ public class ActionAssassinateShould extends ActionTests {
         action.doAction(game);
 
         // then
-        Assert.assertEquals(2, game.player(1).cardsInGame());
-        Assert.assertEquals(0, game.player(1).coins());
+        Assertions.assertEquals(2, game.player(1).cardsInGame());
+        Assertions.assertEquals(0, game.player(1).coins());
 
-        Assert.assertEquals(1, game.player(2).cardsInGame());
-        Assert.assertEquals(2, game.player(2).coins());
+        Assertions.assertEquals(1, game.player(2).cardsInGame());
+        Assertions.assertEquals(2, game.player(2).coins());
     }
 
     // Action can be challenged
@@ -71,13 +71,13 @@ public class ActionAssassinateShould extends ActionTests {
         action.doCallTheBluffOnActionInternal(game);
 
         // then
-        Assert.assertEquals(49, game.treasury());
+        Assertions.assertEquals(49, game.treasury());
 
-        Assert.assertEquals(1, game.player(1).cardsInGame());
-        Assert.assertEquals(0, game.player(1).coins());
+        Assertions.assertEquals(1, game.player(1).cardsInGame());
+        Assertions.assertEquals(0, game.player(1).coins());
 
-        Assert.assertEquals(2, game.player(2).cardsInGame());
-        Assert.assertEquals(2, game.player(2).coins());
+        Assertions.assertEquals(2, game.player(2).cardsInGame());
+        Assertions.assertEquals(2, game.player(2).coins());
     }
 
     // Action can be challenged
@@ -99,13 +99,13 @@ public class ActionAssassinateShould extends ActionTests {
         action.doCallTheBluffOnActionInternal(game);
 
         // then
-        Assert.assertEquals(49, game.treasury());
+        Assertions.assertEquals(49, game.treasury());
 
-        Assert.assertEquals(2, game.player(1).cardsInGame());
-        Assert.assertEquals(0, game.player(1).coins());
+        Assertions.assertEquals(2, game.player(1).cardsInGame());
+        Assertions.assertEquals(0, game.player(1).coins());
 
-        Assert.assertEquals(0, game.player(2).cardsInGame());
-        Assert.assertTrue(game.player(2).isDead());
+        Assertions.assertEquals(0, game.player(2).cardsInGame());
+        Assertions.assertTrue(game.player(2).isDead());
     }
 
     // Action can be blocked
@@ -124,11 +124,11 @@ public class ActionAssassinateShould extends ActionTests {
         action.doBlockAction(game);
 
         // then
-        Assert.assertEquals(2, game.player(1).cardsInGame());
-        Assert.assertEquals(0, game.player(1).coins());
+        Assertions.assertEquals(2, game.player(1).cardsInGame());
+        Assertions.assertEquals(0, game.player(1).coins());
 
-        Assert.assertEquals(2, game.player(2).cardsInGame());
-        Assert.assertEquals(2, game.player(2).coins());
+        Assertions.assertEquals(2, game.player(2).cardsInGame());
+        Assertions.assertEquals(2, game.player(2).coins());
     }
 
     // Action can be blocked
@@ -157,11 +157,11 @@ public class ActionAssassinateShould extends ActionTests {
         action.doCallTheBluffOnBlockActionInternal(game);
 
         // then
-        Assert.assertEquals(2, game.player(1).cardsInGame());
-        Assert.assertEquals(0, game.player(1).coins());
+        Assertions.assertEquals(2, game.player(1).cardsInGame());
+        Assertions.assertEquals(0, game.player(1).coins());
 
-        Assert.assertEquals(0, game.player(2).cardsInGame());
-        Assert.assertTrue(game.player(2).isDead());
+        Assertions.assertEquals(0, game.player(2).cardsInGame());
+        Assertions.assertTrue(game.player(2).isDead());
     }
 
     // Action can be blocked
@@ -190,11 +190,11 @@ public class ActionAssassinateShould extends ActionTests {
         action.doCallTheBluffOnBlockActionInternal(game);
 
         // then
-        Assert.assertEquals(1, game.player(1).cardsInGame());
-        Assert.assertEquals(0, game.player(1).coins());
+        Assertions.assertEquals(1, game.player(1).cardsInGame());
+        Assertions.assertEquals(0, game.player(1).coins());
 
-        Assert.assertEquals(2, game.player(2).cardsInGame());
-        Assert.assertEquals(2, game.player(2).coins());
+        Assertions.assertEquals(2, game.player(2).cardsInGame());
+        Assertions.assertEquals(2, game.player(2).coins());
 
     }
 
