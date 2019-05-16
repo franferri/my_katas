@@ -28,7 +28,7 @@ public abstract class Action {
     }
 
     // Bluff
-    public void doCallTheBluffOnActionInternal(Game game) throws Exception {
+    public void doCallTheBluffOnAction(Game game) throws Exception {
         if (!canThisActionBeChallenged()) {
             throw new Exception("This action can't be challenged");
         }
@@ -40,7 +40,7 @@ public abstract class Action {
         }
     }
 
-    public void doCallTheBluffOnBlockActionInternal(Game game) throws Exception {
+    public void doCallTheBluffOnBlockAction(Game game) throws Exception {
         if (!canThisBlockActionBeChallenged()) {
             throw new Exception("This blockaction can't be challenged");
         }

@@ -70,7 +70,7 @@ public class ActionStealShould extends TestingActions {
         action.doAction(game);
 
         game.playerCallingTheBluff = game.player(2);
-        action.doCallTheBluffOnActionInternal(game);
+        action.doCallTheBluffOnAction(game);
 
         // then
         Assertions.assertEquals(46, game.treasury());
@@ -97,7 +97,7 @@ public class ActionStealShould extends TestingActions {
         action.doAction(game);
 
         game.playerCallingTheBluff = game.player(2);
-        action.doCallTheBluffOnActionInternal(game);
+        action.doCallTheBluffOnAction(game);
 
         // then
         Assertions.assertEquals(46, game.treasury());
@@ -154,7 +154,7 @@ public class ActionStealShould extends TestingActions {
         action.doBlockAction(game);
 
         game.playerCallingTheBluff = game.player(1);
-        action.doCallTheBluffOnBlockActionInternal(game);
+        action.doCallTheBluffOnBlockAction(game);
 
 
         // then
@@ -186,7 +186,7 @@ public class ActionStealShould extends TestingActions {
         action.doBlockAction(game);
 
         game.playerCallingTheBluff = game.player(1);
-        action.doCallTheBluffOnBlockActionInternal(game);
+        action.doCallTheBluffOnBlockAction(game);
 
         // then
         Assertions.assertEquals(46, game.treasury());
@@ -245,7 +245,7 @@ public class ActionStealShould extends TestingActions {
         action.doBlockAction(game);
 
         game.playerCallingTheBluff = game.player(1);
-        action.doCallTheBluffOnBlockActionInternal(game);
+        action.doCallTheBluffOnBlockAction(game);
 
         // then
         Assertions.assertEquals(46, game.treasury());

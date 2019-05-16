@@ -52,7 +52,7 @@ public class ActionExchangeShould extends TestingActions {
         game.player(1).cards().add(0, new TheDuke());
 
         game.playerCallingTheBluff = game.player(2);
-        action.doCallTheBluffOnActionInternal(game);
+        action.doCallTheBluffOnAction(game);
 
         // then
         Assertions.assertEquals(46, game.treasury());
@@ -78,7 +78,7 @@ public class ActionExchangeShould extends TestingActions {
         game.player(1).cards().add(0, new TheDuke());
 
         game.playerCallingTheBluff = game.player(2);
-        action.doCallTheBluffOnActionInternal(game);
+        action.doCallTheBluffOnAction(game);
 
         // then
         Assertions.assertEquals(46, game.treasury());

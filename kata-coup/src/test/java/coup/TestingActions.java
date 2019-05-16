@@ -2,6 +2,7 @@ package coup;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class TestingActions {
@@ -23,6 +24,7 @@ public class TestingActions {
     }
 
     // Action costs money
+    @DisplayName(" asfdasdf")
     @Disabled
     @Test
     public void player_needs_money_to_do_the_action() {
@@ -30,6 +32,7 @@ public class TestingActions {
     }
 
     // Action
+    @DisplayName(" asfdasdf")
     @Disabled
     @Test
     public void player_does_action() throws Exception {
@@ -37,6 +40,7 @@ public class TestingActions {
     }
 
     // Action cannot be challenged
+    @DisplayName(" asfdasdf")
     @Disabled
     @Test
     public void player_calls_the_bluff_over_action() throws Exception {
@@ -45,6 +49,7 @@ public class TestingActions {
 
     // Action can be challenged
     // Challenger (wins)
+    @DisplayName(" asfdasdf")
     @Disabled
     @Test
     public void player_does_action_and_other_player_calls_the_bluff_and_wins_the_call() throws Exception {
@@ -53,6 +58,7 @@ public class TestingActions {
 
     // Action can be challenged
     // Challenger (lose)
+    @DisplayName(" asfdasdf")
     @Disabled
     @Test
     public void player_does_action_and_other_calls_the_bluff_and_lose_the_call() throws Exception {
@@ -60,6 +66,7 @@ public class TestingActions {
     }
 
     // Action cannot be blocked
+    @DisplayName(" asfdasdf")
     @Disabled
     @Test
     public void player_blocks_action() throws Exception {
@@ -67,6 +74,7 @@ public class TestingActions {
     }
 
     // Action can be blocked
+    @DisplayName(" asfdasdf")
     @Disabled
     @Test
     public void player_does_action_and_gets_block() throws Exception {
@@ -76,6 +84,7 @@ public class TestingActions {
     // Action can be blocked
     // Block can be challenged
     // Challenger wins
+    @DisplayName(" asfdasdf")
     @Disabled
     @Test
     public void player_does_action_and_gets_block_but_a_player_calls_the_bluff_on_the_block_and_wins_the_call() throws Exception {
@@ -85,6 +94,7 @@ public class TestingActions {
     // Action can be blocked
     // Block can be challenged
     // Challenger lose
+    @DisplayName(" asfdasdf")
     @Disabled
     @Test
     public void player_does_action_and_gets_block_but_a_player_calls_the_bluff_on_the_block_and_lose_the_call() throws Exception {
@@ -93,6 +103,7 @@ public class TestingActions {
 
     // Action can be blocked
     // Block cannot be challenged
+    @DisplayName(" asfdasdf")
     @Disabled
     @Test
     public void player_does_action_and_gets_block_but_a_player_calls_the_bluff_on_the_block() throws Exception {

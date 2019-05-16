@@ -47,7 +47,7 @@ public class ActionForeignAidShould extends TestingActions {
 
         game.playerCallingTheBluff = game.player(2);
 
-        Assertions.assertThrows(Exception.class, () -> action.doCallTheBluffOnActionInternal(game));
+        Assertions.assertThrows(Exception.class, () -> action.doCallTheBluffOnAction(game));
     }
 
     // Action can be blocked
@@ -93,7 +93,7 @@ public class ActionForeignAidShould extends TestingActions {
         action.doBlockAction(game);
 
         game.playerCallingTheBluff = game.player(1);
-        action.doCallTheBluffOnBlockActionInternal(game);
+        action.doCallTheBluffOnBlockAction(game);
 
         // then
         Assertions.assertEquals(44, game.treasury());
@@ -123,7 +123,7 @@ public class ActionForeignAidShould extends TestingActions {
         action.doBlockAction(game);
 
         game.playerCallingTheBluff = game.player(1);
-        action.doCallTheBluffOnBlockActionInternal(game);
+        action.doCallTheBluffOnBlockAction(game);
 
         // then
 

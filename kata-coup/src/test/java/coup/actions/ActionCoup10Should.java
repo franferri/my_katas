@@ -60,7 +60,7 @@ public class ActionCoup10Should extends TestingActions {
         action.doAction(game);
 
         game.playerCallingTheBluff = game.player(2);
-        Assertions.assertThrows(Exception.class, () -> action.doCallTheBluffOnActionInternal(game));
+        Assertions.assertThrows(Exception.class, () -> action.doCallTheBluffOnAction(game));
     }
 
     // Action cannot be blocked

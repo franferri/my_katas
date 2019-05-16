@@ -52,7 +52,7 @@ public class ActionTaxShould extends TestingActions {
         action.doAction(game);
 
         game.playerCallingTheBluff = game.player(2);
-        action.doCallTheBluffOnActionInternal(game);
+        action.doCallTheBluffOnAction(game);
 
         // then
         Assertions.assertEquals(46, game.treasury());
@@ -78,7 +78,7 @@ public class ActionTaxShould extends TestingActions {
         action.doAction(game);
 
         game.playerCallingTheBluff = game.player(2);
-        action.doCallTheBluffOnActionInternal(game);
+        action.doCallTheBluffOnAction(game);
 
         // then
         Assertions.assertEquals(43, game.treasury());

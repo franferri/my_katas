@@ -66,7 +66,7 @@ public class ActionCoup7Should extends TestingActions {
 
         game.playerCallingTheBluff = game.player(2);
 
-        Assertions.assertThrows(Exception.class, () -> action.doCallTheBluffOnActionInternal(game));
+        Assertions.assertThrows(Exception.class, () -> action.doCallTheBluffOnAction(game));
 
     }
 
