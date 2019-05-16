@@ -25,8 +25,8 @@ public class ActionExchangeShould extends ActionTests {
     @Test
     public void player_does_action() throws Exception {
         // when
-        game.setPlayerPlayingThisHand(1);
-        game.doAction(action);
+        game.playerDoingTheAction = game.player(1);
+        action.doAction(game);
 
         // then
         Assert.assertEquals(46, game.treasury());
@@ -44,14 +44,15 @@ public class ActionExchangeShould extends ActionTests {
     public void player_does_action_and_other_player_calls_the_bluff_and_wins_the_call() throws Exception {
 
         // when
-        game.setPlayerPlayingThisHand(1);
-        game.doAction(action);
+        game.playerDoingTheAction = game.player(1);
+        action.doAction(game);
 
         game.player(1).cards().clear();// Needs to be here since the action will reshuffle the hand
         game.player(1).cards().add(0, new TheDuke());
         game.player(1).cards().add(0, new TheDuke());
 
-        game.doPlayerCallingTheBluffOnTheAction(2, 1, action);
+        game.playerCallingTheBluff = game.player(2);
+        action.doCallTheBluffOnActionInternal(game);
 
         // then
         Assert.assertEquals(46, game.treasury());
@@ -69,14 +70,15 @@ public class ActionExchangeShould extends ActionTests {
     public void player_does_action_and_other_calls_the_bluff_and_lose_the_call() throws Exception {
 
         // when
-        game.setPlayerPlayingThisHand(1);
-        game.doAction(action);
+        game.playerDoingTheAction = game.player(1);
+        action.doAction(game);
 
         game.player(1).cards().clear(); // Needs to be here since the action will reshuffle the hand
         game.player(1).cards().add(0, new TheAmbassator());
         game.player(1).cards().add(0, new TheDuke());
 
-        game.doPlayerCallingTheBluffOnTheAction(2, 1, action);
+        game.playerCallingTheBluff = game.player(2);
+        action.doCallTheBluffOnActionInternal(game);
 
         // then
         Assert.assertEquals(46, game.treasury());
@@ -92,11 +94,11 @@ public class ActionExchangeShould extends ActionTests {
     @Test(expected = Exception.class)
     public void player_blocks_action() throws Exception {
         // when
-        game.setPlayerPlayingThisHand(1);
-        game.doAction(action);
+        game.playerDoingTheAction = game.player(1);
+        action.doAction(game);
 
-        game.setPlayerBlocksAction(2);
-        game.doBlockAction(action);
+        game.playerBlockingTheAction = game.player(2);
+        action.doBlockAction(game);
     }
 
 }

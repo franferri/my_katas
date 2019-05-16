@@ -10,12 +10,12 @@ public class Game {
     private int treasury;
     private Deck deck;
 
-    private Player playerDoingAction;
-    private Player targetPlayerForAssasination;
-    public Player targetPlayerBlockAction;
-    public Player targetPlayerForStealing;
+    public Player playerDoingTheAction;
+    public Player playerBlockingTheAction;
     public Player playerCallingTheBluff;
-    public Player lastPlayerDoingAnAction;
+
+    public Player targetPlayerForAssassination;
+    public Player targetPlayerForStealing;
 
     public Game(Player... players) throws Exception {
 
@@ -27,27 +27,29 @@ public class Game {
             throw new Exception("Only 4 players allowed");
         }
 
+        for (Player player : players) {
+            this.players.add(player);
+        }
+
         treasury = 50;
 
         this.deck = new Deck();
 
-        for (Player player : players) {
-
-            this.players.add(player);
-
-        }
-
     }
 
-    public void startGame() {
+    public int treasury() {
+        return treasury;
+    }
+
+    public Deck deck() {
+        return deck;
+    }
+
+    public void startGame() throws Exception {
 
         for (Player player : players) {
 
-            player.addCoin();
-            player.addCoin();
-
-            takeCoinFromTreasury();
-            takeCoinFromTreasury();
+            playerTakeCoinsFromTreasury(player, 2);
 
             dealCard(player);
             dealCard(player);
@@ -57,23 +59,34 @@ public class Game {
 
     }
 
-    public Deck deck() {
-        return deck;
+    public void playerReturnCoinsToTreasury(Player player, int coins) throws Exception {
+        if (player.coins() < coins) {
+            throw new Exception("Player don't have enough coins");
+        }
+        for (int i = 0; i < coins; i++) {
+            player.looseCoin();
+            ++treasury;
+        }
     }
 
-    public int treasury() {
-        return treasury;
+    public void playerTakeCoinsFromTreasury(Player player, int coins) throws Exception {
+        if (treasury < coins) {
+            throw new Exception("Treasury depleted");
+        }
+        for (int i = 0; i < coins; i++) {
+            --treasury;
+            player.gainCoin();
+        }
     }
 
-    public void takeCoinFromTreasury() {
-        --treasury;
+    public void playerTakesCoinsFromOtherPlayer(Player player_taking, Player player_losing, int coins) throws Exception {
+        for (int i = 0; i < coins; i++) {
+            player_losing.looseCoin();
+            player_taking.gainCoin();
+        }
     }
 
-    public void returnCoinToTreasury() {
-        ++treasury;
-    }
-
-    public void dealCard(Player player) {
+    private void dealCard(Player player) {
         player.cards().add(deck.cards().remove(1));
     }
 
@@ -85,61 +98,8 @@ public class Game {
         return players.get(--player);
     }
 
-    // setActivePlayer
-    public void setPlayerPlayingThisHand(int player) {
-        playerDoingAction = player(player);
-    }
-
-    public void setTargetPlayerForStealing(int player) {
-        targetPlayerForStealing = player(player);
-    }
-
-    public Player playerPlayingHand() {
-        return playerDoingAction;
-    }
-
-    public void setTargetPlayerForAssasination(int player) {
-        targetPlayerForAssasination = player(player);
-    }
-
-    public void setPlayerBlocksAction(int playerBlocking) {
-        this.targetPlayerBlockAction = player(playerBlocking);
-    }
-
-    public void doPlayerCallingTheBluffOnTheAction(int playerCallingTheBluff, int lastPlayerDoingAnAction, Action action) throws Exception {
-        this.playerCallingTheBluff = player(playerCallingTheBluff);
-        this.lastPlayerDoingAnAction = player(lastPlayerDoingAnAction);
-        action.doCallTheBluffOnTheAction(this);
-    }
-
-    public void doPlayerCallingTheBluffOnTheBlockAction(int playerCallingTheBluff, int lastPlayerDoingAnAction, Action action) throws Exception {
-        this.playerCallingTheBluff = player(playerCallingTheBluff);
-        this.lastPlayerDoingAnAction = player(lastPlayerDoingAnAction);
-        action.doCallTheBluffOnTheBlockAction(this);
-    }
-
-    public void doPlayerCallingTheBluffOnTheBlockActionStealing(int playerCallingTheBluff, int lastPlayerDoingAnAction, Action action) throws Exception {
-        this.playerCallingTheBluff = player(playerCallingTheBluff);
-        this.lastPlayerDoingAnAction = player(lastPlayerDoingAnAction);
-        action.doCallTheBluffOnTheBlockActionOnStealing(this);
-    }
-
-    public void doPlayerCallingTheBluffOnTheBlockActionOnAssasination(int playerCallingTheBluff, int lastPlayerDoingAnAction, Action action) throws Exception {
-        this.playerCallingTheBluff = player(playerCallingTheBluff);
-        this.lastPlayerDoingAnAction = player(lastPlayerDoingAnAction);
-        action.doCallTheBluffOnTheBlockActionOnAssasination(this);
-    }
-
-    public void assassinatePlayer() {
-        targetPlayerForAssasination.looseCard();
-    }
-
-    public void recoverPlayer() {
-        targetPlayerForAssasination.recover();
-    }
-
-    public void killPlayer(int player) {
-        player(player).dies();
+    public void playerLoosesCard(Player player) {
+        player.looseCard();
     }
 
     public int whoIsTheWinner() {
@@ -162,12 +122,8 @@ public class Game {
 
     }
 
-    public void doAction(Action action) throws Exception {
-        action.doAction(this);
-    }
-
-    public void doBlockAction(Action action) throws Exception {
-        action.doBlockAction(this);
+    public void recoverPlayer() {
+        targetPlayerForAssassination.recover();
     }
 
 }

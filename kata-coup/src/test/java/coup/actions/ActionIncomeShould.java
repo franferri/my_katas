@@ -22,8 +22,8 @@ public class ActionIncomeShould extends ActionTests {
     @Test
     public void player_does_action() throws Exception {
         // when
-        game.setPlayerPlayingThisHand(1);
-        game.doAction(action);
+        game.playerDoingTheAction = game.player(1);
+        action.doAction(game);
 
         // then
         Assert.assertEquals(45, game.treasury());
@@ -39,10 +39,11 @@ public class ActionIncomeShould extends ActionTests {
     @Test(expected = Exception.class)
     public void player_calls_the_bluff_over_action() throws Exception {
         // when
-        game.setPlayerPlayingThisHand(1);
-        game.doAction(action);
+        game.playerDoingTheAction = game.player(1);
+        action.doAction(game);
 
-        game.doPlayerCallingTheBluffOnTheAction(2, 1, action);
+        game.playerCallingTheBluff = game.player(2);
+        action.doCallTheBluffOnActionInternal(game);
 
     }
 
@@ -50,11 +51,11 @@ public class ActionIncomeShould extends ActionTests {
     @Test(expected = Exception.class)
     public void player_blocks_action() throws Exception {
         // when
-        game.setPlayerPlayingThisHand(1);
-        game.doAction(action);
+        game.playerDoingTheAction = game.player(1);
+        action.doAction(game);
 
-        game.setPlayerBlocksAction(2);
-        game.doBlockAction(action);
+        game.playerBlockingTheAction = game.player(2);
+        action.doBlockAction(game);
     }
 
 }

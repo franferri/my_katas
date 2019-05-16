@@ -22,19 +22,18 @@ public class Assassinate extends Action {
 
     // Action
     public void doActionInternal(Game game) throws Exception {
-        returnCoinsToTreasury(game, 3);
-        game.assassinatePlayer();
+        game.playerReturnCoinsToTreasury(game.playerDoingTheAction,3);
+        game.playerLoosesCard(game.targetPlayerForAssassination);
     }
 
     // Action 2
     @Override
     public void doActionInternal2(Game game) {
-        game.assassinatePlayer();
+        game.playerLoosesCard(game.targetPlayerForAssassination);
     }
 
     // Block Action
     public void doBlockActionInternal(Game game) throws Exception {
-        //takeCoinsFromTreasury(game, 3);
         game.recoverPlayer();
     }
 

@@ -31,9 +31,9 @@ public class ActionStealShould extends ActionTests {
     @Test
     public void player_does_action() throws Exception {
         // when
-        game.setPlayerPlayingThisHand(1);
-        game.setTargetPlayerForStealing(2);
-        game.doAction(action);
+        game.playerDoingTheAction = game.player(1);
+        game.targetPlayerForStealing = game.player(2);
+        action.doAction(game);
 
         // then
         Assert.assertEquals(46, game.treasury());
@@ -55,11 +55,12 @@ public class ActionStealShould extends ActionTests {
         game.player(1).cards().add(0, new TheAmbassator());
 
         // when
-        game.setPlayerPlayingThisHand(1);
-        game.setTargetPlayerForStealing(2);
-        game.doAction(action);
+        game.playerDoingTheAction = game.player(1);
+        game.targetPlayerForStealing = game.player(2);
+        action.doAction(game);
 
-        game.doPlayerCallingTheBluffOnTheAction(2, 1, action);
+        game.playerCallingTheBluff = game.player(2);
+        action.doCallTheBluffOnActionInternal(game);
 
         // then
         Assert.assertEquals(46, game.treasury());
@@ -81,11 +82,12 @@ public class ActionStealShould extends ActionTests {
         game.player(1).cards().add(0, new TheAmbassator());
 
         // when
-        game.setPlayerPlayingThisHand(1);
-        game.setTargetPlayerForStealing(2);
-        game.doAction(action);
+        game.playerDoingTheAction = game.player(1);
+        game.targetPlayerForStealing = game.player(2);
+        action.doAction(game);
 
-        game.doPlayerCallingTheBluffOnTheAction(2, 1, action);
+        game.playerCallingTheBluff = game.player(2);
+        action.doCallTheBluffOnActionInternal(game);
 
         // then
         Assert.assertEquals(46, game.treasury());
@@ -106,12 +108,12 @@ public class ActionStealShould extends ActionTests {
         game.player(2).cards().add(1, new TheDuke());
 
         // when
-        game.setPlayerPlayingThisHand(1);
-        game.setTargetPlayerForStealing(2);
-        game.doAction(action);
+        game.playerDoingTheAction = game.player(1);
+        game.targetPlayerForStealing = game.player(2);
+        action.doAction(game);
 
-        game.setPlayerBlocksAction(2);
-        game.doBlockAction(action);
+        game.playerBlockingTheAction = game.player(2);
+        action.doBlockAction(game);
 
         // then
         Assert.assertEquals(46, game.treasury());
@@ -134,14 +136,16 @@ public class ActionStealShould extends ActionTests {
         game.player(2).cards().add(1, new TheDuke());
 
         // when
-        game.setPlayerPlayingThisHand(1);
-        game.setTargetPlayerForStealing(2);
-        game.doAction(action);
+        game.playerDoingTheAction = game.player(1);
+        game.targetPlayerForStealing = game.player(2);
+        action.doAction(game);
 
-        game.setPlayerBlocksAction(2);
-        game.doBlockAction(action);
+        game.playerBlockingTheAction = game.player(2);
+        action.doBlockAction(game);
 
-        game.doPlayerCallingTheBluffOnTheBlockActionStealing(1, 2, action);
+        game.playerCallingTheBluff = game.player(1);
+        action.doCallTheBluffOnBlockActionInternal(game);
+
 
         // then
         Assert.assertEquals(46, game.treasury());
@@ -164,14 +168,15 @@ public class ActionStealShould extends ActionTests {
         game.player(2).cards().add(1, new TheDuke());
 
         // when
-        game.setPlayerPlayingThisHand(1);
-        game.setTargetPlayerForStealing(2);
-        game.doAction(action);
+        game.playerDoingTheAction = game.player(1);
+        game.targetPlayerForStealing = game.player(2);
+        action.doAction(game);
 
-        game.setPlayerBlocksAction(2);
-        game.doBlockAction(action);
+        game.playerBlockingTheAction = game.player(2);
+        action.doBlockAction(game);
 
-        game.doPlayerCallingTheBluffOnTheBlockActionStealing(1, 2, action);
+        game.playerCallingTheBluff = game.player(1);
+        action.doCallTheBluffOnBlockActionInternal(game);
 
         // then
         Assert.assertEquals(46, game.treasury());
@@ -194,12 +199,12 @@ public class ActionStealShould extends ActionTests {
         game.player(2).cards().add(1, new TheDuke());
 
         // when
-        game.setPlayerPlayingThisHand(1);
-        game.setTargetPlayerForStealing(2);
-        game.doAction(action);
+        game.playerDoingTheAction = game.player(1);
+        game.targetPlayerForStealing = game.player(2);
+        action.doAction(game);
 
-        game.setPlayerBlocksAction(2);
-        game.doBlockAction(action);
+        game.playerBlockingTheAction = game.player(2);
+        action.doBlockAction(game);
 
         // then
         Assert.assertEquals(46, game.treasury());
@@ -222,14 +227,15 @@ public class ActionStealShould extends ActionTests {
         game.player(2).cards().add(1, new TheDuke());
 
         // when
-        game.setPlayerPlayingThisHand(1);
-        game.setTargetPlayerForStealing(2);
-        game.doAction(action);
+        game.playerDoingTheAction = game.player(1);
+        game.targetPlayerForStealing = game.player(2);
+        action.doAction(game);
 
-        game.setPlayerBlocksAction(2);
-        game.doBlockAction(action);
+        game.playerBlockingTheAction = game.player(2);
+        action.doBlockAction(game);
 
-        game.doPlayerCallingTheBluffOnTheBlockActionStealing(1, 2, action);
+        game.playerCallingTheBluff = game.player(1);
+        action.doCallTheBluffOnBlockActionInternal(game);
 
         // then
         Assert.assertEquals(46, game.treasury());

@@ -15,7 +15,7 @@ public class Player {
 
     }
 
-    public void addCoin() {
+    public void gainCoin() {
         ++coins;
     }
 

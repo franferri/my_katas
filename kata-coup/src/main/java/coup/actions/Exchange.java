@@ -30,16 +30,16 @@ public class Exchange extends Action {
     // Action
     public void doActionInternal(Game game) throws Exception {
 
-        cardsInPlayerHand = new ArrayList<>(game.playerPlayingHand().cards()); // We save the original hand, in case we get blocked
+        cardsInPlayerHand = new ArrayList<>(game.playerDoingTheAction.cards()); // We save the original hand, in case we get blocked
         originalDeck = new ArrayList<>(game.deck().cards());
 
-        game.playerPlayingHand().cards().add(game.deck().cards().remove(game.deck().cards().size()-1));
-        game.playerPlayingHand().cards().add(game.deck().cards().remove(game.deck().cards().size()-1));
+        game.playerDoingTheAction.cards().add(game.deck().cards().remove(game.deck().cards().size() - 1));
+        game.playerDoingTheAction.cards().add(game.deck().cards().remove(game.deck().cards().size() - 1));
 
-        game.playerPlayingHand().shuffleCardsInHand();
+        game.playerDoingTheAction.shuffleCardsInHand();
 
-        game.deck().cards().add( game.playerPlayingHand().cards().remove(0));
-        game.deck().cards().add( game.playerPlayingHand().cards().remove(1));
+        game.deck().cards().add(game.playerDoingTheAction.cards().remove(0));
+        game.deck().cards().add(game.playerDoingTheAction.cards().remove(1));
 
     }
 
@@ -50,12 +50,11 @@ public class Exchange extends Action {
 
     public void doBlockActionInternal(Game game) throws Exception {
 
-        game.playerPlayingHand().cards().clear();
-        game.playerPlayingHand().cards().addAll(cardsInPlayerHand);
+        game.playerDoingTheAction.cards().clear();
+        game.playerDoingTheAction.cards().addAll(cardsInPlayerHand);
 
         game.deck().cards().clear();
         game.deck().cards().addAll(originalDeck);
-
 
     }
 

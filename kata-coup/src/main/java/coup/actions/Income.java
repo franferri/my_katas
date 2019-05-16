@@ -22,7 +22,7 @@ public class Income extends Action {
 
     // Action
     public void doActionInternal(Game game) throws Exception {
-        takeCoinsFromTreasury(game, 1);
+        game.playerTakeCoinsFromTreasury(game.playerDoingTheAction,1);
     }
 
     // Block Action

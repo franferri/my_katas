@@ -25,24 +25,12 @@ public class Steal extends Action {
 
     // Action
     public void doActionInternal(Game game) throws Exception {
-
-        game.targetPlayerForStealing.looseCoin();
-        game.targetPlayerForStealing.looseCoin();
-
-        game.playerPlayingHand().addCoin();
-        game.playerPlayingHand().addCoin();
-
+        game.playerTakesCoinsFromOtherPlayer(game.playerDoingTheAction, game.targetPlayerForStealing, 2);
     }
 
     // Block Action
     public void doBlockActionInternal(Game game) throws Exception {
-
-        game.targetPlayerForStealing.addCoin();
-        game.targetPlayerForStealing.addCoin();
-
-        game.playerPlayingHand().looseCoin();
-        game.playerPlayingHand().looseCoin();
-
+        game.playerTakesCoinsFromOtherPlayer(game.targetPlayerForStealing, game.playerDoingTheAction, 2);
     }
 
 }

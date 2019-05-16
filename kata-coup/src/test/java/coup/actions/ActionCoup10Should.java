@@ -3,7 +3,6 @@ package coup.actions;
 import coup.ActionTests;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 public class ActionCoup10Should extends ActionTests {
@@ -23,39 +22,23 @@ public class ActionCoup10Should extends ActionTests {
     @Test(expected = Exception.class)
     public void player_needs_money_to_do_the_action() throws Exception {
         // when
-        game.setPlayerPlayingThisHand(1);
-        game.setTargetPlayerForAssasination(2);
+        game.playerDoingTheAction = game.player(1);
+        game.targetPlayerForAssassination = game.player(2);
 
-        game.doAction(action);
+        action.doAction(game);
     }
 
     // Action
     @Test
     public void player_does_action() throws Exception {
-        // given
-        game.takeCoinFromTreasury();
-        game.takeCoinFromTreasury();
-        game.takeCoinFromTreasury();
-        game.takeCoinFromTreasury();
-        game.takeCoinFromTreasury();
-        game.takeCoinFromTreasury();
-        game.takeCoinFromTreasury();
-        game.takeCoinFromTreasury();
-
-        game.player(1).addCoin();
-        game.player(1).addCoin();
-        game.player(1).addCoin();
-        game.player(1).addCoin();
-        game.player(1).addCoin();
-        game.player(1).addCoin();
-        game.player(1).addCoin();
-        game.player(1).addCoin();
 
         // when
-        game.setPlayerPlayingThisHand(1);
-        game.setTargetPlayerForAssasination(2);
+        game.playerDoingTheAction = game.player(1);
+        game.playerTakeCoinsFromTreasury(game.playerDoingTheAction,8);
 
-        game.doAction(action);
+        game.targetPlayerForAssassination = game.player(2);
+
+        action.doAction(game);
 
         // then
         Assert.assertEquals(48, game.treasury());
@@ -71,21 +54,22 @@ public class ActionCoup10Should extends ActionTests {
     @Test(expected = Exception.class)
     public void player_calls_the_bluff_over_action() throws Exception {
         // when
-        game.setPlayerPlayingThisHand(1);
-        game.doAction(action);
+        game.playerDoingTheAction = game.player(1);
+        action.doAction(game);
 
-        game.doPlayerCallingTheBluffOnTheAction(2, 1, action);
+        game.playerCallingTheBluff = game.player(2);
+        action.doCallTheBluffOnActionInternal(game);
     }
 
     // Action cannot be blocked
     @Test(expected = Exception.class)
     public void player_blocks_action() throws Exception {
         // when
-        game.setPlayerPlayingThisHand(1);
-        game.doAction(action);
+        game.playerDoingTheAction = game.player(1);
+        action.doAction(game);
 
-        game.setPlayerBlocksAction(2);
-        game.doBlockAction(action);
+        game.playerBlockingTheAction = game.player(2);
+        action.doBlockAction(game);
     }
 
 }

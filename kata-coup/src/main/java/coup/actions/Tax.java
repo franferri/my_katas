@@ -23,7 +23,7 @@ public class Tax extends Action {
     // Block Action
 
     public void doActionInternal(Game game) throws Exception {
-        takeCoinsFromTreasury(game, 3);
+        game.playerTakeCoinsFromTreasury(game.playerDoingTheAction,3);
     }
 
     // Block Action
@@ -32,7 +32,7 @@ public class Tax extends Action {
     }
 
     public void doBlockActionInternal(Game game) throws Exception {
-        returnCoinsToTreasury(game, 3);
+        game.playerReturnCoinsToTreasury(game.playerDoingTheAction,3);
     }
 
 }

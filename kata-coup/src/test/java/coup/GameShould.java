@@ -142,7 +142,7 @@ public class GameShould {
     // Shuffle all the characters cards and deal 2 to each player
 
     @Test
-    public void a_game_starts_with_a_shuffled_deck() {
+    public void a_game_starts_with_a_shuffled_deck() throws Exception {
 
         // when
         Deck deck = game.deck();
@@ -156,7 +156,7 @@ public class GameShould {
     }
 
     @Test
-    public void a_new_game_starts_with_two_character_cards_per_player() {
+    public void a_new_game_starts_with_two_character_cards_per_player() throws Exception {
 
         // given
         int amountOfCardsAvailableInTheCourtDeck = game.deck().cards().size();
@@ -176,7 +176,7 @@ public class GameShould {
     // Give each player 2 coins
 
     @Test
-    public void a_new_game_starts_with_two_coins_per_player() {
+    public void a_new_game_starts_with_two_coins_per_player() throws Exception {
 
         // when
         game.startGame();
@@ -192,12 +192,12 @@ public class GameShould {
     // To eliminate the influence of all other players and be the last survivor
 
     @Test
-    public void a_player_wins_when_no_more_players_left_alive() {
+    public void a_player_wins_when_no_more_players_left_alive() throws Exception {
 
         // when
         game.startGame();
 
-        game.killPlayer(1);
+        game.player(1).dies();
 
         // then
         assertEquals(2, game.whoIsTheWinner());
@@ -208,7 +208,7 @@ public class GameShould {
 
     // Face down cards in front of a player represent who they influence at court
     @Test
-    public void a_new_game_starts_with_two_non_visible_character_cards_per_player() {
+    public void a_new_game_starts_with_two_non_visible_character_cards_per_player() throws Exception {
 
         // when
         game.startGame();
@@ -223,7 +223,7 @@ public class GameShould {
 
     // Every time a player loses an influence they have to turn over and reveal one of their face down cards
     @Test
-    public void when_a_player_loses_influence_must_reveal_one_of_its_cards() {
+    public void when_a_player_loses_influence_must_reveal_one_of_its_cards() throws Exception {
 
         // when
         game.startGame();
@@ -236,7 +236,7 @@ public class GameShould {
     // When a player has lost all their influence they are exiled and out of the game
 
     @Test
-    public void a_player_dies_when_he_runs_out_of_cards() {
+    public void a_player_dies_when_he_runs_out_of_cards() throws Exception {
 
         // when
         game.startGame();

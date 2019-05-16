@@ -25,8 +25,8 @@ public class ActionForeignAidShould extends ActionTests {
     @Test
     public void player_does_action() throws Exception {
         // when
-        game.setPlayerPlayingThisHand(1);
-        game.doAction(action);
+        game.playerDoingTheAction = game.player(1);
+        action.doAction(game);
 
         // then
         Assert.assertEquals(44, game.treasury());
@@ -42,10 +42,11 @@ public class ActionForeignAidShould extends ActionTests {
     @Test(expected = Exception.class)
     public void player_calls_the_bluff_over_action() throws Exception {
         // when
-        game.setPlayerPlayingThisHand(1);
-        game.doAction(action);
+        game.playerDoingTheAction = game.player(1);
+        action.doAction(game);
 
-        game.doPlayerCallingTheBluffOnTheAction(2, 1, action);
+        game.playerCallingTheBluff = game.player(2);
+        action.doCallTheBluffOnActionInternal(game);
     }
 
     // Action can be blocked
@@ -57,11 +58,11 @@ public class ActionForeignAidShould extends ActionTests {
         game.player(2).cards().add(0, new TheAmbassator());
 
         // when
-        game.setPlayerPlayingThisHand(1);
-        game.doAction(action);
+        game.playerDoingTheAction = game.player(1);
+        action.doAction(game);
 
-        game.setPlayerBlocksAction(2);
-        game.doBlockAction(action);
+        game.playerBlockingTheAction = game.player(2);
+        action.doBlockAction(game);
 
         // then
         Assert.assertEquals(46, game.treasury());
@@ -84,13 +85,15 @@ public class ActionForeignAidShould extends ActionTests {
         game.player(2).cards().add(1, new TheAmbassator());
 
         // when
-        game.setPlayerPlayingThisHand(1);
-        game.doAction(action);
+        game.playerDoingTheAction = game.player(1);
+        action.doAction(game);
 
-        game.setPlayerBlocksAction(2);
-        game.doBlockAction(action);
+        game.playerBlockingTheAction = game.player(2);
+        action.doBlockAction(game);
 
-        game.doPlayerCallingTheBluffOnTheBlockAction(1, 2, action);
+        game.playerCallingTheBluff = game.player(1);
+        action.doCallTheBluffOnBlockActionInternal(game);
+
 
         // then
         Assert.assertEquals(44, game.treasury());
@@ -108,18 +111,19 @@ public class ActionForeignAidShould extends ActionTests {
     @Test
     public void player_does_action_and_gets_block_but_a_player_calls_the_bluff_on_the_block_and_lose_the_call() throws Exception {
         // when
-        game.setPlayerPlayingThisHand(1);
-        game.doAction(action);
+        game.playerDoingTheAction = game.player(1);
+        action.doAction(game);
 
         // We make sure the player is bluffing
         game.player(2).cards().clear();
         game.player(2).cards().add(0, new TheDuke());
         game.player(2).cards().add(1, new TheDuke());
 
-        game.setPlayerBlocksAction(2);
-        game.doBlockAction(action);
+        game.playerBlockingTheAction = game.player(2);
+        action.doBlockAction(game);
 
-        game.doPlayerCallingTheBluffOnTheBlockAction(1, 2, action);
+        game.playerCallingTheBluff = game.player(1);
+        action.doCallTheBluffOnBlockActionInternal(game);
 
         // then
 

@@ -21,12 +21,12 @@ public class ForeignAid extends Action {
 
     // Action
     public void doActionInternal(Game game) throws Exception {
-        takeCoinsFromTreasury(game, 2);
+        game.playerTakeCoinsFromTreasury(game.playerDoingTheAction,2);
     }
 
     // Block Action
     public void doBlockActionInternal(Game game) throws Exception {
-        returnCoinsToTreasury(game, 2);
+        game.playerReturnCoinsToTreasury(game.playerDoingTheAction,2);
     }
 
 }
