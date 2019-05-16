@@ -11,19 +11,21 @@ public class Assassinate extends Action {
     // Block: Can be blocked by Contessa
     // Block can be challenged
 
+    boolean paid = false;
+
     // Action
     public void doActionInternal(Game game) throws Exception {
-        game.playerReturnCoinsToTreasury(game.playerDoingTheAction,3);
-        game.playerLoosesCard(game.targetPlayerForAssassination);
-    }
 
-    public void doActionInternal2(Game game) {
-        game.playerLoosesCard(game.targetPlayerForAssassination);
+        if (!paid) {
+            game.playerReturnCoinsToTreasury(game.playerDoingTheAction, 3);
+            paid = true;
+        }
+        game.targetPlayerForAssassination.looseCard();
     }
 
     // Block Action
     public void doBlockActionInternal(Game game) throws Exception {
-        game.recoverPlayer();
+        game.targetPlayerForAssassination.restoreLostCard();
     }
 
 }

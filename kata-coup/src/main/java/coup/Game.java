@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Game {
 
-    private List<Player> players = new ArrayList<>();
+    public List<Player> players = new ArrayList<>();
 
     private int treasury;
     private Deck deck;
@@ -48,11 +48,8 @@ public class Game {
     public void startGame() throws Exception {
 
         for (Player player : players) {
-
             playerTakeCoinsFromTreasury(player, 2);
-
-            dealCard(player);
-            dealCard(player);
+            dealCardsToThePlayer(player, 2);
         }
 
         this.deck.shuffle();
@@ -80,26 +77,23 @@ public class Game {
     }
 
     public void playerTakesCoinsFromOtherPlayer(Player player_taking, Player player_losing, int coins) throws Exception {
+        if (player_losing.coins() < coins) {
+            throw new Exception("Player is broke and we can't take more coins from it");
+        }
         for (int i = 0; i < coins; i++) {
             player_losing.looseCoin();
             player_taking.gainCoin();
         }
     }
 
-    private void dealCard(Player player) {
-        player.cards().add(deck.cards().remove(1));
-    }
-
-    public List<Player> players() {
-        return players;
+    private void dealCardsToThePlayer(Player player, int cards) {
+        for (int i = 0; i < cards; i++) {
+            player.cards().add(deck.cards().remove(0));
+        }
     }
 
     public Player player(int player) {
         return players.get(--player);
-    }
-
-    public void playerLoosesCard(Player player) {
-        player.looseCard();
     }
 
     public int whoIsTheWinner() {
@@ -117,13 +111,9 @@ public class Game {
         }
 
         if (playersAlive == 1) {
-            return players().indexOf(winner) + 1;
+            return players.indexOf(winner) + 1;
         } else return -1;
 
-    }
-
-    public void recoverPlayer() {
-        targetPlayerForAssassination.recover();
     }
 
 }

@@ -160,7 +160,7 @@ public class GameShould {
 
         // given
         int amountOfCardsAvailableInTheCourtDeck = game.deck().cards().size();
-        int cardsTakenFromTheDeck = game.players().size() * 2;
+        int cardsTakenFromTheDeck = game.players.size() * 2;
 
         // when
         game.startGame();
@@ -214,9 +214,9 @@ public class GameShould {
         game.startGame();
 
         // then
-        for (Player player : game.players()) {
-            assertFalse(player.cardOne().isVisible());
-            assertFalse(player.cardTwo().isVisible());
+        for (Player player : game.players) {
+            assertFalse(player.cards().get(0).isVisible());
+            assertFalse(player.cards().get(1).isVisible());
         }
 
     }

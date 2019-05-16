@@ -18,17 +18,13 @@ public abstract class Action {
 
     public abstract void doActionInternal(Game game) throws Exception;
 
-    public void doActionInternal2(Game game) {
-
-    }
-
     // Block Action
     public void doBlockAction(Game game) throws Exception {
         doBlockActionInternal(game);
     }
 
     public void doBlockActionInternal(Game game) throws Exception {
-
+        throw new Exception("method not overridden");
     }
 
     // Bluff
@@ -36,11 +32,11 @@ public abstract class Action {
         if (!canThisActionBeChallenged()) {
             throw new Exception("This action can't be challenged");
         }
-        if (game.playerDoingTheAction.doesHaveTheCardToDoTheAction(this)) {
+        if (game.playerDoingTheAction.canHeDoTheAction(this)) {
             game.playerCallingTheBluff.looseCard();
         } else {
             doBlockActionInternal(game);
-            game.playerLoosesCard(game.playerDoingTheAction);
+            game.playerDoingTheAction.looseCard();
         }
     }
 
@@ -49,24 +45,11 @@ public abstract class Action {
             throw new Exception("This blockaction can't be challenged");
         }
 
-        if (game.playerBlockingTheAction.canHeBlockAction(this)) {
-            game.playerLoosesCard(game.playerCallingTheBluff);
+        if (game.playerBlockingTheAction.canHeBlockTheAction(this)) {
+            game.playerCallingTheBluff.looseCard();
         } else {
             doActionInternal(game);
-            game.playerLoosesCard(game.playerBlockingTheAction);
-        }
-    }
-
-    public void doCallTheBluffOnBlockActionInternalOnAssassination(Game game) throws Exception {
-        if (!canThisBlockActionBeChallenged()) {
-            throw new Exception("This blockaction can't be challenged");
-        }
-
-        if (game.playerBlockingTheAction.canHeBlockAction(this)) {
-            game.playerLoosesCard(game.playerCallingTheBluff);
-        } else {
-            doActionInternal2(game);
-            game.playerLoosesCard(game.playerBlockingTheAction);
+            game.playerBlockingTheAction.looseCard();
         }
     }
 

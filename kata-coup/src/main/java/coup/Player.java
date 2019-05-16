@@ -9,11 +9,8 @@ public class Player {
 
     private int coins = 0;
     private List<Card> cards = new ArrayList<>();
-    private int lastCardKilled = -1;
 
-    public Player() {
-
-    }
+    private int lastCardLost = -1;
 
     public void gainCoin() {
         ++coins;
@@ -35,7 +32,7 @@ public class Player {
 
         if (cardsInGame() > 1) {
             int card = new Random().nextInt(2);
-            lastCardKilled = card;
+            lastCardLost = card;
             cards().get(card).setVisible(true);
             return cards().get(card);
         } else {
@@ -44,21 +41,16 @@ public class Player {
         }
     }
 
-    public void recover() {
-        cards().get(lastCardKilled).setVisible(false);
+    public void restoreLostCard() throws Exception {
+        if (lastCardLost < 0 || lastCardLost > 2) {
+            throw new Exception("Card number/range is not valid");
+        }
+        cards().get(lastCardLost).setVisible(false);
     }
 
     public void dies() {
         cards().get(0).setVisible(true);
         cards().get(1).setVisible(true);
-    }
-
-    public Card cardOne() {
-        return cards().get(0);
-    }
-
-    public Card cardTwo() {
-        return cards().get(1);
     }
 
     public boolean isDead() {
@@ -78,9 +70,7 @@ public class Player {
         return leftCards;
     }
 
-
-
-    public boolean canHeBlockAction(Action action) {
+    public boolean canHeBlockTheAction(Action action) {
 
         for (Card card : cards) {
 
@@ -97,7 +87,7 @@ public class Player {
 
     }
 
-    public boolean doesHaveTheCardToDoTheAction(Action action) {
+    public boolean canHeDoTheAction(Action action) {
 
         for (Card card : cards) {
 

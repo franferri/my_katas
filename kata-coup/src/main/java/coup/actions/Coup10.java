@@ -23,7 +23,7 @@ public class Coup10 extends Action {
     // Action
     public void doActionInternal(Game game) throws Exception {
         game.playerReturnCoinsToTreasury(game.playerDoingTheAction, 10);
-        game.playerLoosesCard(game.targetPlayerForAssassination);
+        game.targetPlayerForAssassination.looseCard();
     }
 
     // Block Action

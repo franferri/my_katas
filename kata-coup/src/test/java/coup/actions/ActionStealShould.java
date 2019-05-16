@@ -27,6 +27,18 @@ public class ActionStealShould extends ActionTests {
         action = new Steal();
     }
 
+
+    // Action steal more than other player has
+    @Test(expected = Exception.class)
+    public void player_does_action_to_a_poor_player() throws Exception {
+        // when
+        game.playerDoingTheAction = game.player(1);
+        game.targetPlayerForStealing = game.player(2);
+        game.player(2).looseCoin();
+
+        action.doAction(game);
+    }
+
     // Action
     @Test
     public void player_does_action() throws Exception {

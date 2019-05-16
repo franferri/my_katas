@@ -154,7 +154,7 @@ public class ActionAssassinateShould extends ActionTests {
         action.doBlockAction(game);
 
         game.playerCallingTheBluff = game.player(1);
-        action.doCallTheBluffOnBlockActionInternalOnAssassination(game);
+        action.doCallTheBluffOnBlockActionInternal(game);
 
         // then
         Assert.assertEquals(2, game.player(1).cardsInGame());
