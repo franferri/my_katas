@@ -19,10 +19,6 @@ public class Exchange extends Action {
     List<Card> originalDeck;
 
     // Setup
-    public boolean canThisActionBeChallenged() {
-        return true;
-    }
-
     public boolean canThisBlockActionBeChallenged() {
         return false;
     }

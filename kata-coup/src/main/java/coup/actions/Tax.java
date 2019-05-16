@@ -12,16 +12,11 @@ public class Tax extends Action {
     // --
 
     // Setup
-    public boolean canThisActionBeChallenged() {
-        return true;
-    }
-
     public boolean canThisBlockActionBeChallenged() {
         return false;
     }
 
     // Block Action
-
     public void doActionInternal(Game game) throws Exception {
         game.playerTakeCoinsFromTreasury(game.playerDoingTheAction,3);
     }

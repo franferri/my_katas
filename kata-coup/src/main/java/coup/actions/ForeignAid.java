@@ -15,9 +15,6 @@ public class ForeignAid extends Action {
     public boolean canThisActionBeChallenged() {
         return false;
     }
-    public boolean canThisBlockActionBeChallenged() {
-        return true;
-    }
 
     // Action
     public void doActionInternal(Game game) throws Exception {

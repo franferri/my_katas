@@ -31,8 +31,4 @@ public class Coup10 extends Action {
         throw new Exception("This action can't be blocked");
     }
 
-    public void doBlockActionInternal(Game game) throws Exception {
-        //
-    }
-
 }

@@ -2,25 +2,36 @@ package coup;
 
 public abstract class Action {
 
-    public abstract boolean canThisActionBeChallenged();
-
-    public abstract boolean canThisBlockActionBeChallenged();
-
-    public void doAction(Game game) throws Exception {
-        doActionInternal(game);
+    // Setup
+    public boolean canThisActionBeChallenged() {
+        return true;
     }
 
-    public void doBlockAction(Game game) throws Exception {
-        doBlockActionInternal(game);
+    public boolean canThisBlockActionBeChallenged() {
+        return true;
+    }
+
+    // Action
+    public void doAction(Game game) throws Exception {
+        doActionInternal(game);
     }
 
     public abstract void doActionInternal(Game game) throws Exception;
 
     public void doActionInternal2(Game game) {
+
     }
 
-    public abstract void doBlockActionInternal(Game game) throws Exception;
+    // Block Action
+    public void doBlockAction(Game game) throws Exception {
+        doBlockActionInternal(game);
+    }
 
+    public void doBlockActionInternal(Game game) throws Exception {
+
+    }
+
+    // Bluff
     public void doCallTheBluffOnActionInternal(Game game) throws Exception {
         if (!canThisActionBeChallenged()) {
             throw new Exception("This action can't be challenged");

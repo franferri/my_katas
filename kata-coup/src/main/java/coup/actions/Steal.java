@@ -14,15 +14,6 @@ public class Steal extends Action {
     // Block: Can be blocked by Ambassador
     // Block by Ambassador can be challenged
 
-    // Setup
-    public boolean canThisActionBeChallenged() {
-        return true;
-    }
-
-    public boolean canThisBlockActionBeChallenged() {
-        return true;
-    }
-
     // Action
     public void doActionInternal(Game game) throws Exception {
         game.playerTakesCoinsFromOtherPlayer(game.playerDoingTheAction, game.targetPlayerForStealing, 2);
