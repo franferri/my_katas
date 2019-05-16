@@ -35,7 +35,7 @@ public class Coup2PlayersGame {
     // TODO: This is a simple simulation of a play, were we hardcoded the decisions to be able to predict the outcome, so we can decide to refactor the library better.
 
     @Test
-    public void the_game_() throws Exception {
+    public void simplePlay() throws Exception {
         // given
         game.player(1).cards().clear();
         game.player(1).cards().add(new TheAssassin());
@@ -48,11 +48,13 @@ public class Coup2PlayersGame {
         // when
 
         // Player 1 hand
+        //game.player(1).doesActionForeignAid();
         game.playerDoingTheAction = game.player(1);
         action = new ForeignAid();
         action.doAction(game);
 
         // Player 2 hand
+        //game.player(2).doesActionExchange();
         game.playerDoingTheAction = game.player(2);
         action = new Exchange();
         action.doAction(game);
@@ -62,35 +64,42 @@ public class Coup2PlayersGame {
         game.player(2).cards().add(new TheContessa());
 
         // Player 1 hand
+        //game.player(1).doesActionAssassinate().onPlayer(2);
         game.playerDoingTheAction = game.player(1);
         action = new Assassinate();
         game.targetPlayerForAssassination = game.player(2);
         action.doAction(game);
 
         // Player 2 hand
+        //game.player(2).doesBlockTheAction();
         game.playerBlockingTheAction = game.player(2);
         action.doBlockAction(game);
 
         // Player 1 hand
+        //game.player(1).doesCallTheBluff();
         game.playerCallingTheBluff = game.player(1);
         action.doCallTheBluffOnBlockAction(game);
 
         // Player 2 hand
+        //game.player(2).doesActionForeignAid();
         game.playerDoingTheAction = game.player(2);
         action = new ForeignAid();
         action.doAction(game);
 
         // Player 1 hand
+        //game.player(1).doesActionStealing().onPlayer(2);
         game.playerDoingTheAction = game.player(1);
         action = new Steal();
         game.targetPlayerForStealing = game.player(2);
         action.doAction(game);
 
         // Player 2 hand
+        //game.player(2).doesCallTheBluff
         game.playerBlockingTheAction = game.player(2);
         action.doBlockAction(game);
 
         // Player 1 hand
+        //game.player(1).doesCallTheBluff();
         game.playerCallingTheBluff = game.player(1);
         action.doCallTheBluffOnBlockAction(game);
 
