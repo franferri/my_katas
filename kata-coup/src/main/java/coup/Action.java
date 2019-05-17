@@ -1,5 +1,6 @@
 package coup;
 
+import coup.actions.Coup10;
 
 public abstract class Action {
 
@@ -9,8 +10,14 @@ public abstract class Action {
     public Action() {
     }
 
-    public Action(GameEngine gameEngine) {
+    public Action(GameEngine gameEngine) throws Exception {
         this.gameEngine = gameEngine;
+    }
+
+    private void mustCoup10(GameEngine gameEngine) throws Exception {
+        if (gameEngine.playerDoingTheAction.coins() >= 10 && !(this instanceof Coup10)) {
+            throw new Exception("Player must coup because has 10 or more coins");
+        }
     }
 
     // Setup
@@ -24,6 +31,7 @@ public abstract class Action {
 
     // Action
     public void doAction() throws Exception {
+        mustCoup10(gameEngine);
         doActionInternal();
         isBlocked = false;
     }

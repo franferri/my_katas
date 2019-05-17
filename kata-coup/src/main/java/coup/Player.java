@@ -66,6 +66,20 @@ public class Player {
         return cards().get(0).isVisible() && cards().get(1).isVisible();
     }
 
+    public Card returnActiveCardToCourtDeck() throws Exception {
+        if (isDead()){
+            throw new Exception("Player is dead, don't have any visible cards");
+        }
+
+        for (int i = 0; i < cards.size(); i++) {
+            if (!cards.get(i).isVisible()) {
+                return cards.remove(i);
+            }
+        }
+
+        return null;
+    }
+
     public int cardsInGame() {
 
         int leftCards = 0;

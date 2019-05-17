@@ -14,7 +14,7 @@ public class Coup10 extends Action {
     public Coup10() {
     }
 
-    public Coup10(GameEngine gameEngine) {
+    public Coup10(GameEngine gameEngine) throws Exception {
         super(gameEngine);
     }
 

@@ -14,7 +14,7 @@ public class Assassinate extends Action {
     public Assassinate() {
     }
 
-    public Assassinate(GameEngine gameEngine) {
+    public Assassinate(GameEngine gameEngine) throws Exception {
         super(gameEngine);
     }
 

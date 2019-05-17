@@ -1,9 +1,6 @@
 package coup;
 
-import coup.actions.Assassinate;
-import coup.actions.Exchange;
-import coup.actions.ForeignAid;
-import coup.actions.Steal;
+import coup.actions.*;
 
 public class Game {
 
@@ -59,10 +56,12 @@ public class Game {
 
     }
 
-    public void playerTakesIncomeFromTreasury() {
+    public void playerTakesIncomeFromTreasury() throws Exception {
         calculatePlayerPlaying();
         gameEngine.playerDoingTheAction = gameEngine.player(currentPlayerPlaying);
 
+        currentAction = new Income(gameEngine);
+        currentAction.doAction();
     }
 
     public void playerTakesForeignAidFromTreasury() throws Exception {
@@ -73,30 +72,42 @@ public class Game {
         currentAction.doAction();
     }
 
-    public void playerCoups7(int targetedPlayer) {
+    public void playerCoups7(int targetedPlayer) throws Exception {
         calculatePlayerPlaying();
         gameEngine.playerDoingTheAction = gameEngine.player(currentPlayerPlaying);
+        gameEngine.targetPlayerForAssassination = gameEngine.player(targetedPlayer);
+
+        currentAction = new Coup7(gameEngine);
+        currentAction.doAction();
 
     }
 
-    public void playerCoups10(int targetedPlayer) {
+    public void playerCoups10(int targetedPlayer) throws Exception {
         calculatePlayerPlaying();
         gameEngine.playerDoingTheAction = gameEngine.player(currentPlayerPlaying);
+
+        gameEngine.targetPlayerForAssassination = gameEngine.player(targetedPlayer);
+
+        currentAction = new Coup10(gameEngine);
+        currentAction.doAction();
 
     }
 
-    public void playerTakesTaxesFromTreasury() {
+    public void playerTakesTaxesFromTreasury() throws Exception {
         calculatePlayerPlaying();
         gameEngine.playerDoingTheAction = gameEngine.player(currentPlayerPlaying);
+
+        currentAction = new Tax(gameEngine);
+        currentAction.doAction();
 
     }
 
     public void playerAssassinates(int targetedPlayer) throws Exception {
         calculatePlayerPlaying();
         gameEngine.playerDoingTheAction = gameEngine.player(currentPlayerPlaying);
+        gameEngine.targetPlayerForAssassination = gameEngine.player(targetedPlayer);
 
         currentAction = new Assassinate(gameEngine);
-        gameEngine.targetPlayerForAssassination = gameEngine.player(targetedPlayer);
         currentAction.doAction();
     }
 

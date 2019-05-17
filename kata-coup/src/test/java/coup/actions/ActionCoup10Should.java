@@ -29,7 +29,7 @@ public class ActionCoup10Should extends TestingActions {
     }
 
     // Action cant be done to himself (Engine integrity test)
-@Test
+    @Test
     public void player_does_action_to_himself() throws Exception {
         // when
         gameEngine.playerDoingTheAction = gameEngine.player(1);
@@ -87,6 +87,36 @@ public class ActionCoup10Should extends TestingActions {
         gameEngine.playerBlockingTheAction = gameEngine.player(2);
 
         Assertions.assertThrows(Exception.class, () -> action.doBlockAction());
+    }
+
+    // Action forced by the engine (Engine integrity test)
+    @Test
+    public void player_must_do_the_action_but_tries_other_action() throws Exception {
+
+        // given
+        gameEngine.playerDoingTheAction = gameEngine.player(1);
+        gameEngine.playerTakeCoinsFromTreasury(gameEngine.playerDoingTheAction, 8);
+
+        gameEngine.targetPlayerForAssassination = gameEngine.player(2);
+
+        // when
+        // then
+
+        action = new Income(gameEngine);
+        assertThrowsWithMessage(() -> action.doAction(), "Player must coup because has 10 or more coins");
+        action = new ForeignAid(gameEngine);
+        assertThrowsWithMessage(() -> action.doAction(), "Player must coup because has 10 or more coins");
+        action = new Coup7(gameEngine);
+        assertThrowsWithMessage(() -> action.doAction(), "Player must coup because has 10 or more coins");
+        action = new Tax(gameEngine);
+        assertThrowsWithMessage(() -> action.doAction(), "Player must coup because has 10 or more coins");
+        action = new Assassinate(gameEngine);
+        assertThrowsWithMessage(() -> action.doAction(), "Player must coup because has 10 or more coins");
+        action = new Exchange(gameEngine);
+        assertThrowsWithMessage(() -> action.doAction(), "Player must coup because has 10 or more coins");
+        action = new Steal(gameEngine);
+        assertThrowsWithMessage(() -> action.doAction(), "Player must coup because has 10 or more coins");
+
     }
 
 }

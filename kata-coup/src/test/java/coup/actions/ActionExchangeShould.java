@@ -30,6 +30,7 @@ public class ActionExchangeShould extends TestingActions {
 
         // then
         Assertions.assertEquals(46, gameEngine.treasury());
+        Assertions.assertEquals(11, gameEngine.deck().cards().size());
 
         Assertions.assertEquals(2, gameEngine.player(1).cardsInGame());
         Assertions.assertEquals(2, gameEngine.player(1).coins());

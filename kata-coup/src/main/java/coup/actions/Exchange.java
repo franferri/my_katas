@@ -18,7 +18,7 @@ public class Exchange extends Action {
     public Exchange() {
     }
 
-    public Exchange(GameEngine gameEngine) {
+    public Exchange(GameEngine gameEngine) throws Exception {
         super(gameEngine);
     }
 
@@ -33,16 +33,23 @@ public class Exchange extends Action {
     // Action
     public void doActionInternal() throws Exception {
 
-        cardsInPlayerHand = new ArrayList<>(gameEngine.playerDoingTheAction.cards()); // We save the original hand, in case we get blocked
+        // We save the original hand, in case we get blocked, to rollback
+        cardsInPlayerHand = new ArrayList<>(gameEngine.playerDoingTheAction.cards());
         originalDeck = new ArrayList<>(gameEngine.deck().cards());
 
-        gameEngine.playerDoingTheAction.cards().add(gameEngine.deck().cards().remove(gameEngine.deck().cards().size() - 1));
-        gameEngine.playerDoingTheAction.cards().add(gameEngine.deck().cards().remove(gameEngine.deck().cards().size() - 1));
+        Card card1 = gameEngine.deck().cards().remove(0);
+        Card card2 = gameEngine.deck().cards().remove(0);
+
+        gameEngine.playerDoingTheAction.cards().add(card1);
+        gameEngine.playerDoingTheAction.cards().add(card2);
 
         gameEngine.playerDoingTheAction.shuffleCardsInHand();
+        gameEngine.playerDoingTheAction.shuffleCardsInHand();
+        gameEngine.playerDoingTheAction.shuffleCardsInHand();
+        gameEngine.playerDoingTheAction.shuffleCardsInHand();
 
-        gameEngine.deck().cards().add(gameEngine.playerDoingTheAction.cards().remove(0));
-        gameEngine.deck().cards().add(gameEngine.playerDoingTheAction.cards().remove(1));
+        gameEngine.deck().cards().add(gameEngine.playerDoingTheAction.returnActiveCardToCourtDeck());
+        gameEngine.deck().cards().add(gameEngine.playerDoingTheAction.returnActiveCardToCourtDeck());
 
     }
 
