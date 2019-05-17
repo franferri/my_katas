@@ -1,5 +1,7 @@
 package coup;
 
+import coup.actions.Exchange;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -97,6 +99,8 @@ public class Player {
 
         for (Card card : cards) {
 
+            if (null == card.blocksAction()) {continue;}
+
             Class classz = card.blocksAction().getClass();
             if (classz == null) return false;
 
@@ -112,7 +116,15 @@ public class Player {
 
     public boolean canHeDoTheAction(Action action) {
 
-        for (Card card : cards) {
+        List<Card> cardsToCheck = cards;
+
+        if (action instanceof Exchange){
+            cardsToCheck = ((Exchange)action).originalCardsInPlayerHand;
+        }
+
+        for (Card card : cardsToCheck) {
+
+            if (null == card.doAction()) {continue;}
 
             Class classz = card.doAction().getClass();
             if (classz == null) return false;

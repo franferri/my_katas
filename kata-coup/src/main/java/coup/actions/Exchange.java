@@ -22,7 +22,7 @@ public class Exchange extends Action {
         super(gameEngine);
     }
 
-    List<Card> cardsInPlayerHand;
+    public List<Card> originalCardsInPlayerHand;
     List<Card> originalDeck;
 
     // Setup
@@ -34,7 +34,7 @@ public class Exchange extends Action {
     public void doActionInternal() throws Exception {
 
         // We save the original hand, in case we get blocked, to rollback
-        cardsInPlayerHand = new ArrayList<>(gameEngine.playerDoingTheAction.cards());
+        originalCardsInPlayerHand = new ArrayList<>(gameEngine.playerDoingTheAction.cards());
         originalDeck = new ArrayList<>(gameEngine.deck().cards());
 
         Card card1 = gameEngine.deck().cards().remove(0);
@@ -61,7 +61,7 @@ public class Exchange extends Action {
     public void doBlockActionInternal() throws Exception {
 
         gameEngine.playerDoingTheAction.cards().clear();
-        gameEngine.playerDoingTheAction.cards().addAll(cardsInPlayerHand);
+        gameEngine.playerDoingTheAction.cards().addAll(originalCardsInPlayerHand);
 
         gameEngine.deck().cards().clear();
         gameEngine.deck().cards().addAll(originalDeck);

@@ -1,10 +1,7 @@
 package simulation;
 
 import coup.Game;
-import coup.cards.TheAmbassator;
-import coup.cards.TheAssassin;
-import coup.cards.TheCaptain;
-import coup.cards.TheContessa;
+import coup.cards.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -116,29 +113,9 @@ public class TwoPlayersGameShould {
 
     }
 
-    public void assertGameSituation(int treasury, int player1_cards, int player1_coins, int player2_cards, int player2_coins) {
-        Assertions.assertEquals(treasury, game.gameEngine().treasury());
-        Assertions.assertEquals(11, game.gameEngine().deck().cards().size());
-
-        Assertions.assertEquals(player1_cards, game.gameEngine().player(1).cardsInGame());
-        Assertions.assertEquals(player1_coins, game.gameEngine().player(1).coins());
-
-        Assertions.assertEquals(player2_cards, game.gameEngine().player(2).cardsInGame());
-        Assertions.assertEquals(player2_coins, game.gameEngine().player(2).coins());
-    }
-
-    // We need to test from 2 - 6 players
-    // We need to test all actions, blocks, bluffs actions, bluff blocks
-    // We need to test player A does an action and every other player blocks it
-    // We need to test player A does an action and every other player calls bluffs it and wins the call
-    // We need to test player A does an action and every other player calls bluffs it and loses the call
-    // We need to test player A does an action and every other player blocks it every other player calls the bluff on the block and wins the call
-    // We need to test player A does an action and every other player blocks it every other player calls the bluff on the block and loses the call
-
-    // We need to assert the outcomes of every path
 
     @Test
-    public void playUsingAllActionsAndBlockingThem() throws Exception {
+    public void playUsingAllActionsAndTheyGetBlocked() throws Exception {
 
         // when
         // then
@@ -172,9 +149,150 @@ public class TwoPlayersGameShould {
 
     }
 
-    // calls all the bluff in all actions and wins
-    // calls all the bluff in all actions and looses
+    @Test
+    public void playUsingAllActionsAndTheyGetChallenged_and_playerinitiatingaction_wins_Tax_Assassination() throws Exception {
+
+        // when
+        // then
+
+        game.gameEngine().player(1).cards().clear();
+        game.gameEngine().player(1).cards().add(new TheDuke());
+        game.gameEngine().player(1).cards().add(new TheDuke());
+
+        game.gameEngine().player(2).cards().clear();
+        game.gameEngine().player(2).cards().add(new TheAssassin());
+        game.gameEngine().player(2).cards().add(new TheAssassin());
+
+        game.playerTakesIncomeFromTreasury();
+        assertGameSituation(45, 2, 3, 2, 2);
+
+        game.playerTakesForeignAidFromTreasury();
+        assertGameSituation(43, 2, 3, 2, 4);
+
+        game.playerTakesTaxesFromTreasury();
+        game.playerCallsTheBluff(2);
+        assertGameSituation(40, 2, 6, 1, 4);
+
+        game.playerAssassinates(1);
+        game.playerCallsTheBluff(1);
+        assertGameSituation(43, 0, 6, 1, 1);
+
+    }
+
+    @Test
+    public void playUsingAllActionsAndTheyGetChallenged_and_playerinitiatingaction_loses_Tax_Assassination() throws Exception {
+
+        // when
+        // then
+
+        game.gameEngine().player(1).cards().clear();
+        game.gameEngine().player(1).cards().add(new TheContessa());
+        game.gameEngine().player(1).cards().add(new TheContessa());
+
+        game.gameEngine().player(2).cards().clear();
+        game.gameEngine().player(2).cards().add(new TheContessa());
+        game.gameEngine().player(2).cards().add(new TheContessa());
+
+        game.playerTakesIncomeFromTreasury();
+        assertGameSituation(45, 2, 3, 2, 2);
+
+        game.playerTakesForeignAidFromTreasury();
+        assertGameSituation(43, 2, 3, 2, 4);
+
+        game.playerTakesTaxesFromTreasury();
+        game.playerCallsTheBluff(2);
+        assertGameSituation(43, 1, 3, 2, 4);
+
+        game.playerAssassinates(1);
+        game.playerCallsTheBluff(1);
+        assertGameSituation(46, 1, 3, 1, 1);
+
+    }
+
+    @Test
+    public void playUsingAllActionsAndTheyGetChallenged_and_playerinitiatingaction_wins_Exchange_Steal() throws Exception {
+
+        // when
+        // then
+
+        game.gameEngine().player(1).cards().clear();
+        game.gameEngine().player(1).cards().add(new TheAmbassator());
+        game.gameEngine().player(1).cards().add(new TheAmbassator());
+
+        game.gameEngine().player(2).cards().clear();
+        game.gameEngine().player(2).cards().add(new TheCaptain());
+        game.gameEngine().player(2).cards().add(new TheCaptain());
+
+        game.playerTakesIncomeFromTreasury();
+        assertGameSituation(45, 2, 3, 2, 2);
+
+        game.playerTakesForeignAidFromTreasury();
+        assertGameSituation(43, 2, 3, 2, 4);
+
+        game.playerExchangesCardsFromTheCourtDeck();
+        game.playerCallsTheBluff(2);
+        assertGameSituation(43, 2, 3, 1, 4);
+
+        game.playerStealsFrom(1);
+        game.playerCallsTheBluff(1);
+        assertGameSituation(43, 1, 1, 1, 6);
+
+    }
+
+    @Test
+    public void playUsingAllActionsAndTheyGetChallenged_and_playerinitiatingaction_loses_Exchange_Steal() throws Exception {
+
+        // when
+        // then
+
+        game.gameEngine().player(1).cards().clear();
+        game.gameEngine().player(1).cards().add(new TheContessa());
+        game.gameEngine().player(1).cards().add(new TheContessa());
+
+        game.gameEngine().player(2).cards().clear();
+        game.gameEngine().player(2).cards().add(new TheContessa());
+        game.gameEngine().player(2).cards().add(new TheContessa());
+
+        game.playerTakesIncomeFromTreasury();
+        assertGameSituation(45, 2, 3, 2, 2);
+
+        game.playerTakesForeignAidFromTreasury();
+        assertGameSituation(43, 2, 3, 2, 4);
+
+        game.playerExchangesCardsFromTheCourtDeck();
+        game.playerCallsTheBluff(2);
+        assertGameSituation(43, 1, 3, 2, 4);
+
+        game.playerStealsFrom(1);
+        game.playerCallsTheBluff(1);
+        assertGameSituation(43, 1, 3, 1, 4);
+
+    }
+
+    
+
     // calls all the bluff in all blockactions and wins
     // calls all the bluff in all blockactions and looses
+
+    public void assertGameSituation(int treasury, int player1_cards, int player1_coins, int player2_cards, int player2_coins) {
+        Assertions.assertEquals(treasury, game.gameEngine().treasury());
+        Assertions.assertEquals(11, game.gameEngine().deck().cards().size());
+
+        Assertions.assertEquals(player1_cards, game.gameEngine().player(1).cardsInGame());
+        Assertions.assertEquals(player1_coins, game.gameEngine().player(1).coins());
+
+        Assertions.assertEquals(player2_cards, game.gameEngine().player(2).cardsInGame());
+        Assertions.assertEquals(player2_coins, game.gameEngine().player(2).coins());
+    }
+
+    // We need to test from 2 - 6 players
+    // We need to test all actions, blocks, bluffs actions, bluff blocks
+    // We need to test player A does an action and every other player blocks it
+    // We need to test player A does an action and every other player calls bluffs it and wins the call
+    // We need to test player A does an action and every other player calls bluffs it and loses the call
+    // We need to test player A does an action and every other player blocks it every other player calls the bluff on the block and wins the call
+    // We need to test player A does an action and every other player blocks it every other player calls the bluff on the block and loses the call
+
+    // We need to assert the outcomes of every path
 
 }

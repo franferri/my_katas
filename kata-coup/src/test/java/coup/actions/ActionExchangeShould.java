@@ -60,13 +60,13 @@ public class ActionExchangeShould extends TestingActions {
     @Test
     public void player_does_action_and_other_player_calls_the_bluff_and_wins_the_call() throws Exception {
 
-        // when
-        gameEngine.playerDoingTheAction = gameEngine.player(1);
-        action.doAction();
-
         gameEngine.player(1).cards().clear();// Needs to be here since the action will reshuffle the hand
         gameEngine.player(1).cards().add(0, new TheDuke());
         gameEngine.player(1).cards().add(0, new TheDuke());
+
+        // when
+        gameEngine.playerDoingTheAction = gameEngine.player(1);
+        action.doAction();
 
         gameEngine.playerCallingTheBluff = gameEngine.player(2);
         action.doCallTheBluffOnAction();

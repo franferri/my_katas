@@ -20,6 +20,13 @@ public abstract class Action {
         }
     }
 
+    private void isTheGameEnded(GameEngine gameEngine) throws Exception {
+        int winner = gameEngine.whoIsTheWinner();
+        if (winner > -1) {
+            throw new Exception("The game is done, the winner was player " + winner);
+        }
+    }
+
     // Setup
     public boolean canThisActionBeChallenged() {
         return true;
@@ -31,6 +38,7 @@ public abstract class Action {
 
     // Action
     public void doAction() throws Exception {
+        isTheGameEnded(gameEngine);
         mustCoup10(gameEngine);
         doActionInternal();
         isBlocked = false;
