@@ -14,27 +14,20 @@ public class GameEngine {
     public Player playerBlockingTheAction;
     public Player playerCallingTheBluff;
 
-    public Player targetPlayerForAssassination;
-    public Player targetPlayerForStealing;
+    public Player targetPlayer;
 
     public GameEngine(Player... players) throws Exception {
-
         if (players.length < 2) {
             throw new Exception("Need more players");
         }
-
         if (players.length > 4) {
             throw new Exception("Only 4 players allowed");
         }
-
         for (Player player : players) {
             this.players.add(player);
         }
-
         treasury = 50;
-
         this.deck = new Deck();
-
     }
 
     public int treasury() {
@@ -46,14 +39,11 @@ public class GameEngine {
     }
 
     public void startGame() throws Exception {
-
         for (Player player : players) {
             playerTakeCoinsFromTreasury(player, 2);
             dealCardsToThePlayer(player, 2);
         }
-
         this.deck.shuffle();
-
     }
 
     public void playerReturnCoinsToTreasury(Player player, int coins) throws Exception {
@@ -97,23 +87,19 @@ public class GameEngine {
     }
 
     public int whoIsTheWinner() {
-
         int playersAlive = players.size();
         Player winner = null;
         for (Player player : players) {
-
             if (player.isDead()) {
                 --playersAlive;
             } else {
                 winner = player;
             }
-
         }
 
         if (playersAlive == 1) {
             return players.indexOf(winner) + 1;
         } else return -1;
-
     }
 
 }

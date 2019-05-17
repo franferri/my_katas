@@ -11,9 +11,6 @@ public class Coup7 extends Action {
     // Block: Cannot be blocked
     // -
 
-    public Coup7() {
-    }
-
     public Coup7(GameEngine gameEngine) throws Exception {
         super(gameEngine);
     }
@@ -29,11 +26,8 @@ public class Coup7 extends Action {
 
     // Action
     public void doActionInternal() throws Exception {
-        if (gameEngine.playerDoingTheAction == gameEngine.targetPlayerForAssassination) {
-            throw new Exception("Action can't be done to himself");
-        }
         gameEngine.playerReturnCoinsToTreasury(gameEngine.playerDoingTheAction, 7);
-        gameEngine.targetPlayerForAssassination.looseCard();
+        gameEngine.targetPlayer.looseCard();
     }
 
     // Block Action

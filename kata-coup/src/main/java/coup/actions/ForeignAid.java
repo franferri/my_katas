@@ -30,9 +30,6 @@ public class ForeignAid extends Action {
 
     // Block Action
     public void doBlockActionInternal() throws Exception {
-        if (gameEngine.playerDoingTheAction == gameEngine.playerBlockingTheAction) {
-            throw new Exception("Player cant block himself");
-        }
         gameEngine.playerReturnCoinsToTreasury(gameEngine.playerDoingTheAction, 2);
     }
 

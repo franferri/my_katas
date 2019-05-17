@@ -27,7 +27,7 @@ public class ActionAssassinateShould extends TestingActions {
     public void player_needs_money_to_do_the_action() {
         // when
         gameEngine.playerDoingTheAction = gameEngine.player(1);
-        gameEngine.targetPlayerForAssassination = gameEngine.player(2);
+        gameEngine.targetPlayer = gameEngine.player(2);
 
         assertThrowsWithMessage(() -> action.doAction(), "Player don't have enough coins");
     }
@@ -40,7 +40,7 @@ public class ActionAssassinateShould extends TestingActions {
 
         // when
         gameEngine.playerDoingTheAction = gameEngine.player(1);
-        gameEngine.targetPlayerForAssassination = gameEngine.player(1);
+        gameEngine.targetPlayer = gameEngine.player(1);
 
         assertThrowsWithMessage(() -> action.doAction(), "Action can't be done to himself");
     }
@@ -53,7 +53,7 @@ public class ActionAssassinateShould extends TestingActions {
 
         // when
         gameEngine.playerDoingTheAction = gameEngine.player(1);
-        gameEngine.targetPlayerForAssassination = gameEngine.player(2);
+        gameEngine.targetPlayer = gameEngine.player(2);
 
         action.doAction();
 
@@ -76,7 +76,7 @@ public class ActionAssassinateShould extends TestingActions {
 
         // when
         gameEngine.playerDoingTheAction = gameEngine.player(1);
-        gameEngine.targetPlayerForAssassination = gameEngine.player(2);
+        gameEngine.targetPlayer = gameEngine.player(2);
         action.doAction();
 
         gameEngine.playerCallingTheBluff = gameEngine.player(1);
@@ -96,7 +96,7 @@ public class ActionAssassinateShould extends TestingActions {
 
         // when
         gameEngine.playerDoingTheAction = gameEngine.player(1);
-        gameEngine.targetPlayerForAssassination = gameEngine.player(2);
+        gameEngine.targetPlayer = gameEngine.player(2);
         action.doAction();
 
         gameEngine.playerCallingTheBluff = gameEngine.player(2);
@@ -124,7 +124,7 @@ public class ActionAssassinateShould extends TestingActions {
 
         // when
         gameEngine.playerDoingTheAction = gameEngine.player(1);
-        gameEngine.targetPlayerForAssassination = gameEngine.player(2);
+        gameEngine.targetPlayer = gameEngine.player(2);
         action.doAction();
 
         gameEngine.playerCallingTheBluff = gameEngine.player(2);
@@ -148,7 +148,7 @@ public class ActionAssassinateShould extends TestingActions {
 
         // when
         gameEngine.playerDoingTheAction = gameEngine.player(1);
-        gameEngine.targetPlayerForAssassination = gameEngine.player(2);
+        gameEngine.targetPlayer = gameEngine.player(2);
         action.doAction();
 
         gameEngine.playerBlockingTheAction = gameEngine.player(1);
@@ -164,7 +164,7 @@ public class ActionAssassinateShould extends TestingActions {
 
         // when
         gameEngine.playerDoingTheAction = gameEngine.player(1);
-        gameEngine.targetPlayerForAssassination = gameEngine.player(2);
+        gameEngine.targetPlayer = gameEngine.player(2);
         action.doAction();
 
         gameEngine.playerBlockingTheAction = gameEngine.player(2);
@@ -191,7 +191,7 @@ public class ActionAssassinateShould extends TestingActions {
 
         // when
         gameEngine.playerDoingTheAction = gameEngine.player(1);
-        gameEngine.targetPlayerForAssassination = gameEngine.player(2);
+        gameEngine.targetPlayer = gameEngine.player(2);
 
         action.doAction();
 
@@ -218,7 +218,7 @@ public class ActionAssassinateShould extends TestingActions {
 
         // when
         gameEngine.playerDoingTheAction = gameEngine.player(1);
-        gameEngine.targetPlayerForAssassination = gameEngine.player(2);
+        gameEngine.targetPlayer = gameEngine.player(2);
 
         action.doAction();
 
@@ -251,7 +251,7 @@ public class ActionAssassinateShould extends TestingActions {
 
         // when
         gameEngine.playerDoingTheAction = gameEngine.player(1);
-        gameEngine.targetPlayerForAssassination = gameEngine.player(2);
+        gameEngine.targetPlayer = gameEngine.player(2);
 
         action.doAction();
 

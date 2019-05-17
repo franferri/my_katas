@@ -269,8 +269,6 @@ public class TwoPlayersGameShould {
 
     }
 
-    
-
     // calls all the bluff in all blockactions and wins
     // calls all the bluff in all blockactions and looses
 

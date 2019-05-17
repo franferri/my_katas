@@ -24,7 +24,7 @@ public class ActionCoup7Should extends TestingActions {
     public void player_needs_money_to_do_the_action() {
         // when
         gameEngine.playerDoingTheAction = gameEngine.player(1);
-        gameEngine.targetPlayerForAssassination = gameEngine.player(2);
+        gameEngine.targetPlayer = gameEngine.player(2);
 
         assertThrowsWithMessage(() -> action.doAction(), "Player don't have enough coins");
     }
@@ -35,7 +35,7 @@ public class ActionCoup7Should extends TestingActions {
         // when
         gameEngine.playerDoingTheAction = gameEngine.player(1);
         gameEngine.playerTakeCoinsFromTreasury(gameEngine.playerDoingTheAction, 5);
-        gameEngine.targetPlayerForAssassination = gameEngine.player(1);
+        gameEngine.targetPlayer = gameEngine.player(1);
 
         assertThrowsWithMessage(() -> action.doAction(), "Action can't be done to himself");
     }
@@ -46,7 +46,7 @@ public class ActionCoup7Should extends TestingActions {
         // when
         gameEngine.playerDoingTheAction = gameEngine.player(1);
         gameEngine.playerTakeCoinsFromTreasury(gameEngine.playerDoingTheAction, 5);
-        gameEngine.targetPlayerForAssassination = gameEngine.player(2);
+        gameEngine.targetPlayer = gameEngine.player(2);
 
         action.doAction();
 
@@ -69,7 +69,7 @@ public class ActionCoup7Should extends TestingActions {
         // when
         gameEngine.playerDoingTheAction = gameEngine.player(1);
         gameEngine.playerTakeCoinsFromTreasury(gameEngine.playerDoingTheAction, 5);
-        gameEngine.targetPlayerForAssassination = gameEngine.player(2);
+        gameEngine.targetPlayer = gameEngine.player(2);
 
         action.doAction();
 
@@ -88,7 +88,7 @@ public class ActionCoup7Should extends TestingActions {
         // when
         gameEngine.playerDoingTheAction = gameEngine.player(1);
         gameEngine.playerTakeCoinsFromTreasury(gameEngine.playerDoingTheAction, 5);
-        gameEngine.targetPlayerForAssassination = gameEngine.player(2);
+        gameEngine.targetPlayer = gameEngine.player(2);
 
         action.doAction();
 

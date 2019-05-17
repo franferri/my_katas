@@ -35,10 +35,6 @@ public class Game {
 
         int nextPlayer = ++currentPlayerPlaying;
 
-        // Si estamos en el último player, hay q ir al primero
-        // Si el siguiente player esta muerto, lo saltamos hasta encontrar uno vivo
-        // Si no encontramos ningún otro player vivo, el q qda es el ganador
-
         if (nextPlayer > gameEngine.players.size()) {
             nextPlayer = 1;
         }
@@ -57,6 +53,8 @@ public class Game {
     }
 
     public void playerTakesIncomeFromTreasury() throws Exception {
+        resetStatus();
+
         calculatePlayerPlaying();
         gameEngine.playerDoingTheAction = gameEngine.player(currentPlayerPlaying);
 
@@ -64,7 +62,11 @@ public class Game {
         currentAction.doAction();
     }
 
+
+
     public void playerTakesForeignAidFromTreasury() throws Exception {
+        resetStatus();
+
         calculatePlayerPlaying();
         gameEngine.playerDoingTheAction = gameEngine.player(currentPlayerPlaying);
 
@@ -73,45 +75,52 @@ public class Game {
     }
 
     public void playerCoups7(int targetedPlayer) throws Exception {
+        resetStatus();
+
         calculatePlayerPlaying();
         gameEngine.playerDoingTheAction = gameEngine.player(currentPlayerPlaying);
-        gameEngine.targetPlayerForAssassination = gameEngine.player(targetedPlayer);
+        gameEngine.targetPlayer = gameEngine.player(targetedPlayer);
 
         currentAction = new Coup7(gameEngine);
         currentAction.doAction();
-
     }
 
     public void playerCoups10(int targetedPlayer) throws Exception {
+        resetStatus();
+
         calculatePlayerPlaying();
         gameEngine.playerDoingTheAction = gameEngine.player(currentPlayerPlaying);
 
-        gameEngine.targetPlayerForAssassination = gameEngine.player(targetedPlayer);
+        gameEngine.targetPlayer = gameEngine.player(targetedPlayer);
 
         currentAction = new Coup10(gameEngine);
         currentAction.doAction();
-
     }
 
     public void playerTakesTaxesFromTreasury() throws Exception {
+        resetStatus();
+
         calculatePlayerPlaying();
         gameEngine.playerDoingTheAction = gameEngine.player(currentPlayerPlaying);
 
         currentAction = new Tax(gameEngine);
         currentAction.doAction();
-
     }
 
     public void playerAssassinates(int targetedPlayer) throws Exception {
+        resetStatus();
+
         calculatePlayerPlaying();
         gameEngine.playerDoingTheAction = gameEngine.player(currentPlayerPlaying);
-        gameEngine.targetPlayerForAssassination = gameEngine.player(targetedPlayer);
+        gameEngine.targetPlayer = gameEngine.player(targetedPlayer);
 
         currentAction = new Assassinate(gameEngine);
         currentAction.doAction();
     }
 
     public void playerExchangesCardsFromTheCourtDeck() throws Exception {
+        resetStatus();
+
         calculatePlayerPlaying();
         gameEngine.playerDoingTheAction = gameEngine.player(currentPlayerPlaying);
 
@@ -120,19 +129,19 @@ public class Game {
     }
 
     public void playerStealsFrom(int targetedPlayer) throws Exception {
+        resetStatus();
+
         calculatePlayerPlaying();
         gameEngine.playerDoingTheAction = gameEngine.player(currentPlayerPlaying);
 
         currentAction = new Steal(gameEngine);
-        gameEngine.targetPlayerForStealing = gameEngine.player(targetedPlayer);
+        gameEngine.targetPlayer = gameEngine.player(targetedPlayer);
         currentAction.doAction();
-
     }
 
     public void playerBlocks(int playerBlocking) throws Exception {
         gameEngine.playerBlockingTheAction = gameEngine.player(playerBlocking);
         currentAction.doBlockAction();
-
     }
 
     public void playerCallsTheBluff(int playerCallingTheBluff) throws Exception {
@@ -143,7 +152,12 @@ public class Game {
         } else {
             currentAction.doCallTheBluffOnAction();
         }
+    }
 
+    private void resetStatus() {
+        gameEngine.playerBlockingTheAction = null;
+        gameEngine.playerCallingTheBluff = null;
+        gameEngine.targetPlayer = null;
     }
 
 }

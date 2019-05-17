@@ -30,8 +30,8 @@ public class ActionStealShould extends TestingActions {
     public void player_does_action_to_a_poor_player() throws Exception {
         // when
         gameEngine.playerDoingTheAction = gameEngine.player(1);
-        gameEngine.targetPlayerForStealing = gameEngine.player(2);
-        gameEngine.playerReturnCoinsToTreasury(gameEngine.targetPlayerForStealing, 2);
+        gameEngine.targetPlayer = gameEngine.player(2);
+        gameEngine.playerReturnCoinsToTreasury(gameEngine.targetPlayer, 2);
 
         assertThrowsWithMessage(() -> action.doAction(), "Player is broke and we can't take more coins from it");
     }
@@ -41,7 +41,7 @@ public class ActionStealShould extends TestingActions {
     public void player_does_action_to_himself() {
         // when
         gameEngine.playerDoingTheAction = gameEngine.player(1);
-        gameEngine.targetPlayerForStealing = gameEngine.player(1);
+        gameEngine.targetPlayer = gameEngine.player(1);
 
         assertThrowsWithMessage(() -> action.doAction(), "Action can't be done to himself");
     }
@@ -51,7 +51,7 @@ public class ActionStealShould extends TestingActions {
     public void player_does_action() throws Exception {
         // when
         gameEngine.playerDoingTheAction = gameEngine.player(1);
-        gameEngine.targetPlayerForStealing = gameEngine.player(2);
+        gameEngine.targetPlayer = gameEngine.player(2);
         action.doAction();
 
         // then
@@ -69,7 +69,7 @@ public class ActionStealShould extends TestingActions {
     public void player_does_action_and_challenge_himself() throws Exception {
         // when
         gameEngine.playerDoingTheAction = gameEngine.player(1);
-        gameEngine.targetPlayerForStealing = gameEngine.player(2);
+        gameEngine.targetPlayer = gameEngine.player(2);
         action.doAction();
 
         gameEngine.playerCallingTheBluff = gameEngine.player(1);
@@ -88,7 +88,7 @@ public class ActionStealShould extends TestingActions {
 
         // when
         gameEngine.playerDoingTheAction = gameEngine.player(1);
-        gameEngine.targetPlayerForStealing = gameEngine.player(2);
+        gameEngine.targetPlayer = gameEngine.player(2);
         action.doAction();
 
         gameEngine.playerCallingTheBluff = gameEngine.player(2);
@@ -115,7 +115,7 @@ public class ActionStealShould extends TestingActions {
 
         // when
         gameEngine.playerDoingTheAction = gameEngine.player(1);
-        gameEngine.targetPlayerForStealing = gameEngine.player(2);
+        gameEngine.targetPlayer = gameEngine.player(2);
         action.doAction();
 
         gameEngine.playerCallingTheBluff = gameEngine.player(2);
@@ -141,7 +141,7 @@ public class ActionStealShould extends TestingActions {
 
         // when
         gameEngine.playerDoingTheAction = gameEngine.player(1);
-        gameEngine.targetPlayerForStealing = gameEngine.player(2);
+        gameEngine.targetPlayer = gameEngine.player(2);
         action.doAction();
 
         gameEngine.playerBlockingTheAction = gameEngine.player(1);
@@ -159,7 +159,7 @@ public class ActionStealShould extends TestingActions {
 
         // when
         gameEngine.playerDoingTheAction = gameEngine.player(1);
-        gameEngine.targetPlayerForStealing = gameEngine.player(2);
+        gameEngine.targetPlayer = gameEngine.player(2);
         action.doAction();
 
         gameEngine.playerBlockingTheAction = gameEngine.player(2);
@@ -185,7 +185,7 @@ public class ActionStealShould extends TestingActions {
 
         // when
         gameEngine.playerDoingTheAction = gameEngine.player(1);
-        gameEngine.targetPlayerForStealing = gameEngine.player(2);
+        gameEngine.targetPlayer = gameEngine.player(2);
         action.doAction();
 
         gameEngine.playerBlockingTheAction = gameEngine.player(2);
@@ -208,7 +208,7 @@ public class ActionStealShould extends TestingActions {
 
         // when
         gameEngine.playerDoingTheAction = gameEngine.player(1);
-        gameEngine.targetPlayerForStealing = gameEngine.player(2);
+        gameEngine.targetPlayer = gameEngine.player(2);
         action.doAction();
 
         gameEngine.playerBlockingTheAction = gameEngine.player(2);
@@ -239,7 +239,7 @@ public class ActionStealShould extends TestingActions {
 
         // when
         gameEngine.playerDoingTheAction = gameEngine.player(1);
-        gameEngine.targetPlayerForStealing = gameEngine.player(2);
+        gameEngine.targetPlayer = gameEngine.player(2);
         action.doAction();
 
         gameEngine.playerBlockingTheAction = gameEngine.player(2);
@@ -269,7 +269,7 @@ public class ActionStealShould extends TestingActions {
 
         // when
         gameEngine.playerDoingTheAction = gameEngine.player(1);
-        gameEngine.targetPlayerForStealing = gameEngine.player(2);
+        gameEngine.targetPlayer = gameEngine.player(2);
         action.doAction();
 
         gameEngine.playerBlockingTheAction = gameEngine.player(2);
@@ -297,7 +297,7 @@ public class ActionStealShould extends TestingActions {
 
         // when
         gameEngine.playerDoingTheAction = gameEngine.player(1);
-        gameEngine.targetPlayerForStealing = gameEngine.player(2);
+        gameEngine.targetPlayer = gameEngine.player(2);
         action.doAction();
 
         gameEngine.playerBlockingTheAction = gameEngine.player(2);
