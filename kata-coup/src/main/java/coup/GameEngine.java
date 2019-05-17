@@ -102,4 +102,33 @@ public class GameEngine {
         } else return -1;
     }
 
+    public int currentPlayerPlaying = 0;
+
+    public void calculatePlayerPlaying() {
+
+        int nextPlayer = ++currentPlayerPlaying;
+
+        if (nextPlayer > players.size()) {
+            nextPlayer = 1;
+        }
+
+        for (int i = 0; i < players.size(); i++) {
+
+            if (player(nextPlayer).isDead()) {
+                ++nextPlayer;
+            } else {
+                currentPlayerPlaying = nextPlayer;
+                return;
+            }
+
+        }
+
+    }
+
+    public void resetStatus() {
+        playerBlockingTheAction = null;
+        playerCallingTheBluff = null;
+        targetPlayer = null;
+    }
+
 }
