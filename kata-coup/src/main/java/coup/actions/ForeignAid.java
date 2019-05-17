@@ -1,7 +1,7 @@
 package coup.actions;
 
 import coup.Action;
-import coup.Game;
+import coup.GameEngine;
 
 public class ForeignAid extends Action {
 
@@ -11,19 +11,26 @@ public class ForeignAid extends Action {
     // Block: Can be blocked by a player claiming the Duke
     // Block can be challenged
 
+    public ForeignAid() {
+    }
+
+    public ForeignAid(GameEngine gameEngine) {
+        super(gameEngine);
+    }
+
     // Setup
     public boolean canThisActionBeChallenged() {
         return false;
     }
 
     // Action
-    public void doActionInternal(Game game) throws Exception {
-        game.playerTakeCoinsFromTreasury(game.playerDoingTheAction,2);
+    public void doActionInternal() throws Exception {
+        gameEngine.playerTakeCoinsFromTreasury(gameEngine.playerDoingTheAction, 2);
     }
 
     // Block Action
-    public void doBlockActionInternal(Game game) throws Exception {
-        game.playerReturnCoinsToTreasury(game.playerDoingTheAction,2);
+    public void doBlockActionInternal() throws Exception {
+        gameEngine.playerReturnCoinsToTreasury(gameEngine.playerDoingTheAction, 2);
     }
 
 }

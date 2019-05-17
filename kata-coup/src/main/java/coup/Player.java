@@ -12,6 +12,14 @@ public class Player {
 
     private int lastCardLost = -1;
 
+    public void blocks() {
+
+    }
+
+    public void callsTheBluff() {
+
+    }
+
     public void gainCoin() {
         ++coins;
     }

@@ -1,7 +1,7 @@
 package coup.actions;
 
 import coup.Action;
-import coup.Game;
+import coup.GameEngine;
 
 public class Income extends Action {
 
@@ -10,6 +10,13 @@ public class Income extends Action {
 
     // Block: Cannot be blocked
     // --
+
+    public Income() {
+    }
+
+    public Income(GameEngine gameEngine) {
+        super(gameEngine);
+    }
 
     // Setup
     public boolean canThisActionBeChallenged() {
@@ -21,12 +28,12 @@ public class Income extends Action {
     }
 
     // Action
-    public void doActionInternal(Game game) throws Exception {
-        game.playerTakeCoinsFromTreasury(game.playerDoingTheAction,1);
+    public void doActionInternal() throws Exception {
+        gameEngine.playerTakeCoinsFromTreasury(gameEngine.playerDoingTheAction,1);
     }
 
     // Block Action
-    public void doBlockAction(Game game) throws Exception {
+    public void doBlockAction() throws Exception {
         throw new Exception("This action can't be blocked");
     }
 

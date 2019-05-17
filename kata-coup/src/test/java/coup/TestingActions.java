@@ -9,7 +9,7 @@ public class TestingActions {
 
     // TODO cuando un jugador tiene un challence y enseña la carta, tenemos q reshuflear y coger una nueva para ese player (player 1 si el challence es para la action, player 2 si el challence es para el blockeo de la acción)
 
-    protected Game game;
+    protected GameEngine gameEngine;
     protected Action action;
 
     protected void before() throws Exception {
@@ -18,8 +18,8 @@ public class TestingActions {
         Player player1 = new Player();
         Player player2 = new Player();
 
-        game = new Game(player1, player2);
-        game.startGame();
+        gameEngine = new GameEngine(player1, player2);
+        gameEngine.startGame();
 
     }
 

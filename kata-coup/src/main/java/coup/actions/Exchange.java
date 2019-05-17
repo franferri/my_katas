@@ -2,7 +2,7 @@ package coup.actions;
 
 import coup.Action;
 import coup.Card;
-import coup.Game;
+import coup.GameEngine;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +15,13 @@ public class Exchange extends Action {
     // Block: Cannot be blocked
     // -
 
+    public Exchange() {
+    }
+
+    public Exchange(GameEngine gameEngine) {
+        super(gameEngine);
+    }
+
     List<Card> cardsInPlayerHand;
     List<Card> originalDeck;
 
@@ -24,33 +31,33 @@ public class Exchange extends Action {
     }
 
     // Action
-    public void doActionInternal(Game game) throws Exception {
+    public void doActionInternal() throws Exception {
 
-        cardsInPlayerHand = new ArrayList<>(game.playerDoingTheAction.cards()); // We save the original hand, in case we get blocked
-        originalDeck = new ArrayList<>(game.deck().cards());
+        cardsInPlayerHand = new ArrayList<>(gameEngine.playerDoingTheAction.cards()); // We save the original hand, in case we get blocked
+        originalDeck = new ArrayList<>(gameEngine.deck().cards());
 
-        game.playerDoingTheAction.cards().add(game.deck().cards().remove(game.deck().cards().size() - 1));
-        game.playerDoingTheAction.cards().add(game.deck().cards().remove(game.deck().cards().size() - 1));
+        gameEngine.playerDoingTheAction.cards().add(gameEngine.deck().cards().remove(gameEngine.deck().cards().size() - 1));
+        gameEngine.playerDoingTheAction.cards().add(gameEngine.deck().cards().remove(gameEngine.deck().cards().size() - 1));
 
-        game.playerDoingTheAction.shuffleCardsInHand();
+        gameEngine.playerDoingTheAction.shuffleCardsInHand();
 
-        game.deck().cards().add(game.playerDoingTheAction.cards().remove(0));
-        game.deck().cards().add(game.playerDoingTheAction.cards().remove(1));
+        gameEngine.deck().cards().add(gameEngine.playerDoingTheAction.cards().remove(0));
+        gameEngine.deck().cards().add(gameEngine.playerDoingTheAction.cards().remove(1));
 
     }
 
     // Block Action
-    public void doBlockAction(Game game) throws Exception {
+    public void doBlockAction() throws Exception {
         throw new Exception("This action can't be blocked");
     }
 
-    public void doBlockActionInternal(Game game) throws Exception {
+    public void doBlockActionInternal() throws Exception {
 
-        game.playerDoingTheAction.cards().clear();
-        game.playerDoingTheAction.cards().addAll(cardsInPlayerHand);
+        gameEngine.playerDoingTheAction.cards().clear();
+        gameEngine.playerDoingTheAction.cards().addAll(cardsInPlayerHand);
 
-        game.deck().cards().clear();
-        game.deck().cards().addAll(originalDeck);
+        gameEngine.deck().cards().clear();
+        gameEngine.deck().cards().addAll(originalDeck);
 
     }
 

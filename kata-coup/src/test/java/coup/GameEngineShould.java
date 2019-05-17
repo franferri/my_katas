@@ -9,19 +9,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class GameShould {
+public class GameEngineShould {
 
-    Game game;
+    GameEngine gameEngine;
 
-    // TODO: If the game only have 2 players the rules are different
+    // TODO: If the gameEngine only have 2 players the rules are different
     // Mode 1 Normal (as with many players)
-    // Mode 2 The selected starting player (player 1) gets only 1 coin at the beginning of the game
+    // Mode 2 The selected starting player (player 1) gets only 1 coin at the beginning of the gameEngine
     // Mode 3 divide the cards in 3 sets of 5 (each set has 1 of each characters), Each player (player 1 and player 2) pick one of the sets and selects secretly a card and discard the rest.
     // Shuffle the third set and deal 1 card to each player and then put the remaining 3 cards face down ad court deck
 
 
-    // TODO: If the game only have 2 players the rules are different
-    // The selected starting player (player 1) gets only 1 coin at the beginning of the game
+    // TODO: If the gameEngine only have 2 players the rules are different
+    // The selected starting player (player 1) gets only 1 coin at the beginning of the gameEngine
 
     // TODO: To cover 3 players or more, to choose who is doing the actions in the tests, we can just use random(), or the test repeats itself for all possible combinations in a loop (changing who does the action, who calls the bluff, who blocks the action, and who calls the bluff on the block action)
 
@@ -34,13 +34,13 @@ public class GameShould {
         Player player1 = new Player();
         Player player2 = new Player();
 
-        game = new Game(player1, player2);
+        gameEngine = new GameEngine(player1, player2);
 
     }
 
     // CONTENTS
 
-    // COUP game is a 2-6 players game
+    // COUP gameEngine is a 2-6 players gameEngine
 
     @Test
     public void a_game_needs_2_players_at_least() throws Exception {
@@ -48,7 +48,7 @@ public class GameShould {
         Player player1 = new Player();
 
         // then
-        Assertions.assertThrows(Exception.class, () -> new Game(player1));
+        Assertions.assertThrows(Exception.class, () -> new GameEngine(player1));
     }
 
     @Test
@@ -64,7 +64,7 @@ public class GameShould {
         Player player7 = new Player();
 
         // then
-        Assertions.assertThrows(Exception.class, () -> new Game(player1, player2, player3, player4, player5, player6, player7));
+        Assertions.assertThrows(Exception.class, () -> new GameEngine(player1, player2, player3, player4, player5, player6, player7));
     }
 
     // The Treasury starts with 50 coins
@@ -73,7 +73,7 @@ public class GameShould {
     public void a_new_game_has_a_treasury_of_50_coins() {
 
         // when
-        int treasury = game.treasury();
+        int treasury = gameEngine.treasury();
 
         // then
         Assertions.assertEquals(50, treasury);
@@ -86,7 +86,7 @@ public class GameShould {
     public void a_new_game_has_a_deck() {
 
         // when
-        Deck deck = game.deck();
+        Deck deck = gameEngine.deck();
 
         // then
         Assertions.assertNotNull(deck);
@@ -97,7 +97,7 @@ public class GameShould {
     public void a_new_game_has_a_deck_of_15_cards() {
 
         // when
-        Deck deck = game.deck();
+        Deck deck = gameEngine.deck();
 
         // then
         Assertions.assertEquals(15, deck.cards().size());
@@ -156,10 +156,10 @@ public class GameShould {
     public void a_game_starts_with_a_shuffled_deck() throws Exception {
 
         // when
-        Deck deck = game.deck();
+        Deck deck = gameEngine.deck();
         List<Card> originalOrderCards = new ArrayList<>(deck.cards());
 
-        game.startGame();
+        gameEngine.startGame();
 
         // then
         Assertions.assertNotEquals(originalOrderCards, deck.cards());
@@ -170,17 +170,17 @@ public class GameShould {
     public void a_new_game_starts_with_two_character_cards_per_player() throws Exception {
 
         // given
-        int amountOfCardsAvailableInTheCourtDeck = game.deck().cards().size();
-        int cardsTakenFromTheDeck = game.players.size() * 2;
+        int amountOfCardsAvailableInTheCourtDeck = gameEngine.deck().cards().size();
+        int cardsTakenFromTheDeck = gameEngine.players.size() * 2;
 
         // when
-        game.startGame();
+        gameEngine.startGame();
 
         // then
-        Assertions.assertEquals(2, game.player(1).cardsInGame());
-        Assertions.assertEquals(2, game.player(2).cardsInGame());
+        Assertions.assertEquals(2, gameEngine.player(1).cardsInGame());
+        Assertions.assertEquals(2, gameEngine.player(2).cardsInGame());
 
-        Assertions.assertEquals(amountOfCardsAvailableInTheCourtDeck - cardsTakenFromTheDeck, game.deck().cards().size());
+        Assertions.assertEquals(amountOfCardsAvailableInTheCourtDeck - cardsTakenFromTheDeck, gameEngine.deck().cards().size());
 
     }
 
@@ -190,11 +190,11 @@ public class GameShould {
     public void a_new_game_starts_with_two_coins_per_player() throws Exception {
 
         // when
-        game.startGame();
+        gameEngine.startGame();
 
         // then
-        Assertions.assertEquals(2, game.player(1).coins());
-        Assertions.assertEquals(2, game.player(2).coins());
+        Assertions.assertEquals(2, gameEngine.player(1).coins());
+        Assertions.assertEquals(2, gameEngine.player(2).coins());
 
     }
 
@@ -206,12 +206,12 @@ public class GameShould {
     public void a_player_wins_when_no_more_players_left_alive() throws Exception {
 
         // when
-        game.startGame();
+        gameEngine.startGame();
 
-        game.player(1).dies();
+        gameEngine.player(1).dies();
 
         // then
-        Assertions.assertEquals(2, game.whoIsTheWinner());
+        Assertions.assertEquals(2, gameEngine.whoIsTheWinner());
 
     }
 
@@ -222,10 +222,10 @@ public class GameShould {
     public void a_new_game_starts_with_two_non_visible_character_cards_per_player() throws Exception {
 
         // when
-        game.startGame();
+        gameEngine.startGame();
 
         // then
-        for (Player player : game.players) {
+        for (Player player : gameEngine.players) {
             Assertions.assertFalse(player.cards().get(0).isVisible());
             Assertions.assertFalse(player.cards().get(1).isVisible());
         }
@@ -237,24 +237,24 @@ public class GameShould {
     public void when_a_player_loses_influence_must_reveal_one_of_its_cards() throws Exception {
 
         // when
-        game.startGame();
-        game.player(1).looseCard();
+        gameEngine.startGame();
+        gameEngine.player(1).looseCard();
 
         // then
-        Assertions.assertEquals(1, game.player(1).cardsInGame());
+        Assertions.assertEquals(1, gameEngine.player(1).cardsInGame());
 
     }
-    // When a player has lost all their influence they are exiled and out of the game
+    // When a player has lost all their influence they are exiled and out of the gameEngine
 
     @Test
     public void a_player_dies_when_he_runs_out_of_cards() throws Exception {
 
         // when
-        game.startGame();
-        game.player(1).dies();
+        gameEngine.startGame();
+        gameEngine.player(1).dies();
 
         // then
-        Assertions.assertTrue(game.player(1).isDead());
+        Assertions.assertTrue(gameEngine.player(1).isDead());
 
     }
 

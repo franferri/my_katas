@@ -1,118 +1,137 @@
 package coup;
 
-import java.util.ArrayList;
-import java.util.List;
+import coup.actions.Assassinate;
+import coup.actions.Exchange;
+import coup.actions.ForeignAid;
+import coup.actions.Steal;
 
 public class Game {
 
-    public List<Player> players = new ArrayList<>();
+    private GameEngine gameEngine;
+    private Action currentAction;
 
-    private int treasury;
-    private Deck deck;
+    private int currentPlayerPlaying = 0;
 
-    public Player playerDoingTheAction;
-    public Player playerBlockingTheAction;
-    public Player playerCallingTheBluff;
+    public Game(int players) throws Exception {
 
-    public Player targetPlayerForAssassination;
-    public Player targetPlayerForStealing;
+        Player[] playersList = new Player[players];
 
-    public Game(Player... players) throws Exception {
-
-        if (players.length < 2) {
-            throw new Exception("Need more players");
+        for (int i = 0; i < players; i++) {
+            playersList[i] = new Player();
         }
 
-        if (players.length > 4) {
-            throw new Exception("Only 4 players allowed");
-        }
+        gameEngine = new GameEngine(playersList);
 
-        for (Player player : players) {
-            this.players.add(player);
-        }
-
-        treasury = 50;
-
-        this.deck = new Deck();
+        gameEngine.startGame();
 
     }
 
-    public int treasury() {
-        return treasury;
-    }
-
-    public Deck deck() {
-        return deck;
-    }
-
-    public void startGame() throws Exception {
-
-        for (Player player : players) {
-            playerTakeCoinsFromTreasury(player, 2);
-            dealCardsToThePlayer(player, 2);
-        }
-
-        this.deck.shuffle();
-
-    }
-
-    public void playerReturnCoinsToTreasury(Player player, int coins) throws Exception {
-        if (player.coins() < coins) {
-            throw new Exception("Player don't have enough coins");
-        }
-        for (int i = 0; i < coins; i++) {
-            player.looseCoin();
-            ++treasury;
-        }
-    }
-
-    public void playerTakeCoinsFromTreasury(Player player, int coins) throws Exception {
-        if (treasury < coins) {
-            throw new Exception("Treasury depleted");
-        }
-        for (int i = 0; i < coins; i++) {
-            --treasury;
-            player.gainCoin();
-        }
-    }
-
-    public void playerTakesCoinsFromOtherPlayer(Player player_taking, Player player_losing, int coins) throws Exception {
-        if (player_losing.coins() < coins) {
-            throw new Exception("Player is broke and we can't take more coins from it");
-        }
-        for (int i = 0; i < coins; i++) {
-            player_losing.looseCoin();
-            player_taking.gainCoin();
-        }
-    }
-
-    private void dealCardsToThePlayer(Player player, int cards) {
-        for (int i = 0; i < cards; i++) {
-            player.cards().add(deck.cards().remove(0));
-        }
+    public GameEngine gameEngine() {
+        return gameEngine;
     }
 
     public Player player(int player) {
-        return players.get(--player);
+        return gameEngine.player(player);
     }
 
-    public int whoIsTheWinner() {
+    public void calculatePlayerPlaying() {
 
-        int playersAlive = players.size();
-        Player winner = null;
-        for (Player player : players) {
+        int nextPlayer = ++currentPlayerPlaying;
 
-            if (player.isDead()) {
-                --playersAlive;
+        // Si estamos en el último player, hay q ir al primero
+        // Si el siguiente player esta muerto, lo saltamos hasta encontrar uno vivo
+        // Si no encontramos ningún otro player vivo, el q qda es el ganador
+
+        if (nextPlayer > gameEngine.players.size()) {
+            nextPlayer = 1;
+        }
+
+        for (int i = 0; i < gameEngine.players.size(); i++) {
+
+            if (gameEngine.player(nextPlayer).isDead()) {
+                ++nextPlayer;
             } else {
-                winner = player;
+                currentPlayerPlaying = nextPlayer;
+                return;
             }
 
         }
 
-        if (playersAlive == 1) {
-            return players.indexOf(winner) + 1;
-        } else return -1;
+    }
+
+    public void playerTakesIncomeFromTreasury() {
+        calculatePlayerPlaying();
+        gameEngine.playerDoingTheAction = gameEngine.player(currentPlayerPlaying);
+
+    }
+
+    public void playerTakesForeignAidFromTreasury() throws Exception {
+        calculatePlayerPlaying();
+        gameEngine.playerDoingTheAction = gameEngine.player(currentPlayerPlaying);
+
+        currentAction = new ForeignAid(gameEngine);
+        currentAction.doAction();
+    }
+
+    public void playerCoups7(int targetedPlayer) {
+        calculatePlayerPlaying();
+        gameEngine.playerDoingTheAction = gameEngine.player(currentPlayerPlaying);
+
+    }
+
+    public void playerCoups10(int targetedPlayer) {
+        calculatePlayerPlaying();
+        gameEngine.playerDoingTheAction = gameEngine.player(currentPlayerPlaying);
+
+    }
+
+    public void playerTakesTaxesFromTreasury() {
+        calculatePlayerPlaying();
+        gameEngine.playerDoingTheAction = gameEngine.player(currentPlayerPlaying);
+
+    }
+
+    public void playerAssassinates(int targetedPlayer) throws Exception {
+        calculatePlayerPlaying();
+        gameEngine.playerDoingTheAction = gameEngine.player(currentPlayerPlaying);
+
+        currentAction = new Assassinate(gameEngine);
+        gameEngine.targetPlayerForAssassination = gameEngine.player(targetedPlayer);
+        currentAction.doAction();
+    }
+
+    public void playerExchangesCardsFromTheCourtDeck() throws Exception {
+        calculatePlayerPlaying();
+        gameEngine.playerDoingTheAction = gameEngine.player(currentPlayerPlaying);
+
+        currentAction = new Exchange(gameEngine);
+        currentAction.doAction();
+    }
+
+    public void playerStealsFrom(int targetedPlayer) throws Exception {
+        calculatePlayerPlaying();
+        gameEngine.playerDoingTheAction = gameEngine.player(currentPlayerPlaying);
+
+        currentAction = new Steal(gameEngine);
+        gameEngine.targetPlayerForStealing = gameEngine.player(targetedPlayer);
+        currentAction.doAction();
+
+    }
+
+    public void playerBlocks(int playerBlocking) throws Exception {
+        gameEngine.playerBlockingTheAction = gameEngine.player(playerBlocking);
+        currentAction.doBlockAction();
+
+    }
+
+    public void playerCallsTheBluff(int playerCallingTheBluff) throws Exception {
+        gameEngine.playerCallingTheBluff = gameEngine.player(playerCallingTheBluff);
+
+        if (currentAction.isBlocked()) {
+            currentAction.doCallTheBluffOnBlockAction();
+        } else {
+            currentAction.doCallTheBluffOnAction();
+        }
 
     }
 

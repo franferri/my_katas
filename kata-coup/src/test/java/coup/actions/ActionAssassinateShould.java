@@ -19,37 +19,37 @@ public class ActionAssassinateShould extends TestingActions {
     @BeforeEach
     public void before() throws Exception {
         super.before();
-        action = new Assassinate();
+        action = new Assassinate(gameEngine);
     }
 
     // Action costs money
     @Test
     public void player_needs_money_to_do_the_action() {
         // when
-        game.playerDoingTheAction = game.player(1);
-        game.targetPlayerForAssassination = game.player(2);
+        gameEngine.playerDoingTheAction = gameEngine.player(1);
+        gameEngine.targetPlayerForAssassination = gameEngine.player(2);
 
-        Assertions.assertThrows(Exception.class, () -> action.doAction(game));
+        Assertions.assertThrows(Exception.class, () -> action.doAction());
     }
 
     // Action
     @Test
     public void player_does_action() throws Exception {
         // given
-        game.player(1).gainCoin();
+        gameEngine.player(1).gainCoin();
 
         // when
-        game.playerDoingTheAction = game.player(1);
-        game.targetPlayerForAssassination = game.player(2);
+        gameEngine.playerDoingTheAction = gameEngine.player(1);
+        gameEngine.targetPlayerForAssassination = gameEngine.player(2);
 
-        action.doAction(game);
+        action.doAction();
 
         // then
-        Assertions.assertEquals(2, game.player(1).cardsInGame());
-        Assertions.assertEquals(0, game.player(1).coins());
+        Assertions.assertEquals(2, gameEngine.player(1).cardsInGame());
+        Assertions.assertEquals(0, gameEngine.player(1).coins());
 
-        Assertions.assertEquals(1, game.player(2).cardsInGame());
-        Assertions.assertEquals(2, game.player(2).coins());
+        Assertions.assertEquals(1, gameEngine.player(2).cardsInGame());
+        Assertions.assertEquals(2, gameEngine.player(2).coins());
     }
 
     // Action can be challenged
@@ -57,27 +57,27 @@ public class ActionAssassinateShould extends TestingActions {
     @Test
     public void player_does_action_and_other_player_calls_the_bluff_and_wins_the_call() throws Exception {
         // given
-        game.player(1).cards().clear();
-        game.player(1).cards().add(0, new TheAmbassator());
-        game.player(1).cards().add(0, new TheAmbassator());
-        game.player(1).gainCoin();
+        gameEngine.player(1).cards().clear();
+        gameEngine.player(1).cards().add(0, new TheAmbassator());
+        gameEngine.player(1).cards().add(0, new TheAmbassator());
+        gameEngine.player(1).gainCoin();
 
         // when
-        game.playerDoingTheAction = game.player(1);
-        game.targetPlayerForAssassination = game.player(2);
-        action.doAction(game);
+        gameEngine.playerDoingTheAction = gameEngine.player(1);
+        gameEngine.targetPlayerForAssassination = gameEngine.player(2);
+        action.doAction();
 
-        game.playerCallingTheBluff = game.player(2);
-        action.doCallTheBluffOnAction(game);
+        gameEngine.playerCallingTheBluff = gameEngine.player(2);
+        action.doCallTheBluffOnAction();
 
         // then
-        Assertions.assertEquals(49, game.treasury());
+        Assertions.assertEquals(49, gameEngine.treasury());
 
-        Assertions.assertEquals(1, game.player(1).cardsInGame());
-        Assertions.assertEquals(0, game.player(1).coins());
+        Assertions.assertEquals(1, gameEngine.player(1).cardsInGame());
+        Assertions.assertEquals(0, gameEngine.player(1).coins());
 
-        Assertions.assertEquals(2, game.player(2).cardsInGame());
-        Assertions.assertEquals(2, game.player(2).coins());
+        Assertions.assertEquals(2, gameEngine.player(2).cardsInGame());
+        Assertions.assertEquals(2, gameEngine.player(2).coins());
     }
 
     // Action can be challenged
@@ -85,50 +85,50 @@ public class ActionAssassinateShould extends TestingActions {
     @Test
     public void player_does_action_and_other_calls_the_bluff_and_lose_the_call() throws Exception {
         // given
-        game.player(1).cards().clear();
-        game.player(1).cards().add(0, new TheAssassin());
-        game.player(1).cards().add(0, new TheAmbassator());
-        game.player(1).gainCoin();
+        gameEngine.player(1).cards().clear();
+        gameEngine.player(1).cards().add(0, new TheAssassin());
+        gameEngine.player(1).cards().add(0, new TheAmbassator());
+        gameEngine.player(1).gainCoin();
 
         // when
-        game.playerDoingTheAction = game.player(1);
-        game.targetPlayerForAssassination = game.player(2);
-        action.doAction(game);
+        gameEngine.playerDoingTheAction = gameEngine.player(1);
+        gameEngine.targetPlayerForAssassination = gameEngine.player(2);
+        action.doAction();
 
-        game.playerCallingTheBluff = game.player(2);
-        action.doCallTheBluffOnAction(game);
+        gameEngine.playerCallingTheBluff = gameEngine.player(2);
+        action.doCallTheBluffOnAction();
 
         // then
-        Assertions.assertEquals(49, game.treasury());
+        Assertions.assertEquals(49, gameEngine.treasury());
 
-        Assertions.assertEquals(2, game.player(1).cardsInGame());
-        Assertions.assertEquals(0, game.player(1).coins());
+        Assertions.assertEquals(2, gameEngine.player(1).cardsInGame());
+        Assertions.assertEquals(0, gameEngine.player(1).coins());
 
-        Assertions.assertEquals(0, game.player(2).cardsInGame());
-        Assertions.assertTrue(game.player(2).isDead());
+        Assertions.assertEquals(0, gameEngine.player(2).cardsInGame());
+        Assertions.assertTrue(gameEngine.player(2).isDead());
     }
 
     // Action can be blocked
     @Test
     public void player_does_action_and_gets_block() throws Exception {
         // given
-        game.player(1).gainCoin();
+        gameEngine.player(1).gainCoin();
 
         // when
-        game.playerDoingTheAction = game.player(1);
-        game.targetPlayerForAssassination = game.player(2);
+        gameEngine.playerDoingTheAction = gameEngine.player(1);
+        gameEngine.targetPlayerForAssassination = gameEngine.player(2);
 
-        action.doAction(game);
+        action.doAction();
 
-        game.playerBlockingTheAction = game.player(2);
-        action.doBlockAction(game);
+        gameEngine.playerBlockingTheAction = gameEngine.player(2);
+        action.doBlockAction();
 
         // then
-        Assertions.assertEquals(2, game.player(1).cardsInGame());
-        Assertions.assertEquals(0, game.player(1).coins());
+        Assertions.assertEquals(2, gameEngine.player(1).cardsInGame());
+        Assertions.assertEquals(0, gameEngine.player(1).coins());
 
-        Assertions.assertEquals(2, game.player(2).cardsInGame());
-        Assertions.assertEquals(2, game.player(2).coins());
+        Assertions.assertEquals(2, gameEngine.player(2).cardsInGame());
+        Assertions.assertEquals(2, gameEngine.player(2).coins());
     }
 
     // Action can be blocked
@@ -137,31 +137,31 @@ public class ActionAssassinateShould extends TestingActions {
     @Test
     public void player_does_action_and_gets_block_but_a_player_calls_the_bluff_on_the_block_and_wins_the_call() throws Exception {
         // given
-        game.player(1).gainCoin();
+        gameEngine.player(1).gainCoin();
 
         // given
-        game.player(2).cards().clear();
-        game.player(2).cards().add(0, new TheAmbassator());
-        game.player(2).cards().add(1, new TheAmbassator());
+        gameEngine.player(2).cards().clear();
+        gameEngine.player(2).cards().add(0, new TheAmbassator());
+        gameEngine.player(2).cards().add(1, new TheAmbassator());
 
         // when
-        game.playerDoingTheAction = game.player(1);
-        game.targetPlayerForAssassination = game.player(2);
+        gameEngine.playerDoingTheAction = gameEngine.player(1);
+        gameEngine.targetPlayerForAssassination = gameEngine.player(2);
 
-        action.doAction(game);
+        action.doAction();
 
-        game.playerBlockingTheAction = game.player(2);
-        action.doBlockAction(game);
+        gameEngine.playerBlockingTheAction = gameEngine.player(2);
+        action.doBlockAction();
 
-        game.playerCallingTheBluff = game.player(1);
-        action.doCallTheBluffOnBlockAction(game);
+        gameEngine.playerCallingTheBluff = gameEngine.player(1);
+        action.doCallTheBluffOnBlockAction();
 
         // then
-        Assertions.assertEquals(2, game.player(1).cardsInGame());
-        Assertions.assertEquals(0, game.player(1).coins());
+        Assertions.assertEquals(2, gameEngine.player(1).cardsInGame());
+        Assertions.assertEquals(0, gameEngine.player(1).coins());
 
-        Assertions.assertEquals(0, game.player(2).cardsInGame());
-        Assertions.assertTrue(game.player(2).isDead());
+        Assertions.assertEquals(0, gameEngine.player(2).cardsInGame());
+        Assertions.assertTrue(gameEngine.player(2).isDead());
     }
 
     // Action can be blocked
@@ -170,31 +170,31 @@ public class ActionAssassinateShould extends TestingActions {
     @Test
     public void player_does_action_and_gets_block_but_a_player_calls_the_bluff_on_the_block_and_lose_the_call() throws Exception {
         // given
-        game.player(1).gainCoin();
+        gameEngine.player(1).gainCoin();
 
         // given
-        game.player(2).cards().clear();
-        game.player(2).cards().add(0, new TheContessa());
-        game.player(2).cards().add(1, new TheAmbassator());
+        gameEngine.player(2).cards().clear();
+        gameEngine.player(2).cards().add(0, new TheContessa());
+        gameEngine.player(2).cards().add(1, new TheAmbassator());
 
         // when
-        game.playerDoingTheAction = game.player(1);
-        game.targetPlayerForAssassination = game.player(2);
+        gameEngine.playerDoingTheAction = gameEngine.player(1);
+        gameEngine.targetPlayerForAssassination = gameEngine.player(2);
 
-        action.doAction(game);
+        action.doAction();
 
-        game.playerBlockingTheAction = game.player(2);
-        action.doBlockAction(game);
+        gameEngine.playerBlockingTheAction = gameEngine.player(2);
+        action.doBlockAction();
 
-        game.playerCallingTheBluff = game.player(1);
-        action.doCallTheBluffOnBlockAction(game);
+        gameEngine.playerCallingTheBluff = gameEngine.player(1);
+        action.doCallTheBluffOnBlockAction();
 
         // then
-        Assertions.assertEquals(1, game.player(1).cardsInGame());
-        Assertions.assertEquals(0, game.player(1).coins());
+        Assertions.assertEquals(1, gameEngine.player(1).cardsInGame());
+        Assertions.assertEquals(0, gameEngine.player(1).coins());
 
-        Assertions.assertEquals(2, game.player(2).cardsInGame());
-        Assertions.assertEquals(2, game.player(2).coins());
+        Assertions.assertEquals(2, gameEngine.player(2).cardsInGame());
+        Assertions.assertEquals(2, gameEngine.player(2).coins());
 
     }
 

@@ -1,7 +1,7 @@
 package coup.actions;
 
 import coup.Action;
-import coup.Game;
+import coup.GameEngine;
 
 public class Coup10 extends Action {
 
@@ -10,6 +10,13 @@ public class Coup10 extends Action {
 
     // Block: Cannot be blocked
     // -
+
+    public Coup10() {
+    }
+
+    public Coup10(GameEngine gameEngine) {
+        super(gameEngine);
+    }
 
     // Setup
     public boolean canThisActionBeChallenged() {
@@ -21,13 +28,13 @@ public class Coup10 extends Action {
     }
 
     // Action
-    public void doActionInternal(Game game) throws Exception {
-        game.playerReturnCoinsToTreasury(game.playerDoingTheAction, 10);
-        game.targetPlayerForAssassination.looseCard();
+    public void doActionInternal() throws Exception {
+        gameEngine.playerReturnCoinsToTreasury(gameEngine.playerDoingTheAction, 10);
+        gameEngine.targetPlayerForAssassination.looseCard();
     }
 
     // Block Action
-    public void doBlockAction(Game game) throws Exception {
+    public void doBlockAction() throws Exception {
         throw new Exception("This action can't be blocked");
     }
 

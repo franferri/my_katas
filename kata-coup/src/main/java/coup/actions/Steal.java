@@ -1,7 +1,7 @@
 package coup.actions;
 
 import coup.Action;
-import coup.Game;
+import coup.GameEngine;
 
 public class Steal extends Action {
 
@@ -14,14 +14,21 @@ public class Steal extends Action {
     // Block: Can be blocked by Ambassador
     // Block by Ambassador can be challenged
 
+    public Steal() {
+    }
+
+    public Steal(GameEngine gameEngine) {
+        super(gameEngine);
+    }
+
     // Action
-    public void doActionInternal(Game game) throws Exception {
-        game.playerTakesCoinsFromOtherPlayer(game.playerDoingTheAction, game.targetPlayerForStealing, 2);
+    public void doActionInternal() throws Exception {
+        gameEngine.playerTakesCoinsFromOtherPlayer(gameEngine.playerDoingTheAction, gameEngine.targetPlayerForStealing, 2);
     }
 
     // Block Action
-    public void doBlockActionInternal(Game game) throws Exception {
-        game.playerTakesCoinsFromOtherPlayer(game.targetPlayerForStealing, game.playerDoingTheAction, 2);
+    public void doBlockActionInternal() throws Exception {
+        gameEngine.playerTakesCoinsFromOtherPlayer(gameEngine.targetPlayerForStealing, gameEngine.playerDoingTheAction, 2);
     }
 
 }

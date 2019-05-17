@@ -2,6 +2,16 @@ package coup;
 
 public abstract class Action {
 
+    protected GameEngine gameEngine;
+    private boolean isBlocked;
+
+    public Action() {
+    }
+
+    public Action(GameEngine gameEngine) {
+        this.gameEngine = gameEngine;
+    }
+
     // Setup
     public boolean canThisActionBeChallenged() {
         return true;
@@ -12,45 +22,50 @@ public abstract class Action {
     }
 
     // Action
-    public void doAction(Game game) throws Exception {
-        doActionInternal(game);
+    public void doAction() throws Exception {
+        doActionInternal();
+        isBlocked = false;
     }
 
-    public abstract void doActionInternal(Game game) throws Exception;
+    public abstract void doActionInternal() throws Exception;
 
     // Block Action
-    public void doBlockAction(Game game) throws Exception {
-        doBlockActionInternal(game);
+    public void doBlockAction() throws Exception {
+        doBlockActionInternal();
+        isBlocked = true;
     }
 
-    public void doBlockActionInternal(Game game) throws Exception {
+    public void doBlockActionInternal() throws Exception {
         throw new Exception("method not overridden");
     }
 
     // Bluff
-    public void doCallTheBluffOnAction(Game game) throws Exception {
+    public void doCallTheBluffOnAction() throws Exception {
         if (!canThisActionBeChallenged()) {
             throw new Exception("This action can't be challenged");
         }
-        if (game.playerDoingTheAction.canHeDoTheAction(this)) {
-            game.playerCallingTheBluff.looseCard();
+        if (gameEngine.playerDoingTheAction.canHeDoTheAction(this)) {
+            gameEngine.playerCallingTheBluff.looseCard();
         } else {
-            doBlockActionInternal(game);
-            game.playerDoingTheAction.looseCard();
+            doBlockActionInternal();
+            gameEngine.playerDoingTheAction.looseCard();
         }
     }
 
-    public void doCallTheBluffOnBlockAction(Game game) throws Exception {
+    public void doCallTheBluffOnBlockAction() throws Exception {
         if (!canThisBlockActionBeChallenged()) {
             throw new Exception("This blockaction can't be challenged");
         }
 
-        if (game.playerBlockingTheAction.canHeBlockTheAction(this)) {
-            game.playerCallingTheBluff.looseCard();
+        if (gameEngine.playerBlockingTheAction.canHeBlockTheAction(this)) {
+            gameEngine.playerCallingTheBluff.looseCard();
         } else {
-            doActionInternal(game);
-            game.playerBlockingTheAction.looseCard();
+            doActionInternal();
+            gameEngine.playerBlockingTheAction.looseCard();
         }
     }
 
+    public boolean isBlocked() {
+        return isBlocked;
+    }
 }

@@ -1,7 +1,7 @@
 package coup.actions;
 
 import coup.Action;
-import coup.Game;
+import coup.GameEngine;
 
 public class Assassinate extends Action {
 
@@ -11,21 +11,28 @@ public class Assassinate extends Action {
     // Block: Can be blocked by Contessa
     // Block can be challenged
 
+    public Assassinate() {
+    }
+
+    public Assassinate(GameEngine gameEngine) {
+        super(gameEngine);
+    }
+
     boolean paid = false;
 
     // Action
-    public void doActionInternal(Game game) throws Exception {
+    public void doActionInternal() throws Exception {
 
         if (!paid) {
-            game.playerReturnCoinsToTreasury(game.playerDoingTheAction, 3);
+            gameEngine.playerReturnCoinsToTreasury(gameEngine.playerDoingTheAction, 3);
             paid = true;
         }
-        game.targetPlayerForAssassination.looseCard();
+        gameEngine.targetPlayerForAssassination.looseCard();
     }
 
     // Block Action
-    public void doBlockActionInternal(Game game) throws Exception {
-        game.targetPlayerForAssassination.restoreLostCard();
+    public void doBlockActionInternal() throws Exception {
+        gameEngine.targetPlayerForAssassination.restoreLostCard();
     }
 
 }

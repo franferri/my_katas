@@ -17,7 +17,7 @@ public class ActionTaxShould extends TestingActions {
     @BeforeEach
     public void before() throws Exception {
         super.before();
-        action = new Tax();
+        action = new Tax(gameEngine);
     }
 
     // Action
@@ -25,17 +25,17 @@ public class ActionTaxShould extends TestingActions {
     public void player_does_action() throws Exception {
         // when
 
-        game.playerDoingTheAction = game.player(1);
-        action.doAction(game);
+        gameEngine.playerDoingTheAction = gameEngine.player(1);
+        action.doAction();
 
         // then
-        Assertions.assertEquals(43, game.treasury());
+        Assertions.assertEquals(43, gameEngine.treasury());
 
-        Assertions.assertEquals(2, game.player(1).cardsInGame());
-        Assertions.assertEquals(5, game.player(1).coins());
+        Assertions.assertEquals(2, gameEngine.player(1).cardsInGame());
+        Assertions.assertEquals(5, gameEngine.player(1).coins());
 
-        Assertions.assertEquals(2, game.player(2).cardsInGame());
-        Assertions.assertEquals(2, game.player(2).coins());
+        Assertions.assertEquals(2, gameEngine.player(2).cardsInGame());
+        Assertions.assertEquals(2, gameEngine.player(2).coins());
     }
 
     // Action can be challenged
@@ -43,25 +43,25 @@ public class ActionTaxShould extends TestingActions {
     @Test
     public void player_does_action_and_other_player_calls_the_bluff_and_wins_the_call() throws Exception {
         // given
-        game.player(1).cards().clear();
-        game.player(1).cards().add(0, new TheAmbassator());
-        game.player(1).cards().add(0, new TheAmbassator());
+        gameEngine.player(1).cards().clear();
+        gameEngine.player(1).cards().add(0, new TheAmbassator());
+        gameEngine.player(1).cards().add(0, new TheAmbassator());
 
         // when
-        game.playerDoingTheAction = game.player(1);
-        action.doAction(game);
+        gameEngine.playerDoingTheAction = gameEngine.player(1);
+        action.doAction();
 
-        game.playerCallingTheBluff = game.player(2);
-        action.doCallTheBluffOnAction(game);
+        gameEngine.playerCallingTheBluff = gameEngine.player(2);
+        action.doCallTheBluffOnAction();
 
         // then
-        Assertions.assertEquals(46, game.treasury());
+        Assertions.assertEquals(46, gameEngine.treasury());
 
-        Assertions.assertEquals(1, game.player(1).cardsInGame());
-        Assertions.assertEquals(2, game.player(1).coins());
+        Assertions.assertEquals(1, gameEngine.player(1).cardsInGame());
+        Assertions.assertEquals(2, gameEngine.player(1).coins());
 
-        Assertions.assertEquals(2, game.player(2).cardsInGame());
-        Assertions.assertEquals(2, game.player(2).coins());
+        Assertions.assertEquals(2, gameEngine.player(2).cardsInGame());
+        Assertions.assertEquals(2, gameEngine.player(2).coins());
     }
 
     // Action can be challenged
@@ -69,25 +69,25 @@ public class ActionTaxShould extends TestingActions {
     @Test
     public void player_does_action_and_other_calls_the_bluff_and_lose_the_call() throws Exception {
         // given
-        game.player(1).cards().clear();
-        game.player(1).cards().add(0, new TheDuke());
-        game.player(1).cards().add(0, new TheAmbassator());
+        gameEngine.player(1).cards().clear();
+        gameEngine.player(1).cards().add(0, new TheDuke());
+        gameEngine.player(1).cards().add(0, new TheAmbassator());
 
         // when
-        game.playerDoingTheAction = game.player(1);
-        action.doAction(game);
+        gameEngine.playerDoingTheAction = gameEngine.player(1);
+        action.doAction();
 
-        game.playerCallingTheBluff = game.player(2);
-        action.doCallTheBluffOnAction(game);
+        gameEngine.playerCallingTheBluff = gameEngine.player(2);
+        action.doCallTheBluffOnAction();
 
         // then
-        Assertions.assertEquals(43, game.treasury());
+        Assertions.assertEquals(43, gameEngine.treasury());
 
-        Assertions.assertEquals(2, game.player(1).cardsInGame());
-        Assertions.assertEquals(5, game.player(1).coins());
+        Assertions.assertEquals(2, gameEngine.player(1).cardsInGame());
+        Assertions.assertEquals(5, gameEngine.player(1).coins());
 
-        Assertions.assertEquals(1, game.player(2).cardsInGame());
-        Assertions.assertEquals(2, game.player(2).coins());
+        Assertions.assertEquals(1, gameEngine.player(2).cardsInGame());
+        Assertions.assertEquals(2, gameEngine.player(2).coins());
     }
 
     // Action cannot be blocked
@@ -95,11 +95,11 @@ public class ActionTaxShould extends TestingActions {
     public void player_blocks_action() throws Exception {
         // when
 
-        game.playerDoingTheAction = game.player(1);
-        action.doAction(game);
+        gameEngine.playerDoingTheAction = gameEngine.player(1);
+        action.doAction();
 
-        game.playerBlockingTheAction = game.player(2);
-        Assertions.assertThrows(Exception.class, () -> action.doBlockAction(game));
+        gameEngine.playerBlockingTheAction = gameEngine.player(2);
+        Assertions.assertThrows(Exception.class, () -> action.doBlockAction());
     }
 
 }
