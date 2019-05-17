@@ -29,6 +29,9 @@ public class Coup10 extends Action {
 
     // Action
     public void doActionInternal() throws Exception {
+        if (gameEngine.playerDoingTheAction == gameEngine.targetPlayerForAssassination) {
+            throw new Exception("Action can't be done to himself");
+        }
         gameEngine.playerReturnCoinsToTreasury(gameEngine.playerDoingTheAction, 10);
         gameEngine.targetPlayerForAssassination.looseCard();
     }

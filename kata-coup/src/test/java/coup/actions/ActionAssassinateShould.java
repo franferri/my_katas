@@ -13,7 +13,7 @@ public class ActionAssassinateShould extends TestingActions {
     // Action: Pay 3 coins, choose the player to lose influence
     // Action can be challenged
 
-    // Block: Can be blocked by Contessa
+    // Block: Can be blocked by a player claiming Contessa
     // Block can be challenged
 
     @BeforeEach
@@ -29,7 +29,20 @@ public class ActionAssassinateShould extends TestingActions {
         gameEngine.playerDoingTheAction = gameEngine.player(1);
         gameEngine.targetPlayerForAssassination = gameEngine.player(2);
 
-        Assertions.assertThrows(Exception.class, () -> action.doAction());
+        assertThrowsWithMessage(() -> action.doAction(), "Player don't have enough coins");
+    }
+
+    // Action cant be done to himself (Engine integrity test)
+    @Test
+    public void player_does_action_to_himself() {
+        // given
+        gameEngine.player(1).gainCoin();
+
+        // when
+        gameEngine.playerDoingTheAction = gameEngine.player(1);
+        gameEngine.targetPlayerForAssassination = gameEngine.player(1);
+
+        assertThrowsWithMessage(() -> action.doAction(), "Action can't be done to himself");
     }
 
     // Action
@@ -50,6 +63,25 @@ public class ActionAssassinateShould extends TestingActions {
 
         Assertions.assertEquals(1, gameEngine.player(2).cardsInGame());
         Assertions.assertEquals(2, gameEngine.player(2).coins());
+    }
+
+    // Player cant challenge himself (Engine integrity test)
+    @Test
+    public void player_does_action_and_challenge_himself() throws Exception {
+        // given
+        gameEngine.player(1).cards().clear();
+        gameEngine.player(1).cards().add(0, new TheAmbassator());
+        gameEngine.player(1).cards().add(0, new TheAmbassator());
+        gameEngine.player(1).gainCoin();
+
+        // when
+        gameEngine.playerDoingTheAction = gameEngine.player(1);
+        gameEngine.targetPlayerForAssassination = gameEngine.player(2);
+        action.doAction();
+
+        gameEngine.playerCallingTheBluff = gameEngine.player(1);
+
+        assertThrowsWithMessage(() -> action.doCallTheBluffOnAction(), "Action bluff can't be called over himself");
     }
 
     // Action can be challenged
@@ -108,6 +140,22 @@ public class ActionAssassinateShould extends TestingActions {
         Assertions.assertTrue(gameEngine.player(2).isDead());
     }
 
+    // Player cant block himself (Engine integrity test)
+    @Test
+    public void player_does_action_and_blocks_himself() throws Exception {
+        // given
+        gameEngine.player(1).gainCoin();
+
+        // when
+        gameEngine.playerDoingTheAction = gameEngine.player(1);
+        gameEngine.targetPlayerForAssassination = gameEngine.player(2);
+        action.doAction();
+
+        gameEngine.playerBlockingTheAction = gameEngine.player(1);
+
+        assertThrowsWithMessage(() -> action.doBlockAction(), "Player cant block himself");
+    }
+
     // Action can be blocked
     @Test
     public void player_does_action_and_gets_block() throws Exception {
@@ -117,7 +165,6 @@ public class ActionAssassinateShould extends TestingActions {
         // when
         gameEngine.playerDoingTheAction = gameEngine.player(1);
         gameEngine.targetPlayerForAssassination = gameEngine.player(2);
-
         action.doAction();
 
         gameEngine.playerBlockingTheAction = gameEngine.player(2);
@@ -129,6 +176,31 @@ public class ActionAssassinateShould extends TestingActions {
 
         Assertions.assertEquals(2, gameEngine.player(2).cardsInGame());
         Assertions.assertEquals(2, gameEngine.player(2).coins());
+    }
+
+    // BlockAction bluff can't be called over the player doing the BlockAction (Engine integrity test)
+    @Test
+    public void player_does_action_and_gets_block_then_the_player_blocking_challenge_himself() throws Exception {
+        // given
+        gameEngine.player(1).gainCoin();
+
+        // given
+        gameEngine.player(2).cards().clear();
+        gameEngine.player(2).cards().add(0, new TheAmbassator());
+        gameEngine.player(2).cards().add(1, new TheAmbassator());
+
+        // when
+        gameEngine.playerDoingTheAction = gameEngine.player(1);
+        gameEngine.targetPlayerForAssassination = gameEngine.player(2);
+
+        action.doAction();
+
+        gameEngine.playerBlockingTheAction = gameEngine.player(2);
+        action.doBlockAction();
+
+        gameEngine.playerCallingTheBluff = gameEngine.player(2);
+
+        assertThrowsWithMessage(() -> action.doCallTheBluffOnBlockAction(), "BlockAction bluff can't be called over the player doing the BlockAction");
     }
 
     // Action can be blocked

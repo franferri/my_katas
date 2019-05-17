@@ -22,7 +22,9 @@ public class Assassinate extends Action {
 
     // Action
     public void doActionInternal() throws Exception {
-
+        if (gameEngine.playerDoingTheAction == gameEngine.targetPlayerForAssassination) {
+            throw new Exception("Action can't be done to himself");
+        }
         if (!paid) {
             gameEngine.playerReturnCoinsToTreasury(gameEngine.playerDoingTheAction, 3);
             paid = true;
@@ -32,6 +34,9 @@ public class Assassinate extends Action {
 
     // Block Action
     public void doBlockActionInternal() throws Exception {
+        if (gameEngine.playerDoingTheAction == gameEngine.playerBlockingTheAction) {
+            throw new Exception("Player cant block himself");
+        }
         gameEngine.targetPlayerForAssassination.restoreLostCard();
     }
 

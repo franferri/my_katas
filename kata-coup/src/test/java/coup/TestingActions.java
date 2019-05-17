@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.function.Executable;
 
 public class TestingActions {
 
@@ -21,6 +22,11 @@ public class TestingActions {
         gameEngine = new GameEngine(player1, player2);
         gameEngine.startGame();
 
+    }
+
+    protected void assertThrowsWithMessage(Executable executable, String message) {
+        Exception thrown = Assertions.assertThrows(Exception.class, executable, "The received Exception is not the expected type of Exception");
+        Assertions.assertTrue(thrown.getMessage().equals(message), "The received Exception message is not the expected: Received = '" + thrown.getMessage() + "', Expected = '" + message+"'");
     }
 
     // Action costs money

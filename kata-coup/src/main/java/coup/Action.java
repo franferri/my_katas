@@ -1,5 +1,6 @@
 package coup;
 
+
 public abstract class Action {
 
     protected GameEngine gameEngine;
@@ -41,6 +42,9 @@ public abstract class Action {
 
     // Bluff
     public void doCallTheBluffOnAction() throws Exception {
+        if (gameEngine.playerDoingTheAction == gameEngine.playerCallingTheBluff) {
+            throw new Exception("Action bluff can't be called over himself");
+        }
         if (!canThisActionBeChallenged()) {
             throw new Exception("This action can't be challenged");
         }
@@ -53,6 +57,9 @@ public abstract class Action {
     }
 
     public void doCallTheBluffOnBlockAction() throws Exception {
+        if (gameEngine.playerBlockingTheAction == gameEngine.playerCallingTheBluff) {
+            throw new Exception("BlockAction bluff can't be called over the player doing the BlockAction");
+        }
         if (!canThisBlockActionBeChallenged()) {
             throw new Exception("This blockaction can't be challenged");
         }
@@ -68,4 +75,5 @@ public abstract class Action {
     public boolean isBlocked() {
         return isBlocked;
     }
+
 }

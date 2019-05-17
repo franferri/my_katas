@@ -26,14 +26,23 @@ public class ActionCoup7Should extends TestingActions {
         gameEngine.playerDoingTheAction = gameEngine.player(1);
         gameEngine.targetPlayerForAssassination = gameEngine.player(2);
 
-        Assertions.assertThrows(Exception.class, () -> action.doAction());
+        assertThrowsWithMessage(() -> action.doAction(), "Player don't have enough coins");
+    }
+
+    // Action cant be done to himself (Engine integrity test)
+@Test
+    public void player_does_action_to_himself() throws Exception {
+        // when
+        gameEngine.playerDoingTheAction = gameEngine.player(1);
+        gameEngine.playerTakeCoinsFromTreasury(gameEngine.playerDoingTheAction, 5);
+        gameEngine.targetPlayerForAssassination = gameEngine.player(1);
+
+        assertThrowsWithMessage(() -> action.doAction(), "Action can't be done to himself");
     }
 
     // Action
     @Test
     public void player_does_action() throws Exception {
-        // given
-
         // when
         gameEngine.playerDoingTheAction = gameEngine.player(1);
         gameEngine.playerTakeCoinsFromTreasury(gameEngine.playerDoingTheAction, 5);
@@ -66,7 +75,7 @@ public class ActionCoup7Should extends TestingActions {
 
         gameEngine.playerCallingTheBluff = gameEngine.player(2);
 
-        Assertions.assertThrows(Exception.class, () -> action.doCallTheBluffOnAction());
+        assertThrowsWithMessage(() -> action.doCallTheBluffOnAction(), "This action can't be challenged");
 
     }
 

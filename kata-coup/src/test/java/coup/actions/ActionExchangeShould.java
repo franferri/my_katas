@@ -38,6 +38,22 @@ public class ActionExchangeShould extends TestingActions {
         Assertions.assertEquals(2, gameEngine.player(2).coins());
     }
 
+    // Player cant challenge himself (Engine integrity test)
+    @Test
+    public void player_does_action_and_challenge_himself() throws Exception {
+        // when
+        gameEngine.playerDoingTheAction = gameEngine.player(1);
+        action.doAction();
+
+        gameEngine.player(1).cards().clear();// Needs to be here since the action will reshuffle the hand
+        gameEngine.player(1).cards().add(0, new TheDuke());
+        gameEngine.player(1).cards().add(0, new TheDuke());
+
+        gameEngine.playerCallingTheBluff = gameEngine.player(1);
+
+        assertThrowsWithMessage(() -> action.doCallTheBluffOnAction(), "Action bluff can't be called over himself");
+    }
+
     // Action can be challenged
     // Challenger (wins)
     @Test

@@ -43,7 +43,7 @@ public class ActionIncomeShould extends TestingActions {
         action.doAction();
 
         gameEngine.playerCallingTheBluff = gameEngine.player(2);
-        Assertions.assertThrows(Exception.class, () -> action.doCallTheBluffOnAction());
+        assertThrowsWithMessage(() -> action.doCallTheBluffOnAction(), "This action can't be challenged");
 
     }
 

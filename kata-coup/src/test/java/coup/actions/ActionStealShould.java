@@ -13,10 +13,10 @@ public class ActionStealShould extends TestingActions {
     // Action: Take 2 coins from another player
     // Action can be challenged
 
-    // Block: Can be blocked by Captain
+    // Block: Can be blocked by a player claiming Captain
     // Block by Captain can be challenged
 
-    // Block: Can be blocked by Ambassador
+    // Block: Can be blocked by a player claiming Ambassador
     // Block by Ambassador can be challenged
 
     @BeforeEach
@@ -25,16 +25,25 @@ public class ActionStealShould extends TestingActions {
         action = new Steal(gameEngine);
     }
 
-
-    // Action steal more than other player has
+    // Action try to steal more than other player has
     @Test
-    public void player_does_action_to_a_poor_player() {
+    public void player_does_action_to_a_poor_player() throws Exception {
         // when
         gameEngine.playerDoingTheAction = gameEngine.player(1);
         gameEngine.targetPlayerForStealing = gameEngine.player(2);
-        gameEngine.player(2).looseCoin();
+        gameEngine.playerReturnCoinsToTreasury(gameEngine.targetPlayerForStealing, 2);
 
-        Assertions.assertThrows(Exception.class, () -> action.doAction());
+        assertThrowsWithMessage(() -> action.doAction(), "Player is broke and we can't take more coins from it");
+    }
+
+    // Action cant be done to himself (Engine integrity test)
+    @Test
+    public void player_does_action_to_himself() {
+        // when
+        gameEngine.playerDoingTheAction = gameEngine.player(1);
+        gameEngine.targetPlayerForStealing = gameEngine.player(1);
+
+        assertThrowsWithMessage(() -> action.doAction(), "Action can't be done to himself");
     }
 
     // Action
@@ -53,6 +62,19 @@ public class ActionStealShould extends TestingActions {
 
         Assertions.assertEquals(2, gameEngine.player(2).cardsInGame());
         Assertions.assertEquals(0, gameEngine.player(2).coins());
+    }
+
+    // Player cant challenge himself (Engine integrity test)
+    @Test
+    public void player_does_action_and_challenge_himself() throws Exception {
+        // when
+        gameEngine.playerDoingTheAction = gameEngine.player(1);
+        gameEngine.targetPlayerForStealing = gameEngine.player(2);
+        action.doAction();
+
+        gameEngine.playerCallingTheBluff = gameEngine.player(1);
+
+        assertThrowsWithMessage(() -> action.doCallTheBluffOnAction(), "Action bluff can't be called over himself");
     }
 
     // Action can be challenged
@@ -109,6 +131,24 @@ public class ActionStealShould extends TestingActions {
         Assertions.assertEquals(0, gameEngine.player(2).coins());
     }
 
+    // Player cant block himself (Engine integrity test)
+    @Test
+    public void player_does_action_and_blocks_himself() throws Exception {
+        // given
+        gameEngine.player(2).cards().clear();
+        gameEngine.player(2).cards().add(0, new TheCaptain());
+        gameEngine.player(2).cards().add(1, new TheDuke());
+
+        // when
+        gameEngine.playerDoingTheAction = gameEngine.player(1);
+        gameEngine.targetPlayerForStealing = gameEngine.player(2);
+        action.doAction();
+
+        gameEngine.playerBlockingTheAction = gameEngine.player(1);
+
+        assertThrowsWithMessage(() -> action.doBlockAction(), "Player cant block himself");
+    }
+
     // Action can be blocked (by Captain)
     @Test
     public void player_does_action_and_gets_block_by_captain() throws Exception {
@@ -135,6 +175,27 @@ public class ActionStealShould extends TestingActions {
         Assertions.assertEquals(2, gameEngine.player(2).coins());
     }
 
+    // BlockAction bluff can't be called over the player doing the BlockAction (Engine integrity test)
+    @Test
+    public void player_does_action_and_gets_block_then_the_player_blocking_challenge_himself() throws Exception {
+        // given
+        gameEngine.player(2).cards().clear();
+        gameEngine.player(2).cards().add(0, new TheDuke());
+        gameEngine.player(2).cards().add(1, new TheDuke());
+
+        // when
+        gameEngine.playerDoingTheAction = gameEngine.player(1);
+        gameEngine.targetPlayerForStealing = gameEngine.player(2);
+        action.doAction();
+
+        gameEngine.playerBlockingTheAction = gameEngine.player(2);
+        action.doBlockAction();
+
+        gameEngine.playerCallingTheBluff = gameEngine.player(2);
+
+        assertThrowsWithMessage(() -> action.doCallTheBluffOnBlockAction(), "BlockAction bluff can't be called over the player doing the BlockAction");
+    }
+
     // Action can be blocked (by Captain)
     // Block can be challenged
     // Challenger wins
@@ -155,7 +216,6 @@ public class ActionStealShould extends TestingActions {
 
         gameEngine.playerCallingTheBluff = gameEngine.player(1);
         action.doCallTheBluffOnBlockAction();
-
 
         // then
         Assertions.assertEquals(46, gameEngine.treasury());
@@ -196,7 +256,6 @@ public class ActionStealShould extends TestingActions {
 
         Assertions.assertEquals(2, gameEngine.player(2).cardsInGame());
         Assertions.assertEquals(2, gameEngine.player(2).coins());
-
 
     }
 

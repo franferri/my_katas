@@ -25,9 +25,7 @@ public class TwoPlayersGameShould {
 
     @BeforeEach
     public void before() throws Exception {
-
         game = new Game(2);
-
     }
 
     @Test
@@ -80,5 +78,27 @@ public class TwoPlayersGameShould {
         Assertions.assertTrue(game.gameEngine().player(1).isDead());
 
     }
+
+    @Test
+    public void playUsingAllActions() throws Exception {
+
+        game.playerTakesIncomeFromTreasury();
+        game.playerTakesForeignAidFromTreasury();
+        game.playerTakesTaxesFromTreasury();
+        game.playerAssassinates(1);
+        game.playerExchangesCardsFromTheCourtDeck();
+        game.playerStealsFrom(1);
+
+    }
+
+    // We need to test from 2 - 6 players
+    // We need to test all actions, blocks, bluffs actions, bluff blocks
+    // We need to test player A does an action and every other player blocks it
+    // We need to test player A does an action and every other player calls bluffs it and wins the call
+    // We need to test player A does an action and every other player calls bluffs it and loses the call
+    // We need to test player A does an action and every other player blocks it every other player calls the bluff on the block and wins the call
+    // We need to test player A does an action and every other player blocks it every other player calls the bluff on the block and loses the call
+
+    // We need to assert the outcomes of every path
 
 }
