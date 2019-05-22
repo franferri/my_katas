@@ -1,4 +1,14 @@
 
+### Remaining
+
+* A simulation of just a hand with:
+  * random number of users
+  * random users will randomly block and call the bluff
+  * Actions will be triggered random as well for the playing user
+  * This test will run million times and the results will be asserted against a file
+  * the file well contain all the action -> results possible combinations pre-calculated
+ 
+
 ## Coup
 
 This is just a funny exercise of having a library able to play the game following all the rules and testing all possible combinations.
