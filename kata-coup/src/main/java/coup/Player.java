@@ -116,7 +116,7 @@ public class Player {
 
     public boolean canHeDoTheAction(Action action) {
 
-        List<Card> cardsToCheck = cards;
+        List<Card> cardsToCheck = cards();
 
         if (action instanceof Exchange){
             cardsToCheck = ((Exchange)action).originalCardsInPlayerHand;

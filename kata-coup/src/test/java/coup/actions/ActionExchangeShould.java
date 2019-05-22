@@ -1,11 +1,19 @@
 package coup.actions;
 
+import coup.Card;
+import coup.Player;
 import coup.TestingActions;
 import coup.cards.TheAmbassator;
 import coup.cards.TheDuke;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import static org.mockito.Mockito.*;
 
 public class ActionExchangeShould extends TestingActions {
 
@@ -42,13 +50,17 @@ public class ActionExchangeShould extends TestingActions {
     // Player cant challenge himself (Engine integrity test)
     @Test
     public void player_does_action_and_challenge_himself() throws Exception {
+
+        // given
+        List<Card> cards = Arrays.asList(new TheDuke(), new TheDuke());
+
         // when
         gameEngine.playerDoingTheAction = gameEngine.player(1);
         action.doAction();
 
         gameEngine.player(1).cards().clear();// Needs to be here since the action will reshuffle the hand
-        gameEngine.player(1).cards().add(0, new TheDuke());
-        gameEngine.player(1).cards().add(0, new TheDuke());
+
+        when(player1.cards()).thenReturn(cards);
 
         gameEngine.playerCallingTheBluff = gameEngine.player(1);
 

@@ -15,13 +15,34 @@
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
 
-        <kotlin.version>1.3.31</kotlin.version>
+
         <mockito-core.version>2.27.0</mockito-core.version>
         <junit.jupiter.version>5.4.2</junit.jupiter.version>
+
+        <kotlin.version>1.3.31</kotlin.version>
+        <mockk.version>1.9.3</mockk.version>
     </properties>
 
     <dependencies>
+
+        <!-- Java test -->
         <dependency>
+            <groupId>org.junit.jupiter
+            </groupId> <!-- https://junit.org/junit5/ programmer-friendly testing framework for Java -->
+            <artifactId>junit-jupiter-engine</artifactId>
+            <version>${junit.jupiter.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency> <!-- https://site.mockito.org/ Tasty mocking framework for unit tests in Java -->
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <version>${mockito-core.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+
+        <!-- Kotlin -->
+        <dependency> <!-- https://kotlinlang.org/ Programming language for JVM and Native -->
             <groupId>org.jetbrains.kotlin</groupId>
             <artifactId>kotlin-stdlib-jdk8</artifactId>
             <version>${kotlin.version}</version>
@@ -31,30 +52,21 @@
             <artifactId>kotlin-reflect</artifactId>
             <version>${kotlin.version}</version>
         </dependency>
-        <dependency>
-            <groupId>org.mockito</groupId>
-            <artifactId>mockito-core</artifactId>
-            <version>${mockito-core.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.jetbrains.kotlin</groupId>
-            <artifactId>kotlin-test</artifactId>
-            <version>${kotlin.version}</version>
-            <scope>test</scope>
-        </dependency>
+
+        <!-- Kotlin test -->
         <dependency>
             <groupId>org.jetbrains.kotlin</groupId>
             <artifactId>kotlin-test-junit5</artifactId>
             <version>${kotlin.version}</version>
             <scope>test</scope>
         </dependency>
-        <dependency>
-            <groupId>org.mockito</groupId>
-            <artifactId>mockito-core</artifactId>
-            <version>2.27.0</version>
+        <dependency> <!-- https://mockk.io/ mocking library for Kotlin -->
+            <groupId>io.mockk</groupId>
+            <artifactId>mockk</artifactId>
+            <version>${mockk.version}</version>
             <scope>test</scope>
         </dependency>
+
     </dependencies>
 
     <build>

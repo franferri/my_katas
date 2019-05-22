@@ -6,9 +6,14 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
 
+import static org.mockito.Mockito.spy;
+
 public class TestingActions {
 
     // TODO cuando un jugador tiene un challence y enseña la carta, tenemos q reshuflear y coger una nueva para ese player (player 1 si el challence es para la action, player 2 si el challence es para el blockeo de la acción)
+
+    protected Player player1 = spy(new Player());
+    protected Player player2 = spy(new Player());
 
     protected GameEngine gameEngine;
     protected Action action;
@@ -16,9 +21,6 @@ public class TestingActions {
     protected void before() throws Exception {
 
         // given
-        Player player1 = new Player();
-        Player player2 = new Player();
-
         gameEngine = new GameEngine(player1, player2);
         gameEngine.startGame();
 
