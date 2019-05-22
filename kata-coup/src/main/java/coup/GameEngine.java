@@ -1,11 +1,12 @@
 package coup;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class GameEngine {
 
-    public List<Player> players = new ArrayList<>();
+    public final List<Player> players = new ArrayList<>();
 
     private int treasury;
     private Deck deck;
@@ -23,9 +24,9 @@ public class GameEngine {
         if (players.length > 4) {
             throw new Exception("Only 4 players allowed");
         }
-        for (Player player : players) {
-            this.players.add(player);
-        }
+
+        Collections.addAll(this.players, players);
+
         treasury = 50;
         this.deck = new Deck();
     }
@@ -41,7 +42,7 @@ public class GameEngine {
     public void startGame() throws Exception {
         for (Player player : players) {
             playerTakeCoinsFromTreasury(player, 2);
-            dealCardsToThePlayer(player, 2);
+            dealCardsToThePlayer(player);
         }
         this.deck.shuffle();
     }
@@ -76,8 +77,8 @@ public class GameEngine {
         }
     }
 
-    private void dealCardsToThePlayer(Player player, int cards) {
-        for (int i = 0; i < cards; i++) {
+    public void dealCardsToThePlayer(Player player) {
+        for (int i = 0; i < 2; i++) {
             player.cards().add(deck.cards().remove(0));
         }
     }

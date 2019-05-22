@@ -20,7 +20,7 @@ public class ActionCoup10Should extends TestingActions {
 
     // Action costs money
     @Test
-    public void player_needs_money_to_do_the_action() {
+    void player_needs_money_to_do_the_action() {
         // when
         gameEngine.playerDoingTheAction = gameEngine.player(1);
         gameEngine.targetPlayer = gameEngine.player(2);
@@ -30,7 +30,7 @@ public class ActionCoup10Should extends TestingActions {
 
     // Action cant be done to himself (Engine integrity test)
     @Test
-    public void player_does_action_to_himself() throws Exception {
+    void player_does_action_to_himself() throws Exception {
         // when
         gameEngine.playerDoingTheAction = gameEngine.player(1);
         gameEngine.playerTakeCoinsFromTreasury(gameEngine.playerDoingTheAction, 8);
@@ -42,7 +42,7 @@ public class ActionCoup10Should extends TestingActions {
 
     // Action
     @Test
-    public void player_does_action() throws Exception {
+    void player_does_action() throws Exception {
 
         // when
         gameEngine.playerDoingTheAction = gameEngine.player(1);
@@ -64,7 +64,7 @@ public class ActionCoup10Should extends TestingActions {
 
     // Action cannot be challenged
     @Test
-    public void player_calls_the_bluff_over_action() throws Exception {
+    void player_calls_the_bluff_over_action() throws Exception {
         // when
         gameEngine.playerDoingTheAction = gameEngine.player(1);
         gameEngine.playerTakeCoinsFromTreasury(gameEngine.playerDoingTheAction, 8);
@@ -77,7 +77,7 @@ public class ActionCoup10Should extends TestingActions {
 
     // Action cannot be blocked
     @Test
-    public void player_blocks_action() throws Exception {
+    void player_blocks_action() throws Exception {
         // when
         gameEngine.playerDoingTheAction = gameEngine.player(1);
         gameEngine.playerTakeCoinsFromTreasury(gameEngine.playerDoingTheAction, 8);
@@ -91,7 +91,7 @@ public class ActionCoup10Should extends TestingActions {
 
     // Action forced by the engine (Engine integrity test)
     @Test
-    public void player_must_do_the_action_but_tries_other_action() throws Exception {
+    void player_must_do_the_action_but_tries_other_action() throws Exception {
 
         // given
         gameEngine.playerDoingTheAction = gameEngine.player(1);

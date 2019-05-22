@@ -17,14 +17,14 @@ public class ActionAssassinateShould extends TestingActions {
     // Block can be challenged
 
     @BeforeEach
-    public void before() throws Exception {
+    protected void before() throws Exception {
         super.before();
         action = new Assassinate(gameEngine);
     }
 
     // Action costs money
     @Test
-    public void player_needs_money_to_do_the_action() {
+    void player_needs_money_to_do_the_action() {
         // when
         gameEngine.playerDoingTheAction = gameEngine.player(1);
         gameEngine.targetPlayer = gameEngine.player(2);
@@ -34,7 +34,7 @@ public class ActionAssassinateShould extends TestingActions {
 
     // Action cant be done to himself (Engine integrity test)
     @Test
-    public void player_does_action_to_himself() {
+    void player_does_action_to_himself() {
         // given
         gameEngine.player(1).gainCoin();
 
@@ -47,7 +47,7 @@ public class ActionAssassinateShould extends TestingActions {
 
     // Action
     @Test
-    public void player_does_action() throws Exception {
+    void player_does_action() throws Exception {
         // given
         gameEngine.player(1).gainCoin();
 
@@ -67,7 +67,7 @@ public class ActionAssassinateShould extends TestingActions {
 
     // Player cant challenge himself (Engine integrity test)
     @Test
-    public void player_does_action_and_challenge_himself() throws Exception {
+    void player_does_action_and_challenge_himself() throws Exception {
         // given
         gameEngine.player(1).cards().clear();
         gameEngine.player(1).cards().add(0, new TheAmbassator());
@@ -87,7 +87,7 @@ public class ActionAssassinateShould extends TestingActions {
     // Action can be challenged
     // Challenger (wins)
     @Test
-    public void player_does_action_and_other_player_calls_the_bluff_and_wins_the_call() throws Exception {
+    void player_does_action_and_other_player_calls_the_bluff_and_wins_the_call() throws Exception {
         // given
         gameEngine.player(1).cards().clear();
         gameEngine.player(1).cards().add(0, new TheAmbassator());
@@ -115,7 +115,7 @@ public class ActionAssassinateShould extends TestingActions {
     // Action can be challenged
     // Challenger (lose)
     @Test
-    public void player_does_action_and_other_calls_the_bluff_and_lose_the_call() throws Exception {
+    void player_does_action_and_other_calls_the_bluff_and_lose_the_call() throws Exception {
         // given
         gameEngine.player(1).cards().clear();
         gameEngine.player(1).cards().add(0, new TheAssassin());
@@ -142,7 +142,7 @@ public class ActionAssassinateShould extends TestingActions {
 
     // Player cant block himself (Engine integrity test)
     @Test
-    public void player_does_action_and_blocks_himself() throws Exception {
+    void player_does_action_and_blocks_himself() throws Exception {
         // given
         gameEngine.player(1).gainCoin();
 
@@ -158,7 +158,7 @@ public class ActionAssassinateShould extends TestingActions {
 
     // Action can be blocked
     @Test
-    public void player_does_action_and_gets_block() throws Exception {
+    void player_does_action_and_gets_block() throws Exception {
         // given
         gameEngine.player(1).gainCoin();
 
@@ -180,7 +180,7 @@ public class ActionAssassinateShould extends TestingActions {
 
     // BlockAction bluff can't be called over the player doing the BlockAction (Engine integrity test)
     @Test
-    public void player_does_action_and_gets_block_then_the_player_blocking_challenge_himself() throws Exception {
+    void player_does_action_and_gets_block_then_the_player_blocking_challenge_himself() throws Exception {
         // given
         gameEngine.player(1).gainCoin();
 
@@ -207,7 +207,7 @@ public class ActionAssassinateShould extends TestingActions {
     // Block can be challenged
     // Challenger wins
     @Test
-    public void player_does_action_and_gets_block_but_a_player_calls_the_bluff_on_the_block_and_wins_the_call() throws Exception {
+    void player_does_action_and_gets_block_but_a_player_calls_the_bluff_on_the_block_and_wins_the_call() throws Exception {
         // given
         gameEngine.player(1).gainCoin();
 
@@ -240,7 +240,7 @@ public class ActionAssassinateShould extends TestingActions {
     // Block can be challenged
     // Challenger lose
     @Test
-    public void player_does_action_and_gets_block_but_a_player_calls_the_bluff_on_the_block_and_lose_the_call() throws Exception {
+    void player_does_action_and_gets_block_but_a_player_calls_the_bluff_on_the_block_and_lose_the_call() throws Exception {
         // given
         gameEngine.player(1).gainCoin();
 

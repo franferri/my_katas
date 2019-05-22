@@ -14,11 +14,11 @@ public class Assassinate extends Action {
     public Assassinate() {
     }
 
-    public Assassinate(GameEngine gameEngine) throws Exception {
+    public Assassinate(GameEngine gameEngine) {
         super(gameEngine);
     }
 
-    boolean paid = false;
+    private boolean paid = false;
 
     // Action
     public void doActionInternal() throws Exception {

@@ -14,7 +14,7 @@ public class Tax extends Action {
     public Tax() {
     }
 
-    public Tax(GameEngine gameEngine) throws Exception {
+    public Tax(GameEngine gameEngine) {
         super(gameEngine);
     }
 

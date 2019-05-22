@@ -6,17 +6,17 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class TwoPlayersGameShould {
+class TwoPlayersGameShould {
 
     private Game game;
 
     @BeforeEach
-    public void before() throws Exception {
+    void before() throws Exception {
         game = new Game(2);
     }
 
     @Test
-    public void simplePlay() throws Exception {
+    void simplePlay() throws Exception {
 
         // given
         game.gameEngine().player(1).cards().clear();
@@ -67,7 +67,7 @@ public class TwoPlayersGameShould {
     }
 
     @Test
-    public void playUsingAllActions() throws Exception {
+    void playUsingAllActions() throws Exception {
 
         // when
         // then
@@ -115,7 +115,7 @@ public class TwoPlayersGameShould {
 
 
     @Test
-    public void playUsingAllActionsAndTheyGetBlocked() throws Exception {
+    void playUsingAllActionsAndTheyGetBlocked() throws Exception {
 
         // when
         // then
@@ -150,7 +150,7 @@ public class TwoPlayersGameShould {
     }
 
     @Test
-    public void playUsingAllActionsAndTheyGetChallenged_and_playerinitiatingaction_wins_Tax_Assassination() throws Exception {
+    void playUsingAllActionsAndTheyGetChallenged_and_playerinitiatingaction_wins_Tax_Assassination() throws Exception {
 
         // when
         // then
@@ -180,7 +180,7 @@ public class TwoPlayersGameShould {
     }
 
     @Test
-    public void playUsingAllActionsAndTheyGetChallenged_and_playerinitiatingaction_loses_Tax_Assassination() throws Exception {
+    void playUsingAllActionsAndTheyGetChallenged_and_playerinitiatingaction_loses_Tax_Assassination() throws Exception {
 
         // when
         // then
@@ -210,7 +210,7 @@ public class TwoPlayersGameShould {
     }
 
     @Test
-    public void playUsingAllActionsAndTheyGetChallenged_and_playerinitiatingaction_wins_Exchange_Steal() throws Exception {
+    void playUsingAllActionsAndTheyGetChallenged_and_playerinitiatingaction_wins_Exchange_Steal() throws Exception {
 
         // when
         // then
@@ -240,7 +240,7 @@ public class TwoPlayersGameShould {
     }
 
     @Test
-    public void playUsingAllActionsAndTheyGetChallenged_and_playerinitiatingaction_loses_Exchange_Steal() throws Exception {
+    void playUsingAllActionsAndTheyGetChallenged_and_playerinitiatingaction_loses_Exchange_Steal() throws Exception {
 
         // when
         // then
@@ -272,7 +272,7 @@ public class TwoPlayersGameShould {
     // calls all the bluff in all blockactions and wins
     // calls all the bluff in all blockactions and looses
 
-    public void assertGameSituation(int treasury, int player1_cards, int player1_coins, int player2_cards, int player2_coins) {
+    void assertGameSituation(int treasury, int player1_cards, int player1_coins, int player2_cards, int player2_coins) {
         Assertions.assertEquals(treasury, game.gameEngine().treasury());
         Assertions.assertEquals(11, game.gameEngine().deck().cards().size());
 

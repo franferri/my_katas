@@ -10,17 +10,9 @@ import java.util.Random;
 public class Player {
 
     private int coins = 0;
-    private List<Card> cards = new ArrayList<>();
+    private final List<Card> cards = new ArrayList<>();
 
     private int lastCardLost = -1;
-
-    public void blocks() {
-
-    }
-
-    public void callsTheBluff() {
-
-    }
 
     public void gainCoin() {
         ++coins;
@@ -38,18 +30,15 @@ public class Player {
         return cards;
     }
 
-    public Card looseCard() { // What if there are no cards visible left?
+    public void looseCard() { // What if there are no cards visible left?
 
         if (cardsInGame() > 1) {
             int card = new Random().nextInt(2);
             lastCardLost = card;
             cards().get(card).setVisible(true);
-            return cards().get(card);
         } else {
             dies();
-            return null;
         }
-
     }
 
     public void restoreLostCard() throws Exception {
@@ -69,7 +58,7 @@ public class Player {
     }
 
     public Card returnActiveCardToCourtDeck() throws Exception {
-        if (isDead()){
+        if (isDead()) {
             throw new Exception("Player is dead, don't have any visible cards");
         }
 
@@ -99,7 +88,9 @@ public class Player {
 
         for (Card card : cards) {
 
-            if (null == card.blocksAction()) {continue;}
+            if (null == card.blocksAction()) {
+                continue;
+            }
 
             Class classz = card.blocksAction().getClass();
             if (classz == null) return false;
@@ -118,13 +109,15 @@ public class Player {
 
         List<Card> cardsToCheck = cards();
 
-        if (action instanceof Exchange){
-            cardsToCheck = ((Exchange)action).originalCardsInPlayerHand;
+        if (action instanceof Exchange) {
+            cardsToCheck = ((Exchange) action).originalCardsInPlayerHand;
         }
 
         for (Card card : cardsToCheck) {
 
-            if (null == card.doAction()) {continue;}
+            if (null == card.doAction()) {
+                continue;
+            }
 
             Class classz = card.doAction().getClass();
             if (classz == null) return false;
@@ -143,4 +136,14 @@ public class Player {
         Collections.shuffle(cards);
     }
 
+    public static Player[] newPlayers(int players) {
+
+        Player[] pool = new Player[players];
+
+        for (int i = 0; i < players; i++) {
+            pool[i] = new Player();
+        }
+
+        return pool;
+    }
 }

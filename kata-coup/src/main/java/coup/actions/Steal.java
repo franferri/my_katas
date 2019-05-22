@@ -17,7 +17,7 @@ public class Steal extends Action {
     public Steal() {
     }
 
-    public Steal(GameEngine gameEngine) throws Exception {
+    public Steal(GameEngine gameEngine) {
         super(gameEngine);
     }
 

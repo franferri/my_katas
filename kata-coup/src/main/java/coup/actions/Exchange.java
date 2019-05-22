@@ -18,12 +18,12 @@ public class Exchange extends Action {
     public Exchange() {
     }
 
-    public Exchange(GameEngine gameEngine) throws Exception {
+    public Exchange(GameEngine gameEngine) {
         super(gameEngine);
     }
 
     public List<Card> originalCardsInPlayerHand;
-    List<Card> originalDeck;
+    private List<Card> originalDeck;
 
     // Setup
     public boolean canThisBlockActionBeChallenged() {
@@ -37,11 +37,7 @@ public class Exchange extends Action {
         originalCardsInPlayerHand = new ArrayList<>(gameEngine.playerDoingTheAction.cards());
         originalDeck = new ArrayList<>(gameEngine.deck().cards());
 
-        Card card1 = gameEngine.deck().cards().remove(0);
-        Card card2 = gameEngine.deck().cards().remove(0);
-
-        gameEngine.playerDoingTheAction.cards().add(card1);
-        gameEngine.playerDoingTheAction.cards().add(card2);
+        gameEngine.dealCardsToThePlayer(gameEngine.playerDoingTheAction);
 
         gameEngine.playerDoingTheAction.shuffleCardsInHand();
         gameEngine.playerDoingTheAction.shuffleCardsInHand();
@@ -58,7 +54,7 @@ public class Exchange extends Action {
         throw new Exception("This action can't be blocked");
     }
 
-    public void doBlockActionInternal() throws Exception {
+    public void doBlockActionInternal() {
 
         gameEngine.playerDoingTheAction.cards().clear();
         gameEngine.playerDoingTheAction.cards().addAll(originalCardsInPlayerHand);

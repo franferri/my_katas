@@ -20,7 +20,7 @@ public class ActionIncomeShould extends TestingActions {
 
     // Action
     @Test
-    public void player_does_action() throws Exception {
+    void player_does_action() throws Exception {
         // when
         gameEngine.playerDoingTheAction = gameEngine.player(1);
         action.doAction();
@@ -37,7 +37,7 @@ public class ActionIncomeShould extends TestingActions {
 
     // Action cannot be challenged
     @Test
-    public void player_calls_the_bluff_over_action() throws Exception {
+    void player_calls_the_bluff_over_action() throws Exception {
         // when
         gameEngine.playerDoingTheAction = gameEngine.player(1);
         action.doAction();
@@ -49,7 +49,7 @@ public class ActionIncomeShould extends TestingActions {
 
     // Action cannot be blocked
     @Test
-    public void player_blocks_action() throws Exception {
+    void player_blocks_action() throws Exception {
         // when
         gameEngine.playerDoingTheAction = gameEngine.player(1);
         action.doAction();

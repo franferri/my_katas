@@ -22,7 +22,7 @@ public class ActionTaxShould extends TestingActions {
 
     // Action
     @Test
-    public void player_does_action() throws Exception {
+    void player_does_action() throws Exception {
         // when
 
         gameEngine.playerDoingTheAction = gameEngine.player(1);
@@ -40,7 +40,7 @@ public class ActionTaxShould extends TestingActions {
 
     // Player cant challenge himself (Engine integrity test)
     @Test
-    public void player_does_action_and_challenge_himself() throws Exception {
+    void player_does_action_and_challenge_himself() throws Exception {
         // when
         gameEngine.playerDoingTheAction = gameEngine.player(1);
         action.doAction();
@@ -53,7 +53,7 @@ public class ActionTaxShould extends TestingActions {
     // Action can be challenged
     // Challenger (wins)
     @Test
-    public void player_does_action_and_other_player_calls_the_bluff_and_wins_the_call() throws Exception {
+    void player_does_action_and_other_player_calls_the_bluff_and_wins_the_call() throws Exception {
         // given
         gameEngine.player(1).cards().clear();
         gameEngine.player(1).cards().add(0, new TheAmbassator());
@@ -79,7 +79,7 @@ public class ActionTaxShould extends TestingActions {
     // Action can be challenged
     // Challenger (lose)
     @Test
-    public void player_does_action_and_other_calls_the_bluff_and_lose_the_call() throws Exception {
+    void player_does_action_and_other_calls_the_bluff_and_lose_the_call() throws Exception {
         // given
         gameEngine.player(1).cards().clear();
         gameEngine.player(1).cards().add(0, new TheDuke());
@@ -104,7 +104,7 @@ public class ActionTaxShould extends TestingActions {
 
     // Action cannot be blocked
     @Test
-    public void player_blocks_action() throws Exception {
+    void player_blocks_action() throws Exception {
         // when
 
         gameEngine.playerDoingTheAction = gameEngine.player(1);

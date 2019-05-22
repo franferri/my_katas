@@ -11,7 +11,7 @@ public class Coup10 extends Action {
     // Block: Cannot be blocked
     // -
 
-    public Coup10(GameEngine gameEngine) throws Exception {
+    public Coup10(GameEngine gameEngine) {
         super(gameEngine);
     }
 

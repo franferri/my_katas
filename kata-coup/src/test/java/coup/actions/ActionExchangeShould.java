@@ -1,7 +1,6 @@
 package coup.actions;
 
 import coup.Card;
-import coup.Player;
 import coup.TestingActions;
 import coup.cards.TheAmbassator;
 import coup.cards.TheDuke;
@@ -9,11 +8,10 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.when;
 
 public class ActionExchangeShould extends TestingActions {
 
@@ -31,7 +29,7 @@ public class ActionExchangeShould extends TestingActions {
 
     // Action
     @Test
-    public void player_does_action() throws Exception {
+    void player_does_action() throws Exception {
         // when
         gameEngine.playerDoingTheAction = gameEngine.player(1);
         action.doAction();
@@ -49,7 +47,7 @@ public class ActionExchangeShould extends TestingActions {
 
     // Player cant challenge himself (Engine integrity test)
     @Test
-    public void player_does_action_and_challenge_himself() throws Exception {
+    void player_does_action_and_challenge_himself() throws Exception {
 
         // given
         List<Card> cards = Arrays.asList(new TheDuke(), new TheDuke());
@@ -70,7 +68,7 @@ public class ActionExchangeShould extends TestingActions {
     // Action can be challenged
     // Challenger (wins)
     @Test
-    public void player_does_action_and_other_player_calls_the_bluff_and_wins_the_call() throws Exception {
+    void player_does_action_and_other_player_calls_the_bluff_and_wins_the_call() throws Exception {
 
         gameEngine.player(1).cards().clear();// Needs to be here since the action will reshuffle the hand
         gameEngine.player(1).cards().add(0, new TheDuke());
@@ -96,7 +94,7 @@ public class ActionExchangeShould extends TestingActions {
     // Action can be challenged
     // Challenger (lose)
     @Test
-    public void player_does_action_and_other_calls_the_bluff_and_lose_the_call() throws Exception {
+    void player_does_action_and_other_calls_the_bluff_and_lose_the_call() throws Exception {
 
         // when
         gameEngine.playerDoingTheAction = gameEngine.player(1);
@@ -121,7 +119,7 @@ public class ActionExchangeShould extends TestingActions {
 
     // Action cannot be blocked
     @Test
-    public void player_blocks_action() throws Exception {
+    void player_blocks_action() throws Exception {
         // when
         gameEngine.playerDoingTheAction = gameEngine.player(1);
         action.doAction();

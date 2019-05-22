@@ -14,7 +14,7 @@ public class ForeignAid extends Action {
     public ForeignAid() {
     }
 
-    public ForeignAid(GameEngine gameEngine) throws Exception {
+    public ForeignAid(GameEngine gameEngine) {
         super(gameEngine);
     }
 

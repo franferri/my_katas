@@ -14,7 +14,7 @@ public class Income extends Action {
     public Income() {
     }
 
-    public Income(GameEngine gameEngine) throws Exception {
+    public Income(GameEngine gameEngine) {
         super(gameEngine);
     }
 

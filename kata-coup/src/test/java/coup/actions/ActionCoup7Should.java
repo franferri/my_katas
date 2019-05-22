@@ -21,7 +21,7 @@ public class ActionCoup7Should extends TestingActions {
 
     // Action costs money
     @Test
-    public void player_needs_money_to_do_the_action() {
+    void player_needs_money_to_do_the_action() {
         // when
         gameEngine.playerDoingTheAction = gameEngine.player(1);
         gameEngine.targetPlayer = gameEngine.player(2);
@@ -30,8 +30,8 @@ public class ActionCoup7Should extends TestingActions {
     }
 
     // Action cant be done to himself (Engine integrity test)
-@Test
-    public void player_does_action_to_himself() throws Exception {
+    @Test
+    void player_does_action_to_himself() throws Exception {
         // when
         gameEngine.playerDoingTheAction = gameEngine.player(1);
         gameEngine.playerTakeCoinsFromTreasury(gameEngine.playerDoingTheAction, 5);
@@ -42,7 +42,7 @@ public class ActionCoup7Should extends TestingActions {
 
     // Action
     @Test
-    public void player_does_action() throws Exception {
+    void player_does_action() throws Exception {
         // when
         gameEngine.playerDoingTheAction = gameEngine.player(1);
         gameEngine.playerTakeCoinsFromTreasury(gameEngine.playerDoingTheAction, 5);
@@ -62,7 +62,7 @@ public class ActionCoup7Should extends TestingActions {
 
     // Action cannot be challenged
     @Test
-    public void player_calls_the_bluff_over_action() throws Exception {
+    void player_calls_the_bluff_over_action() throws Exception {
         // given
         Action action = new Coup7(gameEngine);
 
@@ -75,13 +75,13 @@ public class ActionCoup7Should extends TestingActions {
 
         gameEngine.playerCallingTheBluff = gameEngine.player(2);
 
-        assertThrowsWithMessage(() -> action.doCallTheBluffOnAction(), "This action can't be challenged");
+        assertThrowsWithMessage(action::doCallTheBluffOnAction, "This action can't be challenged");
 
     }
 
     // Action cannot be blocked
     @Test
-    public void player_blocks_action() throws Exception {
+    void player_blocks_action() throws Exception {
         // given
         Action action = new Coup7(gameEngine);
 
@@ -94,7 +94,7 @@ public class ActionCoup7Should extends TestingActions {
 
         gameEngine.playerBlockingTheAction = gameEngine.player(2);
 
-        Assertions.assertThrows(Exception.class, () -> action.doBlockAction());
+        Assertions.assertThrows(Exception.class, action::doBlockAction);
 
     }
 

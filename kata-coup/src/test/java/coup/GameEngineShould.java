@@ -8,10 +8,9 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.mockito.Mockito.spy;
 
-public class GameEngineShould {
-
-    GameEngine gameEngine;
+class GameEngineShould {
 
     // TODO: If the gameEngine only have 2 players the rules are different
     // Mode 1 Normal (as with many players)
@@ -19,21 +18,20 @@ public class GameEngineShould {
     // Mode 3 divide the cards in 3 sets of 5 (each set has 1 of each characters), Each player (player 1 and player 2) pick one of the sets and selects secretly a card and discard the rest.
     // Shuffle the third set and deal 1 card to each player and then put the remaining 3 cards face down ad court deck
 
-
     // TODO: If the gameEngine only have 2 players the rules are different
     // The selected starting player (player 1) gets only 1 coin at the beginning of the gameEngine
 
     // TODO: To cover 3 players or more, to choose who is doing the actions in the tests, we can just use random(), or the test repeats itself for all possible combinations in a loop (changing who does the action, who calls the bluff, who blocks the action, and who calls the bluff on the block action)
 
+    private GameEngine gameEngine;
 
+    private final Player player1 = spy(new Player());
+    private final Player player2 = spy(new Player());
 
     @BeforeEach
-    public void before() throws Exception {
+    void before() throws Exception {
 
         // given
-        Player player1 = new Player();
-        Player player2 = new Player();
-
         gameEngine = new GameEngine(player1, player2);
 
     }
@@ -43,34 +41,24 @@ public class GameEngineShould {
     // COUP gameEngine is a 2-6 players gameEngine
 
     @Test
-    public void a_game_needs_2_players_at_least() throws Exception {
-        // given
-        Player player1 = new Player();
+    void a_game_needs_2_players_at_least() {
 
         // then
-        Assertions.assertThrows(Exception.class, () -> new GameEngine(player1));
+        Assertions.assertThrows(Exception.class, () -> new GameEngine(Player.newPlayers(1)));
+
     }
 
     @Test
-    public void a_game_can_have_until_6_players() throws Exception {
-
-        // given
-        Player player1 = new Player();
-        Player player2 = new Player();
-        Player player3 = new Player();
-        Player player4 = new Player();
-        Player player5 = new Player();
-        Player player6 = new Player();
-        Player player7 = new Player();
+    void a_game_can_have_until_6_players() {
 
         // then
-        Assertions.assertThrows(Exception.class, () -> new GameEngine(player1, player2, player3, player4, player5, player6, player7));
+        Assertions.assertThrows(Exception.class, () -> new GameEngine(Player.newPlayers(7)));
+
     }
 
     // The Treasury starts with 50 coins
-
     @Test
-    public void a_new_game_has_a_treasury_of_50_coins() {
+    void a_new_game_has_a_treasury_of_50_coins() {
 
         // when
         int treasury = gameEngine.treasury();
@@ -83,7 +71,7 @@ public class GameEngineShould {
     // The deck has 15 character cards (3 each of Duke, Assassin, Captain, Ambassador, Contessa)
 
     @Test
-    public void a_new_game_has_a_deck() {
+    void a_new_game_has_a_deck() {
 
         // when
         Deck deck = gameEngine.deck();
@@ -94,7 +82,7 @@ public class GameEngineShould {
     }
 
     @Test
-    public void a_new_game_has_a_deck_of_15_cards() {
+    void a_new_game_has_a_deck_of_15_cards() {
 
         // when
         Deck deck = gameEngine.deck();
@@ -105,7 +93,7 @@ public class GameEngineShould {
     }
 
     @Test
-    public void a_new_game_has_a_deck_that_consist_in_three_copies_of_each_characters_card() {
+    void a_new_game_has_a_deck_that_consist_in_three_copies_of_each_characters_card() {
 
         // given
         Deck deck = new Deck();
@@ -153,7 +141,7 @@ public class GameEngineShould {
     // Shuffle all the characters cards and deal 2 to each player
 
     @Test
-    public void a_game_starts_with_a_shuffled_deck() throws Exception {
+    void a_game_starts_with_a_shuffled_deck() throws Exception {
 
         // when
         Deck deck = gameEngine.deck();
@@ -167,7 +155,7 @@ public class GameEngineShould {
     }
 
     @Test
-    public void a_new_game_starts_with_two_character_cards_per_player() throws Exception {
+    void a_new_game_starts_with_two_character_cards_per_player() throws Exception {
 
         // given
         int amountOfCardsAvailableInTheCourtDeck = gameEngine.deck().cards().size();
@@ -187,7 +175,7 @@ public class GameEngineShould {
     // Give each player 2 coins
 
     @Test
-    public void a_new_game_starts_with_two_coins_per_player() throws Exception {
+    void a_new_game_starts_with_two_coins_per_player() throws Exception {
 
         // when
         gameEngine.startGame();
@@ -203,7 +191,7 @@ public class GameEngineShould {
     // To eliminate the influence of all other players and be the last survivor
 
     @Test
-    public void a_player_wins_when_no_more_players_left_alive() throws Exception {
+    void a_player_wins_when_no_more_players_left_alive() throws Exception {
 
         // when
         gameEngine.startGame();
@@ -219,7 +207,7 @@ public class GameEngineShould {
 
     // Face down cards in front of a player represent who they influence at court
     @Test
-    public void a_new_game_starts_with_two_non_visible_character_cards_per_player() throws Exception {
+    void a_new_game_starts_with_two_non_visible_character_cards_per_player() throws Exception {
 
         // when
         gameEngine.startGame();
@@ -234,7 +222,7 @@ public class GameEngineShould {
 
     // Every time a player loses an influence they have to turn over and reveal one of their face down cards
     @Test
-    public void when_a_player_loses_influence_must_reveal_one_of_its_cards() throws Exception {
+    void when_a_player_loses_influence_must_reveal_one_of_its_cards() throws Exception {
 
         // when
         gameEngine.startGame();
@@ -247,7 +235,7 @@ public class GameEngineShould {
     // When a player has lost all their influence they are exiled and out of the gameEngine
 
     @Test
-    public void a_player_dies_when_he_runs_out_of_cards() throws Exception {
+    void a_player_dies_when_he_runs_out_of_cards() throws Exception {
 
         // when
         gameEngine.startGame();

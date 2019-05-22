@@ -4,7 +4,7 @@ public class Card {
 
     private boolean visible;
 
-    public Card() {
+    protected Card() {
         this.visible = false;
     }
 

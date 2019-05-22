@@ -7,10 +7,10 @@ public abstract class Action {
     protected GameEngine gameEngine;
     private boolean isBlocked;
 
-    public Action() {
+    protected Action() {
     }
 
-    public Action(GameEngine gameEngine) throws Exception {
+    protected Action(GameEngine gameEngine) {
         this.gameEngine = gameEngine;
     }
 
@@ -28,11 +28,11 @@ public abstract class Action {
     }
 
     // Setup
-    public boolean canThisActionBeChallenged() {
+    protected boolean canThisActionBeChallenged() {
         return true;
     }
 
-    public boolean canThisBlockActionBeChallenged() {
+    protected boolean canThisBlockActionBeChallenged() {
         return true;
     }
 
@@ -45,7 +45,7 @@ public abstract class Action {
         isBlocked = false;
     }
 
-    public abstract void doActionInternal() throws Exception;
+    protected abstract void doActionInternal() throws Exception;
 
     // Block Action
     public void doBlockAction() throws Exception {
@@ -54,7 +54,7 @@ public abstract class Action {
         isBlocked = true;
     }
 
-    public void doBlockActionInternal() throws Exception {
+    protected void doBlockActionInternal() throws Exception {
         throw new Exception("method not overridden");
     }
 

@@ -2,7 +2,6 @@ package coup.actions;
 
 import coup.TestingActions;
 import coup.cards.TheAmbassator;
-import coup.cards.TheCaptain;
 import coup.cards.TheDuke;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -24,7 +23,7 @@ public class ActionForeignAidShould extends TestingActions {
 
     // Action
     @Test
-    public void player_does_action() throws Exception {
+    void player_does_action() throws Exception {
         // when
         gameEngine.playerDoingTheAction = gameEngine.player(1);
         action.doAction();
@@ -41,7 +40,7 @@ public class ActionForeignAidShould extends TestingActions {
 
     // Action cannot be challenged
     @Test
-    public void player_calls_the_bluff_over_action() throws Exception {
+    void player_calls_the_bluff_over_action() throws Exception {
         // when
         gameEngine.playerDoingTheAction = gameEngine.player(1);
         action.doAction();
@@ -53,7 +52,7 @@ public class ActionForeignAidShould extends TestingActions {
 
     // Player cant block himself (Engine integrity test)
 @Test
-    public void player_does_action_and_blocks_himself() throws Exception {
+void player_does_action_and_blocks_himself() throws Exception {
         // given
         gameEngine.player(2).cards().clear();
         gameEngine.player(2).cards().add(0, new TheDuke());
@@ -70,7 +69,7 @@ public class ActionForeignAidShould extends TestingActions {
 
     // Action can be blocked
     @Test
-    public void player_does_action_and_gets_block() throws Exception {
+    void player_does_action_and_gets_block() throws Exception {
         // given
         gameEngine.player(2).cards().clear();
         gameEngine.player(2).cards().add(0, new TheDuke());
@@ -95,7 +94,7 @@ public class ActionForeignAidShould extends TestingActions {
 
     // BlockAction bluff can't be called over the player doing the BlockAction (Engine integrity test)
     @Test
-    public void player_does_action_and_gets_block_then_the_player_blocking_challenge_himself() throws Exception {
+    void player_does_action_and_gets_block_then_the_player_blocking_challenge_himself() throws Exception {
         // given
         gameEngine.player(2).cards().clear();
         gameEngine.player(2).cards().add(0, new TheAmbassator());
@@ -117,7 +116,7 @@ public class ActionForeignAidShould extends TestingActions {
     // Block can be challenged
     // Challenger wins
     @Test
-    public void player_does_action_and_gets_block_but_a_player_calls_the_bluff_on_the_block_and_wins_the_call() throws Exception {
+    void player_does_action_and_gets_block_but_a_player_calls_the_bluff_on_the_block_and_wins_the_call() throws Exception {
         // given
         gameEngine.player(2).cards().clear();
         gameEngine.player(2).cards().add(0, new TheAmbassator());
@@ -147,7 +146,7 @@ public class ActionForeignAidShould extends TestingActions {
     // Block can be challenged
     // Challenger lose
     @Test
-    public void player_does_action_and_gets_block_but_a_player_calls_the_bluff_on_the_block_and_lose_the_call() throws Exception {
+    void player_does_action_and_gets_block_but_a_player_calls_the_bluff_on_the_block_and_lose_the_call() throws Exception {
         // when
         gameEngine.playerDoingTheAction = gameEngine.player(1);
         action.doAction();
