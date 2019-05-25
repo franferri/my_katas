@@ -1,6 +1,6 @@
-## COUP, the Kata
+# COUP, the Kata
 
-### What is COUP?
+## What is COUP?
 
 Coup is a card game that was created originaly by Rikki Tahta.
 * Official website http://www.indieboardsandcards.com/index.php/games/coup/
@@ -21,7 +21,7 @@ The expanson from Indie Boards and Cards adds 1 more role and introduces faction
 
 * Official website for the expansion http://www.indieboardsandcards.com/index.php/games/coup-reformation/
 
-PRO Tip: If you decide to buy the game, also buy these: https://www.amazon.co.uk/gp/product/B004VEO8P4/ref=ppx_yo_dt_b_asin_title_o01_s00?ie=UTF8&psc=1
+**Tip**: If you decide to buy the game, also buy these: https://www.amazon.co.uk/gp/product/B004VEO8P4/ref=ppx_yo_dt_b_asin_title_o01_s00?ie=UTF8&psc=1
 
 If you fall in love with the game here you have bit more to feed yourself with: https://www.kickstarter.com/projects/2012515236/coup-bluff-and-deception-in-the-world-of-the-resis
 
@@ -31,17 +31,17 @@ In Coup, you want to be the last player with influence in the game, with influen
 
 Each player starts the game with two coins and two influence – i.e., two face-down character cards; the fifteen card deck consists of three copies of five different characters, each with a unique set of powers:
 
-Duke: Take three coins from the treasury. Block someone from taking foreign aid.
-Assassin: Pay three coins and try to assassinate another player's character.
-Contessa: Block an assassination attempt against yourself.
-Captain: Take two coins from another player, or block someone from stealing coins from you.
-Ambassador: Draw two character cards from the Court (the deck), choose which (if any) to exchange with your face-down characters, then return two. Block someone from stealing coins from you.
+**Duke**: Take three coins from the treasury. Block someone from taking foreign aid.
+**Assassin**: Pay three coins and try to assassinate another player's character.
+**Contessa**: Block an assassination attempt against yourself.
+**Captain**: Take two coins from another player, or block someone from stealing coins from you.
+**Ambassador**: Draw two character cards from the Court (the deck), choose which (if any) to exchange with your face-down characters, then return two. Block someone from stealing coins from you.
 
 On your turn, you can take any of the actions listed above, regardless of which characters you actually have in front of you, or you can take one of three other actions:
 
-Income: Take one coin from the treasury.
-Foreign aid: Take two coins from the treasury.
-Coup: Pay seven coins and launch a coup against an opponent, forcing that player to lose an influence. (If you have ten coins or more, you must take this action.)
+**Income**: Take one coin from the treasury.
+**Foreign aid**: Take two coins from the treasury.
+**Coup**: Pay seven coins and launch a coup against an opponent, forcing that player to lose an influence. (If you have ten coins or more, you must take this action.)
 
 When you take one of the character actions – whether actively on your turn, or defensively in response to someone else's action – that character's action automatically succeeds unless an opponent challenges you. In this case, if you can't (or don't) reveal the appropriate character, you lose an influence, turning one of your characters face-up.
 
@@ -53,7 +53,7 @@ If you do have the character in question and choose to reveal it, the opponent l
 
 The last player to still have influence – that is, a face-down character – wins the game!
 
-## The Kata
+# The Kata
 
 This kata aims to make you:
 * Play and Learn the game
@@ -68,7 +68,7 @@ The base game library works, compiles and tests out of the box.
 You only need to have Java 8 or newer in your machine and internet connection.
 Recommended a proper IDE like IntelliJ or Eclipse, but Maven is build in in the project, so you can use any text editor too.
 
-### What are we going to do in this Kata?
+## What are we going to do in this Kata?
 
 First hour (becoming familiar with the base game)
 * Read instructions from the box of the base game
@@ -76,16 +76,16 @@ First hour (becoming familiar with the base game)
 * Read instructions again
 * Play 4 more times
 
-### Challenges
+# Challenges (still a work in progress)
 
-#### Iteration 1 - Building the JAR (environment awareness)
+## Iteration 1 - Building the JAR (environment awareness)
 
 * Open maven configuration file, explain the dependencies section and the uber jar configuration.
 * Each person builds the library
 * Play using the library
 * Let's start the challenges
 
-#### Iteration 2 - Upgrade some tests using Mockito
+## Iteration 2 - Upgrade some tests using Mockito
 
 [TODO]
 
@@ -96,7 +96,7 @@ Many people knows how to Mock, or maybe not even than.
 The challenge is to update this tests to use the mock and spy() instead of normal classes.
 This drives to update the library to have to expose less internal methods because the testing.
 
-#### Iteration 3 - To add the 2 players variant
+## Iteration 3 - To add the 2 players variant
 
 You must update the base library:
 * It must ask you if you want to play with the normal game rules or the variant game when the game is created only with 2 players
@@ -105,7 +105,7 @@ You must update the base library:
 
 At the end of this iteration you must be able to play with other player using the normal game rules and the variant game rules
 
-#### Iteration 4 - To add The Inquisitor card
+## Iteration 4 - To add The Inquisitor card
 
 You must update the base library:
 * Given any number of players, there must be an option to play The Inquisitor variant of the game
