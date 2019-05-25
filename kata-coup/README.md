@@ -1,6 +1,6 @@
-# COUP, the Kata
-
 ## What is COUP?
+
+**(Work in progress)**
 
 Coup is a card game that was created originaly by Rikki Tahta.
 * Official website http://www.indieboardsandcards.com/index.php/games/coup/
@@ -25,7 +25,7 @@ The expanson from Indie Boards and Cards adds 1 more role and introduces faction
 
 If you fall in love with the game here you have bit more to feed yourself with: https://www.kickstarter.com/projects/2012515236/coup-bluff-and-deception-in-the-world-of-the-resis
 
-### Game rules in a nutshell (Skip this if you are already familiar with the game)
+## Game rules in a nutshell (Skip this if you are already familiar with the game)
 
 In Coup, you want to be the last player with influence in the game, with influence being represented by face-down character cards in your playing area.
 
@@ -76,7 +76,7 @@ First hour (becoming familiar with the base game)
 * Read instructions again
 * Play 4 more times
 
-# Challenges (still a work in progress)
+# Challenges
 
 ## Iteration 1 - Building the JAR (environment awareness)
 
