@@ -5,6 +5,8 @@
 Coup is a card game that was created originaly by Rikki Tahta.
 * Official website http://www.indieboardsandcards.com/index.php/games/coup/
 
+![The game assets](https://github.com/franferri/my-codingdojos-katas/blob/master/kata-coup/img/coup_the_game.jpg)
+
 This kata is a recreation of the phisical game made by Indie Boards and Cards, unlike the original game where the theme is arround being a head of a family in an Italian city-state, where you fight for influence, the Indie Boards and Cards version is based in a not too distant future where the government is run for profit by a new “royal class” of multi-national CEOs.
 
 More information about the game: https://boardgamegeek.com/boardgame/131357/coup
