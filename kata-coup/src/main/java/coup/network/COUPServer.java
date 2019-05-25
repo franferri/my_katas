@@ -16,6 +16,8 @@ public class COUPServer {
             System.exit(1);
         }
 
+        System.out.println("Welcome to COUP Kata Server");
+
         int portNumber = Integer.parseInt(args[0]);
 
         try (
@@ -37,6 +39,7 @@ public class COUPServer {
                 out.println(outputLine);
                 if (outputLine.equals("Bye.")) break;
             }
+
         } catch (IOException e) {
             System.out.println("Exception caught when trying to listen on port " + portNumber + " or listening for a connection");
             System.out.println(e.getMessage());
