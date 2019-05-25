@@ -1,8 +1,0 @@
-if we remove the "targetforstealing" and "target for assasination" fields we may refactor the tests to a simpler classes since the tests will become homogeneous.
-or even having a common class for some and then some for te specifics.
-
-
-if we do have specific Exceptions, or we do the checknig of the exception text we can be more accurate in the assertThrow calls, this gives us certainty
-
-
-if a player gets to 10, in the next action the game forces him to coup

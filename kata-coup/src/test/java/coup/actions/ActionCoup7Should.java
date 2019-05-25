@@ -6,6 +6,8 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import static org.mockito.Mockito.when;
+
 public class ActionCoup7Should extends TestingActions {
 
     // Action: Pay 7 cons, choose the player to lose Influence
@@ -43,6 +45,7 @@ public class ActionCoup7Should extends TestingActions {
     // Action
     @Test
     void player_does_action() throws Exception {
+
         // when
         gameEngine.playerDoingTheAction = gameEngine.player(1);
         gameEngine.playerTakeCoinsFromTreasury(gameEngine.playerDoingTheAction, 5);
