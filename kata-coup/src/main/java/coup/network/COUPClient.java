@@ -27,16 +27,31 @@ public class COUPClient {
             String fromServer;
             String fromUser;
 
+            int lines = -1;
+            int metaStartPosition = -1;
+            int metaEndPosition = -1;
+
             while ((fromServer = in.readLine()) != null) {
+                if (fromServer.startsWith("<META>") && fromServer.endsWith("</META>")) {
+                    metaStartPosition = fromServer.indexOf(">") + 1;
+                    metaEndPosition = fromServer.indexOf("<", metaStartPosition);
+                    lines = Integer.valueOf(fromServer.substring(metaStartPosition, metaEndPosition));
+                }
+
                 System.out.println("Server: " + fromServer);
                 if (fromServer.equals("Bye.")) break;
 
-                fromUser = stdIn.readLine();
-                if (fromUser != null) {
-                    System.out.println("Client: " + fromUser);
-                    out.println(fromUser);
+                --lines;
+                if (lines <= 0) {
+                    fromUser = stdIn.readLine();
+                    if (fromUser != null) {
+                        System.out.println("Client: " + fromUser);
+                        out.println(fromUser);
+                    }
                 }
+
             }
+
         } catch (UnknownHostException e) {
             System.err.println("Don't know about host " + hostName);
             System.exit(1);

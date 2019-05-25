@@ -3,6 +3,8 @@
 **(Work in progress)**
 
 Coup is a card game that was created originaly by Rikki Tahta.
+
+* Where all started: http://lamamegames.com
 * Official website http://www.indieboardsandcards.com/index.php/games/coup/
 
 ![The game assets](https://github.com/franferri/my-codingdojos-katas/blob/master/kata-coup/img/coup_the_game.jpg)
