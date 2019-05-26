@@ -1,9 +1,11 @@
 package coup.network;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.UnknownHostException;
-import java.nio.channels.Channels;
 
 public class COUPClient {
     public static void main(String[] args) {
@@ -48,11 +50,16 @@ public class COUPClient {
 
                 --lines;
                 if (lines <= 0) {
+                    //if (null != fromUser && "".equals(fromUser)) {
+                    //    out.println(fromUser);
+                    //}
+
                     fromUser = stdIn.readLine();
                     if (fromUser != null) {
                         System.out.println("Client: " + fromUser);
                         out.println(fromUser);
                     }
+
                 }
 
             }
