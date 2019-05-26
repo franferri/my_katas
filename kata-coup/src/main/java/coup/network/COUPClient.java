@@ -8,7 +8,7 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 
 public class COUPClient {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
 
         if (args.length != 2) {
             System.err.println("Usage: java EchoClient <host name> <port number>");
@@ -32,14 +32,16 @@ public class COUPClient {
             int metaEndPosition = -1;
 
             while ((fromServer = in.readLine()) != null) {
+
                 if (fromServer.startsWith("<META>") && fromServer.endsWith("</META>")) {
                     metaStartPosition = fromServer.indexOf(">") + 1;
                     metaEndPosition = fromServer.indexOf("<", metaStartPosition);
                     lines = Integer.valueOf(fromServer.substring(metaStartPosition, metaEndPosition));
+                    continue;
                 }
 
-                System.out.println("Server: " + fromServer);
-                if (fromServer.equals("Bye.")) break;
+                System.out.println(fromServer);
+                if (fromServer.equals("Game over")) break;
 
                 --lines;
                 if (lines <= 0) {
@@ -60,4 +62,5 @@ public class COUPClient {
             System.exit(1);
         }
     }
+
 }
