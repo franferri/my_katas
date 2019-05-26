@@ -16,7 +16,8 @@ public class StdIn {
             }
 
             fromThread = threat.fromThread();
-            
+
+            Thread.sleep(100);
         }
 
     }
