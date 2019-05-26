@@ -30,6 +30,20 @@ public class Player {
         return cards;
     }
 
+    private String name;
+
+    public Player() {
+        this.name = System.nanoTime()+"";
+    }
+
+    public Player(String name) {
+        this.name = name;
+    }
+
+    public String name() {
+        return name;
+    }
+
     public void looseCard() { // What if there are no cards visible left?
 
         if (cardsInGame() > 1) {

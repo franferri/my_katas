@@ -1,9 +1,14 @@
 package coup.network;
 
+import coup.Game;
+import coup.Player;
+
 import java.io.IOException;
 import java.net.ServerSocket;
 
 public class COUPServer {
+
+    private static Game game = new Game();
 
     public static void main(String[] args) {
 
@@ -12,7 +17,7 @@ public class COUPServer {
             System.exit(1);
         }
 
-        for (String line : ASCIIArt.welcome()) {
+        for (String line : TerminalView.welcome()) {
             System.out.println(line);
         }
 
@@ -21,7 +26,10 @@ public class COUPServer {
 
         try (ServerSocket serverSocket = new ServerSocket(portNumber)) {
             while (listening) {
-                new COUPServerThread(serverSocket.accept()).start();
+                Player player = new Player();
+                COUPServerThread clientThread = new COUPServerThread(serverSocket.accept(), game, player);
+                game.addPlayer(clientThread, player);
+                clientThread.start();
             }
         } catch (IOException e) {
             System.err.println("Could not listen on port " + portNumber);

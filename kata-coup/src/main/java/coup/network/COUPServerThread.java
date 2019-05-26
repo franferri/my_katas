@@ -1,5 +1,8 @@
 package coup.network;
 
+import coup.Game;
+import coup.Player;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -9,11 +12,20 @@ import java.util.List;
 
 public class COUPServerThread extends Thread {
 
-    private Socket socket = null;
+    private Socket socket;
+    private Game game;
 
-    public COUPServerThread(Socket socket) {
+    private PrintWriter out;
+    private BufferedReader in;
+
+    private COUPServerProtocol protocol;
+
+    public COUPServerThread(Socket socket, Game game, Player player) {
         super("COUPServerThread");
         this.socket = socket;
+        this.game = game;
+
+        protocol = new COUPServerProtocol(game, player);
     }
 
     public void run() {
@@ -23,14 +35,15 @@ public class COUPServerThread extends Thread {
                 BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         ) {
 
+            this.out = out;
+            this.in = in;
+
             String inputLine;
             List<String> outputLines;
 
-            COUPServerProtocol protocol = new COUPServerProtocol();
-
             // Mandamos mensaje inicial al cliente
             outputLines = protocol.processInput(null);
-            out.println("<META>" + outputLines.size()+"</META>");
+            out.println("<META>" + outputLines.size() + "</META>");
             for (String line : outputLines) {
                 out.println(line);
             }
@@ -41,7 +54,7 @@ public class COUPServerThread extends Thread {
                 System.out.println("Received from client: " + inputLine);
 
                 outputLines = protocol.processInput(inputLine);
-                out.println("<META>" + outputLines.size()+"</META>");
+                out.println("<META>" + outputLines.size() + "</META>");
                 for (String line : outputLines) {
                     out.println(line);
                     if (line.equals("Bye"))
@@ -57,4 +70,16 @@ public class COUPServerThread extends Thread {
         }
 
     }
+
+    public void updateTerminal() {
+        List<String> outputLines;
+
+        outputLines = protocol.processInput("updateTerminal");
+        out.println("<META>" + outputLines.size() + "</META>");
+        for (String line : outputLines) {
+            out.println(line);
+        }
+
+    }
+
 }

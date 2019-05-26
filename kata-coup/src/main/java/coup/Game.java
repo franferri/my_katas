@@ -1,11 +1,49 @@
 package coup;
 
 import coup.actions.*;
+import coup.network.COUPServerThread;
+
+import java.util.Hashtable;
+import java.util.Set;
 
 public class Game {
 
     private GameEngine gameEngine;
     private Action currentAction;
+
+    private Hashtable<Player, COUPServerThread> players = new Hashtable<>();
+
+    public Game() {
+
+    }
+
+    public void addPlayer(COUPServerThread thread, Player player) {
+        players.put(player, thread);
+    }
+
+    public int players() {
+        return players.size();
+    }
+
+    public void playersThreadsUpdateTerminal(String playerToAvoid) {
+
+        System.out.println("playerToAvoid: " + playerToAvoid);
+
+        Set<Player> playersKeys = players.keySet();
+        for (Player player : playersKeys) {
+            System.out.println("currentPlayerName: " + player.name());
+            if (!player.name().equals(playerToAvoid)) {
+                players.get(player).updateTerminal();
+            }
+        }
+
+    }
+
+    public void startGame() throws Exception {
+        Set<Player> keys = players.keySet();
+        gameEngine = new GameEngine(keys.toArray(new Player[0]));
+        gameEngine.startGame();
+    }
 
     public Game(int players) throws Exception {
 

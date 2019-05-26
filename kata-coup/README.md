@@ -87,6 +87,9 @@ First hour (becoming familiar with the base game)
 * Play using the library
 * Let's start the challenges
 
+* Open it in your IDE
+* Build it
+
 ## Iteration 2 - Upgrade some tests using Mockito
 
 [TODO]

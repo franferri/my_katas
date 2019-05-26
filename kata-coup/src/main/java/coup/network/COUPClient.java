@@ -1,11 +1,9 @@
 package coup.network;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
+import java.io.*;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.nio.channels.Channels;
 
 public class COUPClient {
     public static void main(String[] args) {
@@ -24,6 +22,7 @@ public class COUPClient {
                 BufferedReader in = new BufferedReader(new InputStreamReader(kkSocket.getInputStream()));
         ) {
             BufferedReader stdIn = new BufferedReader(new InputStreamReader(System.in));
+
             String fromServer;
             String fromUser;
 
@@ -43,6 +42,10 @@ public class COUPClient {
                 System.out.println(fromServer);
                 if (fromServer.equals("Game over")) break;
 
+                // capturar el teclado del usuario debería hacerse en un thread a parte, si no, los updates q envía el servidor para refrescar la pantalla no se ejecutan
+
+                // Necesitamos que el teclado y la recepción desde el servidor sea tratada asíncrona y separadamente, o no podremos hacer cosas cmo actualizar la pantalla a todos los clientes
+
                 --lines;
                 if (lines <= 0) {
                     fromUser = stdIn.readLine();
@@ -61,6 +64,7 @@ public class COUPClient {
             System.err.println("Couldn't get I/O for the connection to " + hostName);
             System.exit(1);
         }
+
     }
 
 }
