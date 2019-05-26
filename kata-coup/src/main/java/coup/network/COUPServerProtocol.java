@@ -102,6 +102,12 @@ public class COUPServerProtocol {
 
         // añadir un test al juego: un jugador q no está en su turno, intenta hacer una acción
 
+        // During a play, linux terminal let us to change the colors, like the boldify method we created
+        // Use colors like blue for actions, yellow or blinking for challenge, and red for block
+        // background colors are also available, we can remark the back of the cards in game
+
+        // if we do animations, during the time they last, we dont let the user write, we dont ask him
+
         return theOutput;
     }
 
