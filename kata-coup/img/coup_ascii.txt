@@ -53,5 +53,8 @@ ________________________________________________________________________________
                                    
                                   
                              
-                               
+The clients must be able to write and have communication with the server at the same time, right now we read from the server n amount of lines and we wait for user input, so another user action will never update the user screen.
+
+
+there is a command to know the size of the the terminal opened, with that we can in the client, tell the user to expand the console to n lines and n cols, withtout shoing anyting on it.
 

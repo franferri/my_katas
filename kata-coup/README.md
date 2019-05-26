@@ -90,7 +90,7 @@ First hour (becoming familiar with the base game)
 * Open it in your IDE
 * Build it
 
-## Iteration 2 - Upgrade some tests using Mockito
+## Iteration 2 - Upgrade some tests using Mockito (Preparation for fast testing)
 
 [TODO]
 
