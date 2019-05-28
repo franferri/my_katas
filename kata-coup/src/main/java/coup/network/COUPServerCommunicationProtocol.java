@@ -35,7 +35,7 @@ public class COUPServerCommunicationProtocol {
 
         if (null != theInput && theInput.equals("updateTerminal")) {
 
-            theOutput.addAll(COUPTerminalView.table(game.players()));
+            theOutput.addAll(COUPTerminalView.table(6, "","", "", ""));
 
         } else {
 
@@ -53,8 +53,7 @@ public class COUPServerCommunicationProtocol {
             } else if (state == JOINED_THE_TABLE) {
 
                 state = WAITING;
-                theOutput.addAll(COUPTerminalView.table(game.players()));
-
+                theOutput.addAll(COUPTerminalView.table(6, "Player 1 is doing Assasination", "on Player 6","Player 5 is blocking", "Player 2 is calling the bluff"));
                 refresh_others = true;
                 // We update all connected players console to reflect the new joiner
 
@@ -63,7 +62,7 @@ public class COUPServerCommunicationProtocol {
                 // If there is only 1 player he cant start the ga
 
                 state = WAITING_FOR_PLAYER_TO_PLAY;
-                theOutput.addAll(COUPTerminalView.table(game.players()));
+                theOutput.addAll(COUPTerminalView.table(6, "Player 2 is doing Assasination", "on Player 333","AAAAAA 5 is blocking", "BBBBBB 2 is calling the bluff"));
 
                 refresh_others = true;
             } else if (state == WAITING_FOR_PLAYER_TO_PLAY && theInput.equals("income")) {
@@ -101,7 +100,7 @@ public class COUPServerCommunicationProtocol {
             } else if (theInput.equals("Game over")) {
                 theOutput.add("Game over");
             } else {
-                theOutput.addAll(COUPTerminalView.table(game.players()));
+                theOutput.addAll(COUPTerminalView.table(6, "Player 2 is doing Assasination", "on Player 333","AAAAAA 5 is blocking", "BBBBBB 2 is calling the bluff"));
             }
 
             // IF A PLAYER GETS DISCONNECTED, THE GAME WILL REVEAL HIS CARDS INMEDIATELY
@@ -132,11 +131,11 @@ public class COUPServerCommunicationProtocol {
         ArrayList<String> toTheClient = new ArrayList<>();
         for (int i = 0; i < theOutput.size(); i++) {
 
-         //   if (i - 1 == theOutput.size()) {
-         //       toTheClient.add(theOutput.get(i));
-         //   } else {
-                toTheClient.add(theOutput.get(i));
-          //  }
+            //   if (i - 1 == theOutput.size()) {
+            //       toTheClient.add(theOutput.get(i));
+            //   } else {
+            toTheClient.add(theOutput.get(i));
+            //  }
 
         }
 

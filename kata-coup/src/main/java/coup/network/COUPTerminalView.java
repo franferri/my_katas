@@ -4,42 +4,45 @@ import coup.Game;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class COUPTerminalView {
+
+    private static Random random = new Random();
 
     public static List<String> layout() {
 
         List<String> lines = new ArrayList<>();
 
         lines.add("___________________________________________________________________________________________________ ");
-        lines.add("                                                                                                   |");
-        lines.add("                                                                                                   |");
-        lines.add("                                                                                                   |");
-        lines.add("                                                                                                   |");
-        lines.add("                                                                                                   |");
-        lines.add("                                                                                                   |");
-        lines.add("                                                                                                   |");
-        lines.add("                                                                                                   |");
-        lines.add("                                                                                                   |");
-        lines.add("                                                                                                   |");
-        lines.add("                                                                                                   |");
-        lines.add("                                                                                                   |");
-        lines.add("                                                                                                   |");
-        lines.add("                                                                                                   |");
-        lines.add("                                                                                                   |");
-        lines.add("                                                                                                   |");
-        lines.add("                                                                                                   |");
-        lines.add("                                                                                                   |");
-        lines.add("                                                                                                   |");
-        lines.add("                                                                                                   |");
-        lines.add("                                                                                                   |");
-        lines.add("                                                                                                   |");
-        lines.add("                                                                                                   |");
-        lines.add("                                                                                                   |");
-        lines.add("                                                                                                   |");
-        lines.add("                                                                                                   |");
-        lines.add("                                                                                                   |");
-        lines.add("                                                                                                   |");
+        lines.add("|                                                                                                  |");
+        lines.add("|                                                                                                  |");
+        lines.add("|                                                                                                  |");
+        lines.add("|                                                                                                  |");
+        lines.add("|                                                                                                  |");
+        lines.add("|                                                                                                  |");
+        lines.add("|                                                                                                  |");
+        lines.add("|                                                                                                  |");
+        lines.add("|                                                                                                  |");
+        lines.add("|                                                                                                  |");
+        lines.add("|                                                                                                  |");
+        lines.add("|                                                                                                  |");
+        lines.add("|                                                                                                  |");
+        lines.add("|                                                                                                  |");
+        lines.add("|                                                                                                  |");
+        lines.add("|                                                                                                  |");
+        lines.add("|                                                                                                  |");
+        lines.add("|                                                                                                  |");
+        lines.add("|                                                                                                  |");
+        lines.add("|                                                                                                  |");
+        lines.add("|                                                                                                  |");
+        lines.add("|                                                                                                  |");
+        lines.add("|                                                                                                  |");
+        lines.add("|                                                                                                  |");
+        lines.add("|                                                                                                  |");
+        lines.add("|                                                                                                  |");
+        lines.add("|                                                                                                  |");
+        lines.add("|                                                                                                  |");
         lines.add("___________________________________________________________________________________________________|");
 
         return lines;
@@ -78,12 +81,77 @@ public class COUPTerminalView {
 
     }
 
+    public static List<String> addNewPlayer() {
+
+        List<String> patternOne = new ArrayList<>();
+        patternOne.add("              ____________ ");
+        patternOne.add("[  PLAYER  ] |            |");
+        patternOne.add("    ____     |            |");
+        patternOne.add("   /    \\    |____________|");
+        patternOne.add("  / 10   \\    ____________ ");
+        patternOne.add("  \\  ISK /   |            |");
+        patternOne.add("   \\____/    |            |");
+        patternOne.add("             |____________|");
+
+        List<String> patternTwo = new ArrayList<>();
+        patternTwo.add(" ____________              ");
+        patternTwo.add("|            |     ____    ");
+        patternTwo.add("| ASSASSIN   |    /    \\   ");
+        patternTwo.add("|____________|   /  10  \\  ");
+        patternTwo.add(" ____________    \\  ISK /  ");
+        patternTwo.add("|            |    \\____/   ");
+        patternTwo.add("|            |             ");
+        patternTwo.add("|____________| [  PLAYER  ]");
+
+        List<String> patternThree = new ArrayList<>();
+        patternThree.add(" ____________              ");
+        patternThree.add("|            | [  PLAYER  ]");
+        patternThree.add("|            |     ____    ");
+        patternThree.add("|____________|    /    \\   ");
+        patternThree.add(" ____________    / 10   \\  ");
+        patternThree.add("|            |   \\  ISK /  ");
+        patternThree.add("| AMBASSADOR |    \\____/   ");
+        patternThree.add("|____________|             ");
+
+        List<String> patternFour = new ArrayList<>();
+        patternFour.add(" ____________              ");
+        patternFour.add("|            |             ");
+        patternFour.add("|            | [  PLAYER  ]");
+        patternFour.add("|____________|     ____    ");
+        patternFour.add(" ____________     /    \\   ");
+        patternFour.add("|            |   / 10   \\  ");
+        patternFour.add("| COMPTESA   |   \\  ISK /  ");
+        patternFour.add("|____________|    \\____/   ");
+
+        List<String> patternFive = new ArrayList<>();
+        patternFive.add("              ____________ ");
+        patternFive.add("             |            |");
+        patternFive.add("[  PLAYER  ] |            |");
+        patternFive.add("    ____     |____________|");
+        patternFive.add("   /    \\     ____________ ");
+        patternFive.add("  / 10   \\   |            |");
+        patternFive.add("  \\  ISK /   | COMPTESA   |");
+        patternFive.add("   \\____/    |____________|");
+
+        List<List<String>> patterns = new ArrayList<>();
+        patterns.add(patternOne);
+        patterns.add(patternTwo);
+        patterns.add(patternThree);
+        patterns.add(patternFour);
+        patterns.add(patternFive);
+
+        int randomNumber = random.nextInt(patterns.size());
+
+        return patterns.get(randomNumber);
+
+    }
+
     public static List<String> welcomeServer(Game game) {
 
         List<String> lines = new ArrayList<>();
 
         lines.add("Welcome to COUP Kata Server");
-        lines.add("Users connected ["+game.players()+"]");
+        lines.add("Users connected [" + game.players() + "]");
         lines.add("Recommended terminal size 100 columns x 30 lines");
 
         return lines;
@@ -102,105 +170,117 @@ public class COUPTerminalView {
 
     }
 
-    public static List<String> playerOne() {
+    public static List<String> table(int players, String action, String targetPlayer, String block, String challenge) {
 
-        List<String> lines = new ArrayList<>();
+        List<String> layout = new ArrayList<>(layout());
+        layout.remove(layout.size() - 2);
 
-        lines.add("              ____________ ");
-        lines.add("[ PLAYER   ] |            |");
-        lines.add("    ____     |            |");
-        lines.add("   /    \\    |____________|");
-        lines.add("  / 10   \\    ____________ ");
-        lines.add("  \\  ISK /   |            |");
-        lines.add("   \\____/    |            |");
-        lines.add("             |____________|");
+        int line;
+        int column;
 
-        return lines;
+        // Add Player 1 to the table
+        if (players >= 1) {
+            List<String> player1 = addNewPlayer();
+            line = 3;
+            column = 36;
 
-    }
+            placeInTheLayout(layout, player1, line, column);
+        }
 
-    public static List<String> playerTwo() {
+        // Add Player 2 to the table
+        if (players >= 2) {
+            List<String> player2 = addNewPlayer();
+            line = 20;
+            column = 38;
 
-        List<String> lines = new ArrayList<>();
+            placeInTheLayout(layout, player2, line, column);
+        }
 
-        lines.add("              ____________ ");
-        lines.add("[ PLAYER   ] |            |");
-        lines.add("    ____     |            |");
-        lines.add("   /    \\    |____________|");
-        lines.add("  / 10   \\    ____________ ");
-        lines.add("  \\  ISK /   |            |");
-        lines.add("   \\____/    |            |");
-        lines.add("             |____________|");
+        // Add Player 3 to the table
+        if (players >= 3) {
+            List<String> player3 = addNewPlayer();
+            line = 5;
+            column = 70;
 
-        return lines;
+            placeInTheLayout(layout, player3, line, column);
+        }
 
-    }
+        // Add Player 4 to the table
+        if (players >= 4) {
+            List<String> player3 = addNewPlayer();
+            line = 15;
+            column = 5;
 
-    public static List<String> playerThree() {
+            placeInTheLayout(layout, player3, line, column);
+        }
 
-        List<String> lines = new ArrayList<>();
+        // Add Player 5 to the table
+        if (players >= 5) {
+            List<String> player3 = addNewPlayer();
+            line = 5;
+            column = 5;
 
-        lines.add("              ____________ ");
-        lines.add("[ PLAYER   ] |            |");
-        lines.add("    ____     |            |");
-        lines.add("   /    \\    |____________|");
-        lines.add("  / 10   \\    ____________ ");
-        lines.add("  \\  ISK /   |            |");
-        lines.add("   \\____/    |            |");
-        lines.add("             |____________|");
+            placeInTheLayout(layout, player3, line, column);
+        }
 
-        return lines;
+        // Add Player 6 to the table
+        if (players >= 6) {
+            List<String> player3 = addNewPlayer();
+            line = 16;
+            column = 70;
 
-    }
+            placeInTheLayout(layout, player3, line, column);
+        }
 
-    public static List<String> playerFour() {
+        int additionalSpacer = 0;
+        List<String> actionText = play(action);
+        line = 13;
+        column = 35;
+        placeInTheLayout(layout, actionText, line, column);
 
-        List<String> lines = new ArrayList<>();
+        if (null != targetPlayer && !"".equals(targetPlayer)) {
+            List<String> targetPlayerText = play(targetPlayer);
+            line = 14;
+            column = 37;
+            placeInTheLayout(layout, targetPlayerText, line, column);
+            ++additionalSpacer;
+        }
 
-        lines.add("              ____________ ");
-        lines.add("[ PLAYER   ] |            |");
-        lines.add("    ____     |            |");
-        lines.add("   /    \\    |____________|");
-        lines.add("  / 10   \\    ____________ ");
-        lines.add("  \\  ISK /   |            |");
-        lines.add("   \\____/    |            |");
-        lines.add("             |____________|");
+        if (null != block && !"".equals(block)) {
 
-        return lines;
+            List<String> blockText = play(block);
+            line = 15 + additionalSpacer;
+            column = 35;
 
-    }
+            placeInTheLayout(layout, blockText, line, column);
 
-    public static List<String> playerFive() {
+            if (null != challenge && !"".equals(challenge)) {
+                List<String> challengeText = play(challenge);
+                line = 17 + additionalSpacer;
+                column = 35;
 
-        List<String> lines = new ArrayList<>();
+                placeInTheLayout(layout, challengeText, line, column);
+            }
 
-        lines.add("              ____________ ");
-        lines.add("[ PLAYER   ] |            |");
-        lines.add("    ____     |            |");
-        lines.add("   /    \\    |____________|");
-        lines.add("  / 10   \\    ____________ ");
-        lines.add("  \\  ISK /   |            |");
-        lines.add("   \\____/    |            |");
-        lines.add("             |____________|");
+        } else {
 
-        return lines;
+            if (null != challenge && !"".equals(challenge)) {
+                List<String> challengeText = play(challenge);
+                line = 15 + additionalSpacer;
+                column = 35;
 
-    }
+                placeInTheLayout(layout, challengeText, line, column);
+            }
 
-    public static List<String> playerSix() {
+        }
 
-        List<String> lines = new ArrayList<>();
+        List<String> courtDeckTreasury = courtDeckTreasury(55,88);
+        line = 27;
+        column = 76;
+        placeInTheLayout(layout, courtDeckTreasury, line, column);
 
-        lines.add("              ____________ ");
-        lines.add("[ PLAYER   ] |            |");
-        lines.add("    ____     |            |");
-        lines.add("   /    \\    |____________|");
-        lines.add("  / 10   \\    ____________ ");
-        lines.add("  \\  ISK /   |            |");
-        lines.add("   \\____/    |            |");
-        lines.add("             |____________|");
-
-        return lines;
+        layout.add("Player> "); // Line for the user to write
+        return layout;
 
     }
 
@@ -224,7 +304,7 @@ public class COUPTerminalView {
 
         List<String> logo = logo();
         int line = 3;
-        int column = 3;
+        int column = 6;
 
         placeInTheLayout(layout, logo, line, column);
 
@@ -243,11 +323,11 @@ public class COUPTerminalView {
     public static List<String> renderWelcomeScreenClient() {
 
         List<String> layout = new ArrayList<>(layout());
-        layout.remove(layout.size()-2);
+        layout.remove(layout.size() - 2);
 
         List<String> logo = logo();
         int line = 3;
-        int column = 3;
+        int column = 6;
 
         placeInTheLayout(layout, logo, line, column);
 
@@ -264,64 +344,17 @@ public class COUPTerminalView {
 
     }
 
-    public static List<String> table(int players) {
+    public static List<String> play(String text) {
+        List<String> lines = new ArrayList<>();
+        lines.add(text);
+        return lines;
+    }
 
-        List<String> layout = new ArrayList<>(layout());
-        layout.remove(layout.size()-2);
-
-        // Add Player 1 to the table
-        if (players >= 1) {
-            List<String> player1 = playerOne();
-            int player1_line = 3;
-            int player1_column = 36;
-
-            placeInTheLayout(layout, player1, player1_line, player1_column);
-        }
-
-        // Add Player 2 to the table
-        if (players >= 2) {
-            List<String> player2 = playerTwo();
-            int player2_line = 19;
-            int player2_column = 38;
-
-            placeInTheLayout(layout, player2, player2_line, player2_column);
-        }
-        // Add Player 3 to the table
-        if (players >= 3) {
-            List<String> player3 = playerThree();
-            int player3_line = 5;
-            int player3_column = 69;
-
-            placeInTheLayout(layout, player3, player3_line, player3_column);
-        }
-        // Add Player 4 to the table
-        if (players >= 4) {
-            List<String> player4 = playerFour();
-            int player4_line = 15;
-            int player4_column = 5;
-
-            placeInTheLayout(layout, player4, player4_line, player4_column);
-        }
-        // Add Player 5 to the table
-        if (players >= 5) {
-            List<String> player5 = playerFive();
-            int player5_line = 5;
-            int player5_column = 5;
-
-            placeInTheLayout(layout, player5, player5_line, player5_column);
-        }
-        // Add Player 6 to the table
-        if (players == 6) {
-            List<String> player6 = playerSix();
-            int player6_line = 15;
-            int player6_column = 69;
-
-            placeInTheLayout(layout, player6, player6_line, player6_column);
-        }
-
-        layout.add("Player> "); // Line for the user to write
-        return layout;
-
+    public static List<String> courtDeckTreasury(int courtDeck, int treasury) {
+        List<String> lines = new ArrayList<>();
+        lines.add("Court deck: " + courtDeck + " cards");
+        lines.add("Treasury: " + treasury + " ISK");
+        return lines;
     }
 
     private static void placeInTheLayout(List<String> table, String toAdd, int inLine, int inColumn) {
