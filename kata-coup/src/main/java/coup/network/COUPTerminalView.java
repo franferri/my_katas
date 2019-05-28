@@ -150,7 +150,7 @@ public class COUPTerminalView {
 
         List<String> lines = new ArrayList<>();
 
-        lines.add("Welcome to COUP Kata Server");
+        lines.add(boldifyText("Welcome to COUP Kata Server"));
         lines.add("Users connected [" + game.players() + "]");
         lines.add("Recommended terminal size 100 columns x 30 lines");
 
@@ -274,12 +274,12 @@ public class COUPTerminalView {
 
         }
 
-        List<String> courtDeckTreasury = courtDeckTreasury(55,88);
+        List<String> courtDeckTreasury = courtDeckTreasury(55, 88);
         line = 27;
         column = 76;
         placeInTheLayout(layout, courtDeckTreasury, line, column);
 
-        layout.add("Player> "); // Line for the user to write
+        layout.add(boldifyText("Player> ")); // Line for the user to write
         return layout;
 
     }
@@ -293,9 +293,38 @@ public class COUPTerminalView {
     }
 
     public static String boldifyText(String textToBold) {
-        String strNormalSize = "\033[0;0m";
+
         String strBoldSize = "\033[0;1m";
-        return strBoldSize + textToBold + strNormalSize;
+        String strNormalSize = "\033[0;0m";
+
+        String output = "";
+
+        boolean boldifying = false;
+        for (int i = 0; i < textToBold.length(); i++) {
+
+            if (textToBold.charAt(i) == ' ') {
+
+                if (boldifying) {
+                    output += strNormalSize + textToBold.charAt(i);
+                    boldifying = false;
+                } else {
+                    output += textToBold.charAt(i);
+                }
+
+            } else {
+
+                if (!boldifying) {
+                    output += strBoldSize + textToBold.charAt(i);
+                    boldifying = true;
+                } else {
+                    output += textToBold.charAt(i);
+                }
+
+            }
+
+        }
+
+        return output + strNormalSize;
     }
 
     public static List<String> renderWelcomeScreenServer(Game game) {
@@ -308,14 +337,15 @@ public class COUPTerminalView {
 
         placeInTheLayout(layout, logo, line, column);
 
-        List<String> welcomeServerLines = welcomeServer(game);
+        List<String> lines = welcomeServer(game);
         line = 27;
-        for (int i = 0; i < welcomeServerLines.size(); i++) {
-            column = (layout.get(line).length() - welcomeServerLines.get(i).length()) / 2;
-            placeInTheLayout(layout, welcomeServerLines.get(i), line, column);
+        int lineLength ;
+        for (int i = 0; i < lines.size(); i++) {
+            lineLength =lengthWithtoutEffects(lines.get(i));
+            column = (layout.get(line).length() - lineLength) / 2;
+            placeInTheLayout(layout, lines.get(i), line, column);
             ++line;
         }
-
         return layout;
 
     }
@@ -331,11 +361,13 @@ public class COUPTerminalView {
 
         placeInTheLayout(layout, logo, line, column);
 
-        List<String> welcomeServerLines = welcomeClients();
+        List<String> lines = welcomeClients();
         line = 26;
-        for (int i = 0; i < welcomeServerLines.size(); i++) {
-            column = (layout.get(line).length() - welcomeServerLines.get(i).length()) / 2;
-            placeInTheLayout(layout, welcomeServerLines.get(i), line, column);
+        int lineLength ;
+        for (int i = 0; i < lines.size(); i++) {
+            lineLength =lengthWithtoutEffects(lines.get(i));
+            column = (layout.get(line).length() - lineLength) / 2;
+            placeInTheLayout(layout, lines.get(i), line, column);
             ++line;
         }
 
@@ -346,7 +378,7 @@ public class COUPTerminalView {
 
     public static List<String> play(String text) {
         List<String> lines = new ArrayList<>();
-        lines.add(text);
+        lines.add(boldifyText(text));
         return lines;
     }
 
@@ -378,7 +410,9 @@ public class COUPTerminalView {
                 String lineToAdd = toAdd.get(player_iteration);
 
                 String prefix = table.get(i).substring(0, inColumn);
-                String suffix = table.get(i).substring(inColumn + lineToAdd.length(), table.get(i).length() - 1);
+                int a = lengthWithtoutEffects(lineToAdd);
+                int b = lineToAdd.length();
+                String suffix = table.get(i).substring(inColumn + lengthWithtoutEffects(lineToAdd), table.get(i).length() - 1);
 
                 newLine = prefix + lineToAdd + suffix;
                 newLine += "|";
@@ -389,6 +423,26 @@ public class COUPTerminalView {
             }
 
         }
+    }
+
+    private static int lengthWithtoutEffects(String lineToAdd) {
+        // If toAdd has \33+5 chars, discount it from the size, since those are the colors for the terminal
+
+        int length = 0;
+
+        for (int i = 0; i < lineToAdd.length(); i++) {
+
+            if (lineToAdd.charAt(i) == '\033') {
+                i = i + 5;
+                continue;
+            }
+
+            ++length;
+
+        }
+
+        return length;
+
     }
 
 }
