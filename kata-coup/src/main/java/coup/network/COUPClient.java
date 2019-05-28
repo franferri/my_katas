@@ -10,7 +10,7 @@ public class COUPClient {
     public static void main(String[] args) {
 
         if (args.length != 2) {
-            System.err.println("Usage: java EchoClient <host name> <port number>");
+            System.err.println("Usage: java COUPClient <host name> <port number>");
             System.exit(1);
         }
 
@@ -19,43 +19,16 @@ public class COUPClient {
 
         try (
                 Socket kkSocket = new Socket(hostName, portNumber);
-                PrintWriter out = new PrintWriter(kkSocket.getOutputStream(), true);
         ) {
 
             NetworkInThreat threadFromServer = new NetworkInThreat(kkSocket);
             threadFromServer.start();
 
-            StdInThreat threadKeyboard = new StdInThreat();
+            StdInThreat threadKeyboard = new StdInThreat(kkSocket);
             threadKeyboard.start();
 
-            String fromServer = "";
-            String fromUser = "";
-
-            int metaStartPosition = -1;
-            int metaEndPosition = -1;
-
             while (true) {
-
-                // From Served received
-
-                if (!fromServer.equals(threadFromServer.fromThread())) {
-                    System.out.println("\"Received from Server: " + threadFromServer.fromThread());
-//                if (fromServer.equals("Game over")) break;
-                }
-
-                fromServer = threadFromServer.fromThread();
-
-                // Client keyboard input
-
-                if (!fromUser.equals(threadKeyboard.fromThread())) {
-                    System.out.println("Client: " + threadKeyboard.fromThread());
-                    out.println(threadKeyboard.fromThread());
-                }
-
-                fromUser = threadKeyboard.fromThread();
-
-                Thread.sleep(100);
-
+                Thread.sleep(1000);
             }
 
             // capturar el teclado del usuario debería hacerse en un thread a parte, si no, los updates q envía el servidor para refrescar la pantalla no se ejecutan

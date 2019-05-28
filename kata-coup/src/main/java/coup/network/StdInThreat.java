@@ -3,22 +3,29 @@ package coup.network;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.net.Socket;
 
 public class StdInThreat extends Thread {
 
-    private String stdIn = "";
+    private Socket kkSocket;
+
+    public StdInThreat(Socket kkSocket) {
+        this.kkSocket = kkSocket;
+    }
 
     @Override
     public void run() {
 
-        BufferedReader stdin = new BufferedReader(new InputStreamReader(System.in));
+
         String msg;
 
-        try {
+        try (PrintWriter out = new PrintWriter(kkSocket.getOutputStream(), true)) {
+
+            BufferedReader stdin = new BufferedReader(new InputStreamReader(System.in));
 
             while ((msg = stdin.readLine()) != null) {
-                System.out.println("Captured in the client: " + msg);
-                stdIn = "To send to the server: " + msg;
+                out.println(msg);
             }
 
             System.out.println("Aborted.");
@@ -27,10 +34,6 @@ public class StdInThreat extends Thread {
             ex.printStackTrace();
         }
 
-    }
-
-    public String fromThread() {
-        return stdIn;
     }
 
 }

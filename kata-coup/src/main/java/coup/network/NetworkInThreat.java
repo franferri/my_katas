@@ -7,8 +7,6 @@ import java.net.Socket;
 
 public class NetworkInThreat extends Thread {
 
-    private String stdIn = "";
-
     private Socket kkSocket;
 
     public NetworkInThreat(Socket kkSocket) {
@@ -18,32 +16,12 @@ public class NetworkInThreat extends Thread {
     @Override
     public void run() {
 
-        String fromServer;
+        String msg;
 
-        int lines = -1;
-        int metaStartPosition = -1;
-        int metaEndPosition = -1;
+        try (BufferedReader in = new BufferedReader(new InputStreamReader(kkSocket.getInputStream()))) {
 
-        try (
-                BufferedReader in = new BufferedReader(new InputStreamReader(kkSocket.getInputStream()));
-        ) {
-
-            while ((fromServer = in.readLine()) != null) {
-
-                if (fromServer.startsWith("<META>") && fromServer.endsWith("</META>")) {
-                    metaStartPosition = fromServer.indexOf(">") + 1;
-                    metaEndPosition = fromServer.indexOf("<", metaStartPosition);
-                    lines = Integer.valueOf(fromServer.substring(metaStartPosition, metaEndPosition));
-                    continue;
-                }
-
-                System.out.println("Received from the Server: " + fromServer);
-                stdIn = "Received from the Server: " + fromServer;
-
-                --lines;
-                if (lines <= 0) {
-                }
-
+            while ((msg = in.readLine()) != null) {
+                System.out.println(msg);
             }
 
             System.out.println("Aborted.");
@@ -52,10 +30,6 @@ public class NetworkInThreat extends Thread {
             ex.printStackTrace();
         }
 
-    }
-
-    public String fromThread() {
-        return stdIn;
     }
 
 }
