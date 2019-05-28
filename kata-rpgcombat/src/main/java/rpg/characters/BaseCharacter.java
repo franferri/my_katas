@@ -1,8 +1,11 @@
 package rpg.characters;
 
-import rpg.ChainOfAttacks;
-import rpg.GameData;
-import rpg.attacks.Attack;
+import rpg.attack.Attack;
+import rpg.attack.GameData;
+import rpg.attacks.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class BaseCharacter {
 
@@ -12,7 +15,8 @@ public class BaseCharacter {
     private int level = 1;
     protected int range;
 
-    public BaseCharacter() {}
+    public BaseCharacter() {
+    }
 
     public BaseCharacter(int level) {
         this.level = level;
@@ -52,10 +56,30 @@ public class BaseCharacter {
 
         GameData gameData = new GameData(this, enemy, damage);
 
-        Attack attackChain = ChainOfAttacks.getChainOfAttacks();
+        Attack attackChain = getChainOfAttacks();
         attackChain.execute(gameData);
 
     }
+
+    private static Attack getChainOfAttacks() {
+
+        List<Attack> attacks = new ArrayList<>();
+        attacks.add(new AvoidSelfDamaging());
+        attacks.add(new NoHealingThroughDamage());
+        attacks.add(new MeleeFighterAttackOutOfRange());
+        attacks.add(new RangeFighterAttackOutOfRange());
+        attacks.add(new ApplyReducedDamage());
+        attacks.add(new ApplyBoostedDamage());
+        attacks.add(new ApplyDamage());
+
+        for (int i = 1; i < attacks.size(); i++) {
+            attacks.get(i - 1).setNextLogger(attacks.get(i));
+        }
+
+        return attacks.get(0);
+
+    }
+
 
     public int range() {
         return range;

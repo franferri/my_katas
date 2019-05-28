@@ -1,4 +1,4 @@
-package rpg;
+package rpg.attack;
 
 import rpg.characters.BaseCharacter;
 
