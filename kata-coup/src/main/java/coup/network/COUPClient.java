@@ -1,7 +1,6 @@
 package coup.network;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
@@ -21,14 +20,14 @@ public class COUPClient {
                 Socket kkSocket = new Socket(hostName, portNumber);
         ) {
 
-            NetworkInThreat threadFromServer = new NetworkInThreat(kkSocket);
+            COUPClientNetworkLisenerThread threadFromServer = new COUPClientNetworkLisenerThread(kkSocket);
             threadFromServer.start();
 
-            StdInThreat threadKeyboard = new StdInThreat(kkSocket);
+            COUPClientStdInListenerThread threadKeyboard = new COUPClientStdInListenerThread(kkSocket);
             threadKeyboard.start();
 
             while (true) {
-                Thread.sleep(1000);
+                Thread.sleep(100);
             }
 
             // capturar el teclado del usuario debería hacerse en un thread a parte, si no, los updates q envía el servidor para refrescar la pantalla no se ejecutan

@@ -6,7 +6,7 @@ import coup.Player;
 import java.util.ArrayList;
 import java.util.List;
 
-public class COUPServerProtocol {
+public class COUPServerCommunicationProtocol {
 
     private Game game;
     private Player player;
@@ -21,14 +21,11 @@ public class COUPServerProtocol {
     private static final int CALLING_THE_BLUFF = 5;
     private static final int BLOCKING_ACTION = 6;
 
-    private static final int ACTIVE = 10000;
-
     private int state = JUST_CONNECTED;
 
-    boolean refresh_mine = false;
-    boolean refresh_others = false;
+    private boolean refresh_others = false;
 
-    public COUPServerProtocol(Game game, Player player) {
+    public COUPServerCommunicationProtocol(Game game, Player player) {
         this.game = game;
         this.player = player;
     }
@@ -37,15 +34,14 @@ public class COUPServerProtocol {
         List<String> theOutput = new ArrayList<>();
 
         if (null != theInput && theInput.equals("updateTerminal")) {
-            System.out.println("updateTerminal executed");
-            theOutput.addAll(TerminalView.table(game.players()));
+
+            theOutput.addAll(COUPTerminalView.table(game.players()));
+
         } else {
 
             if (state == JUST_CONNECTED) {
 
-                theOutput.addAll(TerminalView.welcome());
-                theOutput.add("");
-                theOutput.add("There are [ " + TerminalView.boldify(game.players() + "") + " ] players on the table. Press Enter to join.");
+                theOutput.addAll(COUPTerminalView.renderWelcomeScreenClient());
 
                 // If there are 6 players connected, no more are accepted we suggest to connect to another server
 
@@ -57,7 +53,7 @@ public class COUPServerProtocol {
             } else if (state == JOINED_THE_TABLE) {
 
                 state = WAITING;
-                theOutput.addAll(TerminalView.table(game.players()));
+                theOutput.addAll(COUPTerminalView.table(game.players()));
 
                 refresh_others = true;
                 // We update all connected players console to reflect the new joiner
@@ -67,7 +63,7 @@ public class COUPServerProtocol {
                 // If there is only 1 player he cant start the ga
 
                 state = WAITING_FOR_PLAYER_TO_PLAY;
-                theOutput.addAll(TerminalView.table(game.players()));
+                theOutput.addAll(COUPTerminalView.table(game.players()));
 
                 refresh_others = true;
             } else if (state == WAITING_FOR_PLAYER_TO_PLAY && theInput.equals("income")) {
@@ -105,7 +101,7 @@ public class COUPServerProtocol {
             } else if (theInput.equals("Game over")) {
                 theOutput.add("Game over");
             } else {
-                theOutput.addAll(TerminalView.table(game.players()));
+                theOutput.addAll(COUPTerminalView.table(game.players()));
                 theOutput.add("Unknown parameter: " + theInput);
             }
 
@@ -132,9 +128,19 @@ public class COUPServerProtocol {
         }
 
         String firstLine = theOutput.remove(0);
-        theOutput.add(0, TerminalView.cleanTerminal() + TerminalView.normalize() + firstLine);
+        theOutput.add(0, COUPTerminalView.cleanTerminal() + COUPTerminalView.normalize() + firstLine);
 
-        return theOutput;
+        ArrayList<String> toTheClient = new ArrayList<>();
+        for (int i = 0; i < theOutput.size(); i++) {
+
+            if (i - 1 == theOutput.size()) {
+                toTheClient.add(theOutput.get(i));
+            } else {
+                toTheClient.add(theOutput.get(i) + System.lineSeparator());
+            }
+        }
+
+        return toTheClient;
     }
 
 }

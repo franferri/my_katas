@@ -1,7 +1,8 @@
 package coup;
 
 import coup.actions.*;
-import coup.network.COUPServerThread;
+import coup.network.COUPServer;
+import coup.network.COUPServerNetworkListenerThread;
 
 import java.util.Hashtable;
 import java.util.Set;
@@ -11,13 +12,13 @@ public class Game {
     private GameEngine gameEngine;
     private Action currentAction;
 
-    private Hashtable<Player, COUPServerThread> players = new Hashtable<>();
+    private Hashtable<Player, COUPServerNetworkListenerThread> players = new Hashtable<>();
 
     public Game() {
 
     }
 
-    public void addPlayer(COUPServerThread thread, Player player) {
+    public void addPlayer(COUPServerNetworkListenerThread thread, Player player) {
         players.put(player, thread);
     }
 
@@ -27,11 +28,10 @@ public class Game {
 
     public void playersThreadsUpdateTerminal(String playerToAvoid) {
 
-        System.out.println("playerToAvoid: " + playerToAvoid);
+        COUPServer.updateServerTerminal();
 
         Set<Player> playersKeys = players.keySet();
         for (Player player : playersKeys) {
-            System.out.println("currentPlayerName: " + player.name());
             if (!player.name().equals(playerToAvoid)) {
                 players.get(player).updateTerminal();
             }

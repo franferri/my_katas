@@ -10,7 +10,7 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.List;
 
-public class COUPServerThread extends Thread {
+public class COUPServerNetworkListenerThread extends Thread {
 
     private Socket socket;
     private Game game;
@@ -18,14 +18,14 @@ public class COUPServerThread extends Thread {
     private PrintWriter out;
     private BufferedReader in;
 
-    private COUPServerProtocol protocol;
+    private COUPServerCommunicationProtocol protocol;
 
-    public COUPServerThread(Socket socket, Game game, Player player) {
+    public COUPServerNetworkListenerThread(Socket socket, Game game, Player player) {
         super("COUPServerThread");
         this.socket = socket;
         this.game = game;
 
-        protocol = new COUPServerProtocol(game, player);
+        protocol = new COUPServerCommunicationProtocol(game, player);
     }
 
     public void run() {
@@ -43,7 +43,6 @@ public class COUPServerThread extends Thread {
 
             // Mandamos mensaje inicial al cliente
             outputLines = protocol.processInput(null);
-            out.println("<META>" + outputLines.size() + "</META>");
             for (String line : outputLines) {
                 out.println(line);
             }
@@ -51,10 +50,7 @@ public class COUPServerThread extends Thread {
             // Recibimos mensaje del cliente, y le respondemos según el protocolo
             outerloop:
             while ((inputLine = in.readLine()) != null) {
-                System.out.println("Received from client: " + inputLine);
-
                 outputLines = protocol.processInput(inputLine);
-                out.println("<META>" + outputLines.size() + "</META>");
                 for (String line : outputLines) {
                     out.println(line);
                     if (line.equals("Bye"))
@@ -75,7 +71,6 @@ public class COUPServerThread extends Thread {
         List<String> outputLines;
 
         outputLines = protocol.processInput("updateTerminal");
-        out.println("<META>" + outputLines.size() + "</META>");
         for (String line : outputLines) {
             out.println(line);
         }

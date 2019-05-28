@@ -5,6 +5,7 @@ import coup.Player;
 
 import java.io.IOException;
 import java.net.ServerSocket;
+import java.util.List;
 
 public class COUPServer {
 
@@ -17,23 +18,37 @@ public class COUPServer {
             System.exit(1);
         }
 
-        for (String line : TerminalView.welcome()) {
-            System.out.println(line);
-        }
+        updateServerTerminal();
 
         int portNumber = Integer.parseInt(args[0]);
         boolean listening = true;
 
         try (ServerSocket serverSocket = new ServerSocket(portNumber)) {
+
             while (listening) {
                 Player player = new Player();
-                COUPServerThread clientThread = new COUPServerThread(serverSocket.accept(), game, player);
+                COUPServerNetworkListenerThread clientThread = new COUPServerNetworkListenerThread(serverSocket.accept(), game, player);
                 game.addPlayer(clientThread, player);
                 clientThread.start();
             }
+
         } catch (IOException e) {
             System.err.println("Could not listen on port " + portNumber);
             System.exit(-1);
+        }
+    }
+
+    public static void updateServerTerminal() {
+        System.out.print(COUPTerminalView.cleanTerminal() + COUPTerminalView.normalize());
+        List<String> lines = COUPTerminalView.renderWelcomeScreenServer(game);
+        for (int i = 0; i < lines.size(); i++) {
+
+            if (lines.size() == i + 1) {
+                System.out.print(lines.get(i));
+            } else {
+                System.out.println(lines.get(i));
+            }
+
         }
     }
 

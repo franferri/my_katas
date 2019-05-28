@@ -3,29 +3,25 @@ package coup.network;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.PrintWriter;
 import java.net.Socket;
 
-public class StdInThreat extends Thread {
+public class COUPClientNetworkLisenerThread extends Thread {
 
     private Socket kkSocket;
 
-    public StdInThreat(Socket kkSocket) {
+    public COUPClientNetworkLisenerThread(Socket kkSocket) {
         this.kkSocket = kkSocket;
     }
 
     @Override
     public void run() {
 
-
         String msg;
 
-        try (PrintWriter out = new PrintWriter(kkSocket.getOutputStream(), true)) {
+        try (BufferedReader in = new BufferedReader(new InputStreamReader(kkSocket.getInputStream()))) {
 
-            BufferedReader stdin = new BufferedReader(new InputStreamReader(System.in));
-
-            while ((msg = stdin.readLine()) != null) {
-                out.println(msg);
+            while ((msg = in.readLine()) != null) {
+                System.out.print(msg);
             }
 
             System.out.println("Aborted.");
