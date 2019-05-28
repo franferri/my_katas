@@ -43,6 +43,7 @@ public class COUPServerNetworkListenerThread extends Thread {
 
             // Mandamos mensaje inicial al cliente
             outputLines = protocol.processInput(null);
+            outputLines.add(0, "<META>" + outputLines.size() + "</META>");
             for (String line : outputLines) {
                 out.println(line);
             }
@@ -51,6 +52,7 @@ public class COUPServerNetworkListenerThread extends Thread {
             outerloop:
             while ((inputLine = in.readLine()) != null) {
                 outputLines = protocol.processInput(inputLine);
+                outputLines.add(0, "<META>" + outputLines.size() + "</META>");
                 for (String line : outputLines) {
                     out.println(line);
                     if (line.equals("Bye"))
@@ -71,6 +73,7 @@ public class COUPServerNetworkListenerThread extends Thread {
         List<String> outputLines;
 
         outputLines = protocol.processInput("updateTerminal");
+        outputLines.add(0, "<META>" + outputLines.size() + "</META>");
         for (String line : outputLines) {
             out.println(line);
         }

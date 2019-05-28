@@ -18,10 +18,28 @@ public class COUPClientNetworkLisenerThread extends Thread {
 
         String msg;
 
+        int lines = -1;
+        int metaStartPosition = -1;
+        int metaEndPosition = -1;
+
         try (BufferedReader in = new BufferedReader(new InputStreamReader(kkSocket.getInputStream()))) {
 
             while ((msg = in.readLine()) != null) {
-                System.out.print(msg);
+
+                if (msg.startsWith("<META>") && msg.endsWith("</META>")) {
+                    metaStartPosition = msg.indexOf(">") + 1;
+                    metaEndPosition = msg.indexOf("<", metaStartPosition);
+                    lines = Integer.valueOf(msg.substring(metaStartPosition, metaEndPosition));
+                    continue;
+                }
+
+                --lines;
+                if (lines <= 0) {
+                    System.out.print(msg);
+                } else {
+                    System.out.println(msg);
+                }
+
             }
 
             System.out.println("Aborted.");

@@ -102,7 +102,6 @@ public class COUPServerCommunicationProtocol {
                 theOutput.add("Game over");
             } else {
                 theOutput.addAll(COUPTerminalView.table(game.players()));
-                theOutput.add("Unknown parameter: " + theInput);
             }
 
             // IF A PLAYER GETS DISCONNECTED, THE GAME WILL REVEAL HIS CARDS INMEDIATELY
@@ -133,11 +132,12 @@ public class COUPServerCommunicationProtocol {
         ArrayList<String> toTheClient = new ArrayList<>();
         for (int i = 0; i < theOutput.size(); i++) {
 
-            if (i - 1 == theOutput.size()) {
+         //   if (i - 1 == theOutput.size()) {
+         //       toTheClient.add(theOutput.get(i));
+         //   } else {
                 toTheClient.add(theOutput.get(i));
-            } else {
-                toTheClient.add(theOutput.get(i) + System.lineSeparator());
-            }
+          //  }
+
         }
 
         return toTheClient;
