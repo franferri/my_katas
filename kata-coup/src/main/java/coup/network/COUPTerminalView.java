@@ -339,9 +339,9 @@ public class COUPTerminalView {
 
         List<String> lines = welcomeServer(game);
         line = 27;
-        int lineLength ;
+        int lineLength;
         for (int i = 0; i < lines.size(); i++) {
-            lineLength =lengthWithtoutEffects(lines.get(i));
+            lineLength = lengthWithtoutEffects(lines.get(i));
             column = (layout.get(line).length() - lineLength) / 2;
             placeInTheLayout(layout, lines.get(i), line, column);
             ++line;
@@ -363,9 +363,9 @@ public class COUPTerminalView {
 
         List<String> lines = welcomeClients();
         line = 26;
-        int lineLength ;
+        int lineLength;
         for (int i = 0; i < lines.size(); i++) {
-            lineLength =lengthWithtoutEffects(lines.get(i));
+            lineLength = lengthWithtoutEffects(lines.get(i));
             column = (layout.get(line).length() - lineLength) / 2;
             placeInTheLayout(layout, lines.get(i), line, column);
             ++line;

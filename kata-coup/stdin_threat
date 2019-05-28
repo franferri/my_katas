@@ -1,4 +1,0 @@
-#!/usr/bin/env bash
-
-./mvnw clean package
-java -cp target/kata-coup-0.0.1-SNAPSHOT.jar coup.network.StdIn localhost 8128
