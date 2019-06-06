@@ -78,9 +78,7 @@ First hour (becoming familiar with the base game)
 * Read instructions again
 * Play 4 more times
 
-# Challenges
-
-## Iteration 1 - Building the JAR (environment awareness)
+## Get ready 1 - Building the JAR (environment awareness)
 
 * Open maven configuration file, explain the dependencies section and the uber jar configuration.
 * Each person builds the library
@@ -90,7 +88,7 @@ First hour (becoming familiar with the base game)
 * Open it in your IDE
 * Build it
 
-## Iteration 2 - Upgrade some tests using Mockito (Preparation for fast testing)
+## Get ready 2 - Upgrade some tests using Mockito
 
 [TODO]
 
@@ -101,16 +99,12 @@ Many people knows how to Mock, or maybe not even than.
 The challenge is to update this tests to use the mock and spy() instead of normal classes.
 This drives to update the library to have to expose less internal methods because the testing.
 
-## Iteration 3 - To add the 2 players variant
+# Challenges
 
-You must update the base library:
-* It must ask you if you want to play with the normal game rules or the variant game when the game is created only with 2 players
-* It must be hable to play with the 2 players variant
-* The 2 players variant test must cover all the new rules
+## Iteration 1 - To add the new game mode, The Inquisitor.
 
-At the end of this iteration you must be able to play with other player using the normal game rules and the variant game rules
-
-## Iteration 4 - To add The Inquisitor card
+* Replace The Ambassador card with The Inquisitor card
+* Add a new game mode
 
 You must update the base library:
 * Given any number of players, there must be an option to play The Inquisitor variant of the game
@@ -121,6 +115,15 @@ The Inquisitor block someone from stealing coins from you.
 
 At the end of this iteration you must be able to play with others players using the normal game rules or using the inquisitor card
 
+
+## Iteration 2 - To add the 2 players variant
+
+You must update the base library:
+* It must ask you if you want to play with the normal game rules or the variant game when the game is created only with 2 players
+* It must be able to play with the 2 players variant
+* The 2 players variant test must cover all the new rules
+
+At the end of this iteration you must be able to play with other player using the normal game rules and the variant game rules
 
 
 

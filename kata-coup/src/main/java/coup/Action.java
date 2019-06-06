@@ -14,16 +14,16 @@ public abstract class Action {
         this.gameEngine = gameEngine;
     }
 
-    private void mustCoup10(GameEngine gameEngine) throws Exception {
+    private void mustCoup10(GameEngine gameEngine)  {
         if (gameEngine.playerDoingTheAction.coins() >= 10 && !(this instanceof Coup10)) {
-            throw new Exception("Player must coup because has 10 or more coins");
+            throw new RuntimeException("Player must coup because has 10 or more coins");
         }
     }
 
-    private void isTheGameEnded(GameEngine gameEngine) throws Exception {
+    private void isTheGameEnded(GameEngine gameEngine)  {
         int winner = gameEngine.whoIsTheWinner();
         if (winner > -1) {
-            throw new Exception("The game is done, the winner was player " + winner);
+            throw new RuntimeException("The game is done, the winner was player " + winner);
         }
     }
 
@@ -37,7 +37,7 @@ public abstract class Action {
     }
 
     // Action
-    public void doAction() throws Exception {
+    public void doAction()  {
         actionCantBeDoneToHimself();
         isTheGameEnded(gameEngine);
         mustCoup10(gameEngine);
@@ -45,24 +45,24 @@ public abstract class Action {
         isBlocked = false;
     }
 
-    protected abstract void doActionInternal() throws Exception;
+    protected abstract void doActionInternal() ;
 
     // Block Action
-    public void doBlockAction() throws Exception {
+    public void doBlockAction()  {
         playerCantBlockHimself();
         doBlockActionInternal();
         isBlocked = true;
     }
 
-    protected void doBlockActionInternal() throws Exception {
-        throw new Exception("method not overridden");
+    protected void doBlockActionInternal()  {
+        throw new RuntimeException("method not overridden");
     }
 
     // Bluff
-    public void doCallTheBluffOnAction() throws Exception {
+    public void doCallTheBluffOnAction()  {
         cannotCallBluffOnHimself();
         if (!canThisActionBeChallenged()) {
-            throw new Exception("This action can't be challenged");
+            throw new RuntimeException("This action can't be challenged");
         }
         if (gameEngine.playerDoingTheAction.canHeDoTheAction(this)) {
             gameEngine.playerCallingTheBluff.looseCard();
@@ -72,10 +72,10 @@ public abstract class Action {
         }
     }
 
-    public void doCallTheBluffOnBlockAction() throws Exception {
+    public void doCallTheBluffOnBlockAction()  {
         cannotBluffOnHisOwnBlockAction();
         if (!canThisBlockActionBeChallenged()) {
-            throw new Exception("This blockaction can't be challenged");
+            throw new RuntimeException("This blockaction can't be challenged");
         }
         if (gameEngine.playerBlockingTheAction.canHeBlockTheAction(this)) {
             gameEngine.playerCallingTheBluff.looseCard();
@@ -89,27 +89,27 @@ public abstract class Action {
         return isBlocked;
     }
 
-    private void actionCantBeDoneToHimself() throws Exception {
+    private void actionCantBeDoneToHimself()  {
         if (gameEngine.playerDoingTheAction == gameEngine.targetPlayer) {
-            throw new Exception("Action can't be done to himself");
+            throw new RuntimeException("Action can't be done to himself");
         }
     }
 
-    private void playerCantBlockHimself() throws Exception {
+    private void playerCantBlockHimself()  {
         if (gameEngine.playerDoingTheAction == gameEngine.playerBlockingTheAction) {
-            throw new Exception("Player cant block himself");
+            throw new RuntimeException("Player cant block himself");
         }
     }
 
-    private void cannotCallBluffOnHimself() throws Exception {
+    private void cannotCallBluffOnHimself()  {
         if (gameEngine.playerDoingTheAction == gameEngine.playerCallingTheBluff) {
-            throw new Exception("Action bluff can't be called over himself");
+            throw new RuntimeException("Action bluff can't be called over himself");
         }
     }
 
-    private void cannotBluffOnHisOwnBlockAction() throws Exception {
+    private void cannotBluffOnHisOwnBlockAction()  {
         if (gameEngine.playerBlockingTheAction == gameEngine.playerCallingTheBluff) {
-            throw new Exception("BlockAction bluff can't be called over the player doing the BlockAction");
+            throw new RuntimeException("BlockAction bluff can't be called over the player doing the BlockAction");
         }
     }
 

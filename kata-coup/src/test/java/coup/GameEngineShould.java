@@ -12,16 +12,16 @@ import static org.mockito.Mockito.spy;
 
 class GameEngineShould {
 
-    // TODO: If the gameEngine only have 2 players the rules are different
-    // Mode 1 Normal (as with many players)
+    // TODO: If the gameEngine only have 2 onlinePlayers the rules are different
+    // Mode 1 Normal (as with many onlinePlayers)
     // Mode 2 The selected starting player (player 1) gets only 1 coin at the beginning of the gameEngine
     // Mode 3 divide the cards in 3 sets of 5 (each set has 1 of each characters), Each player (player 1 and player 2) pick one of the sets and selects secretly a card and discard the rest.
     // Shuffle the third set and deal 1 card to each player and then put the remaining 3 cards face down ad court deck
 
-    // TODO: If the gameEngine only have 2 players the rules are different
+    // TODO: If the gameEngine only have 2 onlinePlayers the rules are different
     // The selected starting player (player 1) gets only 1 coin at the beginning of the gameEngine
 
-    // TODO: To cover 3 players or more, to choose who is doing the actions in the tests, we can just use random(), or the test repeats itself for all possible combinations in a loop (changing who does the action, who calls the bluff, who blocks the action, and who calls the bluff on the block action)
+    // TODO: To cover 3 onlinePlayers or more, to choose who is doing the actions in the tests, we can just use random(), or the test repeats itself for all possible combinations in a loop (changing who does the action, who calls the bluff, who blocks the action, and who calls the bluff on the block action)
 
     private GameEngine gameEngine;
 
@@ -29,7 +29,7 @@ class GameEngineShould {
     private final Player player2 = spy(new Player());
 
     @BeforeEach
-    void before() throws Exception {
+    void before()  {
 
         // given
         gameEngine = new GameEngine(player1, player2);
@@ -38,7 +38,7 @@ class GameEngineShould {
 
     // CONTENTS
 
-    // COUP gameEngine is a 2-6 players gameEngine
+    // COUP gameEngine is a 2-6 onlinePlayers gameEngine
 
     @Test
     void a_game_needs_2_players_at_least() {
@@ -141,7 +141,7 @@ class GameEngineShould {
     // Shuffle all the characters cards and deal 2 to each player
 
     @Test
-    void a_game_starts_with_a_shuffled_deck() throws Exception {
+    void a_game_starts_with_a_shuffled_deck()  {
 
         // when
         Deck deck = gameEngine.deck();
@@ -155,7 +155,7 @@ class GameEngineShould {
     }
 
     @Test
-    void a_new_game_starts_with_two_character_cards_per_player() throws Exception {
+    void a_new_game_starts_with_two_character_cards_per_player()  {
 
         // given
         int amountOfCardsAvailableInTheCourtDeck = gameEngine.deck().cards().size();
@@ -175,7 +175,7 @@ class GameEngineShould {
     // Give each player 2 coins
 
     @Test
-    void a_new_game_starts_with_two_coins_per_player() throws Exception {
+    void a_new_game_starts_with_two_coins_per_player()  {
 
         // when
         gameEngine.startGame();
@@ -188,10 +188,10 @@ class GameEngineShould {
 
     // GOAL
 
-    // To eliminate the influence of all other players and be the last survivor
+    // To eliminate the influence of all other onlinePlayers and be the last survivor
 
     @Test
-    void a_player_wins_when_no_more_players_left_alive() throws Exception {
+    void a_player_wins_when_no_more_players_left_alive()  {
 
         // when
         gameEngine.startGame();
@@ -207,7 +207,7 @@ class GameEngineShould {
 
     // Face down cards in front of a player represent who they influence at court
     @Test
-    void a_new_game_starts_with_two_non_visible_character_cards_per_player() throws Exception {
+    void a_new_game_starts_with_two_non_visible_character_cards_per_player()  {
 
         // when
         gameEngine.startGame();
@@ -222,7 +222,7 @@ class GameEngineShould {
 
     // Every time a player loses an influence they have to turn over and reveal one of their face down cards
     @Test
-    void when_a_player_loses_influence_must_reveal_one_of_its_cards() throws Exception {
+    void when_a_player_loses_influence_must_reveal_one_of_its_cards()  {
 
         // when
         gameEngine.startGame();
@@ -235,7 +235,7 @@ class GameEngineShould {
     // When a player has lost all their influence they are exiled and out of the gameEngine
 
     @Test
-    void a_player_dies_when_he_runs_out_of_cards() throws Exception {
+    void a_player_dies_when_he_runs_out_of_cards()  {
 
         // when
         gameEngine.startGame();

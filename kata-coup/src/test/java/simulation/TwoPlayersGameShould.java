@@ -11,12 +11,12 @@ class TwoPlayersGameShould {
     private Game game;
 
     @BeforeEach
-    void before() throws Exception {
+    void before()  {
         game = new Game(2);
     }
 
     @Test
-    void simplePlay() throws Exception {
+    void simplePlay()  {
 
         // given
         game.gameEngine().player(1).cards().clear();
@@ -67,7 +67,7 @@ class TwoPlayersGameShould {
     }
 
     @Test
-    void playUsingAllActions() throws Exception {
+    void playUsingAllActions()  {
 
         // when
         // then
@@ -115,7 +115,7 @@ class TwoPlayersGameShould {
 
 
     @Test
-    void playUsingAllActionsAndTheyGetBlocked() throws Exception {
+    void playUsingAllActionsAndTheyGetBlocked()  {
 
         // when
         // then
@@ -150,7 +150,7 @@ class TwoPlayersGameShould {
     }
 
     @Test
-    void playUsingAllActionsAndTheyGetChallenged_and_playerinitiatingaction_wins_Tax_Assassination() throws Exception {
+    void playUsingAllActionsAndTheyGetChallenged_and_playerinitiatingaction_wins_Tax_Assassination()  {
 
         // when
         // then
@@ -180,7 +180,7 @@ class TwoPlayersGameShould {
     }
 
     @Test
-    void playUsingAllActionsAndTheyGetChallenged_and_playerinitiatingaction_loses_Tax_Assassination() throws Exception {
+    void playUsingAllActionsAndTheyGetChallenged_and_playerinitiatingaction_loses_Tax_Assassination()  {
 
         // when
         // then
@@ -210,7 +210,7 @@ class TwoPlayersGameShould {
     }
 
     @Test
-    void playUsingAllActionsAndTheyGetChallenged_and_playerinitiatingaction_wins_Exchange_Steal() throws Exception {
+    void playUsingAllActionsAndTheyGetChallenged_and_playerinitiatingaction_wins_Exchange_Steal()  {
 
         // when
         // then
@@ -240,7 +240,7 @@ class TwoPlayersGameShould {
     }
 
     @Test
-    void playUsingAllActionsAndTheyGetChallenged_and_playerinitiatingaction_loses_Exchange_Steal() throws Exception {
+    void playUsingAllActionsAndTheyGetChallenged_and_playerinitiatingaction_loses_Exchange_Steal()  {
 
         // when
         // then
@@ -283,7 +283,7 @@ class TwoPlayersGameShould {
         Assertions.assertEquals(player2_coins, game.gameEngine().player(2).coins());
     }
 
-    // We need to test from 2 - 6 players
+    // We need to test from 2 - 6 onlinePlayers
     // We need to test all actions, blocks, bluffs actions, bluff blocks
     // We need to test player A does an action and every other player blocks it
     // We need to test player A does an action and every other player calls bluffs it and wins the call

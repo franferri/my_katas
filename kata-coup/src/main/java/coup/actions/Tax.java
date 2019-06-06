@@ -24,16 +24,16 @@ public class Tax extends Action {
     }
 
     // Block Action
-    public void doActionInternal() throws Exception {
+    public void doActionInternal()  {
         gameEngine.playerTakeCoinsFromTreasury(gameEngine.playerDoingTheAction,3);
     }
 
     // Block Action
-    public void doBlockAction() throws Exception {
-        throw new Exception("This action can't be blocked");
+    public void doBlockAction()  {
+        throw new RuntimeException("This action can't be blocked");
     }
 
-    public void doBlockActionInternal() throws Exception {
+    public void doBlockActionInternal()  {
         gameEngine.playerReturnCoinsToTreasury(gameEngine.playerDoingTheAction,3);
     }
 

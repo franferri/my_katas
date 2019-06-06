@@ -22,14 +22,14 @@ public class ActionExchangeShould extends TestingActions {
     // -
 
     @BeforeEach
-    public void before() throws Exception {
+    public void before()  {
         super.before();
         action = new Exchange(gameEngine);
     }
 
     // Action
     @Test
-    void player_does_action() throws Exception {
+    void player_does_action()  {
         // when
         gameEngine.playerDoingTheAction = gameEngine.player(1);
         action.doAction();
@@ -47,7 +47,7 @@ public class ActionExchangeShould extends TestingActions {
 
     // Player cant challenge himself (Engine integrity test)
     @Test
-    void player_does_action_and_challenge_himself() throws Exception {
+    void player_does_action_and_challenge_himself()  {
 
         // given
         List<Card> cards = Arrays.asList(new TheDuke(), new TheDuke());
@@ -68,7 +68,7 @@ public class ActionExchangeShould extends TestingActions {
     // Action can be challenged
     // Challenger (wins)
     @Test
-    void player_does_action_and_other_player_calls_the_bluff_and_wins_the_call() throws Exception {
+    void player_does_action_and_other_player_calls_the_bluff_and_wins_the_call()  {
 
         gameEngine.player(1).cards().clear();// Needs to be here since the action will reshuffle the hand
         gameEngine.player(1).cards().add(0, new TheDuke());
@@ -94,15 +94,15 @@ public class ActionExchangeShould extends TestingActions {
     // Action can be challenged
     // Challenger (lose)
     @Test
-    void player_does_action_and_other_calls_the_bluff_and_lose_the_call() throws Exception {
-
-        // when
-        gameEngine.playerDoingTheAction = gameEngine.player(1);
-        action.doAction();
+    void player_does_action_and_other_calls_the_bluff_and_lose_the_call()  {
 
         gameEngine.player(1).cards().clear(); // Needs to be here since the action will reshuffle the hand
         gameEngine.player(1).cards().add(0, new TheAmbassator());
         gameEngine.player(1).cards().add(0, new TheDuke());
+
+        // when
+        gameEngine.playerDoingTheAction = gameEngine.player(1);
+        action.doAction();
 
         gameEngine.playerCallingTheBluff = gameEngine.player(2);
         action.doCallTheBluffOnAction();
@@ -119,7 +119,7 @@ public class ActionExchangeShould extends TestingActions {
 
     // Action cannot be blocked
     @Test
-    void player_blocks_action() throws Exception {
+    void player_blocks_action()  {
         // when
         gameEngine.playerDoingTheAction = gameEngine.player(1);
         action.doAction();

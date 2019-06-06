@@ -25,14 +25,14 @@ public class Coup7 extends Action {
     }
 
     // Action
-    public void doActionInternal() throws Exception {
+    public void doActionInternal()  {
         gameEngine.playerReturnCoinsToTreasury(gameEngine.playerDoingTheAction, 7);
         gameEngine.targetPlayer.looseCard();
     }
 
     // Block Action
-    public void doBlockAction() throws Exception {
-        throw new Exception("This action can't be blocked");
+    public void doBlockAction()  {
+        throw new RuntimeException("This action can't be blocked");
     }
 
 }

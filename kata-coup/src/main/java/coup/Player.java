@@ -55,9 +55,9 @@ public class Player {
         }
     }
 
-    public void restoreLostCard() throws Exception {
+    public void restoreLostCard()  {
         if (lastCardLost < 0 || lastCardLost > 2) {
-            throw new Exception("Card number/range is not valid");
+            throw new RuntimeException("Card number/range is not valid");
         }
         cards().get(lastCardLost).setVisible(false);
     }
@@ -71,9 +71,9 @@ public class Player {
         return cards().get(0).isVisible() && cards().get(1).isVisible();
     }
 
-    public Card returnActiveCardToCourtDeck() throws Exception {
+    public Card returnActiveCardToCourtDeck()  {
         if (isDead()) {
-            throw new Exception("Player is dead, don't have any visible cards");
+            throw new RuntimeException("Player is dead, don't have any visible cards");
         }
 
         for (int i = 0; i < cards.size(); i++) {

@@ -43,19 +43,19 @@ public class COUPServerCommunicationProtocol {
 
                 theOutput.addAll(COUPTerminalView.renderWelcomeScreenClient());
 
-                // If there are 6 players connected, no more are accepted we suggest to connect to another server
+                // If there are 6 onlinePlayers connected, no more are accepted we suggest to connect to another server
 
                 state = JOINED_THE_TABLE;
 
                 refresh_others = false;
-                // We update all connected players console to reflect the new joiner
+                // We update all connected onlinePlayers console to reflect the new joiner
 
             } else if (state == JOINED_THE_TABLE) {
 
                 state = WAITING;
                 theOutput.addAll(COUPTerminalView.table(6, "Player 1 is doing Assasination", "on Player 6","Player 5 is blocking", "Player 2 is calling the bluff"));
                 refresh_others = true;
-                // We update all connected players console to reflect the new joiner
+                // We update all connected onlinePlayers console to reflect the new joiner
 
             } else if (state == WAITING && theInput.equals("start")) {
 

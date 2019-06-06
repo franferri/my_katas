@@ -20,14 +20,14 @@ public class ActionStealShould extends TestingActions {
     // Block by Ambassador can be challenged
 
     @BeforeEach
-    public void before() throws Exception {
+    public void before()  {
         super.before();
         action = new Steal(gameEngine);
     }
 
     // Action try to steal more than other player has
     @Test
-    void player_does_action_to_a_poor_player() throws Exception {
+    void player_does_action_to_a_poor_player()  {
         // when
         gameEngine.playerDoingTheAction = gameEngine.player(1);
         gameEngine.targetPlayer = gameEngine.player(2);
@@ -48,7 +48,7 @@ public class ActionStealShould extends TestingActions {
 
     // Action
     @Test
-    void player_does_action() throws Exception {
+    void player_does_action()  {
         // when
         gameEngine.playerDoingTheAction = gameEngine.player(1);
         gameEngine.targetPlayer = gameEngine.player(2);
@@ -66,7 +66,7 @@ public class ActionStealShould extends TestingActions {
 
     // Player cant challenge himself (Engine integrity test)
     @Test
-    void player_does_action_and_challenge_himself() throws Exception {
+    void player_does_action_and_challenge_himself()  {
         // when
         gameEngine.playerDoingTheAction = gameEngine.player(1);
         gameEngine.targetPlayer = gameEngine.player(2);
@@ -80,7 +80,7 @@ public class ActionStealShould extends TestingActions {
     // Action can be challenged
     // Challenger (wins)
     @Test
-    void player_does_action_and_other_player_calls_the_bluff_and_wins_the_call() throws Exception {
+    void player_does_action_and_other_player_calls_the_bluff_and_wins_the_call()  {
         // given
         gameEngine.player(1).cards().clear();
         gameEngine.player(1).cards().add(0, new TheAmbassator());
@@ -107,7 +107,7 @@ public class ActionStealShould extends TestingActions {
     // Action can be challenged
     // Challenger (lose)
     @Test
-    void player_does_action_and_other_calls_the_bluff_and_lose_the_call() throws Exception {
+    void player_does_action_and_other_calls_the_bluff_and_lose_the_call()  {
         // given
         gameEngine.player(1).cards().clear();
         gameEngine.player(1).cards().add(0, new TheCaptain());
@@ -133,7 +133,7 @@ public class ActionStealShould extends TestingActions {
 
     // Player cant block himself (Engine integrity test)
     @Test
-    void player_does_action_and_blocks_himself() throws Exception {
+    void player_does_action_and_blocks_himself()  {
         // given
         gameEngine.player(2).cards().clear();
         gameEngine.player(2).cards().add(0, new TheCaptain());
@@ -151,7 +151,7 @@ public class ActionStealShould extends TestingActions {
 
     // Action can be blocked (by Captain)
     @Test
-    void player_does_action_and_gets_block_by_captain() throws Exception {
+    void player_does_action_and_gets_block_by_captain()  {
         // given
         gameEngine.player(2).cards().clear();
         gameEngine.player(2).cards().add(0, new TheCaptain());
@@ -177,7 +177,7 @@ public class ActionStealShould extends TestingActions {
 
     // BlockAction bluff can't be called over the player doing the BlockAction (Engine integrity test)
     @Test
-    void player_does_action_and_gets_block_then_the_player_blocking_challenge_himself() throws Exception {
+    void player_does_action_and_gets_block_then_the_player_blocking_challenge_himself()  {
         // given
         gameEngine.player(2).cards().clear();
         gameEngine.player(2).cards().add(0, new TheDuke());
@@ -200,7 +200,7 @@ public class ActionStealShould extends TestingActions {
     // Block can be challenged
     // Challenger wins
     @Test
-    void player_does_action_and_gets_block_by_captain_but_a_player_calls_the_bluff_on_the_block_and_wins_the_call() throws Exception {
+    void player_does_action_and_gets_block_by_captain_but_a_player_calls_the_bluff_on_the_block_and_wins_the_call()  {
         // given
         gameEngine.player(2).cards().clear();
         gameEngine.player(2).cards().add(0, new TheDuke());
@@ -231,7 +231,7 @@ public class ActionStealShould extends TestingActions {
     // Block can be challenged
     // Challenger lose
     @Test
-    void player_does_action_and_gets_block_by_captain_but_a_player_calls_the_bluff_on_the_block_and_lose_the_call() throws Exception {
+    void player_does_action_and_gets_block_by_captain_but_a_player_calls_the_bluff_on_the_block_and_lose_the_call()  {
         // given
         gameEngine.player(2).cards().clear();
         gameEngine.player(2).cards().add(0, new TheCaptain());
@@ -261,7 +261,7 @@ public class ActionStealShould extends TestingActions {
 
     // Action can be blocked (by Ambassador)
     @Test
-    void player_does_action_and_gets_block_by_ambassador() throws Exception {
+    void player_does_action_and_gets_block_by_ambassador()  {
         // given
         gameEngine.player(2).cards().clear();
         gameEngine.player(2).cards().add(0, new TheAmbassator());
@@ -289,7 +289,7 @@ public class ActionStealShould extends TestingActions {
     // Block can be challenged
     // Challenger wins
     @Test
-    void player_does_action_and_gets_block_by_ambassador_but_a_player_calls_the_bluff_on_the_block_and_wins_the_call() throws Exception {
+    void player_does_action_and_gets_block_by_ambassador_but_a_player_calls_the_bluff_on_the_block_and_wins_the_call()  {
         // given
         gameEngine.player(2).cards().clear();
         gameEngine.player(2).cards().add(0, new TheAmbassator());

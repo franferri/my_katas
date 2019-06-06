@@ -18,7 +18,7 @@ public class TestingActions {
 
     protected Action action;
 
-    protected void before() throws Exception {
+    protected void before()  {
 
         // given
         gameEngine = new GameEngine(player1, player2);

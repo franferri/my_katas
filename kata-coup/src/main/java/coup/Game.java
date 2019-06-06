@@ -12,40 +12,34 @@ public class Game {
     private GameEngine gameEngine;
     private Action currentAction;
 
-    private Hashtable<Player, COUPServerNetworkListenerThread> players = new Hashtable<>();
+    private Hashtable<Player, COUPServerNetworkListenerThread> onlinePlayers = new Hashtable<>();
 
     public Game() {
 
     }
 
     public void addPlayer(COUPServerNetworkListenerThread thread, Player player) {
-        players.put(player, thread);
+        onlinePlayers.put(player, thread);
     }
 
-    public int players() {
-        return players.size();
+    public int onlinePlayers() {
+        return onlinePlayers.size();
     }
 
     public void playersThreadsUpdateTerminal(String playerToAvoid) {
 
         COUPServer.updateServerTerminal();
 
-        Set<Player> playersKeys = players.keySet();
+        Set<Player> playersKeys = onlinePlayers.keySet();
         for (Player player : playersKeys) {
             if (!player.name().equals(playerToAvoid)) {
-                players.get(player).updateTerminal();
+                onlinePlayers.get(player).updateTerminal();
             }
         }
 
     }
 
-    public void startGame() throws Exception {
-        Set<Player> keys = players.keySet();
-        gameEngine = new GameEngine(keys.toArray(new Player[0]));
-        gameEngine.startGame();
-    }
-
-    public Game(int players) throws Exception {
+    public Game(int players)  {
 
         Player[] playersList = new Player[players];
 
@@ -63,21 +57,21 @@ public class Game {
         return gameEngine;
     }
 
-    public void playerTakesIncomeFromTreasury() throws Exception {
+    public void playerTakesIncomeFromTreasury()  {
         startAction();
 
         currentAction = new Income(gameEngine);
         currentAction.doAction();
     }
 
-    public void playerTakesForeignAidFromTreasury() throws Exception {
+    public void playerTakesForeignAidFromTreasury()  {
         startAction();
 
         currentAction = new ForeignAid(gameEngine);
         currentAction.doAction();
     }
 
-    public void playerCoups7(int targetedPlayer) throws Exception {
+    public void playerCoups7(int targetedPlayer)  {
         startAction();
         gameEngine.targetPlayer = gameEngine.player(targetedPlayer);
 
@@ -85,7 +79,7 @@ public class Game {
         currentAction.doAction();
     }
 
-    public void playerCoups10(int targetedPlayer) throws Exception {
+    public void playerCoups10(int targetedPlayer)  {
         startAction();
 
         gameEngine.targetPlayer = gameEngine.player(targetedPlayer);
@@ -94,14 +88,14 @@ public class Game {
         currentAction.doAction();
     }
 
-    public void playerTakesTaxesFromTreasury() throws Exception {
+    public void playerTakesTaxesFromTreasury()  {
         startAction();
 
         currentAction = new Tax(gameEngine);
         currentAction.doAction();
     }
 
-    public void playerAssassinates(int targetedPlayer) throws Exception {
+    public void playerAssassinates(int targetedPlayer)  {
         startAction();
         gameEngine.targetPlayer = gameEngine.player(targetedPlayer);
 
@@ -109,14 +103,14 @@ public class Game {
         currentAction.doAction();
     }
 
-    public void playerExchangesCardsFromTheCourtDeck() throws Exception {
+    public void playerExchangesCardsFromTheCourtDeck()  {
         startAction();
 
         currentAction = new Exchange(gameEngine);
         currentAction.doAction();
     }
 
-    public void playerStealsFrom(int targetedPlayer) throws Exception {
+    public void playerStealsFrom(int targetedPlayer)  {
         startAction();
         gameEngine.targetPlayer = gameEngine.player(targetedPlayer);
 
@@ -124,12 +118,12 @@ public class Game {
         currentAction.doAction();
     }
 
-    public void playerBlocks(int playerBlocking) throws Exception {
+    public void playerBlocks(int playerBlocking)  {
         gameEngine.playerBlockingTheAction = gameEngine.player(playerBlocking);
         currentAction.doBlockAction();
     }
 
-    public void playerCallsTheBluff(int playerCallingTheBluff) throws Exception {
+    public void playerCallsTheBluff(int playerCallingTheBluff)  {
         gameEngine.playerCallingTheBluff = gameEngine.player(playerCallingTheBluff);
 
         if (currentAction.isBlocked()) {

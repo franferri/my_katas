@@ -24,12 +24,12 @@ public class ForeignAid extends Action {
     }
 
     // Action
-    public void doActionInternal() throws Exception {
+    public void doActionInternal()  {
         gameEngine.playerTakeCoinsFromTreasury(gameEngine.playerDoingTheAction, 2);
     }
 
     // Block Action
-    public void doBlockActionInternal() throws Exception {
+    public void doBlockActionInternal()  {
         gameEngine.playerReturnCoinsToTreasury(gameEngine.playerDoingTheAction, 2);
     }
 

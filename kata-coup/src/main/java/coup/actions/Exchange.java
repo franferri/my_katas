@@ -31,7 +31,7 @@ public class Exchange extends Action {
     }
 
     // Action
-    public void doActionInternal() throws Exception {
+    public void doActionInternal()  {
 
         // We save the original hand, in case we get blocked, to rollback
         originalCardsInPlayerHand = new ArrayList<>(gameEngine.playerDoingTheAction.cards());
@@ -50,8 +50,8 @@ public class Exchange extends Action {
     }
 
     // Block Action
-    public void doBlockAction() throws Exception {
-        throw new Exception("This action can't be blocked");
+    public void doBlockAction()  {
+        throw new RuntimeException("This action can't be blocked");
     }
 
     public void doBlockActionInternal() {

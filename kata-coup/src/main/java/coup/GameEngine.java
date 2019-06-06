@@ -17,18 +17,19 @@ public class GameEngine {
 
     public Player targetPlayer;
 
-    public GameEngine(Player... players) throws Exception {
+    public GameEngine(Player... players)  {
         if (players.length < 2) {
-            throw new Exception("Need more players");
+            throw new RuntimeException("Need more onlinePlayers");
         }
-        if (players.length > 4) {
-            throw new Exception("Only 4 players allowed");
+        if (players.length > 6) {
+            throw new RuntimeException("Only 6 onlinePlayers allowed");
         }
 
         Collections.addAll(this.players, players);
 
         treasury = 50;
         this.deck = new Deck();
+        this.deck.shuffle();
     }
 
     public int treasury() {
@@ -39,17 +40,16 @@ public class GameEngine {
         return deck;
     }
 
-    public void startGame() throws Exception {
+    public void startGame()  {
         for (Player player : players) {
             playerTakeCoinsFromTreasury(player, 2);
             dealCardsToThePlayer(player);
         }
-        this.deck.shuffle();
     }
 
-    public void playerReturnCoinsToTreasury(Player player, int coins) throws Exception {
+    public void playerReturnCoinsToTreasury(Player player, int coins)  {
         if (player.coins() < coins) {
-            throw new Exception("Player don't have enough coins");
+            throw new RuntimeException("Player don't have enough coins");
         }
         for (int i = 0; i < coins; i++) {
             player.looseCoin();
@@ -57,9 +57,9 @@ public class GameEngine {
         }
     }
 
-    public void playerTakeCoinsFromTreasury(Player player, int coins) throws Exception {
+    public void playerTakeCoinsFromTreasury(Player player, int coins)  {
         if (treasury < coins) {
-            throw new Exception("Treasury depleted");
+            throw new RuntimeException("Treasury depleted");
         }
         for (int i = 0; i < coins; i++) {
             --treasury;
@@ -67,9 +67,9 @@ public class GameEngine {
         }
     }
 
-    public void playerTakesCoinsFromOtherPlayer(Player player_taking, Player player_losing, int coins) throws Exception {
+    public void playerTakesCoinsFromOtherPlayer(Player player_taking, Player player_losing, int coins)  {
         if (player_losing.coins() < coins) {
-            throw new Exception("Player is broke and we can't take more coins from it");
+            throw new RuntimeException("Player is broke and we can't take more coins from it");
         }
         for (int i = 0; i < coins; i++) {
             player_losing.looseCoin();
@@ -117,6 +117,11 @@ public class GameEngine {
 
             if (player(nextPlayer).isDead()) {
                 ++nextPlayer;
+
+                if (nextPlayer > players.size()) {
+                    nextPlayer = 1;
+                }
+
             } else {
                 currentPlayerPlaying = nextPlayer;
                 return;
@@ -124,6 +129,16 @@ public class GameEngine {
 
         }
 
+    }
+
+    public int playersStillInTheGame() {
+        int playersAlive = players.size();
+        for (Player player : players) {
+            if (player.isDead()) {
+                --playersAlive;
+            }
+        }
+        return playersAlive;
     }
 
     public void resetStatus() {

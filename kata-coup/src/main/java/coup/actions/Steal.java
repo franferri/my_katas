@@ -22,12 +22,12 @@ public class Steal extends Action {
     }
 
     // Action
-    public void doActionInternal() throws Exception {
+    public void doActionInternal()  {
         gameEngine.playerTakesCoinsFromOtherPlayer(gameEngine.playerDoingTheAction, gameEngine.targetPlayer, 2);
     }
 
     // Block Action
-    public void doBlockActionInternal() throws Exception {
+    public void doBlockActionInternal()  {
         gameEngine.playerTakesCoinsFromOtherPlayer(gameEngine.targetPlayer, gameEngine.playerDoingTheAction, 2);
     }
 

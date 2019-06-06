@@ -13,14 +13,14 @@ public class ActionIncomeShould extends TestingActions {
     // Block: Cannot be blocked
 
     @BeforeEach
-    public void before() throws Exception {
+    public void before()  {
         super.before();
         action = new Income(gameEngine);
     }
 
     // Action
     @Test
-    void player_does_action() throws Exception {
+    void player_does_action()  {
         // when
         gameEngine.playerDoingTheAction = gameEngine.player(1);
         action.doAction();
@@ -37,7 +37,7 @@ public class ActionIncomeShould extends TestingActions {
 
     // Action cannot be challenged
     @Test
-    void player_calls_the_bluff_over_action() throws Exception {
+    void player_calls_the_bluff_over_action()  {
         // when
         gameEngine.playerDoingTheAction = gameEngine.player(1);
         action.doAction();
@@ -49,7 +49,7 @@ public class ActionIncomeShould extends TestingActions {
 
     // Action cannot be blocked
     @Test
-    void player_blocks_action() throws Exception {
+    void player_blocks_action()  {
         // when
         gameEngine.playerDoingTheAction = gameEngine.player(1);
         action.doAction();

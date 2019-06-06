@@ -151,7 +151,7 @@ public class COUPTerminalView {
         List<String> lines = new ArrayList<>();
 
         lines.add(boldifyText("Welcome to COUP Kata Server"));
-        lines.add("Users connected [" + game.players() + "]");
+        lines.add("Users connected [" + game.onlinePlayers() + "]");
         lines.add("Recommended terminal size 100 columns x 30 lines");
 
         return lines;

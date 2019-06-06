@@ -21,7 +21,7 @@ public class Assassinate extends Action {
     private boolean paid = false;
 
     // Action
-    public void doActionInternal() throws Exception {
+    public void doActionInternal()  {
         if (!paid) {
             gameEngine.playerReturnCoinsToTreasury(gameEngine.playerDoingTheAction, 3);
             paid = true;
@@ -30,7 +30,7 @@ public class Assassinate extends Action {
     }
 
     // Block Action
-    public void doBlockActionInternal() throws Exception {
+    public void doBlockActionInternal()  {
         gameEngine.targetPlayer.restoreLostCard();
     }
 

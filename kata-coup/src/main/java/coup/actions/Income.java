@@ -28,13 +28,13 @@ public class Income extends Action {
     }
 
     // Action
-    public void doActionInternal() throws Exception {
+    public void doActionInternal()  {
         gameEngine.playerTakeCoinsFromTreasury(gameEngine.playerDoingTheAction,1);
     }
 
     // Block Action
-    public void doBlockAction() throws Exception {
-        throw new Exception("This action can't be blocked");
+    public void doBlockAction()  {
+        throw new RuntimeException("This action can't be blocked");
     }
 
 }
