@@ -25,14 +25,14 @@ class GameEngineShould {
 
     private GameEngine gameEngine;
 
-    private final Player player1 = spy(new Player());
-    private final Player player2 = spy(new Player());
-
     @BeforeEach
     void before()  {
 
         // given
-        gameEngine = new GameEngine(player1, player2);
+        gameEngine = new GameEngine();
+
+        gameEngine.addPlayer();
+        gameEngine.addPlayer();
 
     }
 
@@ -43,16 +43,28 @@ class GameEngineShould {
     @Test
     void a_game_needs_2_players_at_least() {
 
+        gameEngine = new GameEngine();
+        gameEngine.addPlayer();
+
         // then
-        Assertions.assertThrows(Exception.class, () -> new GameEngine(Player.newPlayers(1)));
+        Assertions.assertThrows(Exception.class, () -> gameEngine.startGame());
 
     }
 
     @Test
     void a_game_can_have_until_6_players() {
 
+        gameEngine = new GameEngine();
+        gameEngine.addPlayer();
+        gameEngine.addPlayer();
+        gameEngine.addPlayer();
+        gameEngine.addPlayer();
+        gameEngine.addPlayer();
+        gameEngine.addPlayer();
+        gameEngine.addPlayer();
+
         // then
-        Assertions.assertThrows(Exception.class, () -> new GameEngine(Player.newPlayers(7)));
+        Assertions.assertThrows(Exception.class, () -> gameEngine.startGame());
 
     }
 

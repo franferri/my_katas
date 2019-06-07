@@ -1,11 +1,7 @@
 package coup;
 
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Disabled;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
-
-import static org.mockito.Mockito.spy;
 
 public class TestingActions {
 
@@ -13,15 +9,16 @@ public class TestingActions {
 
     protected GameEngine gameEngine;
 
-    protected final Player player1 = spy(new Player());
-    protected final Player player2 = spy(new Player());
-
     protected Action action;
 
     protected void before()  {
 
         // given
-        gameEngine = new GameEngine(player1, player2);
+        gameEngine = new GameEngine();
+
+        gameEngine.addPlayer();
+        gameEngine.addPlayer();
+
         gameEngine.startGame();
 
     }

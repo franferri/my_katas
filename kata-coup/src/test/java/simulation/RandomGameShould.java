@@ -113,14 +113,20 @@ class RandomGameShould {
     @Test
     void randomPlay() {
 
-        for (int i = 0; i < 1000; i++) { // We play with all available onlinePlayers setup
+        for (int i = 0; i < 250; i++) { // We play with all available onlinePlayers setup
 
             System.out.println("Game " + i);
 
             int players = random.nextInt(5);
 
             // given
-            game = new Game(players + 2);
+            game = new Game();
+
+            for (int j = 0; j < players + 2; j++) {
+                game.gameEngine().addPlayer();
+            }
+
+            game.gameEngine().startGame();
 
             int weHaveAWinner = -1;
             while (weHaveAWinner < 0) {

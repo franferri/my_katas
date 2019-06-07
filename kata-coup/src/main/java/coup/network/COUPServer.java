@@ -14,7 +14,7 @@ public class COUPServer {
     public static void main(String[] args) {
 
         if (args.length != 1) {
-            System.err.println("Usage: java KKMultiServer <port number>");
+            System.err.println("Usage: java -cp target/kata-coup-0.0.1-SNAPSHOT.jar coup.network.COUPServer <PORT NUMBER>");
             System.exit(1);
         }
 

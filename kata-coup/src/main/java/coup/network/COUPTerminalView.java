@@ -163,8 +163,32 @@ public class COUPTerminalView {
         List<String> lines = new ArrayList<>();
 
         lines.add("Welcome to COUP Kata");
-        lines.add("Users connected [X], press ENTER to join");
-        lines.add("Recommended terminal size 100 columns x 30 lines");
+        lines.add(boldifyText("Write your name and press ENTER to join the play"));
+        lines.add("Resize your terminal to 100 columns x 30 lines");
+
+        return lines;
+
+    }
+
+    public static List<String> welcomeClientsServerFull() {
+
+        List<String> lines = new ArrayList<>();
+
+        lines.add("Welcome to COUP Kata");
+        lines.add("");
+        lines.add(boldifyText("All seats are taken in the table"));
+
+        return lines;
+
+    }
+
+    public static List<String> welcomeClientsWaitingForAtLeastAnotherPlayer() {
+
+        List<String> lines = new ArrayList<>();
+
+        lines.add("Welcome to COUP Kata");
+        lines.add("");
+        lines.add(boldifyText("Waiting for another player needed to open the table"));
 
         return lines;
 
@@ -371,10 +395,61 @@ public class COUPTerminalView {
             ++line;
         }
 
-        layout.add("Player> "); // Line for the user to write
+        layout.add("Write your name [Max 8 characters]> "); // Line for the user to write
         return layout;
 
     }
+
+    public static List<String> renderWelcomeScreenClientServerIsFull() {
+
+        List<String> layout = new ArrayList<>(layout());
+        layout.remove(layout.size() - 2);
+
+        List<String> logo = logo();
+        int line = 3;
+        int column = 6;
+
+        placeInTheLayout(layout, logo, line, column);
+
+        List<String> lines = welcomeClientsServerFull();
+        line = 26;
+        int lineLength;
+        for (int i = 0; i < lines.size(); i++) {
+            lineLength = lengthWithtoutEffects(lines.get(i));
+            column = (layout.get(line).length() - lineLength) / 2;
+            placeInTheLayout(layout, lines.get(i), line, column);
+            ++line;
+        }
+
+        return layout;
+
+    }
+
+    public static List<String> renderWelcomeScreenClientWaitingForAtLeastAnotherPlayer() {
+
+        List<String> layout = new ArrayList<>(layout());
+        layout.remove(layout.size() - 2);
+
+        List<String> logo = logo();
+        int line = 3;
+        int column = 6;
+
+        placeInTheLayout(layout, logo, line, column);
+
+        List<String> lines = welcomeClientsWaitingForAtLeastAnotherPlayer();
+        line = 26;
+        int lineLength;
+        for (int i = 0; i < lines.size(); i++) {
+            lineLength = lengthWithtoutEffects(lines.get(i));
+            column = (layout.get(line).length() - lineLength) / 2;
+            placeInTheLayout(layout, lines.get(i), line, column);
+            ++line;
+        }
+
+        return layout;
+
+    }
+
 
     public static List<String> play(String text) {
         List<String> lines = new ArrayList<>();

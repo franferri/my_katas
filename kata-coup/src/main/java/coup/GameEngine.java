@@ -17,15 +17,7 @@ public class GameEngine {
 
     public Player targetPlayer;
 
-    public GameEngine(Player... players)  {
-        if (players.length < 2) {
-            throw new RuntimeException("Need more onlinePlayers");
-        }
-        if (players.length > 6) {
-            throw new RuntimeException("Only 6 onlinePlayers allowed");
-        }
-
-        Collections.addAll(this.players, players);
+    public GameEngine()  {
 
         treasury = 50;
         this.deck = new Deck();
@@ -41,10 +33,27 @@ public class GameEngine {
     }
 
     public void startGame()  {
+
+        if (players.size() < 2) {
+            throw new RuntimeException("Need more onlinePlayers");
+        }
+        if (players.size() > 6) {
+            throw new RuntimeException("Only 6 onlinePlayers allowed");
+        }
+
         for (Player player : players) {
             playerTakeCoinsFromTreasury(player, 2);
             dealCardsToThePlayer(player);
         }
+
+    }
+
+    public void addPlayer() {
+        this.players.add(new Player());
+    }
+
+    public void addPlayer(String playerName) {
+        this.players.add(new Player(playerName));
     }
 
     public void playerReturnCoinsToTreasury(Player player, int coins)  {

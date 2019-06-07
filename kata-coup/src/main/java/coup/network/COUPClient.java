@@ -9,7 +9,7 @@ public class COUPClient {
     public static void main(String[] args) {
 
         if (args.length != 2) {
-            System.err.println("Usage: java COUPClient <host name> <port number>");
+            System.err.println("Usage: java -cp target/kata-coup-0.0.1-SNAPSHOT.jar coup.network.COUPClient localhost <PORT NUMBER>");
             System.exit(1);
         }
 

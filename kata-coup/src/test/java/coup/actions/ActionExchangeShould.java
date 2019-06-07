@@ -1,17 +1,11 @@
 package coup.actions;
 
-import coup.Card;
 import coup.TestingActions;
 import coup.cards.TheAmbassator;
 import coup.cards.TheDuke;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import java.util.Arrays;
-import java.util.List;
-
-import static org.mockito.Mockito.when;
 
 public class ActionExchangeShould extends TestingActions {
 
@@ -22,14 +16,14 @@ public class ActionExchangeShould extends TestingActions {
     // -
 
     @BeforeEach
-    public void before()  {
+    public void before() {
         super.before();
         action = new Exchange(gameEngine);
     }
 
     // Action
     @Test
-    void player_does_action()  {
+    void player_does_action() {
         // when
         gameEngine.playerDoingTheAction = gameEngine.player(1);
         action.doAction();
@@ -47,18 +41,15 @@ public class ActionExchangeShould extends TestingActions {
 
     // Player cant challenge himself (Engine integrity test)
     @Test
-    void player_does_action_and_challenge_himself()  {
-
-        // given
-        List<Card> cards = Arrays.asList(new TheDuke(), new TheDuke());
+    void player_does_action_and_challenge_himself() {
 
         // when
         gameEngine.playerDoingTheAction = gameEngine.player(1);
         action.doAction();
 
         gameEngine.player(1).cards().clear();// Needs to be here since the action will reshuffle the hand
-
-        when(player1.cards()).thenReturn(cards);
+        gameEngine.player(1).cards().add(0, new TheDuke());
+        gameEngine.player(1).cards().add(0, new TheDuke());
 
         gameEngine.playerCallingTheBluff = gameEngine.player(1);
 
@@ -68,7 +59,7 @@ public class ActionExchangeShould extends TestingActions {
     // Action can be challenged
     // Challenger (wins)
     @Test
-    void player_does_action_and_other_player_calls_the_bluff_and_wins_the_call()  {
+    void player_does_action_and_other_player_calls_the_bluff_and_wins_the_call() {
 
         gameEngine.player(1).cards().clear();// Needs to be here since the action will reshuffle the hand
         gameEngine.player(1).cards().add(0, new TheDuke());
@@ -94,7 +85,7 @@ public class ActionExchangeShould extends TestingActions {
     // Action can be challenged
     // Challenger (lose)
     @Test
-    void player_does_action_and_other_calls_the_bluff_and_lose_the_call()  {
+    void player_does_action_and_other_calls_the_bluff_and_lose_the_call() {
 
         gameEngine.player(1).cards().clear(); // Needs to be here since the action will reshuffle the hand
         gameEngine.player(1).cards().add(0, new TheAmbassator());
@@ -119,7 +110,7 @@ public class ActionExchangeShould extends TestingActions {
 
     // Action cannot be blocked
     @Test
-    void player_blocks_action()  {
+    void player_blocks_action() {
         // when
         gameEngine.playerDoingTheAction = gameEngine.player(1);
         action.doAction();

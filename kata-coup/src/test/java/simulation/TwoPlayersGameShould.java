@@ -12,7 +12,12 @@ class TwoPlayersGameShould {
 
     @BeforeEach
     void before()  {
-        game = new Game(2);
+        game = new Game();
+
+        game.gameEngine().addPlayer();
+        game.gameEngine().addPlayer();
+
+        game.gameEngine().startGame();
     }
 
     @Test

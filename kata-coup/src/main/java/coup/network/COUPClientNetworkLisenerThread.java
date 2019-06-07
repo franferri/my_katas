@@ -42,7 +42,7 @@ public class COUPClientNetworkLisenerThread extends Thread {
 
             }
 
-            System.out.println("Aborted.");
+            System.out.println("Server aborted.");
 
         } catch (IOException ex) {
             ex.printStackTrace();

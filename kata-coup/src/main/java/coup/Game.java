@@ -15,7 +15,7 @@ public class Game {
     private Hashtable<Player, COUPServerNetworkListenerThread> onlinePlayers = new Hashtable<>();
 
     public Game() {
-
+        gameEngine = new GameEngine();
     }
 
     public void addPlayer(COUPServerNetworkListenerThread thread, Player player) {
@@ -39,19 +39,7 @@ public class Game {
 
     }
 
-    public Game(int players)  {
 
-        Player[] playersList = new Player[players];
-
-        for (int i = 0; i < players; i++) {
-            playersList[i] = new Player();
-        }
-
-        gameEngine = new GameEngine(playersList);
-
-        gameEngine.startGame();
-
-    }
 
     public GameEngine gameEngine() {
         return gameEngine;
