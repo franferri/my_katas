@@ -1,16 +1,16 @@
 package simulation;
 
 import coup.Card;
-import coup.Deck;
 import coup.Game;
 import coup.Player;
-import coup.cards.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class RandomGameShould {
 
@@ -141,6 +141,7 @@ class RandomGameShould {
                     if (e.getMessage().equals("Player must coup because has 10 or more coins")) continue;
 
                     e.printStackTrace();
+                    assertTrue(false);
                 }
 
             }
@@ -181,7 +182,7 @@ class RandomGameShould {
         sb.append(", TheDuke " + quantifiedCards.get("TheDuke"));
 
         quantifyCards(cards, quantifiedCards);
-        sb.append(", total cards in game: " + (quantifiedCards.get("TheAmbassator") + quantifiedCards.get("TheAssassin") + quantifiedCards.get("TheCaptain")+ quantifiedCards.get("TheContessa")+quantifiedCards.get("TheDuke")));
+        sb.append(", total cards in game: " + (quantifiedCards.get("TheAmbassator") + quantifiedCards.get("TheAssassin") + quantifiedCards.get("TheCaptain") + quantifiedCards.get("TheContessa") + quantifiedCards.get("TheDuke")));
         System.out.println(sb.toString());
 
         sb = new StringBuilder();
