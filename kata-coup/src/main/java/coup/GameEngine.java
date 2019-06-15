@@ -17,6 +17,8 @@ public class GameEngine {
 
     public Player targetPlayer;
 
+    public boolean isStarted = false;
+
     public GameEngine() {
         treasury = 50;
         this.deck = new Deck();
@@ -32,6 +34,8 @@ public class GameEngine {
     }
 
     public void startGame() {
+
+        isStarted = true;
 
         if (players.size() < 2) {
             throw new RuntimeException("Need more onlinePlayers");

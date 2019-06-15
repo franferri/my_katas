@@ -242,7 +242,7 @@ public class COUPServerCommunicationProtocol {
         switch (action) {
             case 1:
                 theOutput.addAll(COUPTerminalView.table(game, "Player NNN is doing ??????", "", "Player KKK is challenging", ""));
-                theOutput.addAll(COUPTerminalView.commandPostPostAction(game));
+                theOutput.addAll(COUPTerminalView.commandLinePlayers(game));
                 break;
             case 2:
                 theOutput.addAll(COUPTerminalView.table(game, "Player NNN is doing ??????", "", "Player KKK is blocking", ""));

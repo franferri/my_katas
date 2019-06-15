@@ -2,6 +2,7 @@ package coup.network;
 
 import coup.Game;
 import coup.GameEngine;
+import coup.Player;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -82,7 +83,7 @@ public class COUPTerminalView {
 
     }
 
-    public static List<String> addNewPlayer(String playerName) {
+    public static List<String> addNewPlayer(String playerName, int coins, String card1, String card2) {
 
         if (null == playerName) {
             playerName = "ERROR";
@@ -101,54 +102,85 @@ public class COUPTerminalView {
 
         }
 
+        String isks = Integer.toString(coins);
+        for (int i = isks.length(); i < 2; i++) {
+            isks = isks + " ";
+        }
+
+        rightSide = true;
+        for (int i = card1.length(); i < 10; i++) {
+
+            if (rightSide) {
+                card1 = card1 + " ";
+                rightSide = false;
+            } else {
+                card1 = " " + card1;
+                rightSide = true;
+            }
+
+        }
+
+        rightSide = true;
+        for (int i = card2.length(); i < 10; i++) {
+
+            if (rightSide) {
+                card2 = card2 + " ";
+                rightSide = false;
+            } else {
+                card2 = " " + card2;
+                rightSide = true;
+            }
+
+        }
+
         List<String> patternOne = new ArrayList<>();
         patternOne.add("              ____________ ");
         patternOne.add("[ " + playerName + " ] |            |");
-        patternOne.add("    ____     |            |");
+        patternOne.add("    ____     | " + card1 + " |");
         patternOne.add("   /    \\    |____________|");
-        patternOne.add("  / 10   \\    ____________ ");
+        patternOne.add("  / " + isks + "   \\    ____________ ");
         patternOne.add("  \\  ISK /   |            |");
-        patternOne.add("   \\____/    |            |");
+        patternOne.add("   \\____/    | " + card1 + " |");
         patternOne.add("             |____________|");
 
         List<String> patternTwo = new ArrayList<>();
         patternTwo.add(" ____________              ");
         patternTwo.add("|            |     ____    ");
-        patternTwo.add("| ASSASSIN   |    /    \\   ");
-        patternTwo.add("|____________|   /  10  \\  ");
+        patternTwo.add("| " + card1 + " |    /    \\   ");
+        patternTwo.add("|____________|   / " + isks + "   \\  ");
         patternTwo.add(" ____________    \\  ISK /  ");
         patternTwo.add("|            |    \\____/   ");
-        patternTwo.add("|            |             ");
+        patternTwo.add("| " + card1 + " |             ");
         patternTwo.add("|____________| [ " + playerName + " ]");
 
         List<String> patternThree = new ArrayList<>();
         patternThree.add(" ____________              ");
         patternThree.add("|            | [ " + playerName + " ]");
-        patternThree.add("|            |     ____    ");
+        patternThree.add("| " + card1 + " |     ____    ");
         patternThree.add("|____________|    /    \\   ");
-        patternThree.add(" ____________    / 10   \\  ");
+        patternThree.add(" ____________    / " + isks + "   \\  ");
         patternThree.add("|            |   \\  ISK /  ");
-        patternThree.add("| AMBASSADOR |    \\____/   ");
+        patternThree.add("| " + card1 + " |    \\____/   ");
         patternThree.add("|____________|             ");
 
         List<String> patternFour = new ArrayList<>();
         patternFour.add(" ____________              ");
         patternFour.add("|            |             ");
-        patternFour.add("|            | [ " + playerName + " ]");
+        patternFour.add("| " + card1 + " | [ " + playerName + " ]");
         patternFour.add("|____________|     ____    ");
         patternFour.add(" ____________     /    \\   ");
-        patternFour.add("|            |   / 10   \\  ");
-        patternFour.add("| COMPTESA   |   \\  ISK /  ");
+        patternFour.add("|            |   / " + isks + "   \\  ");
+        patternFour.add("| " + card1 + " |   \\  ISK /  ");
         patternFour.add("|____________|    \\____/   ");
 
         List<String> patternFive = new ArrayList<>();
         patternFive.add("              ____________ ");
         patternFive.add("             |            |");
-        patternFive.add("[ " + playerName + " ] |            |");
+        patternFive.add("[ " + playerName + " ] | " + card1 + " |");
         patternFive.add("    ____     |____________|");
         patternFive.add("   /    \\     ____________ ");
-        patternFive.add("  / 10   \\   |            |");
-        patternFive.add("  \\  ISK /   | COMPTESA   |");
+        patternFive.add("  / " + isks + "   \\   |            |");
+        patternFive.add("  \\  ISK /   | " + card1 + " |");
         patternFive.add("   \\____/    |____________|");
 
         List<List<String>> patterns = new ArrayList<>();
@@ -212,7 +244,6 @@ public class COUPTerminalView {
 
     }
 
-
     public static List<String> winner(Game game) {
 
         List<String> lines = new ArrayList<>();
@@ -241,9 +272,26 @@ public class COUPTerminalView {
         int line;
         int column;
 
+        Player aPlayer;
+        String card1 = "";
+        String card2 = "";
+
         // Add Player 1 to the table
         if (game.gameEngine().players.size() >= 1) {
-            List<String> player = addNewPlayer(game.gameEngine().player(1).name());
+            aPlayer = game.gameEngine().player(1);
+            if (game.gameEngine().isStarted) {
+                if (aPlayer.cards().get(0).isVisible()) {
+                    card1 = aPlayer.cards().get(0).name;
+                } else {
+                    card1 = "";
+                }
+                if (aPlayer.cards().get(1).isVisible()) {
+                    card2 = aPlayer.cards().get(1).name;
+                } else {
+                    card2 = "";
+                }
+            }
+            List<String> player = addNewPlayer(aPlayer.name(), aPlayer.coins(), card1, card2);
             line = 3;
             column = 36;
 
@@ -252,7 +300,20 @@ public class COUPTerminalView {
 
         // Add Player 2 to the table
         if (game.gameEngine().players.size() >= 2) {
-            List<String> player = addNewPlayer(game.gameEngine().player(2).name());
+            aPlayer = game.gameEngine().player(2);
+            if (game.gameEngine().isStarted) {
+                if (aPlayer.cards().get(0).isVisible()) {
+                    card1 = aPlayer.cards().get(0).name;
+                } else {
+                    card1 = "";
+                }
+                if (aPlayer.cards().get(1).isVisible()) {
+                    card2 = aPlayer.cards().get(1).name;
+                } else {
+                    card2 = "";
+                }
+            }
+            List<String> player = addNewPlayer(aPlayer.name(), aPlayer.coins(), card1, card2);
             line = 20;
             column = 38;
 
@@ -261,7 +322,20 @@ public class COUPTerminalView {
 
         // Add Player 3 to the table
         if (game.gameEngine().players.size() >= 3) {
-            List<String> player = addNewPlayer(game.gameEngine().player(3).name());
+            aPlayer = game.gameEngine().player(3);
+            if (game.gameEngine().isStarted) {
+                if (aPlayer.cards().get(0).isVisible()) {
+                    card1 = aPlayer.cards().get(0).name;
+                } else {
+                    card1 = "";
+                }
+                if (aPlayer.cards().get(1).isVisible()) {
+                    card2 = aPlayer.cards().get(1).name;
+                } else {
+                    card2 = "";
+                }
+            }
+            List<String> player = addNewPlayer(aPlayer.name(), aPlayer.coins(), card1, card2);
             line = 5;
             column = 70;
 
@@ -270,7 +344,20 @@ public class COUPTerminalView {
 
         // Add Player 4 to the table
         if (game.gameEngine().players.size() >= 4) {
-            List<String> player = addNewPlayer(game.gameEngine().player(4).name());
+            aPlayer = game.gameEngine().player(4);
+            if (game.gameEngine().isStarted) {
+                if (aPlayer.cards().get(0).isVisible()) {
+                    card1 = aPlayer.cards().get(0).name;
+                } else {
+                    card1 = "";
+                }
+                if (aPlayer.cards().get(1).isVisible()) {
+                    card2 = aPlayer.cards().get(1).name;
+                } else {
+                    card2 = "";
+                }
+            }
+            List<String> player = addNewPlayer(aPlayer.name(), aPlayer.coins(), card1, card2);
             line = 15;
             column = 5;
 
@@ -279,7 +366,20 @@ public class COUPTerminalView {
 
         // Add Player 5 to the table
         if (game.gameEngine().players.size() >= 5) {
-            List<String> player = addNewPlayer(game.gameEngine().player(5).name());
+            aPlayer = game.gameEngine().player(5);
+            if (game.gameEngine().isStarted) {
+                if (aPlayer.cards().get(0).isVisible()) {
+                    card1 = aPlayer.cards().get(0).name;
+                } else {
+                    card1 = "";
+                }
+                if (aPlayer.cards().get(1).isVisible()) {
+                    card2 = aPlayer.cards().get(1).name;
+                } else {
+                    card2 = "";
+                }
+            }
+            List<String> player = addNewPlayer(aPlayer.name(), aPlayer.coins(), card1, card2);
             line = 5;
             column = 5;
 
@@ -288,7 +388,20 @@ public class COUPTerminalView {
 
         // Add Player 6 to the table
         if (game.gameEngine().players.size() >= 6) {
-            List<String> player = addNewPlayer(game.gameEngine().player(6).name());
+            aPlayer = game.gameEngine().player(6);
+            if (game.gameEngine().isStarted) {
+                if (aPlayer.cards().get(0).isVisible()) {
+                    card1 = aPlayer.cards().get(0).name;
+                } else {
+                    card1 = "";
+                }
+                if (aPlayer.cards().get(1).isVisible()) {
+                    card2 = aPlayer.cards().get(1).name;
+                } else {
+                    card2 = "";
+                }
+            }
+            List<String> player = addNewPlayer(aPlayer.name(), aPlayer.coins(), card1, card2);
             line = 16;
             column = 70;
 
@@ -337,7 +450,7 @@ public class COUPTerminalView {
 
         }
 
-        List<String> courtDeckTreasury = courtDeckTreasury(55, 88);
+        List<String> courtDeckTreasury = courtDeckTreasury(game.gameEngine().deck().cards().size(), game.gameEngine().treasury());
         line = 27;
         column = 76;
         placeInTheLayout(layout, courtDeckTreasury, line, column);

@@ -5,6 +5,8 @@ import coup.actions.Steal;
 
 public class TheCaptain extends Card {
 
+    public  String name = "Ambassator";
+
     public TheCaptain() {
         this.action = new Steal();
         this.blocks = new Steal();

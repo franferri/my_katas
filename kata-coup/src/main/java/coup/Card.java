@@ -1,8 +1,10 @@
 package coup;
 
-public class Card {
+public abstract class Card {
 
     private boolean visible;
+
+    public String name = "card";
 
     protected Card() {
         this.visible = false;
