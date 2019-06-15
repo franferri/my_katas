@@ -77,10 +77,14 @@ public class COUPServerNetworkListenerThread extends Thread {
     public void updateTerminal() {
         List<String> outputLines;
 
-        outputLines = protocol.processInput("updateTerminal");
-        outputLines.add(0, "<META>" + outputLines.size() + "</META>");
-        for (String line : outputLines) {
-            out.println(line);
+        if (protocol.state != protocol.JUST_CONNECTED_ASKING_FOR_NAME) {
+
+            outputLines = protocol.processInput("updateTerminal");
+            outputLines.add(0, "<META>" + outputLines.size() + "</META>");
+            for (String line : outputLines) {
+                out.println(line);
+            }
+
         }
 
     }

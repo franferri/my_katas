@@ -212,6 +212,27 @@ public class COUPTerminalView {
 
     }
 
+
+    public static List<String> winner(Game game) {
+
+        List<String> lines = new ArrayList<>();
+
+        lines.add(boldifyText("The Winner is: XXXXX"));
+
+        return lines;
+
+    }
+
+    public static List<String> unexpectedCommand() {
+
+        List<String> lines = new ArrayList<>();
+
+        lines.add(boldifyText("Unexpected command"));
+
+        return lines;
+
+    }
+
     public static List<String> table(Game game, String action, String targetPlayer, String block, String challenge) {
 
         List<String> layout = new ArrayList<>(layout());
@@ -321,14 +342,82 @@ public class COUPTerminalView {
         column = 76;
         placeInTheLayout(layout, courtDeckTreasury, line, column);
 
-
         return layout;
 
     }
 
-    public static List<String> commandLine() {
+    public static List<String> commandLineWaitingForTheGameToStart() {
         List<String> layout = new ArrayList<>();
-        layout.add(boldifyText("Write \"start\" to start the game> ")); // Line for the user to write
+        layout.add(boldifyText("Write \"start\" to start the game> "));
+        return layout;
+    }
+
+    public static List<String> commandLineInGame(Game game) {
+        List<String> layout = new ArrayList<>();
+
+        StringBuilder sb = new StringBuilder();
+        sb.append("[1] Income");
+        sb.append(", ");
+        sb.append("[2] Foreign Aid");
+        sb.append(", ");
+        sb.append("[3] Coup");
+        sb.append(", ");
+        sb.append("[4] Tax");
+        sb.append(", ");
+        sb.append("[5] Assassinate");
+        sb.append(", ");
+        sb.append("[6] Exchange");
+        sb.append(", ");
+        sb.append("[7] Steal");
+
+        layout.add(sb.toString());
+
+        return layout;
+    }
+
+    public static List<String> commandPostAction(Game game) {
+        List<String> layout = new ArrayList<>();
+
+        StringBuilder sb = new StringBuilder();
+        sb.append("[1] Challenge");
+        sb.append(", ");
+        sb.append("[2] Block");
+        sb.append(", ");
+        sb.append("[3] Let it pass");
+
+        layout.add(sb.toString());
+
+        return layout;
+    }
+
+    public static List<String> commandPostPostAction(Game game) {
+        List<String> layout = new ArrayList<>();
+
+        StringBuilder sb = new StringBuilder();
+        sb.append("[1] Challenge");
+        sb.append(", ");
+        sb.append("[2] Let it pass");
+
+        layout.add(sb.toString());
+
+        return layout;
+    }
+
+    public static List<String> commandLinePlayers(Game game) {
+        List<String> layout = new ArrayList<>();
+
+        // TODO: remove himself and list only players still in the game
+        StringBuilder sb = new StringBuilder();
+        for (int i = 1; i <= game.gameEngine().players.size(); i++) {
+            sb.append("[");
+            sb.append(i);
+            sb.append("] ");
+            sb.append(game.gameEngine().player(i).name());
+            sb.append(", ");
+        }
+
+        layout.add(boldifyText(sb.toString()));
+
         return layout;
     }
 
@@ -373,6 +462,34 @@ public class COUPTerminalView {
         }
 
         return output + strNormalSize;
+    }
+
+    public static List<String> renderWinner(Game game) {
+
+        List<String> layout = new ArrayList<>(layout());
+
+        List<String> logo = winner(game);
+        int line = 3;
+        int column = 6;
+
+        placeInTheLayout(layout, logo, line, column);
+
+        return layout;
+
+    }
+
+    public static List<String> renderError() {
+
+        List<String> layout = new ArrayList<>(layout());
+
+        List<String> logo = unexpectedCommand();
+        int line = 3;
+        int column = 6;
+
+        placeInTheLayout(layout, logo, line, column);
+
+        return layout;
+
     }
 
     public static List<String> renderWelcomeScreenServer(Game game) {
