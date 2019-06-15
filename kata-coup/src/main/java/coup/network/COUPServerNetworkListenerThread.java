@@ -13,19 +13,20 @@ import java.util.List;
 public class COUPServerNetworkListenerThread extends Thread {
 
     private Socket socket;
-    private Game game;
+    private int playerNumber;
 
     private PrintWriter out;
     private BufferedReader in;
 
     private COUPServerCommunicationProtocol protocol;
 
-    public COUPServerNetworkListenerThread(Socket socket, Game game, Player player) {
+    public COUPServerNetworkListenerThread(Socket socket, int playerNumber) {
+
         super("COUPServerThread");
         this.socket = socket;
-        this.game = game;
 
-        this.protocol = new COUPServerCommunicationProtocol(game, player);
+        this.playerNumber = playerNumber;
+        this.protocol = new COUPServerCommunicationProtocol(playerNumber);
     }
 
     public void run() {
@@ -67,6 +68,10 @@ public class COUPServerNetworkListenerThread extends Thread {
             e.printStackTrace();
         }
 
+    }
+
+    public int playerNumber() {
+        return playerNumber;
     }
 
     public void updateTerminal() {

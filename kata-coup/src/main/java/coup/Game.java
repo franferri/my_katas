@@ -1,42 +1,14 @@
 package coup;
 
 import coup.actions.*;
-import coup.network.COUPServer;
-import coup.network.COUPServerNetworkListenerThread;
-
-import java.util.Hashtable;
-import java.util.Set;
 
 public class Game {
 
-    private static GameEngine gameEngine;
+    private GameEngine gameEngine;
     private Action currentAction;
-
-    private Hashtable<Player, COUPServerNetworkListenerThread> onlinePlayers = new Hashtable<>();
 
     public Game() {
         gameEngine = new GameEngine();
-    }
-
-    public void addPlayer(COUPServerNetworkListenerThread thread, Player player) {
-        onlinePlayers.put(player, thread);
-    }
-
-    public int onlinePlayers() {
-        return onlinePlayers.size();
-    }
-
-    public void playersThreadsUpdateTerminal(String playerToAvoid) {
-
-        COUPServer.updateServerTerminal();
-
-        Set<Player> playersKeys = onlinePlayers.keySet();
-        for (Player player : playersKeys) {
-            if (!player.name().equals(playerToAvoid)) {
-                onlinePlayers.get(player).updateTerminal();
-            }
-        }
-
     }
 
     public GameEngine gameEngine() {

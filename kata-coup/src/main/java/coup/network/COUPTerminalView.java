@@ -169,7 +169,7 @@ public class COUPTerminalView {
         List<String> lines = new ArrayList<>();
 
         lines.add(boldifyText("Welcome to COUP Kata Server"));
-        lines.add("Users connected [" + game.onlinePlayers() + "]");
+        lines.add("Users connected [" + COUPServer.game.gameEngine().players.size() + "]");
         lines.add("Recommended terminal size 100 columns x 30 lines");
 
         return lines;
@@ -321,9 +321,15 @@ public class COUPTerminalView {
         column = 76;
         placeInTheLayout(layout, courtDeckTreasury, line, column);
 
-        layout.add(boldifyText("Player> ")); // Line for the user to write
+
         return layout;
 
+    }
+
+    public static List<String> commandLine() {
+        List<String> layout = new ArrayList<>();
+        layout.add(boldifyText("Write \"start\" to start the game> ")); // Line for the user to write
+        return layout;
     }
 
     public static String cleanTerminal() {

@@ -18,7 +18,6 @@ public class GameEngine {
     public Player targetPlayer;
 
     public GameEngine() {
-
         treasury = 50;
         this.deck = new Deck();
         this.deck.shuffle();

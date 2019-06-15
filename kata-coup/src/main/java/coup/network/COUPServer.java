@@ -5,11 +5,17 @@ import coup.Player;
 
 import java.io.IOException;
 import java.net.ServerSocket;
+import java.net.Socket;
+import java.util.ArrayList;
+import java.util.Hashtable;
 import java.util.List;
+import java.util.Set;
 
 public class COUPServer {
 
-    private static Game game = new Game();
+    public static Game game = new Game();
+
+    private static List<COUPServerNetworkListenerThread> onlinePlayersThreads = new ArrayList<>();
 
     public static void main(String[] args) {
 
@@ -25,11 +31,20 @@ public class COUPServer {
 
         try (ServerSocket serverSocket = new ServerSocket(portNumber)) {
 
+            int playerNumber = 1;
             while (listening) {
-                Player player = game.gameEngine().addPlayer("PLAYER A");
-                COUPServerNetworkListenerThread clientThread = new COUPServerNetworkListenerThread(serverSocket.accept(), game, player);
-                game.addPlayer(clientThread, player);
+
+                // Server waits here till a new client connects
+                Socket socket = serverSocket.accept();
+
+                // Server does the following once a new client connect
+                Player player = game.gameEngine().addPlayer("WAITING");
+
+                COUPServerNetworkListenerThread clientThread = new COUPServerNetworkListenerThread(socket, playerNumber);
+                onlinePlayersThreads.add(clientThread);
+
                 clientThread.start();
+                ++playerNumber;
             }
 
         } catch (IOException e) {
@@ -41,15 +56,27 @@ public class COUPServer {
     public static void updateServerTerminal() {
         System.out.print(COUPTerminalView.cleanTerminal() + COUPTerminalView.normalize());
         List<String> lines = COUPTerminalView.renderWelcomeScreenServer(game);
-        for (int i = 0; i < lines.size(); i++) {
 
+        for (int i = 0; i < lines.size(); i++) {
             if (lines.size() == i + 1) {
                 System.out.print(lines.get(i));
             } else {
                 System.out.println(lines.get(i));
             }
-
         }
+
+    }
+
+    public static void playersThreadsUpdateTerminal(int playerToAvoid) {
+
+        updateServerTerminal();
+
+        for (COUPServerNetworkListenerThread clientThread : onlinePlayersThreads) {
+            if (clientThread.playerNumber() != playerToAvoid) {
+                clientThread.updateTerminal();
+            }
+        }
+
     }
 
 }
