@@ -16,8 +16,8 @@ public class TestingActions {
         // given
         gameEngine = new GameEngine();
 
-        gameEngine.addPlayer();
-        gameEngine.addPlayer();
+        gameEngine.addPlayer("TEST");
+        gameEngine.addPlayer("TEST");
 
         gameEngine.startGame();
 

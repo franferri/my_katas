@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
 
-./mvnw clean package -T 1.5C
+./mvnw clean package -T 1.5C -Dmaven.test.skip=true
 java -cp target/kata-coup-0.0.1-SNAPSHOT.jar coup.network.COUPServer 8127

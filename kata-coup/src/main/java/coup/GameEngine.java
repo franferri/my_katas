@@ -17,7 +17,7 @@ public class GameEngine {
 
     public Player targetPlayer;
 
-    public GameEngine()  {
+    public GameEngine() {
 
         treasury = 50;
         this.deck = new Deck();
@@ -32,7 +32,7 @@ public class GameEngine {
         return deck;
     }
 
-    public void startGame()  {
+    public void startGame() {
 
         if (players.size() < 2) {
             throw new RuntimeException("Need more onlinePlayers");
@@ -48,15 +48,13 @@ public class GameEngine {
 
     }
 
-    public void addPlayer() {
-        this.players.add(new Player());
+    public Player addPlayer(String playerName) {
+        Player player = new Player(playerName);
+        this.players.add(player);
+        return player;
     }
 
-    public void addPlayer(String playerName) {
-        this.players.add(new Player(playerName));
-    }
-
-    public void playerReturnCoinsToTreasury(Player player, int coins)  {
+    public void playerReturnCoinsToTreasury(Player player, int coins) {
         if (player.coins() < coins) {
             throw new RuntimeException("Player don't have enough coins");
         }
@@ -66,7 +64,7 @@ public class GameEngine {
         }
     }
 
-    public void playerTakeCoinsFromTreasury(Player player, int coins)  {
+    public void playerTakeCoinsFromTreasury(Player player, int coins) {
         if (treasury < coins) {
             throw new RuntimeException("Treasury depleted");
         }
@@ -76,7 +74,7 @@ public class GameEngine {
         }
     }
 
-    public void playerTakesCoinsFromOtherPlayer(Player player_taking, Player player_losing, int coins)  {
+    public void playerTakesCoinsFromOtherPlayer(Player player_taking, Player player_losing, int coins) {
         if (player_losing.coins() < coins) {
             throw new RuntimeException("Player is broke and we can't take more coins from it");
         }

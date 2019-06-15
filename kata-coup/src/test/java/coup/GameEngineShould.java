@@ -31,8 +31,8 @@ class GameEngineShould {
         // given
         gameEngine = new GameEngine();
 
-        gameEngine.addPlayer();
-        gameEngine.addPlayer();
+        gameEngine.addPlayer("TEST");
+        gameEngine.addPlayer("TEST");
 
     }
 
@@ -44,7 +44,7 @@ class GameEngineShould {
     void a_game_needs_2_players_at_least() {
 
         gameEngine = new GameEngine();
-        gameEngine.addPlayer();
+        gameEngine.addPlayer("TEST");
 
         // then
         Assertions.assertThrows(Exception.class, () -> gameEngine.startGame());
@@ -55,13 +55,13 @@ class GameEngineShould {
     void a_game_can_have_until_6_players() {
 
         gameEngine = new GameEngine();
-        gameEngine.addPlayer();
-        gameEngine.addPlayer();
-        gameEngine.addPlayer();
-        gameEngine.addPlayer();
-        gameEngine.addPlayer();
-        gameEngine.addPlayer();
-        gameEngine.addPlayer();
+        gameEngine.addPlayer("TEST");
+        gameEngine.addPlayer("TEST");
+        gameEngine.addPlayer("TEST");
+        gameEngine.addPlayer("TEST");
+        gameEngine.addPlayer("TEST");
+        gameEngine.addPlayer("TEST");
+        gameEngine.addPlayer("TEST");
 
         // then
         Assertions.assertThrows(Exception.class, () -> gameEngine.startGame());

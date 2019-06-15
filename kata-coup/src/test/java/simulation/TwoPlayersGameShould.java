@@ -14,8 +14,8 @@ class TwoPlayersGameShould {
     void before()  {
         game = new Game();
 
-        game.gameEngine().addPlayer();
-        game.gameEngine().addPlayer();
+        game.gameEngine().addPlayer("TEST");
+        game.gameEngine().addPlayer("TEST");
 
         game.gameEngine().startGame();
     }

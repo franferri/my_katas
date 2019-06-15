@@ -11,9 +11,9 @@ public class COUPServerCommunicationProtocol {
     private Game game;
     private Player player;
 
-    private static final int JUST_CONNECTED = 0;
-    private static final int JOINED_THE_TABLE = 1;
-    private static final int WAITING = 2;
+    private static final int JUST_CONNECTED_ASKING_FOR_NAME = 0;
+    private static final int PLAYER_JOINED_THE_TABLE = 1;
+    private static final int WAITING_FOR_THE_GAME_TO_START = 2;
 
     private static final int WAITING_FOR_PLAYER_TO_PLAY = 3;
 
@@ -21,9 +21,9 @@ public class COUPServerCommunicationProtocol {
     private static final int CALLING_THE_BLUFF = 5;
     private static final int BLOCKING_ACTION = 6;
 
-    private int state = JUST_CONNECTED;
+    private int state = JUST_CONNECTED_ASKING_FOR_NAME;
 
-    private boolean refresh_others = false;
+    private boolean refresh_other_players_screen = false;
 
     public COUPServerCommunicationProtocol(Game game, Player player) {
         this.game = game;
@@ -31,47 +31,47 @@ public class COUPServerCommunicationProtocol {
     }
 
     public List<String> processInput(String theInput) {
+
+        // TODO: If a player gets disconnected, his cards get's revealed, but don't ruin other players play
+        // TODO: If a player is inactive for 30 seconds in his round, gets kicked off
+        // TODO: Server command to reset the play (same as after a play ends, will
+
         List<String> theOutput = new ArrayList<>();
 
         if (null != theInput && theInput.equals("updateTerminal")) {
 
-            theOutput.addAll(COUPTerminalView.table(6, "", "", "", ""));
+            theOutput.addAll(COUPTerminalView.table(game, "", "", "", ""));
 
         } else {
 
-            if (state == JUST_CONNECTED) {
+            if (state == JUST_CONNECTED_ASKING_FOR_NAME) {
 
-                // If there are 6 onlinePlayers connected, no more are accepted we suggest to connect to another server
-                //if (game.gameEngine().players.size() >= 6) {
-                //    theOutput.addAll(COUPTerminalView.renderWelcomeScreenClientServerIsFull());
-                //} else if (game.gameEngine().players.size() < 2) {
-                //    theOutput.addAll(COUPTerminalView.renderWelcomeScreenClientWaitingForAtLeastAnotherPlayer());
-                //} else {
-                    theOutput.addAll(COUPTerminalView.renderWelcomeScreenClient());
-                //}
+                // TODO: If there are 6 onlinePlayers connected, no more are accepted we suggest to connect to another server
 
-                game.gameEngine().addPlayer();
+                theOutput.addAll(COUPTerminalView.renderWelcomeScreenClient());
 
-                state = JOINED_THE_TABLE;
+                state = PLAYER_JOINED_THE_TABLE;
 
-                refresh_others = false;
-                // We update all connected onlinePlayers console to reflect the new joiner
+                refresh_other_players_screen = true;
 
-            } else if (state == JOINED_THE_TABLE) {
+            } else if (state == PLAYER_JOINED_THE_TABLE) {
 
-                state = WAITING;
-                theOutput.addAll(COUPTerminalView.table(6, "Player 1 is doing Assasination", "on Player 6", "Player 5 is blocking", "Player 2 is calling the bluff"));
-                refresh_others = true;
-                // We update all connected onlinePlayers console to reflect the new joiner
+                player.setName(theInput);
 
-            } else if (state == WAITING && theInput.equals("start")) {
+                theOutput.addAll(COUPTerminalView.table(game, "", "", "", ""));
+
+                state = WAITING_FOR_THE_GAME_TO_START;
+
+                refresh_other_players_screen = true;
+
+            } else if (state == WAITING_FOR_THE_GAME_TO_START && theInput.equals("start")) {
 
                 // If there is only 1 player he cant start the ga
 
                 state = WAITING_FOR_PLAYER_TO_PLAY;
-                theOutput.addAll(COUPTerminalView.table(6, "Player 2 is doing Assasination", "on Player 333", "AAAAAA 5 is blocking", "BBBBBB 2 is calling the bluff"));
+                theOutput.addAll(COUPTerminalView.table(game, "Player 2 is doing Assasination", "on Player 333", "AAAAAA 5 is blocking", "BBBBBB 2 is calling the bluff"));
 
-                refresh_others = true;
+                refresh_other_players_screen = true;
             } else if (state == WAITING_FOR_PLAYER_TO_PLAY && theInput.equals("income")) {
 
                 state = DOING_ACTION;
@@ -107,7 +107,7 @@ public class COUPServerCommunicationProtocol {
             } else if (theInput.equals("Game over")) {
                 theOutput.add("Game over");
             } else {
-                theOutput.addAll(COUPTerminalView.table(6, "Player 2 is doing Assasination", "on Player 333", "AAAAAA 5 is blocking", "BBBBBB 2 is calling the bluff"));
+                theOutput.addAll(COUPTerminalView.table(game, "Player 2 is doing Assasination", "on Player 333", "AAAAAA 5 is blocking", "BBBBBB 2 is calling the bluff"));
             }
 
             // IF A PLAYER GETS DISCONNECTED, THE GAME WILL REVEAL HIS CARDS INMEDIATELY
@@ -126,7 +126,7 @@ public class COUPServerCommunicationProtocol {
 
             // if we do animations, during the time they last, we dont let the user write, we dont ask him
 
-            if (refresh_others) {
+            if (refresh_other_players_screen) {
                 game.playersThreadsUpdateTerminal(player.name());
             }
 

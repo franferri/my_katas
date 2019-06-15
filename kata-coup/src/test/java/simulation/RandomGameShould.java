@@ -123,7 +123,7 @@ class RandomGameShould {
             game = new Game();
 
             for (int j = 0; j < players + 2; j++) {
-                game.gameEngine().addPlayer();
+                game.gameEngine().addPlayer("TEST");
             }
 
             game.gameEngine().startGame();

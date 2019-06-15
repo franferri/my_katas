@@ -25,7 +25,7 @@ public class COUPServerNetworkListenerThread extends Thread {
         this.socket = socket;
         this.game = game;
 
-        protocol = new COUPServerCommunicationProtocol(game, player);
+        this.protocol = new COUPServerCommunicationProtocol(game, player);
     }
 
     public void run() {

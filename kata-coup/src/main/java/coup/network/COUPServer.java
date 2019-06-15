@@ -26,7 +26,7 @@ public class COUPServer {
         try (ServerSocket serverSocket = new ServerSocket(portNumber)) {
 
             while (listening) {
-                Player player = new Player();
+                Player player = game.gameEngine().addPlayer("PLAYER A");
                 COUPServerNetworkListenerThread clientThread = new COUPServerNetworkListenerThread(serverSocket.accept(), game, player);
                 game.addPlayer(clientThread, player);
                 clientThread.start();

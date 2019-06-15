@@ -32,11 +32,15 @@ public class Player {
 
     private String name;
 
-    public Player() {
-        this.name = System.nanoTime()+"";
-    }
+    //public Player() {
+    //    this.name = System.nanoTime()+"";
+    //}
 
     public Player(String name) {
+        this.name = name;
+    }
+
+    public void setName(String name) {
         this.name = name;
     }
 
@@ -55,7 +59,7 @@ public class Player {
         }
     }
 
-    public void restoreLostCard()  {
+    public void restoreLostCard() {
         if (lastCardLost < 0 || lastCardLost > 2) {
             throw new RuntimeException("Card number/range is not valid");
         }
@@ -71,7 +75,7 @@ public class Player {
         return cards().get(0).isVisible() && cards().get(1).isVisible();
     }
 
-    public Card returnActiveCardToCourtDeck()  {
+    public Card returnActiveCardToCourtDeck() {
         if (isDead()) {
             throw new RuntimeException("Player is dead, don't have any visible cards");
         }
@@ -150,14 +154,4 @@ public class Player {
         Collections.shuffle(cards);
     }
 
-    public static Player[] newPlayers(int players) {
-
-        Player[] pool = new Player[players];
-
-        for (int i = 0; i < players; i++) {
-            pool[i] = new Player();
-        }
-
-        return pool;
-    }
 }

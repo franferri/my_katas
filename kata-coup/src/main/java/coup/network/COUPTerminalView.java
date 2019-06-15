@@ -1,6 +1,7 @@
 package coup.network;
 
 import coup.Game;
+import coup.GameEngine;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -81,11 +82,28 @@ public class COUPTerminalView {
 
     }
 
-    public static List<String> addNewPlayer() {
+    public static List<String> addNewPlayer(String playerName) {
+
+        if (null == playerName) {
+            playerName = "ERROR";
+        }
+
+        boolean rightSide = true;
+        for (int i = playerName.length(); i < 8; i++) {
+
+            if (rightSide) {
+                playerName = playerName + " ";
+                rightSide = false;
+            } else {
+                playerName = " " + playerName;
+                rightSide = true;
+            }
+
+        }
 
         List<String> patternOne = new ArrayList<>();
         patternOne.add("              ____________ ");
-        patternOne.add("[  PLAYER  ] |            |");
+        patternOne.add("[ " + playerName + " ] |            |");
         patternOne.add("    ____     |            |");
         patternOne.add("   /    \\    |____________|");
         patternOne.add("  / 10   \\    ____________ ");
@@ -101,11 +119,11 @@ public class COUPTerminalView {
         patternTwo.add(" ____________    \\  ISK /  ");
         patternTwo.add("|            |    \\____/   ");
         patternTwo.add("|            |             ");
-        patternTwo.add("|____________| [  PLAYER  ]");
+        patternTwo.add("|____________| [ " + playerName + " ]");
 
         List<String> patternThree = new ArrayList<>();
         patternThree.add(" ____________              ");
-        patternThree.add("|            | [  PLAYER  ]");
+        patternThree.add("|            | [ " + playerName + " ]");
         patternThree.add("|            |     ____    ");
         patternThree.add("|____________|    /    \\   ");
         patternThree.add(" ____________    / 10   \\  ");
@@ -116,7 +134,7 @@ public class COUPTerminalView {
         List<String> patternFour = new ArrayList<>();
         patternFour.add(" ____________              ");
         patternFour.add("|            |             ");
-        patternFour.add("|            | [  PLAYER  ]");
+        patternFour.add("|            | [ " + playerName + " ]");
         patternFour.add("|____________|     ____    ");
         patternFour.add(" ____________     /    \\   ");
         patternFour.add("|            |   / 10   \\  ");
@@ -126,7 +144,7 @@ public class COUPTerminalView {
         List<String> patternFive = new ArrayList<>();
         patternFive.add("              ____________ ");
         patternFive.add("             |            |");
-        patternFive.add("[  PLAYER  ] |            |");
+        patternFive.add("[ " + playerName + " ] |            |");
         patternFive.add("    ____     |____________|");
         patternFive.add("   /    \\     ____________ ");
         patternFive.add("  / 10   \\   |            |");
@@ -194,7 +212,7 @@ public class COUPTerminalView {
 
     }
 
-    public static List<String> table(int players, String action, String targetPlayer, String block, String challenge) {
+    public static List<String> table(Game game, String action, String targetPlayer, String block, String challenge) {
 
         List<String> layout = new ArrayList<>(layout());
         layout.remove(layout.size() - 2);
@@ -203,57 +221,57 @@ public class COUPTerminalView {
         int column;
 
         // Add Player 1 to the table
-        if (players >= 1) {
-            List<String> player1 = addNewPlayer();
+        if (game.gameEngine().players.size() >= 1) {
+            List<String> player = addNewPlayer(game.gameEngine().player(1).name());
             line = 3;
             column = 36;
 
-            placeInTheLayout(layout, player1, line, column);
+            placeInTheLayout(layout, player, line, column);
         }
 
         // Add Player 2 to the table
-        if (players >= 2) {
-            List<String> player2 = addNewPlayer();
+        if (game.gameEngine().players.size() >= 2) {
+            List<String> player = addNewPlayer(game.gameEngine().player(2).name());
             line = 20;
             column = 38;
 
-            placeInTheLayout(layout, player2, line, column);
+            placeInTheLayout(layout, player, line, column);
         }
 
         // Add Player 3 to the table
-        if (players >= 3) {
-            List<String> player3 = addNewPlayer();
+        if (game.gameEngine().players.size() >= 3) {
+            List<String> player = addNewPlayer(game.gameEngine().player(3).name());
             line = 5;
             column = 70;
 
-            placeInTheLayout(layout, player3, line, column);
+            placeInTheLayout(layout, player, line, column);
         }
 
         // Add Player 4 to the table
-        if (players >= 4) {
-            List<String> player3 = addNewPlayer();
+        if (game.gameEngine().players.size() >= 4) {
+            List<String> player = addNewPlayer(game.gameEngine().player(4).name());
             line = 15;
             column = 5;
 
-            placeInTheLayout(layout, player3, line, column);
+            placeInTheLayout(layout, player, line, column);
         }
 
         // Add Player 5 to the table
-        if (players >= 5) {
-            List<String> player3 = addNewPlayer();
+        if (game.gameEngine().players.size() >= 5) {
+            List<String> player = addNewPlayer(game.gameEngine().player(5).name());
             line = 5;
             column = 5;
 
-            placeInTheLayout(layout, player3, line, column);
+            placeInTheLayout(layout, player, line, column);
         }
 
         // Add Player 6 to the table
-        if (players >= 6) {
-            List<String> player3 = addNewPlayer();
+        if (game.gameEngine().players.size() >= 6) {
+            List<String> player = addNewPlayer(game.gameEngine().player(6).name());
             line = 16;
             column = 70;
 
-            placeInTheLayout(layout, player3, line, column);
+            placeInTheLayout(layout, player, line, column);
         }
 
         int additionalSpacer = 0;
@@ -449,7 +467,6 @@ public class COUPTerminalView {
         return layout;
 
     }
-
 
     public static List<String> play(String text) {
         List<String> lines = new ArrayList<>();
