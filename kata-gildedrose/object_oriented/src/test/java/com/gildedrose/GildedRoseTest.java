@@ -97,7 +97,26 @@ public class GildedRoseTest {
 	}
 
 	@Test
-	public void BackstageBeforeTenDays() {
+	public void BackstageBetweenThousandDaysAndElevenDaysBeforeTheEvent() {
+
+		for (int i = 11; i <= 1000; i++) {
+
+			Item[] items = new Item[]{
+					new Item("Backstage passes to a TAFKAL80ETC concert", i, 5)
+			};
+
+			GildedRose app = new GildedRose(items);
+			app.updateQuality();
+
+			assertEquals(i - 1, items[0].sellIn);
+			assertEquals(6, items[0].quality);
+
+		}
+
+	}
+
+	@Test
+	public void BackstageBeforeTenDays() { // Redundant test
 
 		Item[] items = new Item[]{
 				new Item("Backstage passes to a TAFKAL80ETC concert", 12, 5),
@@ -116,7 +135,26 @@ public class GildedRoseTest {
 	}
 
 	@Test
-	public void BackstageBetweenTenDaysAndSixDays() {
+	public void BackstageBetweenTenDaysAndSixDaysBeforeTheEvent() {
+
+		for (int i = 6; i <= 10; i++) {
+
+			Item[] items = new Item[]{
+					new Item("Backstage passes to a TAFKAL80ETC concert", i, 5)
+			};
+
+			GildedRose app = new GildedRose(items);
+			app.updateQuality();
+
+			assertEquals(i - 1, items[0].sellIn);
+			assertEquals(7, items[0].quality);
+
+		}
+
+	}
+
+	@Test
+	public void BackstageAtTenDaysAndSixDaysBeforeTheEvent() { // Redundant test
 
 		Item[] items = new Item[]{
 				new Item("Backstage passes to a TAFKAL80ETC concert", 10, 5),
@@ -135,7 +173,26 @@ public class GildedRoseTest {
 	}
 
 	@Test
-	public void BackstageBetweenFiveDaysAndZeroDays() {
+	public void BackstageBetweenFiveDaysAndOneDayBeforeTheEvent() {
+
+		for (int i = 1; i <= 5; i++) {
+
+			Item[] items = new Item[]{
+					new Item("Backstage passes to a TAFKAL80ETC concert", i, 5)
+			};
+
+			GildedRose app = new GildedRose(items);
+			app.updateQuality();
+
+			assertEquals(i - 1, items[0].sellIn);
+			assertEquals(8, items[0].quality);
+
+		}
+
+	}
+
+	@Test
+	public void BackstageAtFiveDaysAndOneDayBeforeTheEvent() { // Redundant test
 
 		Item[] items = new Item[]{
 				new Item("Backstage passes to a TAFKAL80ETC concert", 5, 5),
@@ -197,7 +254,6 @@ public class GildedRoseTest {
 		assertEquals(0, items[0].quality);
 
 	}
-
 
 	@Test
 	public void ConjuredFruitQualityWillNeverBeNegative() {
