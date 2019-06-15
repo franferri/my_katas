@@ -112,15 +112,15 @@ public class COUPServerCommunicationProtocol {
                 refresh_other_players_screen = true;
 
             } else if (state == TARGETING_PLAYER_FOR_COUP) {
-                targetingPlayerForCoup(theOutput);
+                targetingPlayerForCoup(theInput, theOutput);
                 state  = WAITING_FOR_COUNTER_ACTION;
                 refresh_other_players_screen = true;
             } else if (state == TARGETING_PLAYER_FOR_ASSASSINATION) {
-                targetingPlayerForAssassination(theOutput);
+                targetingPlayerForAssassination(theInput, theOutput);
                 state = WAITING_FOR_COUNTER_ACTION;
                 refresh_other_players_screen = true;
             } else if (state == TARGETING_PLAYER_FOR_STEAL) {
-                targetingPlayerForSteal(theOutput);
+                targetingPlayerForSteal(theInput, theOutput);
                 state = WAITING_FOR_COUNTER_ACTION;
                 refresh_other_players_screen = true;
 
@@ -190,6 +190,7 @@ public class COUPServerCommunicationProtocol {
     }
 
     public void gameStarted(List<String> theOutput) {
+        game.gameEngine().startGame();
 
         theOutput.addAll(COUPTerminalView.table(game, "Player NNN start", "", "", ""));
         theOutput.addAll(COUPTerminalView.commandLineInGame(game));
@@ -271,20 +272,20 @@ public class COUPServerCommunicationProtocol {
 
     public void targetingPlayerForCoup(String theInput, List<String> theOutput) {
 
-        theOutput.addAll(COUPTerminalView.table(game, "Player " + game.gameEngine().playerDoingTheAction.name() + " is doing Coup", "to the player "+game.gameEngine().player(Integer.parseInt(theInput)), "", ""));
-        theOutput.addAll(COUPTerminalView.commandLineInGame(game));
+        theOutput.addAll(COUPTerminalView.table(game, "Player " + game.gameEngine().playerDoingTheAction.name() + " is doing Coup", "to the player "+game.gameEngine().player(Integer.parseInt(theInput)).name(), "", ""));
+        theOutput.addAll(COUPTerminalView.commandPostAction(game));
 
     }
     public void targetingPlayerForAssassination(String theInput, List<String> theOutput) {
 
-        theOutput.addAll(COUPTerminalView.table(game, "Player " + game.gameEngine().playerDoingTheAction.name() + " is doing Assassination", "to the player "+game.gameEngine().player(Integer.parseInt(theInput)), "", ""));
-        theOutput.addAll(COUPTerminalView.commandLineInGame(game));
+        theOutput.addAll(COUPTerminalView.table(game, "Player " + game.gameEngine().playerDoingTheAction.name() + " is doing Assassination", "to the player "+game.gameEngine().player(Integer.parseInt(theInput)).name(), "", ""));
+        theOutput.addAll(COUPTerminalView.commandPostAction(game));
 
     }
     public void targetingPlayerForSteal(String theInput, List<String> theOutput) {
 
-        theOutput.addAll(COUPTerminalView.table(game, "Player " + game.gameEngine().playerDoingTheAction.name() + " is doing Steal", "to the player "+game.gameEngine().player(Integer.parseInt(theInput)), "", ""));
-        theOutput.addAll(COUPTerminalView.commandLineInGame(game));
+        theOutput.addAll(COUPTerminalView.table(game, "Player " + game.gameEngine().playerDoingTheAction.name() + " is doing Steal", "to the player "+game.gameEngine().player(Integer.parseInt(theInput)).name(), "", ""));
+        theOutput.addAll(COUPTerminalView.commandPostAction(game));
 
     }
 
