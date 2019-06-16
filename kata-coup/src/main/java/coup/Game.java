@@ -91,7 +91,7 @@ public class Game {
         }
     }
 
-    private void startAction() {
+    public void startAction() {
         gameEngine.resetStatus();
 
         gameEngine.calculatePlayerPlaying();

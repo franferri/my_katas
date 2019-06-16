@@ -41,19 +41,18 @@ public class COUPServerCommunicationProtocol {
         // TODO: Server command to reset the play (same as after a play ends, will
         // TODO: If there are 6 onlinePlayers connected, no more are accepted we suggest to connect to another server
         // TODO: If there is only 1 player he cant start the game
+        // TODO: When game is started, no one else can join
 
         List<String> theOutput = new ArrayList<>();
 
-        if (null != theInput && theInput.equals("updateTerminal")) {
+        if (state == JUST_CONNECTED_ASKING_FOR_NAME) {
 
-            // We only update players that already joined the table
-            if (state != JUST_CONNECTED_ASKING_FOR_NAME) {
-                theOutput.addAll(COUPTerminalView.table(game, "", "", "", ""));
-            }
+            if (null != theInput && theInput.equals("updateTerminal")) {
 
-        } else {
+                // We dont do anything on update if the user is in this screen
+                refresh_other_players_screen = false;
 
-            if (state == JUST_CONNECTED_ASKING_FOR_NAME) {
+            } else {
 
                 if (null != theInput && !theInput.equals("")) {
 
@@ -68,103 +67,119 @@ public class COUPServerCommunicationProtocol {
 
                 }
 
-            } else if (state == WAITING_FOR_THE_GAME_TO_START) {
+            }
 
-                if (null != theInput && !theInput.equals("") && theInput.equals("start")) {
+        } else if (state == WAITING_FOR_THE_GAME_TO_START) {
+
+            if (null != theInput && theInput.equals("updateTerminal")) {
+
+                if (!game.gameEngine().isStarted) {
+                    waitingForTheGameToStart("", theOutput);
+                    refresh_other_players_screen = false;
+                } else {
+                    gameStartedViewForNonActivePlayers(theOutput);
+                    state = IN_GAME;
+                    refresh_other_players_screen = false;
+                }
+
+            } else {
+
+                if (null != theInput && theInput.equalsIgnoreCase("start")) {
 
                     gameStarted(theOutput);
                     state = IN_GAME;
+                    refresh_other_players_screen = true;
 
                 } else {
 
                     waitingForTheGameToStart(theInput, theOutput);
+                    refresh_other_players_screen = true;
 
                 }
 
-                refresh_other_players_screen = true;
-            } else if (state == IN_GAME && (theInput.equals("1"))) {
-                doingAction(1, theOutput);
-                state = WAITING_FOR_COUNTER_ACTION;
-                refresh_other_players_screen = true;
-            } else if (state == IN_GAME && (theInput.equals("2"))) {
-                doingAction(2, theOutput);
-                state = WAITING_FOR_COUNTER_ACTION;
-                refresh_other_players_screen = true;
-            } else if (state == IN_GAME && (theInput.equals("3"))) {
-                doingAction(3, theOutput);
-                state = TARGETING_PLAYER_FOR_COUP;
-                refresh_other_players_screen = true;
-            } else if (state == IN_GAME && (theInput.equals("4"))) {
-                doingAction(4, theOutput);
-                state = WAITING_FOR_COUNTER_ACTION;
-                refresh_other_players_screen = true;
-            } else if (state == IN_GAME && (theInput.equals("5"))) {
-                doingAction(5, theOutput);
-                state  = TARGETING_PLAYER_FOR_ASSASSINATION;
-                refresh_other_players_screen = true;
-            } else if (state == IN_GAME && (theInput.equals("6"))) {
-                doingAction(6, theOutput);
-                state = WAITING_FOR_COUNTER_ACTION;
-                refresh_other_players_screen = true;
-            } else if (state == IN_GAME && (theInput.equals("7"))) {
-                doingAction(7, theOutput);
-                state  = TARGETING_PLAYER_FOR_STEAL;
-                refresh_other_players_screen = true;
-
-            } else if (state == TARGETING_PLAYER_FOR_COUP) {
-                targetingPlayerForCoup(theInput, theOutput);
-                state  = WAITING_FOR_COUNTER_ACTION;
-                refresh_other_players_screen = true;
-            } else if (state == TARGETING_PLAYER_FOR_ASSASSINATION) {
-                targetingPlayerForAssassination(theInput, theOutput);
-                state = WAITING_FOR_COUNTER_ACTION;
-                refresh_other_players_screen = true;
-            } else if (state == TARGETING_PLAYER_FOR_STEAL) {
-                targetingPlayerForSteal(theInput, theOutput);
-                state = WAITING_FOR_COUNTER_ACTION;
-                refresh_other_players_screen = true;
-
-            } else if (state == WAITING_FOR_COUNTER_ACTION && theInput.equals("1")) {
-                doingCounterAction(1, theOutput);
-                state = CALLING_THE_BLUFF;
-            } else if (state == WAITING_FOR_COUNTER_ACTION && theInput.equals("2")) {
-                doingCounterAction(2, theOutput);
-                state = WAITING_FOR_COUNTER_COUNTER_ACTION;
-            } else if (state == WAITING_FOR_COUNTER_ACTION && theInput.equals("3")) {
-                doingCounterAction(3, theOutput);
-                state = WAITING_FOR_COUNTER_COUNTER_ACTION;
-
-            } else if (state == WAITING_FOR_COUNTER_COUNTER_ACTION && theInput.equals("1")) {
-                doingCounterCounterAction(1, theOutput);
-                state = IN_GAME;
-            } else if (state == WAITING_FOR_COUNTER_COUNTER_ACTION && theInput.equals("2")) {
-                doingCounterCounterAction(2, theOutput);
-                state = IN_GAME;
-
-            } else {
-                theOutput.addAll(COUPTerminalView.renderError());
             }
 
-            // IF A PLAYER GETS DISCONNECTED, THE GAME WILL REVEAL HIS CARDS IMMEDIATELY
-            // IF A PLAYER IS TAKING MORE THAN N MINUTES TO PLAY, WILL DIE
+        } else if (state == IN_GAME && (theInput.equals("1"))) {
+            doingAction(1, theOutput);
+            state = WAITING_FOR_COUNTER_ACTION;
+            refresh_other_players_screen = true;
+        } else if (state == IN_GAME && (theInput.equals("2"))) {
+            doingAction(2, theOutput);
+            state = WAITING_FOR_COUNTER_ACTION;
+            refresh_other_players_screen = true;
+        } else if (state == IN_GAME && (theInput.equals("3"))) {
+            doingAction(3, theOutput);
+            state = TARGETING_PLAYER_FOR_COUP;
+            refresh_other_players_screen = true;
+        } else if (state == IN_GAME && (theInput.equals("4"))) {
+            doingAction(4, theOutput);
+            state = WAITING_FOR_COUNTER_ACTION;
+            refresh_other_players_screen = true;
+        } else if (state == IN_GAME && (theInput.equals("5"))) {
+            doingAction(5, theOutput);
+            state = TARGETING_PLAYER_FOR_ASSASSINATION;
+            refresh_other_players_screen = true;
+        } else if (state == IN_GAME && (theInput.equals("6"))) {
+            doingAction(6, theOutput);
+            state = WAITING_FOR_COUNTER_ACTION;
+            refresh_other_players_screen = true;
+        } else if (state == IN_GAME && (theInput.equals("7"))) {
+            doingAction(7, theOutput);
+            state = TARGETING_PLAYER_FOR_STEAL;
+            refresh_other_players_screen = true;
 
-            // EACH PLAYER SEES THE COUNT DOWN TO BE ABLE TO BLOCK OR CALL THE BLUFF, DURING THIS TIME
-            // THE ACTION IS NOT EXECUTED, SO OTHER PLAYERS CAN ACT
+        } else if (state == TARGETING_PLAYER_FOR_COUP) {
+            targetingPlayerForCoup(theInput, theOutput);
+            state = WAITING_FOR_COUNTER_ACTION;
+            refresh_other_players_screen = true;
+        } else if (state == TARGETING_PLAYER_FOR_ASSASSINATION) {
+            targetingPlayerForAssassination(theInput, theOutput);
+            state = WAITING_FOR_COUNTER_ACTION;
+            refresh_other_players_screen = true;
+        } else if (state == TARGETING_PLAYER_FOR_STEAL) {
+            targetingPlayerForSteal(theInput, theOutput);
+            state = WAITING_FOR_COUNTER_ACTION;
+            refresh_other_players_screen = true;
 
-            // TIMES APPEAR IN THE BOARD, TO EACH USER HIS OWN
+        } else if (state == WAITING_FOR_COUNTER_ACTION && theInput.equals("1")) {
+            doingCounterAction(1, theOutput);
+            state = CALLING_THE_BLUFF;
+        } else if (state == WAITING_FOR_COUNTER_ACTION && theInput.equals("2")) {
+            doingCounterAction(2, theOutput);
+            state = WAITING_FOR_COUNTER_COUNTER_ACTION;
+        } else if (state == WAITING_FOR_COUNTER_ACTION && theInput.equals("3")) {
+            doingCounterAction(3, theOutput);
+            state = WAITING_FOR_COUNTER_COUNTER_ACTION;
 
-            // añadir un test al juego: un jugador q no está en su turno, intenta hacer una acción
+        } else if (state == WAITING_FOR_COUNTER_COUNTER_ACTION && theInput.equals("1")) {
+            doingCounterCounterAction(1, theOutput);
+            state = IN_GAME;
+        } else if (state == WAITING_FOR_COUNTER_COUNTER_ACTION && theInput.equals("2")) {
+            doingCounterCounterAction(2, theOutput);
+            state = IN_GAME;
 
-            // During a play, linux terminal let us to change the colors, like the boldify method we created
-            // Use colors like blue for actions, yellow or blinking for challenge, and red for block
-            // background colors are also available, we can remark the back of the cards in game
+        } else {
+            theOutput.addAll(COUPTerminalView.renderError());
+        }
 
-            // if we do animations, during the time they last, we dont let the user write, we dont ask him
+        // IF A PLAYER GETS DISCONNECTED, THE GAME WILL REVEAL HIS CARDS IMMEDIATELY
+        // IF A PLAYER IS TAKING MORE THAN N MINUTES TO PLAY, WILL DIE
 
-            if (refresh_other_players_screen) {
-                COUPServer.playersThreadsUpdateTerminal(playerNumber);
-            }
+        // EACH PLAYER SEES THE COUNT DOWN TO BE ABLE TO BLOCK OR CALL THE BLUFF, DURING THIS TIME
+        // THE ACTION IS NOT EXECUTED, SO OTHER PLAYERS CAN ACT
 
+        // TIMES APPEAR IN THE BOARD, TO EACH USER HIS OWN
+
+        // añadir un test al juego: un jugador q no está en su turno, intenta hacer una acción
+
+        // During a play, linux terminal let us to change the colors, like the boldify method we created
+        // Use colors like blue for actions, yellow or blinking for challenge, and red for block
+        // background colors are also available, we can remark the back of the cards in game
+
+        // if we do animations, during the time they last, we dont let the user write, we dont ask him
+
+        if (refresh_other_players_screen) {
+            COUPServer.playersThreadsUpdateTerminal(playerNumber);
         }
 
         String firstLine = theOutput.remove(0);
@@ -179,6 +194,11 @@ public class COUPServerCommunicationProtocol {
     }
 
     public void waitingForTheGameToStart(String theInput, List<String> theOutput) {
+
+        if (theInput.length() > 8) {
+            theInput = theInput.substring(0, 8);
+        }
+
         Player player = game.gameEngine().player(playerNumber);
         if (null == player.name() || player.name().equals("WAITING")) {
             player.setName(theInput);
@@ -190,10 +210,26 @@ public class COUPServerCommunicationProtocol {
     }
 
     public void gameStarted(List<String> theOutput) {
-        game.gameEngine().startGame();
 
-        theOutput.addAll(COUPTerminalView.table(game, "Player NNN start", "", "", ""));
+        game.gameEngine().startGame();
+        game.startAction();
+
+        theOutput.addAll(COUPTerminalView.table(game, "Player " + game.gameEngine().playerDoingTheAction.name() + " plays first", "", "", ""));
         theOutput.addAll(COUPTerminalView.commandLineInGame(game));
+
+    }
+
+    public void gameStartedViewForNonActivePlayers(List<String> theOutput) {
+
+
+
+        if (game.gameEngine().currentPlayerPlaying+1 == playerNumber) {
+            theOutput.addAll(COUPTerminalView.table(game, "YOUR PLAY", "", "", ""));
+            theOutput.addAll(COUPTerminalView.commandLineInGame(game));
+        } else {
+            theOutput.addAll(COUPTerminalView.table(game, "Player " + game.gameEngine().playerDoingTheAction.name() + " plays first", "", "", ""));
+            theOutput.addAll(COUPTerminalView.commandLineInGameWaitingForPlayerAction(game));
+        }
 
     }
 
@@ -272,19 +308,21 @@ public class COUPServerCommunicationProtocol {
 
     public void targetingPlayerForCoup(String theInput, List<String> theOutput) {
 
-        theOutput.addAll(COUPTerminalView.table(game, "Player " + game.gameEngine().playerDoingTheAction.name() + " is doing Coup", "to the player "+game.gameEngine().player(Integer.parseInt(theInput)).name(), "", ""));
+        theOutput.addAll(COUPTerminalView.table(game, "Player " + game.gameEngine().playerDoingTheAction.name() + " is doing Coup", "to the player " + game.gameEngine().player(Integer.parseInt(theInput)).name(), "", ""));
         theOutput.addAll(COUPTerminalView.commandPostAction(game));
 
     }
+
     public void targetingPlayerForAssassination(String theInput, List<String> theOutput) {
 
-        theOutput.addAll(COUPTerminalView.table(game, "Player " + game.gameEngine().playerDoingTheAction.name() + " is doing Assassination", "to the player "+game.gameEngine().player(Integer.parseInt(theInput)).name(), "", ""));
+        theOutput.addAll(COUPTerminalView.table(game, "Player " + game.gameEngine().playerDoingTheAction.name() + " is doing Assassination", "to the player " + game.gameEngine().player(Integer.parseInt(theInput)).name(), "", ""));
         theOutput.addAll(COUPTerminalView.commandPostAction(game));
 
     }
+
     public void targetingPlayerForSteal(String theInput, List<String> theOutput) {
 
-        theOutput.addAll(COUPTerminalView.table(game, "Player " + game.gameEngine().playerDoingTheAction.name() + " is doing Steal", "to the player "+game.gameEngine().player(Integer.parseInt(theInput)).name(), "", ""));
+        theOutput.addAll(COUPTerminalView.table(game, "Player " + game.gameEngine().playerDoingTheAction.name() + " is doing Steal", "to the player " + game.gameEngine().player(Integer.parseInt(theInput)).name(), "", ""));
         theOutput.addAll(COUPTerminalView.commandPostAction(game));
 
     }

@@ -465,7 +465,7 @@ public class COUPTerminalView {
         return layout;
     }
 
-    public static List<String> commandLineInGame(Game game) {
+    public static List<String> commandLineInGameWaitingForPlayerAction(Game game) {
         List<String> layout = new ArrayList<>();
 
         StringBuilder sb = new StringBuilder();
@@ -483,6 +483,18 @@ public class COUPTerminalView {
         sb.append(", ");
         sb.append("[7] Steal");
 
+        layout.add(sb.toString());
+
+        return layout;
+    }
+
+    public static List<String> commandLineInGame(Game game) {
+        List<String> layout = new ArrayList<>();
+
+        StringBuilder sb = new StringBuilder();
+        sb.append("Player ");
+        sb.append(game.gameEngine().playerDoingTheAction.name());
+        sb.append(" is thinking his next move...");
         layout.add(sb.toString());
 
         return layout;
@@ -649,7 +661,7 @@ public class COUPTerminalView {
             ++line;
         }
 
-        layout.add("Write your name [Max 8 characters]> "); // Line for the user to write
+        layout.add("Write your name when ready to joing [Max 8 characters]> "); // Line for the user to write
         return layout;
 
     }

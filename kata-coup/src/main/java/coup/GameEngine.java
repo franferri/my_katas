@@ -152,6 +152,7 @@ public class GameEngine {
     }
 
     public void resetStatus() {
+        playerDoingTheAction = null;
         playerBlockingTheAction = null;
         playerCallingTheBluff = null;
         targetPlayer = null;
