@@ -254,11 +254,13 @@ public class COUPTerminalView {
 
     }
 
-    public static List<String> unexpectedCommand() {
+    public static List<String> unexpectedCommand(int state, String theInput) {
 
         List<String> lines = new ArrayList<>();
 
         lines.add(boldifyText("Unexpected command"));
+        lines.add("state: " + state);
+        lines.add("theInput: " + theInput);
 
         return lines;
 
@@ -465,7 +467,7 @@ public class COUPTerminalView {
         return layout;
     }
 
-    public static List<String> commandLineInGameWaitingForPlayerAction(Game game) {
+    public static List<String> commandLineInGame(Game game) {
         List<String> layout = new ArrayList<>();
 
         StringBuilder sb = new StringBuilder();
@@ -482,13 +484,14 @@ public class COUPTerminalView {
         sb.append("[6] Exchange");
         sb.append(", ");
         sb.append("[7] Steal");
+        sb.append(": ");
 
-        layout.add(sb.toString());
+        layout.add(boldifyText(sb.toString()));
 
         return layout;
     }
 
-    public static List<String> commandLineInGame(Game game) {
+    public static List<String> commandLineInGameWaitingForPlayerAction(Game game) {
         List<String> layout = new ArrayList<>();
 
         StringBuilder sb = new StringBuilder();
@@ -500,15 +503,33 @@ public class COUPTerminalView {
         return layout;
     }
 
-    public static List<String> commandPostAction(Game game) {
+    public static List<String> commandLineWaitingForPlayersToConterAct(Game game) {
         List<String> layout = new ArrayList<>();
 
         StringBuilder sb = new StringBuilder();
-        sb.append("[1] Challenge");
-        sb.append(", ");
-        sb.append("[2] Block");
-        sb.append(", ");
-        sb.append("[3] Let it pass");
+        sb.append("Other players are thinking their next move...");
+        layout.add(sb.toString());
+
+        return layout;
+    }
+
+    public static List<String> commandPostAction(Game game) {
+        List<String> layout = new ArrayList<>();
+
+        // TODO: Income cannot be challenged
+
+        StringBuilder sb = new StringBuilder();
+        if (game.getCurrentAction().canThisActionBeChallenged()) {
+            sb.append("[1] Challenge");
+            sb.append(", ");
+        }
+
+        if (game.getCurrentAction().canThisActionBeChallenged()) {
+            sb.append("[2] Block");
+            sb.append(", ");
+        }
+
+        sb.append("[3] Let it pass: ");
 
         layout.add(sb.toString());
 
@@ -540,6 +561,20 @@ public class COUPTerminalView {
             sb.append(game.gameEngine().player(i).name());
             sb.append(", ");
         }
+
+        layout.add(boldifyText(sb.toString()));
+
+        return layout;
+    }
+
+    public static List<String> commandLineChallenged(Game game) {
+
+        List<String> layout = new ArrayList<>();
+
+        StringBuilder sb = new StringBuilder();
+
+        sb.append(game.gameEngine().playerDoingTheAction.name());
+        sb.append(" challenged!");
 
         layout.add(boldifyText(sb.toString()));
 
@@ -603,11 +638,11 @@ public class COUPTerminalView {
 
     }
 
-    public static List<String> renderError() {
+    public static List<String> renderError(int state, String theInput) {
 
         List<String> layout = new ArrayList<>(layout());
 
-        List<String> logo = unexpectedCommand();
+        List<String> logo = unexpectedCommand(state, theInput);
         int line = 3;
         int column = 6;
 

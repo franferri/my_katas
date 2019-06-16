@@ -11,6 +11,8 @@ public class Income extends Action {
     // Block: Cannot be blocked
     // --
 
+    public int actionNumber = 1;
+
     public Income() {
     }
 

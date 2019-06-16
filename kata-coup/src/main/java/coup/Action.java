@@ -7,6 +7,8 @@ public abstract class Action {
     protected GameEngine gameEngine;
     private boolean isBlocked;
 
+    public int actionNumber = -1;
+
     protected Action() {
     }
 
@@ -28,11 +30,11 @@ public abstract class Action {
     }
 
     // Setup
-    protected boolean canThisActionBeChallenged() {
+    public boolean canThisActionBeChallenged() {
         return true;
     }
 
-    protected boolean canThisBlockActionBeChallenged() {
+    public boolean canThisBlockActionBeChallenged() {
         return true;
     }
 

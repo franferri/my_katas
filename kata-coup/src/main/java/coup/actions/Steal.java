@@ -14,6 +14,8 @@ public class Steal extends Action {
     // Block: Can be blocked by Ambassador
     // Block by Ambassador can be challenged
 
+    public int actionNumber = 7;
+
     public Steal() {
     }
 

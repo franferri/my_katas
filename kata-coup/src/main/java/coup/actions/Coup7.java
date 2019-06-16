@@ -11,6 +11,8 @@ public class Coup7 extends Action {
     // Block: Cannot be blocked
     // -
 
+    public int actionNumber = 3;
+
     public Coup7(GameEngine gameEngine) {
         super(gameEngine);
     }

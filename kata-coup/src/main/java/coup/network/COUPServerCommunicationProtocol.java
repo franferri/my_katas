@@ -86,7 +86,11 @@ public class COUPServerCommunicationProtocol {
 
                 if (null != theInput && theInput.equalsIgnoreCase("start")) {
 
-                    gameStarted(theOutput);
+                    game.gameEngine().startGame();
+                    game.startAction();
+
+                    gameStartedViewForNonActivePlayers(theOutput);
+
                     state = IN_GAME;
                     refresh_other_players_screen = true;
 
@@ -99,34 +103,48 @@ public class COUPServerCommunicationProtocol {
 
             }
 
-        } else if (state == IN_GAME && (theInput.equals("1"))) {
-            doingAction(1, theOutput);
-            state = WAITING_FOR_COUNTER_ACTION;
-            refresh_other_players_screen = true;
-        } else if (state == IN_GAME && (theInput.equals("2"))) {
-            doingAction(2, theOutput);
-            state = WAITING_FOR_COUNTER_ACTION;
-            refresh_other_players_screen = true;
-        } else if (state == IN_GAME && (theInput.equals("3"))) {
-            doingAction(3, theOutput);
-            state = TARGETING_PLAYER_FOR_COUP;
-            refresh_other_players_screen = true;
-        } else if (state == IN_GAME && (theInput.equals("4"))) {
-            doingAction(4, theOutput);
-            state = WAITING_FOR_COUNTER_ACTION;
-            refresh_other_players_screen = true;
-        } else if (state == IN_GAME && (theInput.equals("5"))) {
-            doingAction(5, theOutput);
-            state = TARGETING_PLAYER_FOR_ASSASSINATION;
-            refresh_other_players_screen = true;
-        } else if (state == IN_GAME && (theInput.equals("6"))) {
-            doingAction(6, theOutput);
-            state = WAITING_FOR_COUNTER_ACTION;
-            refresh_other_players_screen = true;
-        } else if (state == IN_GAME && (theInput.equals("7"))) {
-            doingAction(7, theOutput);
-            state = TARGETING_PLAYER_FOR_STEAL;
-            refresh_other_players_screen = true;
+        } else if (state == IN_GAME) {
+
+            if (theInput.equals("updateTerminal")) {
+
+                doingAction(game.currentActionNumber(), theOutput);
+
+                state = WAITING_FOR_COUNTER_ACTION;
+                refresh_other_players_screen = false;
+
+            } else if (theInput.equals("1")) {
+
+                doingAction(1, theOutput);
+
+                state = WAITING_FOR_COUNTER_ACTION;
+                refresh_other_players_screen = true;
+
+            } else if (theInput.equals("2")) {
+                doingAction(2, theOutput);
+                state = WAITING_FOR_COUNTER_ACTION;
+                refresh_other_players_screen = true;
+            } else if (theInput.equals("3")) {
+                doingAction(3, theOutput);
+                state = TARGETING_PLAYER_FOR_COUP;
+                refresh_other_players_screen = true;
+            } else if (theInput.equals("4")) {
+                doingAction(4, theOutput);
+                state = WAITING_FOR_COUNTER_ACTION;
+                refresh_other_players_screen = true;
+            } else if (theInput.equals("5")) {
+                doingAction(5, theOutput);
+                state = TARGETING_PLAYER_FOR_ASSASSINATION;
+                refresh_other_players_screen = true;
+            } else if (theInput.equals("6")) {
+                doingAction(6, theOutput);
+                state = WAITING_FOR_COUNTER_ACTION;
+                refresh_other_players_screen = true;
+            } else if (theInput.equals("7")) {
+                doingAction(7, theOutput);
+                state = TARGETING_PLAYER_FOR_STEAL;
+                refresh_other_players_screen = true;
+
+            }
 
         } else if (state == TARGETING_PLAYER_FOR_COUP) {
             targetingPlayerForCoup(theInput, theOutput);
@@ -141,15 +159,18 @@ public class COUPServerCommunicationProtocol {
             state = WAITING_FOR_COUNTER_ACTION;
             refresh_other_players_screen = true;
 
-        } else if (state == WAITING_FOR_COUNTER_ACTION && theInput.equals("1")) {
-            doingCounterAction(1, theOutput);
-            state = CALLING_THE_BLUFF;
-        } else if (state == WAITING_FOR_COUNTER_ACTION && theInput.equals("2")) {
-            doingCounterAction(2, theOutput);
-            state = WAITING_FOR_COUNTER_COUNTER_ACTION;
-        } else if (state == WAITING_FOR_COUNTER_ACTION && theInput.equals("3")) {
-            doingCounterAction(3, theOutput);
-            state = WAITING_FOR_COUNTER_COUNTER_ACTION;
+        } else if (state == WAITING_FOR_COUNTER_ACTION) {
+
+            if (theInput.equals("1")) {
+                doingCounterAction(1, theOutput);
+                state = CALLING_THE_BLUFF;
+            } else if (theInput.equals("2")) {
+                doingCounterAction(2, theOutput);
+                state = WAITING_FOR_COUNTER_COUNTER_ACTION;
+            } else if (theInput.equals("3")) {
+                doingCounterAction(3, theOutput);
+                state = WAITING_FOR_COUNTER_COUNTER_ACTION;
+            }
 
         } else if (state == WAITING_FOR_COUNTER_COUNTER_ACTION && theInput.equals("1")) {
             doingCounterCounterAction(1, theOutput);
@@ -159,7 +180,7 @@ public class COUPServerCommunicationProtocol {
             state = IN_GAME;
 
         } else {
-            theOutput.addAll(COUPTerminalView.renderError());
+            theOutput.addAll(COUPTerminalView.renderError(state, theInput));
         }
 
         // IF A PLAYER GETS DISCONNECTED, THE GAME WILL REVEAL HIS CARDS IMMEDIATELY
@@ -209,21 +230,9 @@ public class COUPServerCommunicationProtocol {
 
     }
 
-    public void gameStarted(List<String> theOutput) {
-
-        game.gameEngine().startGame();
-        game.startAction();
-
-        theOutput.addAll(COUPTerminalView.table(game, "Player " + game.gameEngine().playerDoingTheAction.name() + " plays first", "", "", ""));
-        theOutput.addAll(COUPTerminalView.commandLineInGame(game));
-
-    }
-
     public void gameStartedViewForNonActivePlayers(List<String> theOutput) {
 
-
-
-        if (game.gameEngine().currentPlayerPlaying+1 == playerNumber) {
+        if (game.gameEngine().currentPlayerPlaying + 1 == playerNumber) {
             theOutput.addAll(COUPTerminalView.table(game, "YOUR PLAY", "", "", ""));
             theOutput.addAll(COUPTerminalView.commandLineInGame(game));
         } else {
@@ -237,38 +246,79 @@ public class COUPServerCommunicationProtocol {
 
         switch (action) {
             case 1:
-                game.playerTakesIncomeFromTreasury();
-                theOutput.addAll(COUPTerminalView.table(game, "Player " + game.gameEngine().playerDoingTheAction.name() + " is doing Income", "", "", ""));
-                theOutput.addAll(COUPTerminalView.commandPostAction(game));
+
+                if (game.gameEngine().currentPlayerPlaying + 1 == playerNumber) {
+                    game.playerTakesIncomeFromTreasury();
+                    theOutput.addAll(COUPTerminalView.table(game, "You are doing Income", "", "", ""));
+                    theOutput.addAll(COUPTerminalView.commandLineWaitingForPlayersToConterAct(game));
+                } else {
+                    theOutput.addAll(COUPTerminalView.table(game, "Player " + game.gameEngine().playerDoingTheAction.name() + " is doing Income", "", "", ""));
+                    theOutput.addAll(COUPTerminalView.commandPostAction(game));
+                }
 
                 break;
             case 2:
-                game.playerTakesForeignAidFromTreasury();
-                theOutput.addAll(COUPTerminalView.table(game, "Player " + game.gameEngine().playerDoingTheAction.name() + " is doing Foreign Aid", "", "", ""));
-                theOutput.addAll(COUPTerminalView.commandPostAction(game));
+
+                if (game.gameEngine().currentPlayerPlaying + 1 == playerNumber) {
+                    game.playerTakesForeignAidFromTreasury();
+                    theOutput.addAll(COUPTerminalView.table(game, "You are doing Foreign Aid", "", "", ""));
+                    theOutput.addAll(COUPTerminalView.commandLineWaitingForPlayersToConterAct(game));
+                } else {
+                    theOutput.addAll(COUPTerminalView.table(game, "Player " + game.gameEngine().playerDoingTheAction.name() + " is doing Foreign Aid", "", "", ""));
+                    theOutput.addAll(COUPTerminalView.commandPostAction(game));
+                }
                 break;
             case 3:
-                theOutput.addAll(COUPTerminalView.table(game, "Player NNN is doing Coup", "", "", ""));
-                theOutput.addAll(COUPTerminalView.commandLinePlayers(game));
+
+                if (game.gameEngine().currentPlayerPlaying + 1 == playerNumber) {
+                    theOutput.addAll(COUPTerminalView.table(game, "You are doing Coup", "", "", ""));
+                    theOutput.addAll(COUPTerminalView.commandLineWaitingForPlayersToConterAct(game));
+                } else {
+                    theOutput.addAll(COUPTerminalView.table(game, "Player " + game.gameEngine().playerDoingTheAction.name() + " is doing Coup", "", "", ""));
+                    theOutput.addAll(COUPTerminalView.commandLinePlayers(game));
+                }
                 break;
             case 4:
-                game.playerTakesTaxesFromTreasury();
-                theOutput.addAll(COUPTerminalView.table(game, "Player NNN is doing Tax", "", "", ""));
-                theOutput.addAll(COUPTerminalView.commandPostAction(game));
+
+                if (game.gameEngine().currentPlayerPlaying + 1 == playerNumber) {
+                    game.playerTakesTaxesFromTreasury();
+                    theOutput.addAll(COUPTerminalView.table(game, "You are doing Tax", "", "", ""));
+                    theOutput.addAll(COUPTerminalView.commandLineWaitingForPlayersToConterAct(game));
+                } else {
+                    theOutput.addAll(COUPTerminalView.table(game, "Player " + game.gameEngine().playerDoingTheAction.name() + " is doing Tax", "", "", ""));
+                    theOutput.addAll(COUPTerminalView.commandPostAction(game));
+                }
                 break;
             case 5:
-                theOutput.addAll(COUPTerminalView.table(game, "Player NNN is doing Assassination", "to Player YYY", "", ""));
-                theOutput.addAll(COUPTerminalView.commandLinePlayers(game));
+                if (game.gameEngine().currentPlayerPlaying + 1 == playerNumber) {
+                    theOutput.addAll(COUPTerminalView.table(game, "You are doing Assassination", "to Player YYY", "", ""));
+                    theOutput.addAll(COUPTerminalView.commandLineWaitingForPlayersToConterAct(game));
+                } else {
+                    theOutput.addAll(COUPTerminalView.table(game, "Player " + game.gameEngine().playerDoingTheAction.name() + " is doing Assassination", "", "", ""));
+                    theOutput.addAll(COUPTerminalView.commandLinePlayers(game));
+                }
                 break;
             case 6:
-                game.playerExchangesCardsFromTheCourtDeck();
-                theOutput.addAll(COUPTerminalView.table(game, "Player NNN is doing Exchange", "", "", ""));
-                theOutput.addAll(COUPTerminalView.commandPostAction(game));
+                if (game.gameEngine().currentPlayerPlaying + 1 == playerNumber) {
+                    game.playerExchangesCardsFromTheCourtDeck();
+                    theOutput.addAll(COUPTerminalView.table(game, "You are doing Exchange", "", "", ""));
+                    theOutput.addAll(COUPTerminalView.commandLineWaitingForPlayersToConterAct(game));
+                } else {
+                    theOutput.addAll(COUPTerminalView.table(game, "Player " + game.gameEngine().playerDoingTheAction.name() + " is doing Exchange", "", "", ""));
+                    theOutput.addAll(COUPTerminalView.commandPostAction(game));
+                }
                 break;
             case 7:
-                theOutput.addAll(COUPTerminalView.table(game, "Player NNN is doing Steal", "to Player YYY", "", ""));
-                theOutput.addAll(COUPTerminalView.commandLinePlayers(game));
+                if (game.gameEngine().currentPlayerPlaying + 1 == playerNumber) {
+                    theOutput.addAll(COUPTerminalView.table(game, "You are doing Steal", "to Player YYY", "", ""));
+                    theOutput.addAll(COUPTerminalView.commandLineWaitingForPlayersToConterAct(game));
+                } else {
+                    theOutput.addAll(COUPTerminalView.table(game, "Player " + game.gameEngine().playerDoingTheAction.name() + " is doing Steal", "", "", ""));
+                    theOutput.addAll(COUPTerminalView.commandLinePlayers(game));
+                }
                 break;
+            default:
+                theOutput.addAll(COUPTerminalView.unexpectedCommand(action, "Missing action Number"));
         }
 
     }
@@ -276,9 +326,11 @@ public class COUPServerCommunicationProtocol {
     public void doingCounterAction(int action, List<String> theOutput) {
 
         switch (action) {
+
             case 1:
-                theOutput.addAll(COUPTerminalView.table(game, "Player NNN is doing ??????", "", "Player KKK is challenging", ""));
-                theOutput.addAll(COUPTerminalView.commandLinePlayers(game));
+                game.playerCallsTheBluff(playerNumber);
+                theOutput.addAll(COUPTerminalView.table(game, "Player " + game.gameEngine().playerDoingTheAction.name() + " is doing Income", "Player " + game.gameEngine().playerCallingTheBluff.name() + " is challenging", "", ""));
+                theOutput.addAll(COUPTerminalView.commandLineChallenged(game));
                 break;
             case 2:
                 theOutput.addAll(COUPTerminalView.table(game, "Player NNN is doing ??????", "", "Player KKK is blocking", ""));

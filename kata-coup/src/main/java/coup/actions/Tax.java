@@ -11,6 +11,8 @@ public class Tax extends Action {
     // Block: Cannot be blocked
     // --
 
+    public int actionNumber = 4;
+
     public Tax() {
     }
 

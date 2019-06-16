@@ -11,6 +11,8 @@ public class ForeignAid extends Action {
     // Block: Can be blocked by a player claiming the Duke
     // Block can be challenged
 
+    public int actionNumber = 2;
+
     public ForeignAid() {
     }
 

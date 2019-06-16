@@ -6,6 +6,7 @@ public class Game {
 
     private GameEngine gameEngine;
     private Action currentAction;
+    private int currentActionNumber;
 
     public Game() {
         gameEngine = new GameEngine();
@@ -15,10 +16,19 @@ public class Game {
         return gameEngine;
     }
 
+    public int currentActionNumber() {
+        return currentActionNumber;
+    }
+
+    public Action getCurrentAction() {
+        return currentAction;
+    }
+
     public void playerTakesIncomeFromTreasury() {
         startAction();
 
         currentAction = new Income(gameEngine);
+        currentActionNumber = 1;
         currentAction.doAction();
     }
 
@@ -26,6 +36,7 @@ public class Game {
         startAction();
 
         currentAction = new ForeignAid(gameEngine);
+        currentActionNumber = 2;
         currentAction.doAction();
     }
 
@@ -34,6 +45,7 @@ public class Game {
         gameEngine.targetPlayer = gameEngine.player(targetedPlayer);
 
         currentAction = new Coup7(gameEngine);
+        currentActionNumber = 3;
         currentAction.doAction();
     }
 
@@ -50,6 +62,7 @@ public class Game {
         startAction();
 
         currentAction = new Tax(gameEngine);
+        currentActionNumber = 4;
         currentAction.doAction();
     }
 
@@ -58,6 +71,7 @@ public class Game {
         gameEngine.targetPlayer = gameEngine.player(targetedPlayer);
 
         currentAction = new Assassinate(gameEngine);
+        currentActionNumber = 5;
         currentAction.doAction();
     }
 
@@ -65,6 +79,7 @@ public class Game {
         startAction();
 
         currentAction = new Exchange(gameEngine);
+        currentActionNumber = 6;
         currentAction.doAction();
     }
 
@@ -73,6 +88,7 @@ public class Game {
         gameEngine.targetPlayer = gameEngine.player(targetedPlayer);
 
         currentAction = new Steal(gameEngine);
+        currentActionNumber = 7;
         currentAction.doAction();
     }
 

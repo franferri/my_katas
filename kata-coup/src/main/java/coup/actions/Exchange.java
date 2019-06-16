@@ -15,6 +15,8 @@ public class Exchange extends Action {
     // Block: Cannot be blocked
     // -
 
+    public int actionNumber = 6;
+
     public Exchange() {
     }
 

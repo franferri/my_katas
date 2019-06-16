@@ -11,6 +11,8 @@ public class Assassinate extends Action {
     // Block: Can be blocked by Contessa
     // Block can be challenged
 
+    public int actionNumber = 5;
+
     public Assassinate() {
     }
 
