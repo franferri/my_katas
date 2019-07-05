@@ -1,7 +1,6 @@
 package coup;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class GameEngine {
@@ -17,7 +16,7 @@ public class GameEngine {
 
     public Player targetPlayer;
 
-    public boolean isStarted = false;
+    public boolean gameIsStarted = false;
 
     public GameEngine() {
         treasury = 50;
@@ -35,7 +34,7 @@ public class GameEngine {
 
     public void startGame() {
 
-        isStarted = true;
+        gameIsStarted = true;
 
         if (players.size() < 2) {
             throw new RuntimeException("Need more onlinePlayers");

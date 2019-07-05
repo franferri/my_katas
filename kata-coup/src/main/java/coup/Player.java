@@ -10,6 +10,7 @@ import java.util.Random;
 public class Player {
 
     private int coins = 0;
+
     private final List<Card> cards = new ArrayList<>();
 
     private int lastCardLost = -1;
