@@ -1,6 +1,6 @@
 # Python 101
 
-## Create a new project
+## Create a new project from scratch
 ~~~~
     # rm -rf kata-new-python-project
     mkdir kata-new-python-project
@@ -71,3 +71,40 @@
     pip install --upgrade pip
     pip install -r ../requirements.txt
 ~~~~
+## Create the python scripts folders
+~~~~
+    mkdir example
+    cd example
+    curl https://raw.githubusercontent.com/franferri/your-codingdojos-katas/master/your-kata-project-using-python3/example/bank_account.py --output bank_account.py
+    
+    cd ..
+    mkdir -p tests/example
+    cd tests
+    curl https://raw.githubusercontent.com/franferri/your-codingdojos-katas/master/your-kata-project-using-python3/tests/test_my_class.py  --output test_my_class.py
+    cd example
+    curl https://raw.githubusercontent.com/franferri/your-codingdojos-katas/master/your-kata-project-using-python3/tests/example/test_bank_account.py --output test_bank_account.py 
+    cd ../..
+~~~~
+## How to run the tests from console
+* Needs to be run in the parent folder, not inside the tests folder, so it will succeed importing the referenced files
+~~~~
+    $ cd kata-new-python-project
+    $ python3 -m unittest discover
+    $ python3 -m unittest example.BankAccountTestCase
+    $ python3 -m unittest example.BankAccountTestCase.test_have_the_balance_increased_after_a_deposit
+~~~~
+More examples here: https://docs.python.org/3/library/unittest.html#command-line-interface
+
+## How to run the tests from the PyCharm
+
+    * Open the project in Pycharm
+    * Right click on the tests folders
+    * Run 'Unittests in tests' (**will fail**)
+    * Edit run configurations -> Working directory -> Remove the ending "/tests"
+    * Right click on the tests folders again
+    * Run 'Unittests in tests' (**will succeed**)
+
+
+
+
+
