@@ -108,3 +108,12 @@ More examples here: https://docs.python.org/3/library/unittest.html#command-line
     * Edit run configurations -> Working directory -> Remove the ending "/tests"
     * Right click on the tests folders again
     * Run 'Unittests in tests' (**will succeed**)
+
+
+## How to add a dependency to your project
+
+    source venv/bin/activate
+    pip install --upgrade pip
+    pip install <dependency_name>
+    pip list
+    deactivate
