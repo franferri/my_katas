@@ -70,7 +70,7 @@
     pip install --upgrade pip
     pip install -r ../requirements.txt
 ~~~~
-## Create the python scripts folders
+## Let's add some python code and tests just for fun
 ~~~~
     mkdir example
     cd example
@@ -108,7 +108,6 @@ More examples here: https://docs.python.org/3/library/unittest.html#command-line
     * Edit run configurations -> Working directory -> Remove the ending "/tests"
     * Right click on the tests folders again
     * Run 'Unittests in tests' (**will succeed**)
-
 
 ## How to add a dependency to your project
 
