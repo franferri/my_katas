@@ -116,3 +116,10 @@ More examples here: https://docs.python.org/3/library/unittest.html#command-line
     pip install <dependency_name>
     pip list
     deactivate
+
+## Challenge, can you add a simple mock?
+How to do it: https://docs.python.org/3/library/unittest.mock.html
+Advanced read: https://martinfowler.com/articles/mocksArentStubs.html
+
+## Where to continue with your idea?
+https://realpython.com/
