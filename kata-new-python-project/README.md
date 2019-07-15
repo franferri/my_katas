@@ -1,4 +1,4 @@
-Python 101
+# Python 101
 
 ## Create a new project
 ~~~~
@@ -26,7 +26,7 @@ Python 101
 ~~~~
 * Save the requirements in a text file
 ~~~~
-	cd ..
+    cd ..
     pip freeze > requirements.txt
 ~~~~
 * To deactivate
@@ -60,7 +60,7 @@ Python 101
     echo '.classpath' >> .gitignore
     echo '.project' >> .gitignore
 ~~~~
-## Share a Python
+## Share an existent Python project
 ~~~~
     git clone kata-new-python-project
 
