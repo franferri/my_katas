@@ -1,15 +1,25 @@
 # Python 101
 
-## Create a new project from scratch
+## This repo gives you a few files with basic python code and tests, also .gitignore so you can start fast.
+
+* Clone this very repo and cd to this folder
+~~~~
+    git clone XXXXXXXXXXX
+    cd kata-new-python-project
+~~~~
+* Or create a new project from scratch
 ~~~~
     # rm -rf YOURPROJECTPARENTFOLDER
     mkdir YOURPROJECTPARENTFOLDER
     cd YOURPROJECTPARENTFOLDER
 ~~~~
 
+## Lets start
+
 * We create the project environment
 ~~~~
-    python3 -m venv venv
+    python3 --version
+    python3 -m venv venv --clear
 ~~~~
 * We activate the environment in this bash
 ~~~~
@@ -17,7 +27,10 @@
 ~~~~
 * Install the requirements in the env
 ~~~~
+    curl https://bootstrap.pypa.io/get-pip.py | python
     pip install --upgrade pip
+    pip install --upgrade setuptools
+
     pip install requests bs4
     pip list
 
