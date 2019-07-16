@@ -64,22 +64,18 @@ Python needs the file '__init__.py' in every folder to make it a valid python mo
 * tests/example/* some example tests over the example business logic
 
 ## Share an existent Python project
-~~~~
-    git clone YOURPROJECTPARENTFOLDER
 
-    cd YOURPROJECTPARENTFOLDER
-    python3 -m venv venv
-    source venv/bin/activate
-
-    pip install --upgrade pip
-    pip install -r ../requirements.txt
-    
-    cd ../..
+* We activate the environment
+* Update pip for the environment
+* Install the requirements
 ~~~~
+    pip install -r requirements.txt
+~~~~
+
 ## How to run the tests from console
-* The following needs to be run in the parent folder, not inside the tests folder, so it will succeed importing the referenced files
+
+* The following needs to be run **in the parent folder**, not inside the tests folder, so it will succeed importing the referenced files
 ~~~~
-    cd YOURPROJECTPARENTFOLDER
     # deactivate
     python3 -m unittest discover
     python3 -m unittest tests/example/test_bank_account.py
@@ -102,7 +98,9 @@ More examples here: https://docs.python.org/3/library/unittest.html#command-line
     source venv/bin/activate
     pip install --upgrade pip
     pip install <dependency_name>
+    pip show <dependency_name>
     pip list
+    pip freeze > requirements.txt
     deactivate
 
 ## Challenge, can you add a simple mock?
