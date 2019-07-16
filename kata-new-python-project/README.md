@@ -65,12 +65,15 @@ Python needs the file '__init__.py' in every folder to make it a valid python mo
 
 ## Share an existent Python project
 
-* We activate the environment
+* Check your python version
+* Create the project environment
+* Activate the environment
 * Update pip for the environment
-* Install the requirements
+* Install the requirements with the following line
 ~~~~
     pip install -r requirements.txt
 ~~~~
+* Deactivate
 
 ## How to run the tests from console
 
