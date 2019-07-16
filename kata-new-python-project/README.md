@@ -15,27 +15,32 @@
 ~~~~
 
 ## Lets start
-
-* We create the project environment
+* Check your python version
 ~~~~
     python3 --version
+~~~~
+* We create the project environment
+~~~~
     python3 -m venv venv --clear
 ~~~~
-* We activate the environment in this bash
+* We activate the environment
 ~~~~
     source venv/bin/activate
 ~~~~
-* Install the requirements in the env
+* Update pip for the environment
 ~~~~
+    # updating pip this way works always and fix deprecated versions problems
     curl https://bootstrap.pypa.io/get-pip.py | python
+
     pip install --upgrade pip
     pip install --upgrade setuptools
-
-    pip install requests bs4
-    pip list
-
+~~~~
+* Install a example dependency in the env
+~~~~
+    pip install requests
     pip show requests
-    pip show bs4
+
+    pip list
 ~~~~
 * Save the requirements in a text file
 ~~~~
@@ -50,28 +55,14 @@
 ~~~~
     cat requirements.txt
 ~~~~
-## .gitignore
-~~~~
-    curl https://raw.githubusercontent.com/github/gitignore/master/Python.gitignore --output .gitignore
-    
-    echo '' >> .gitignore
-    echo '# Apple OSX' >> .gitignore
-    echo '.DS_Store' >> .gitignore
-    echo '' >> .gitignore
-    echo '# Windows' >> .gitignore
-    echo 'Thumbs.db' >> .gitignore
-    echo '' >> .gitignore
-    echo '# IntelliJ' >> .gitignore
-    echo '.idea/' >> .gitignore
-    echo '*.ipr' >> .gitignore
-    echo '*.iws' >> .gitignore
-    echo '*.iml' >> .gitignore
-    echo '' >> .gitignore
-    echo '# eclipse' >> .gitignore
-    echo '.settings/' >> .gitignore
-    echo '.classpath' >> .gitignore
-    echo '.project' >> .gitignore
-~~~~
+
+## Included example files
+
+Python needs the file '__init__.py' in every folder to make it a valid python module
+* .gitignore
+* example/* some busines logic
+* tests/example/* some example tests over the example business logic
+
 ## Share an existent Python project
 ~~~~
     git clone YOURPROJECTPARENTFOLDER
@@ -82,22 +73,6 @@
 
     pip install --upgrade pip
     pip install -r ../requirements.txt
-~~~~
-## Let's add some python code and tests just for fun
-~~~~
-    mkdir example
-    cd example
-    touch __init__.py
-    curl https://raw.githubusercontent.com/franferri/your-codingdojos-katas/master/your-kata-project-using-python3/example/bank_account.py --output bank_account.py
-    
-    cd ..
-    mkdir -p tests/example
-    cd tests
-    touch __init__.py
-    curl https://raw.githubusercontent.com/franferri/your-codingdojos-katas/master/your-kata-project-using-python3/tests/test_my_class.py --output test_my_class.py
-    cd example
-    touch __init__.py
-    curl https://raw.githubusercontent.com/franferri/your-codingdojos-katas/master/your-kata-project-using-python3/tests/example/test_bank_account.py --output test_bank_account.py
     
     cd ../..
 ~~~~
