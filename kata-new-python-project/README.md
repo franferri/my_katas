@@ -1,6 +1,6 @@
 # Python 101
 
-## This repo gives you a few files with basic python code and tests, also .gitignore so you can start fast.
+## This repo gives you a few files with basic python code and tests, also .gitignore, and instructions to create a Python project, so, if you like to get to know a bit more Python you can start fast.
 
 * Clone this very repo and cd to this folder
 ~~~~
