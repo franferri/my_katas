@@ -1,4 +1,1 @@
-
-### Some solutions to a few CodingDojo's / Katas and basic examples
-
-(and some opinions)
+### My solutions, some opinions and some stuff in preparation
