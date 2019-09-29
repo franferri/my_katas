@@ -22,7 +22,7 @@ public class ActionIncomeShould extends TestingActions {
     @Test
     void player_does_action()  {
         // when
-        gameEngine.playerDoingTheAction = gameEngine.player(1);
+        gameEngine.setPlayerDoingTheAction(gameEngine.player(1));
         action.doAction();
 
         // then
@@ -39,10 +39,10 @@ public class ActionIncomeShould extends TestingActions {
     @Test
     void player_calls_the_bluff_over_action()  {
         // when
-        gameEngine.playerDoingTheAction = gameEngine.player(1);
+        gameEngine.setPlayerDoingTheAction(gameEngine.player(1));
         action.doAction();
 
-        gameEngine.playerCallingTheBluff = gameEngine.player(2);
+        gameEngine.setPlayerCallingTheBluff(gameEngine.player(2));
         assertThrowsWithMessage(() -> action.doCallTheBluffOnAction(), "This action can't be challenged");
 
     }
@@ -51,10 +51,10 @@ public class ActionIncomeShould extends TestingActions {
     @Test
     void player_blocks_action()  {
         // when
-        gameEngine.playerDoingTheAction = gameEngine.player(1);
+        gameEngine.setPlayerDoingTheAction(gameEngine.player(1));
         action.doAction();
 
-        gameEngine.playerBlockingTheAction = gameEngine.player(2);
+        gameEngine.setPlayerBlockingTheAction(gameEngine.player(2));
 
         Assertions.assertThrows(Exception.class, () -> action.doBlockAction());
     }

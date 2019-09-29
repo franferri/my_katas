@@ -4,8 +4,6 @@ public abstract class Card {
 
     private boolean visible;
 
-    public String name = "card";
-
     protected Card() {
         this.visible = false;
     }
@@ -14,19 +12,34 @@ public abstract class Card {
         return visible;
     }
 
-    public void setVisible(boolean visible) {
-        this.visible = visible;
+    public void setVisible(final boolean bVisible) {
+        this.visible = bVisible;
     }
 
-    protected Action action;
-    protected Action blocks;
+    private Action action;
+    private Action blocks;
 
     public Action doAction() {
-        return action;
+        return getAction();
     }
 
     public Action blocksAction() {
+        return getBlocks();
+    }
+
+    public Action getAction() {
+        return action;
+    }
+
+    public void setAction(final Action action) {
+        this.action = action;
+    }
+
+    public Action getBlocks() {
         return blocks;
     }
 
+    public void setBlocks(final Action blocks) {
+        this.blocks = blocks;
+    }
 }

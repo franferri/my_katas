@@ -3,7 +3,7 @@ package coup.actions;
 import coup.Action;
 import coup.GameEngine;
 
-public class Coup7 extends Action {
+public final class Coup7 extends Action {
 
     // Action: Pay 7 cons, choose the player to lose Influence
     // Action cannot be challenged
@@ -11,9 +11,7 @@ public class Coup7 extends Action {
     // Block: Cannot be blocked
     // -
 
-    public int actionNumber = 3;
-
-    public Coup7(GameEngine gameEngine) {
+    public Coup7(final GameEngine gameEngine) {
         super(gameEngine);
     }
 
@@ -27,14 +25,15 @@ public class Coup7 extends Action {
     }
 
     // Action
-    public void doActionInternal()  {
-        gameEngine.playerReturnCoinsToTreasury(gameEngine.playerDoingTheAction, 7);
-        gameEngine.targetPlayer.looseCard();
+    public void doActionInternal() {
+        getGameEngine().playerReturnCoinsToTreasury(getGameEngine().getPlayerDoingTheAction(), SEVEN);
+        getGameEngine().getTargetPlayer().looseCard();
     }
 
     // Block Action
-    public void doBlockAction()  {
+    public void doBlockAction() {
         throw new RuntimeException("This action can't be blocked");
     }
+
 
 }

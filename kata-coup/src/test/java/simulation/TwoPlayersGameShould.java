@@ -41,7 +41,7 @@ class TwoPlayersGameShould {
         game.playerExchangesCardsFromTheCourtDeck();
 
         game.gameEngine().player(2).cards().clear();
-        game.gameEngine().player(2).cards().add(new TheAmbassator());
+        game.gameEngine().player(2).cards().add(new TheAmbassador());
         game.gameEngine().player(2).cards().add(new TheContessa());
 
         // Player 1 hand
@@ -221,8 +221,8 @@ class TwoPlayersGameShould {
         // then
 
         game.gameEngine().player(1).cards().clear();
-        game.gameEngine().player(1).cards().add(new TheAmbassator());
-        game.gameEngine().player(1).cards().add(new TheAmbassator());
+        game.gameEngine().player(1).cards().add(new TheAmbassador());
+        game.gameEngine().player(1).cards().add(new TheAmbassador());
 
         game.gameEngine().player(2).cards().clear();
         game.gameEngine().player(2).cards().add(new TheCaptain());

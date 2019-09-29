@@ -3,7 +3,7 @@ package coup.actions;
 import coup.Action;
 import coup.GameEngine;
 
-public class ForeignAid extends Action {
+public final class ForeignAid extends Action {
 
     // Action: Take two coins from the treasury
     // Action cannot be challenged
@@ -11,12 +11,10 @@ public class ForeignAid extends Action {
     // Block: Can be blocked by a player claiming the Duke
     // Block can be challenged
 
-    public int actionNumber = 2;
-
     public ForeignAid() {
     }
 
-    public ForeignAid(GameEngine gameEngine) {
+    public ForeignAid(final GameEngine gameEngine) {
         super(gameEngine);
     }
 
@@ -26,13 +24,13 @@ public class ForeignAid extends Action {
     }
 
     // Action
-    public void doActionInternal()  {
-        gameEngine.playerTakeCoinsFromTreasury(gameEngine.playerDoingTheAction, 2);
+    public void doActionInternal() {
+        getGameEngine().playerTakeCoinsFromTreasury(getGameEngine().getPlayerDoingTheAction(), 2);
     }
 
     // Block Action
-    public void doBlockActionInternal()  {
-        gameEngine.playerReturnCoinsToTreasury(gameEngine.playerDoingTheAction, 2);
+    public void doBlockActionInternal() {
+        getGameEngine().playerReturnCoinsToTreasury(getGameEngine().getPlayerDoingTheAction(), 2);
     }
 
 }

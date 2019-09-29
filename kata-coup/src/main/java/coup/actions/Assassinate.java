@@ -3,7 +3,7 @@ package coup.actions;
 import coup.Action;
 import coup.GameEngine;
 
-public class Assassinate extends Action {
+public final class Assassinate extends Action {
 
     // Action: Pay 3 coins, choose the player to lose influence
     // Action can be challenged
@@ -11,29 +11,27 @@ public class Assassinate extends Action {
     // Block: Can be blocked by Contessa
     // Block can be challenged
 
-    public int actionNumber = 5;
-
     public Assassinate() {
     }
 
-    public Assassinate(GameEngine gameEngine) {
+    public Assassinate(final GameEngine gameEngine) {
         super(gameEngine);
     }
 
     private boolean paid = false;
 
     // Action
-    public void doActionInternal()  {
+    public void doActionInternal() {
         if (!paid) {
-            gameEngine.playerReturnCoinsToTreasury(gameEngine.playerDoingTheAction, 3);
+            getGameEngine().playerReturnCoinsToTreasury(getGameEngine().getPlayerDoingTheAction(), THREE);
             paid = true;
         }
-        gameEngine.targetPlayer.looseCard();
+        getGameEngine().getTargetPlayer().looseCard();
     }
 
     // Block Action
-    public void doBlockActionInternal()  {
-        gameEngine.targetPlayer.restoreLostCard();
+    public void doBlockActionInternal() {
+        getGameEngine().getTargetPlayer().restoreLostCard();
     }
 
 }

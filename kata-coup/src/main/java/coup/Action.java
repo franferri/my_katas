@@ -4,25 +4,30 @@ import coup.actions.Coup10;
 
 public abstract class Action {
 
-    protected GameEngine gameEngine;
+    public static final Integer TEN = 10;
+    public static final Integer SEVEN = 7;
+    public static final Integer THREE = 3;
+    public static final Integer ONE = 1;
+
+    private GameEngine gameEngine;
     private boolean isBlocked;
 
-    public int actionNumber = -1;
+    private int actionNumber = -1;
 
     protected Action() {
     }
 
-    protected Action(GameEngine gameEngine) {
-        this.gameEngine = gameEngine;
+    protected Action(final GameEngine gameEngine) {
+        this.setGameEngine(gameEngine);
     }
 
-    private void mustCoup10(GameEngine gameEngine)  {
-        if (gameEngine.playerDoingTheAction.coins() >= 10 && !(this instanceof Coup10)) {
+    private void mustCoup10(final GameEngine gameEngine) {
+        if (gameEngine.getPlayerDoingTheAction().coins() >= TEN && !(this instanceof Coup10)) {
             throw new RuntimeException("Player must coup because has 10 or more coins");
         }
     }
 
-    private void isTheGameEnded(GameEngine gameEngine)  {
+    private void isTheGameEnded(final GameEngine gameEngine) {
         int winner = gameEngine.whoIsTheWinner();
         if (winner > -1) {
             throw new RuntimeException("The game is done, the winner was player " + winner);
@@ -39,51 +44,51 @@ public abstract class Action {
     }
 
     // Action
-    public void doAction()  {
+    public void doAction() {
         actionCantBeDoneToHimself();
-        isTheGameEnded(gameEngine);
-        mustCoup10(gameEngine);
+        isTheGameEnded(getGameEngine());
+        mustCoup10(getGameEngine());
         doActionInternal();
         isBlocked = false;
     }
 
-    protected abstract void doActionInternal() ;
+    protected abstract void doActionInternal();
 
     // Block Action
-    public void doBlockAction()  {
+    public void doBlockAction() {
         playerCantBlockHimself();
         doBlockActionInternal();
         isBlocked = true;
     }
 
-    protected void doBlockActionInternal()  {
+    protected void doBlockActionInternal() {
         throw new RuntimeException("method not overridden");
     }
 
     // Bluff
-    public void doCallTheBluffOnAction()  {
+    public void doCallTheBluffOnAction() {
         cannotCallBluffOnHimself();
         if (!canThisActionBeChallenged()) {
             throw new RuntimeException("This action can't be challenged");
         }
-        if (gameEngine.playerDoingTheAction.canHeDoTheAction(this)) {
-            gameEngine.playerCallingTheBluff.looseCard();
+        if (getGameEngine().getPlayerDoingTheAction().canHeDoTheAction(this)) {
+            getGameEngine().getPlayerCallingTheBluff().looseCard();
         } else {
             doBlockActionInternal();
-            gameEngine.playerDoingTheAction.looseCard();
+            getGameEngine().getPlayerDoingTheAction().looseCard();
         }
     }
 
-    public void doCallTheBluffOnBlockAction()  {
+    public void doCallTheBluffOnBlockAction() {
         cannotBluffOnHisOwnBlockAction();
         if (!canThisBlockActionBeChallenged()) {
             throw new RuntimeException("This blockaction can't be challenged");
         }
-        if (gameEngine.playerBlockingTheAction.canHeBlockTheAction(this)) {
-            gameEngine.playerCallingTheBluff.looseCard();
+        if (getGameEngine().getPlayerBlockingTheAction().canHeBlockTheAction(this)) {
+            getGameEngine().getPlayerCallingTheBluff().looseCard();
         } else {
             doActionInternal();
-            gameEngine.playerBlockingTheAction.looseCard();
+            getGameEngine().getPlayerBlockingTheAction().looseCard();
         }
     }
 
@@ -91,28 +96,43 @@ public abstract class Action {
         return isBlocked;
     }
 
-    private void actionCantBeDoneToHimself()  {
-        if (gameEngine.playerDoingTheAction == gameEngine.targetPlayer) {
+    private void actionCantBeDoneToHimself() {
+        if (getGameEngine().getPlayerDoingTheAction() == getGameEngine().getTargetPlayer()) {
             throw new RuntimeException("Action can't be done to himself");
         }
     }
 
-    private void playerCantBlockHimself()  {
-        if (gameEngine.playerDoingTheAction == gameEngine.playerBlockingTheAction) {
+    private void playerCantBlockHimself() {
+        if (getGameEngine().getPlayerDoingTheAction() == getGameEngine().getPlayerBlockingTheAction()) {
             throw new RuntimeException("Player cant block himself");
         }
     }
 
-    private void cannotCallBluffOnHimself()  {
-        if (gameEngine.playerDoingTheAction == gameEngine.playerCallingTheBluff) {
+    private void cannotCallBluffOnHimself() {
+        if (getGameEngine().getPlayerDoingTheAction() == getGameEngine().getPlayerCallingTheBluff()) {
             throw new RuntimeException("Action bluff can't be called over himself");
         }
     }
 
-    private void cannotBluffOnHisOwnBlockAction()  {
-        if (gameEngine.playerBlockingTheAction == gameEngine.playerCallingTheBluff) {
+    private void cannotBluffOnHisOwnBlockAction() {
+        if (getGameEngine().getPlayerBlockingTheAction() == getGameEngine().getPlayerCallingTheBluff()) {
             throw new RuntimeException("BlockAction bluff can't be called over the player doing the BlockAction");
         }
     }
 
+    public GameEngine getGameEngine() {
+        return gameEngine;
+    }
+
+    public void setGameEngine(final GameEngine gameEngine) {
+        this.gameEngine = gameEngine;
+    }
+
+    public int getActionNumber() {
+        return actionNumber;
+    }
+
+    public void setActionNumber(final int actionNumber) {
+        this.actionNumber = actionNumber;
+    }
 }

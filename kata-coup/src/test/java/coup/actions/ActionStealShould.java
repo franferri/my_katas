@@ -1,7 +1,7 @@
 package coup.actions;
 
 import coup.TestingActions;
-import coup.cards.TheAmbassator;
+import coup.cards.TheAmbassador;
 import coup.cards.TheCaptain;
 import coup.cards.TheDuke;
 import org.junit.jupiter.api.Assertions;
@@ -29,9 +29,9 @@ public class ActionStealShould extends TestingActions {
     @Test
     void player_does_action_to_a_poor_player()  {
         // when
-        gameEngine.playerDoingTheAction = gameEngine.player(1);
-        gameEngine.targetPlayer = gameEngine.player(2);
-        gameEngine.playerReturnCoinsToTreasury(gameEngine.targetPlayer, 2);
+        gameEngine.setPlayerDoingTheAction(gameEngine.player(1));
+        gameEngine.setTargetPlayer(gameEngine.player(2));
+        gameEngine.playerReturnCoinsToTreasury(gameEngine.getTargetPlayer(), 2);
 
         assertThrowsWithMessage(() -> action.doAction(), "Player is broke and we can't take more coins from it");
     }
@@ -40,8 +40,8 @@ public class ActionStealShould extends TestingActions {
     @Test
     void player_does_action_to_himself() {
         // when
-        gameEngine.playerDoingTheAction = gameEngine.player(1);
-        gameEngine.targetPlayer = gameEngine.player(1);
+        gameEngine.setPlayerDoingTheAction(gameEngine.player(1));
+        gameEngine.setTargetPlayer(gameEngine.player(1));
 
         assertThrowsWithMessage(() -> action.doAction(), "Action can't be done to himself");
     }
@@ -50,8 +50,8 @@ public class ActionStealShould extends TestingActions {
     @Test
     void player_does_action()  {
         // when
-        gameEngine.playerDoingTheAction = gameEngine.player(1);
-        gameEngine.targetPlayer = gameEngine.player(2);
+        gameEngine.setPlayerDoingTheAction(gameEngine.player(1));
+        gameEngine.setTargetPlayer(gameEngine.player(2));
         action.doAction();
 
         // then
@@ -68,11 +68,11 @@ public class ActionStealShould extends TestingActions {
     @Test
     void player_does_action_and_challenge_himself()  {
         // when
-        gameEngine.playerDoingTheAction = gameEngine.player(1);
-        gameEngine.targetPlayer = gameEngine.player(2);
+        gameEngine.setPlayerDoingTheAction(gameEngine.player(1));
+        gameEngine.setTargetPlayer(gameEngine.player(2));
         action.doAction();
 
-        gameEngine.playerCallingTheBluff = gameEngine.player(1);
+        gameEngine.setPlayerCallingTheBluff(gameEngine.player(1));
 
         assertThrowsWithMessage(() -> action.doCallTheBluffOnAction(), "Action bluff can't be called over himself");
     }
@@ -83,15 +83,15 @@ public class ActionStealShould extends TestingActions {
     void player_does_action_and_other_player_calls_the_bluff_and_wins_the_call()  {
         // given
         gameEngine.player(1).cards().clear();
-        gameEngine.player(1).cards().add(0, new TheAmbassator());
-        gameEngine.player(1).cards().add(0, new TheAmbassator());
+        gameEngine.player(1).cards().add(0, new TheAmbassador());
+        gameEngine.player(1).cards().add(0, new TheAmbassador());
 
         // when
-        gameEngine.playerDoingTheAction = gameEngine.player(1);
-        gameEngine.targetPlayer = gameEngine.player(2);
+        gameEngine.setPlayerDoingTheAction(gameEngine.player(1));
+        gameEngine.setTargetPlayer(gameEngine.player(2));
         action.doAction();
 
-        gameEngine.playerCallingTheBluff = gameEngine.player(2);
+        gameEngine.setPlayerCallingTheBluff(gameEngine.player(2));
         action.doCallTheBluffOnAction();
 
         // then
@@ -111,14 +111,14 @@ public class ActionStealShould extends TestingActions {
         // given
         gameEngine.player(1).cards().clear();
         gameEngine.player(1).cards().add(0, new TheCaptain());
-        gameEngine.player(1).cards().add(0, new TheAmbassator());
+        gameEngine.player(1).cards().add(0, new TheAmbassador());
 
         // when
-        gameEngine.playerDoingTheAction = gameEngine.player(1);
-        gameEngine.targetPlayer = gameEngine.player(2);
+        gameEngine.setPlayerDoingTheAction(gameEngine.player(1));
+        gameEngine.setTargetPlayer(gameEngine.player(2));
         action.doAction();
 
-        gameEngine.playerCallingTheBluff = gameEngine.player(2);
+        gameEngine.setPlayerCallingTheBluff(gameEngine.player(2));
         action.doCallTheBluffOnAction();
 
         // then
@@ -140,11 +140,11 @@ public class ActionStealShould extends TestingActions {
         gameEngine.player(2).cards().add(1, new TheDuke());
 
         // when
-        gameEngine.playerDoingTheAction = gameEngine.player(1);
-        gameEngine.targetPlayer = gameEngine.player(2);
+        gameEngine.setPlayerDoingTheAction(gameEngine.player(1));
+        gameEngine.setTargetPlayer(gameEngine.player(2));
         action.doAction();
 
-        gameEngine.playerBlockingTheAction = gameEngine.player(1);
+        gameEngine.setPlayerBlockingTheAction(gameEngine.player(1));
 
         assertThrowsWithMessage(() -> action.doBlockAction(), "Player cant block himself");
     }
@@ -158,11 +158,11 @@ public class ActionStealShould extends TestingActions {
         gameEngine.player(2).cards().add(1, new TheDuke());
 
         // when
-        gameEngine.playerDoingTheAction = gameEngine.player(1);
-        gameEngine.targetPlayer = gameEngine.player(2);
+        gameEngine.setPlayerDoingTheAction(gameEngine.player(1));
+        gameEngine.setTargetPlayer(gameEngine.player(2));
         action.doAction();
 
-        gameEngine.playerBlockingTheAction = gameEngine.player(2);
+        gameEngine.setPlayerBlockingTheAction(gameEngine.player(2));
         action.doBlockAction();
 
         // then
@@ -184,14 +184,14 @@ public class ActionStealShould extends TestingActions {
         gameEngine.player(2).cards().add(1, new TheDuke());
 
         // when
-        gameEngine.playerDoingTheAction = gameEngine.player(1);
-        gameEngine.targetPlayer = gameEngine.player(2);
+        gameEngine.setPlayerDoingTheAction(gameEngine.player(1));
+        gameEngine.setTargetPlayer(gameEngine.player(2));
         action.doAction();
 
-        gameEngine.playerBlockingTheAction = gameEngine.player(2);
+        gameEngine.setPlayerBlockingTheAction(gameEngine.player(2));
         action.doBlockAction();
 
-        gameEngine.playerCallingTheBluff = gameEngine.player(2);
+        gameEngine.setPlayerCallingTheBluff(gameEngine.player(2));
 
         assertThrowsWithMessage(() -> action.doCallTheBluffOnBlockAction(), "BlockAction bluff can't be called over the player doing the BlockAction");
     }
@@ -207,14 +207,14 @@ public class ActionStealShould extends TestingActions {
         gameEngine.player(2).cards().add(1, new TheDuke());
 
         // when
-        gameEngine.playerDoingTheAction = gameEngine.player(1);
-        gameEngine.targetPlayer = gameEngine.player(2);
+        gameEngine.setPlayerDoingTheAction(gameEngine.player(1));
+        gameEngine.setTargetPlayer(gameEngine.player(2));
         action.doAction();
 
-        gameEngine.playerBlockingTheAction = gameEngine.player(2);
+        gameEngine.setPlayerBlockingTheAction(gameEngine.player(2));
         action.doBlockAction();
 
-        gameEngine.playerCallingTheBluff = gameEngine.player(1);
+        gameEngine.setPlayerCallingTheBluff(gameEngine.player(1));
         action.doCallTheBluffOnBlockAction();
 
         // then
@@ -238,14 +238,14 @@ public class ActionStealShould extends TestingActions {
         gameEngine.player(2).cards().add(1, new TheDuke());
 
         // when
-        gameEngine.playerDoingTheAction = gameEngine.player(1);
-        gameEngine.targetPlayer = gameEngine.player(2);
+        gameEngine.setPlayerDoingTheAction(gameEngine.player(1));
+        gameEngine.setTargetPlayer(gameEngine.player(2));
         action.doAction();
 
-        gameEngine.playerBlockingTheAction = gameEngine.player(2);
+        gameEngine.setPlayerBlockingTheAction(gameEngine.player(2));
         action.doBlockAction();
 
-        gameEngine.playerCallingTheBluff = gameEngine.player(1);
+        gameEngine.setPlayerCallingTheBluff(gameEngine.player(1));
         action.doCallTheBluffOnBlockAction();
 
         // then
@@ -264,15 +264,15 @@ public class ActionStealShould extends TestingActions {
     void player_does_action_and_gets_block_by_ambassador()  {
         // given
         gameEngine.player(2).cards().clear();
-        gameEngine.player(2).cards().add(0, new TheAmbassator());
+        gameEngine.player(2).cards().add(0, new TheAmbassador());
         gameEngine.player(2).cards().add(1, new TheDuke());
 
         // when
-        gameEngine.playerDoingTheAction = gameEngine.player(1);
-        gameEngine.targetPlayer = gameEngine.player(2);
+        gameEngine.setPlayerDoingTheAction(gameEngine.player(1));
+        gameEngine.setTargetPlayer(gameEngine.player(2));
         action.doAction();
 
-        gameEngine.playerBlockingTheAction = gameEngine.player(2);
+        gameEngine.setPlayerBlockingTheAction(gameEngine.player(2));
         action.doBlockAction();
 
         // then
@@ -292,18 +292,18 @@ public class ActionStealShould extends TestingActions {
     void player_does_action_and_gets_block_by_ambassador_but_a_player_calls_the_bluff_on_the_block_and_wins_the_call()  {
         // given
         gameEngine.player(2).cards().clear();
-        gameEngine.player(2).cards().add(0, new TheAmbassator());
+        gameEngine.player(2).cards().add(0, new TheAmbassador());
         gameEngine.player(2).cards().add(1, new TheDuke());
 
         // when
-        gameEngine.playerDoingTheAction = gameEngine.player(1);
-        gameEngine.targetPlayer = gameEngine.player(2);
+        gameEngine.setPlayerDoingTheAction(gameEngine.player(1));
+        gameEngine.setTargetPlayer(gameEngine.player(2));
         action.doAction();
 
-        gameEngine.playerBlockingTheAction = gameEngine.player(2);
+        gameEngine.setPlayerBlockingTheAction(gameEngine.player(2));
         action.doBlockAction();
 
-        gameEngine.playerCallingTheBluff = gameEngine.player(1);
+        gameEngine.setPlayerCallingTheBluff(gameEngine.player(1));
         action.doCallTheBluffOnBlockAction();
 
         // then

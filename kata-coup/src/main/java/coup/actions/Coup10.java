@@ -3,7 +3,7 @@ package coup.actions;
 import coup.Action;
 import coup.GameEngine;
 
-public class Coup10 extends Action {
+public final class Coup10 extends Action {
 
     // Action: If 10 or more coins, the player must coup
     // Action cannot be challenged
@@ -11,7 +11,7 @@ public class Coup10 extends Action {
     // Block: Cannot be blocked
     // -
 
-    public Coup10(GameEngine gameEngine) {
+    public Coup10(final GameEngine gameEngine) {
         super(gameEngine);
     }
 
@@ -26,8 +26,8 @@ public class Coup10 extends Action {
 
     // Action
     public void doActionInternal()  {
-        gameEngine.playerReturnCoinsToTreasury(gameEngine.playerDoingTheAction, 10);
-        gameEngine.targetPlayer.looseCard();
+        getGameEngine().playerReturnCoinsToTreasury(getGameEngine().getPlayerDoingTheAction(), TEN);
+        getGameEngine().getTargetPlayer().looseCard();
     }
 
     // Block Action

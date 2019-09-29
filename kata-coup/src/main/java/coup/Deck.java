@@ -1,20 +1,24 @@
 package coup;
 
-import coup.cards.*;
+import coup.cards.TheAmbassador;
+import coup.cards.TheAssassin;
+import coup.cards.TheCaptain;
+import coup.cards.TheContessa;
+import coup.cards.TheDuke;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class Deck {
+public final class Deck {
 
     private final List<Card> cards = new ArrayList<>();
 
     public Deck() {
 
-        cards.add(new TheAmbassator());
-        cards.add(new TheAmbassator());
-        cards.add(new TheAmbassator());
+        cards.add(new TheAmbassador());
+        cards.add(new TheAmbassador());
+        cards.add(new TheAmbassador());
 
         cards.add(new TheAssassin());
         cards.add(new TheAssassin());

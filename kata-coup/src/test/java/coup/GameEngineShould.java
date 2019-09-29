@@ -121,7 +121,7 @@ class GameEngineShould {
 
         for (Card card : cards) {
 
-            if (card instanceof TheAmbassator) {
+            if (card instanceof TheAmbassador) {
                 ++ambassators;
             }
             if (card instanceof TheAssassin) {
@@ -171,7 +171,7 @@ class GameEngineShould {
 
         // given
         int amountOfCardsAvailableInTheCourtDeck = gameEngine.deck().cards().size();
-        int cardsTakenFromTheDeck = gameEngine.players.size() * 2;
+        int cardsTakenFromTheDeck = gameEngine.getPlayers().size() * 2;
 
         // when
         gameEngine.startGame();
@@ -225,7 +225,7 @@ class GameEngineShould {
         gameEngine.startGame();
 
         // then
-        for (Player player : gameEngine.players) {
+        for (Player player : gameEngine.getPlayers()) {
             Assertions.assertFalse(player.cards().get(0).isVisible());
             Assertions.assertFalse(player.cards().get(1).isVisible());
         }

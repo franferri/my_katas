@@ -1,12 +1,18 @@
 package coup;
 
-import coup.actions.*;
+import coup.actions.Assassinate;
+import coup.actions.Coup10;
+import coup.actions.Coup7;
+import coup.actions.Exchange;
+import coup.actions.ForeignAid;
+import coup.actions.Income;
+import coup.actions.Steal;
+import coup.actions.Tax;
 
-public class Game {
+public final class Game {
 
     private GameEngine gameEngine;
     private Action currentAction;
-    private int currentActionNumber;
 
     public Game() {
         gameEngine = new GameEngine();
@@ -14,10 +20,6 @@ public class Game {
 
     public GameEngine gameEngine() {
         return gameEngine;
-    }
-
-    public int currentActionNumber() {
-        return currentActionNumber;
     }
 
     public Action getCurrentAction() {
@@ -28,7 +30,6 @@ public class Game {
         startAction();
 
         currentAction = new Income(gameEngine);
-        currentActionNumber = 1;
         currentAction.doAction();
     }
 
@@ -36,23 +37,21 @@ public class Game {
         startAction();
 
         currentAction = new ForeignAid(gameEngine);
-        currentActionNumber = 2;
         currentAction.doAction();
     }
 
-    public void playerCoups7(int targetedPlayer) {
+    public void playerCoups7(final int targetedPlayer) {
         startAction();
-        gameEngine.targetPlayer = gameEngine.player(targetedPlayer);
+        gameEngine.setTargetPlayer(gameEngine.player(targetedPlayer));
 
         currentAction = new Coup7(gameEngine);
-        currentActionNumber = 3;
         currentAction.doAction();
     }
 
-    public void playerCoups10(int targetedPlayer) {
+    public void playerCoups10(final int targetedPlayer) {
         startAction();
 
-        gameEngine.targetPlayer = gameEngine.player(targetedPlayer);
+        gameEngine.setTargetPlayer(gameEngine.player(targetedPlayer));
 
         currentAction = new Coup10(gameEngine);
         currentAction.doAction();
@@ -62,16 +61,14 @@ public class Game {
         startAction();
 
         currentAction = new Tax(gameEngine);
-        currentActionNumber = 4;
         currentAction.doAction();
     }
 
-    public void playerAssassinates(int targetedPlayer) {
+    public void playerAssassinates(final int targetedPlayer) {
         startAction();
-        gameEngine.targetPlayer = gameEngine.player(targetedPlayer);
+        gameEngine.setTargetPlayer(gameEngine.player(targetedPlayer));
 
         currentAction = new Assassinate(gameEngine);
-        currentActionNumber = 5;
         currentAction.doAction();
     }
 
@@ -79,26 +76,24 @@ public class Game {
         startAction();
 
         currentAction = new Exchange(gameEngine);
-        currentActionNumber = 6;
         currentAction.doAction();
     }
 
-    public void playerStealsFrom(int targetedPlayer) {
+    public void playerStealsFrom(final int targetedPlayer) {
         startAction();
-        gameEngine.targetPlayer = gameEngine.player(targetedPlayer);
+        gameEngine.setTargetPlayer(gameEngine.player(targetedPlayer));
 
         currentAction = new Steal(gameEngine);
-        currentActionNumber = 7;
         currentAction.doAction();
     }
 
-    public void playerBlocks(int playerBlocking) {
-        gameEngine.playerBlockingTheAction = gameEngine.player(playerBlocking);
+    public void playerBlocks(final int playerBlocking) {
+        gameEngine.setPlayerBlockingTheAction(gameEngine.player(playerBlocking));
         currentAction.doBlockAction();
     }
 
-    public void playerCallsTheBluff(int playerCallingTheBluff) {
-        gameEngine.playerCallingTheBluff = gameEngine.player(playerCallingTheBluff);
+    public void playerCallsTheBluff(final int playerCallingTheBluff) {
+        gameEngine.setPlayerCallingTheBluff(gameEngine.player(playerCallingTheBluff));
 
         if (currentAction.isBlocked()) {
             currentAction.doCallTheBluffOnBlockAction();
@@ -111,7 +106,7 @@ public class Game {
         gameEngine.resetStatus();
 
         gameEngine.calculatePlayerPlaying();
-        gameEngine.playerDoingTheAction = gameEngine.player(gameEngine.currentPlayerPlaying);
+        gameEngine.setPlayerDoingTheAction(gameEngine.player(gameEngine.getCurrentPlayerPlaying()));
     }
 
 }

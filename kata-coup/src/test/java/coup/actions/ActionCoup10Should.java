@@ -22,8 +22,8 @@ public class ActionCoup10Should extends TestingActions {
     @Test
     void player_needs_money_to_do_the_action() {
         // when
-        gameEngine.playerDoingTheAction = gameEngine.player(1);
-        gameEngine.targetPlayer = gameEngine.player(2);
+        gameEngine.setPlayerDoingTheAction(gameEngine.player(1));
+        gameEngine.setTargetPlayer(gameEngine.player(2));
 
         assertThrowsWithMessage(() -> action.doAction(), "Player don't have enough coins");
     }
@@ -32,10 +32,10 @@ public class ActionCoup10Should extends TestingActions {
     @Test
     void player_does_action_to_himself()  {
         // when
-        gameEngine.playerDoingTheAction = gameEngine.player(1);
-        gameEngine.playerTakeCoinsFromTreasury(gameEngine.playerDoingTheAction, 8);
+        gameEngine.setPlayerDoingTheAction(gameEngine.player(1));
+        gameEngine.playerTakeCoinsFromTreasury(gameEngine.getPlayerDoingTheAction(), 8);
 
-        gameEngine.targetPlayer = gameEngine.player(1);
+        gameEngine.setTargetPlayer(gameEngine.player(1));
 
         assertThrowsWithMessage(() -> action.doAction(), "Action can't be done to himself");
     }
@@ -45,10 +45,10 @@ public class ActionCoup10Should extends TestingActions {
     void player_does_action()  {
 
         // when
-        gameEngine.playerDoingTheAction = gameEngine.player(1);
-        gameEngine.playerTakeCoinsFromTreasury(gameEngine.playerDoingTheAction, 8);
+        gameEngine.setPlayerDoingTheAction(gameEngine.player(1));
+        gameEngine.playerTakeCoinsFromTreasury(gameEngine.getPlayerDoingTheAction(), 8);
 
-        gameEngine.targetPlayer = gameEngine.player(2);
+        gameEngine.setTargetPlayer(gameEngine.player(2));
 
         action.doAction();
 
@@ -66,12 +66,12 @@ public class ActionCoup10Should extends TestingActions {
     @Test
     void player_calls_the_bluff_over_action()  {
         // when
-        gameEngine.playerDoingTheAction = gameEngine.player(1);
-        gameEngine.playerTakeCoinsFromTreasury(gameEngine.playerDoingTheAction, 8);
-        gameEngine.targetPlayer = gameEngine.player(2);
+        gameEngine.setPlayerDoingTheAction(gameEngine.player(1));
+        gameEngine.playerTakeCoinsFromTreasury(gameEngine.getPlayerDoingTheAction(), 8);
+        gameEngine.setTargetPlayer(gameEngine.player(2));
         action.doAction();
 
-        gameEngine.playerCallingTheBluff = gameEngine.player(2);
+        gameEngine.setPlayerCallingTheBluff(gameEngine.player(2));
         assertThrowsWithMessage(() -> action.doCallTheBluffOnAction(), "This action can't be challenged");
     }
 
@@ -79,12 +79,12 @@ public class ActionCoup10Should extends TestingActions {
     @Test
     void player_blocks_action()  {
         // when
-        gameEngine.playerDoingTheAction = gameEngine.player(1);
-        gameEngine.playerTakeCoinsFromTreasury(gameEngine.playerDoingTheAction, 8);
-        gameEngine.targetPlayer = gameEngine.player(2);
+        gameEngine.setPlayerDoingTheAction(gameEngine.player(1));
+        gameEngine.playerTakeCoinsFromTreasury(gameEngine.getPlayerDoingTheAction(), 8);
+        gameEngine.setTargetPlayer(gameEngine.player(2));
         action.doAction();
 
-        gameEngine.playerBlockingTheAction = gameEngine.player(2);
+        gameEngine.setPlayerBlockingTheAction(gameEngine.player(2));
 
         Assertions.assertThrows(Exception.class, () -> action.doBlockAction());
     }
@@ -94,10 +94,10 @@ public class ActionCoup10Should extends TestingActions {
     void player_must_do_the_action_but_tries_other_action()  {
 
         // given
-        gameEngine.playerDoingTheAction = gameEngine.player(1);
-        gameEngine.playerTakeCoinsFromTreasury(gameEngine.playerDoingTheAction, 8);
+        gameEngine.setPlayerDoingTheAction(gameEngine.player(1));
+        gameEngine.playerTakeCoinsFromTreasury(gameEngine.getPlayerDoingTheAction(), 8);
 
-        gameEngine.targetPlayer = gameEngine.player(2);
+        gameEngine.setTargetPlayer(gameEngine.player(2));
 
         // when
         // then

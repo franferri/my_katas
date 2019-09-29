@@ -6,8 +6,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.mockito.Mockito.when;
-
 public class ActionCoup7Should extends TestingActions {
 
     // Action: Pay 7 cons, choose the player to lose Influence
@@ -25,8 +23,8 @@ public class ActionCoup7Should extends TestingActions {
     @Test
     void player_needs_money_to_do_the_action() {
         // when
-        gameEngine.playerDoingTheAction = gameEngine.player(1);
-        gameEngine.targetPlayer = gameEngine.player(2);
+        gameEngine.setPlayerDoingTheAction(gameEngine.player(1));
+        gameEngine.setTargetPlayer(gameEngine.player(2));
 
         assertThrowsWithMessage(() -> action.doAction(), "Player don't have enough coins");
     }
@@ -35,9 +33,9 @@ public class ActionCoup7Should extends TestingActions {
     @Test
     void player_does_action_to_himself()  {
         // when
-        gameEngine.playerDoingTheAction = gameEngine.player(1);
-        gameEngine.playerTakeCoinsFromTreasury(gameEngine.playerDoingTheAction, 5);
-        gameEngine.targetPlayer = gameEngine.player(1);
+        gameEngine.setPlayerDoingTheAction(gameEngine.player(1));
+        gameEngine.playerTakeCoinsFromTreasury(gameEngine.getPlayerDoingTheAction(), 5);
+        gameEngine.setTargetPlayer(gameEngine.player(1));
 
         assertThrowsWithMessage(() -> action.doAction(), "Action can't be done to himself");
     }
@@ -47,9 +45,9 @@ public class ActionCoup7Should extends TestingActions {
     void player_does_action()  {
 
         // when
-        gameEngine.playerDoingTheAction = gameEngine.player(1);
-        gameEngine.playerTakeCoinsFromTreasury(gameEngine.playerDoingTheAction, 5);
-        gameEngine.targetPlayer = gameEngine.player(2);
+        gameEngine.setPlayerDoingTheAction(gameEngine.player(1));
+        gameEngine.playerTakeCoinsFromTreasury(gameEngine.getPlayerDoingTheAction(), 5);
+        gameEngine.setTargetPlayer(gameEngine.player(2));
 
         action.doAction();
 
@@ -70,13 +68,13 @@ public class ActionCoup7Should extends TestingActions {
         Action action = new Coup7(gameEngine);
 
         // when
-        gameEngine.playerDoingTheAction = gameEngine.player(1);
-        gameEngine.playerTakeCoinsFromTreasury(gameEngine.playerDoingTheAction, 5);
-        gameEngine.targetPlayer = gameEngine.player(2);
+        gameEngine.setPlayerDoingTheAction(gameEngine.player(1));
+        gameEngine.playerTakeCoinsFromTreasury(gameEngine.getPlayerDoingTheAction(), 5);
+        gameEngine.setTargetPlayer(gameEngine.player(2));
 
         action.doAction();
 
-        gameEngine.playerCallingTheBluff = gameEngine.player(2);
+        gameEngine.setPlayerCallingTheBluff(gameEngine.player(2));
 
         assertThrowsWithMessage(action::doCallTheBluffOnAction, "This action can't be challenged");
 
@@ -89,13 +87,13 @@ public class ActionCoup7Should extends TestingActions {
         Action action = new Coup7(gameEngine);
 
         // when
-        gameEngine.playerDoingTheAction = gameEngine.player(1);
-        gameEngine.playerTakeCoinsFromTreasury(gameEngine.playerDoingTheAction, 5);
-        gameEngine.targetPlayer = gameEngine.player(2);
+        gameEngine.setPlayerDoingTheAction(gameEngine.player(1));
+        gameEngine.playerTakeCoinsFromTreasury(gameEngine.getPlayerDoingTheAction(), 5);
+        gameEngine.setTargetPlayer(gameEngine.player(2));
 
         action.doAction();
 
-        gameEngine.playerBlockingTheAction = gameEngine.player(2);
+        gameEngine.setPlayerBlockingTheAction(gameEngine.player(2));
 
         Assertions.assertThrows(Exception.class, action::doBlockAction);
 

@@ -113,7 +113,7 @@ class RandomGameShould {
     @Test
     void randomPlay() {
 
-        for (int i = 0; i < 250; i++) { // We play with all available onlinePlayers setup
+        for (int i = 0; i < 10; i++) { // We play with all available onlinePlayers setup
 
             System.out.println("Game " + i);
 
@@ -160,7 +160,7 @@ class RandomGameShould {
         // Print the status
 
         List<Card> cards = game.gameEngine().deck().cards();
-        List<Player> players = game.gameEngine().players;
+        List<Player> players = game.gameEngine().getPlayers();
 
         System.out.println("------------------------------------------");
 
@@ -203,7 +203,7 @@ class RandomGameShould {
         sb.append(", total coins in game: " + totalCoinsInGame);
         System.out.println(sb.toString());
 
-        System.out.println("   Current player playing: " + game.gameEngine().currentPlayerPlaying);
+        System.out.println("   Current player playing: " + game.gameEngine().getCurrentPlayerPlaying());
         //System.out.println("   Player doing the action: " + game.gameEngine().playerDoingTheAction.name());
         //System.out.println("   Player blocking the action: " + game.gameEngine().playerBlockingTheAction.name());
         //System.out.println("   Player challenging the action: " + game.gameEngine().playerCallingTheBluff.name());

@@ -7,7 +7,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-public class Player {
+public final class Player {
 
     private int coins = 0;
 
@@ -37,11 +37,11 @@ public class Player {
     //    this.name = System.nanoTime()+"";
     //}
 
-    public Player(String name) {
+    public Player(final String name) {
         this.name = name;
     }
 
-    public void setName(String name) {
+    public void setName(final String name) {
         this.name = name;
     }
 
@@ -103,7 +103,7 @@ public class Player {
         return leftCards;
     }
 
-    public boolean canHeBlockTheAction(Action action) {
+    public boolean canHeBlockTheAction(final Action action) {
 
         for (Card card : cards) {
 
@@ -112,7 +112,9 @@ public class Player {
             }
 
             Class classz = card.blocksAction().getClass();
-            if (classz == null) return false;
+            if (classz == null) {
+                return false;
+            }
 
             if (classz == action.getClass()) {
                 return true;
@@ -124,12 +126,12 @@ public class Player {
 
     }
 
-    public boolean canHeDoTheAction(Action action) {
+    public boolean canHeDoTheAction(final Action action) {
 
         List<Card> cardsToCheck = cards();
 
         if (action instanceof Exchange) {
-            cardsToCheck = ((Exchange) action).originalCardsInPlayerHand;
+            cardsToCheck = ((Exchange) action).getOriginalCardsInPlayerHand();
         }
 
         for (Card card : cardsToCheck) {
@@ -139,7 +141,9 @@ public class Player {
             }
 
             Class classz = card.doAction().getClass();
-            if (classz == null) return false;
+            if (classz == null) {
+                return false;
+            }
 
             if (classz == action.getClass()) {
                 return true;

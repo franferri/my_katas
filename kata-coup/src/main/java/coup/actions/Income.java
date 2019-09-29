@@ -3,7 +3,7 @@ package coup.actions;
 import coup.Action;
 import coup.GameEngine;
 
-public class Income extends Action {
+public final class Income extends Action {
 
     // Action: Take 1 coin from the treasury
     // Action cannot be challenged
@@ -11,12 +11,10 @@ public class Income extends Action {
     // Block: Cannot be blocked
     // --
 
-    public int actionNumber = 1;
-
     public Income() {
     }
 
-    public Income(GameEngine gameEngine) {
+    public Income(final GameEngine gameEngine) {
         super(gameEngine);
     }
 
@@ -30,12 +28,12 @@ public class Income extends Action {
     }
 
     // Action
-    public void doActionInternal()  {
-        gameEngine.playerTakeCoinsFromTreasury(gameEngine.playerDoingTheAction,1);
+    public void doActionInternal() {
+        getGameEngine().playerTakeCoinsFromTreasury(getGameEngine().getPlayerDoingTheAction(), ONE);
     }
 
     // Block Action
-    public void doBlockAction()  {
+    public void doBlockAction() {
         throw new RuntimeException("This action can't be blocked");
     }
 

@@ -6,11 +6,9 @@ import coup.actions.Tax;
 
 public class TheDuke extends Card {
 
-    public  String name = "Duke";
-
     public TheDuke() {
-        this.action = new Tax();
-        this.blocks = new ForeignAid();
+        this.setAction(new Tax());
+        this.setBlocks(new ForeignAid());
     }
 
 }

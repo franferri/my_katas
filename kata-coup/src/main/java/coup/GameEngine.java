@@ -3,23 +3,25 @@ package coup;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GameEngine {
+public final class GameEngine {
 
-    public final List<Player> players = new ArrayList<>();
+    private static final int FIFTY = 50;
+    private static final int SIX = 6;
+    private static final int TWO = 2;
+
+    private final List<Player> players = new ArrayList<>();
 
     private int treasury;
     private Deck deck;
 
-    public Player playerDoingTheAction;
-    public Player playerBlockingTheAction;
-    public Player playerCallingTheBluff;
+    private Player playerDoingTheAction;
+    private Player playerBlockingTheAction;
+    private Player playerCallingTheBluff;
 
-    public Player targetPlayer;
-
-    public boolean gameIsStarted = false;
+    private Player targetPlayer;
 
     public GameEngine() {
-        treasury = 50;
+        treasury = FIFTY;
         this.deck = new Deck();
         this.deck.shuffle();
     }
@@ -34,29 +36,27 @@ public class GameEngine {
 
     public void startGame() {
 
-        gameIsStarted = true;
-
-        if (players.size() < 2) {
+        if (getPlayers().size() < TWO) {
             throw new RuntimeException("Need more onlinePlayers");
         }
-        if (players.size() > 6) {
+        if (getPlayers().size() > SIX) {
             throw new RuntimeException("Only 6 onlinePlayers allowed");
         }
 
-        for (Player player : players) {
+        for (Player player : getPlayers()) {
             playerTakeCoinsFromTreasury(player, 2);
             dealCardsToThePlayer(player);
         }
 
     }
 
-    public Player addPlayer(String playerName) {
+    public Player addPlayer(final String playerName) {
         Player player = new Player(playerName);
-        this.players.add(player);
+        this.getPlayers().add(player);
         return player;
     }
 
-    public void playerReturnCoinsToTreasury(Player player, int coins) {
+    public void playerReturnCoinsToTreasury(final Player player, final int coins) {
         if (player.coins() < coins) {
             throw new RuntimeException("Player don't have enough coins");
         }
@@ -66,7 +66,7 @@ public class GameEngine {
         }
     }
 
-    public void playerTakeCoinsFromTreasury(Player player, int coins) {
+    public void playerTakeCoinsFromTreasury(final Player player, final int coins) {
         if (treasury < coins) {
             throw new RuntimeException("Treasury depleted");
         }
@@ -76,30 +76,30 @@ public class GameEngine {
         }
     }
 
-    public void playerTakesCoinsFromOtherPlayer(Player player_taking, Player player_losing, int coins) {
-        if (player_losing.coins() < coins) {
+    public void playerTakesCoinsFromOtherPlayer(final Player playerTaking, final Player playerLosing, final int coins) {
+        if (playerLosing.coins() < coins) {
             throw new RuntimeException("Player is broke and we can't take more coins from it");
         }
         for (int i = 0; i < coins; i++) {
-            player_losing.looseCoin();
-            player_taking.gainCoin();
+            playerLosing.looseCoin();
+            playerTaking.gainCoin();
         }
     }
 
-    public void dealCardsToThePlayer(Player player) {
+    public void dealCardsToThePlayer(final Player player) {
         for (int i = 0; i < 2; i++) {
             player.cards().add(deck.cards().remove(0));
         }
     }
 
-    public Player player(int player) {
-        return players.get(--player);
+    public Player player(final int player) {
+        return getPlayers().get(player - 1);
     }
 
     public int whoIsTheWinner() {
-        int playersAlive = players.size();
+        int playersAlive = getPlayers().size();
         Player winner = null;
-        for (Player player : players) {
+        for (Player player : getPlayers()) {
             if (player.isDead()) {
                 --playersAlive;
             } else {
@@ -108,31 +108,33 @@ public class GameEngine {
         }
 
         if (playersAlive == 1) {
-            return players.indexOf(winner) + 1;
-        } else return -1;
+            return getPlayers().indexOf(winner) + 1;
+        } else {
+            return -1;
+        }
     }
 
-    public int currentPlayerPlaying = 0;
+    private int currentPlayerPlaying = 0;
 
     public void calculatePlayerPlaying() {
 
-        int nextPlayer = ++currentPlayerPlaying;
+        int nextPlayer = getCurrentPlayerPlaying() + 1;
 
-        if (nextPlayer > players.size()) {
+        if (nextPlayer > getPlayers().size()) {
             nextPlayer = 1;
         }
 
-        for (int i = 0; i < players.size(); i++) {
+        for (int i = 0; i < getPlayers().size(); i++) {
 
             if (player(nextPlayer).isDead()) {
                 ++nextPlayer;
 
-                if (nextPlayer > players.size()) {
+                if (nextPlayer > getPlayers().size()) {
                     nextPlayer = 1;
                 }
 
             } else {
-                currentPlayerPlaying = nextPlayer;
+                setCurrentPlayerPlaying(nextPlayer);
                 return;
             }
 
@@ -141,8 +143,8 @@ public class GameEngine {
     }
 
     public int playersStillInTheGame() {
-        int playersAlive = players.size();
-        for (Player player : players) {
+        int playersAlive = getPlayers().size();
+        for (Player player : getPlayers()) {
             if (player.isDead()) {
                 --playersAlive;
             }
@@ -151,10 +153,53 @@ public class GameEngine {
     }
 
     public void resetStatus() {
-        playerDoingTheAction = null;
-        playerBlockingTheAction = null;
-        playerCallingTheBluff = null;
-        targetPlayer = null;
+        setPlayerDoingTheAction(null);
+        setPlayerBlockingTheAction(null);
+        setPlayerCallingTheBluff(null);
+        setTargetPlayer(null);
     }
 
+    public List<Player> getPlayers() {
+        return players;
+    }
+
+    public Player getPlayerDoingTheAction() {
+        return playerDoingTheAction;
+    }
+
+    public void setPlayerDoingTheAction(final Player playerDoingTheAction) {
+        this.playerDoingTheAction = playerDoingTheAction;
+    }
+
+    public Player getPlayerBlockingTheAction() {
+        return playerBlockingTheAction;
+    }
+
+    public void setPlayerBlockingTheAction(final Player playerBlockingTheAction) {
+        this.playerBlockingTheAction = playerBlockingTheAction;
+    }
+
+    public Player getPlayerCallingTheBluff() {
+        return playerCallingTheBluff;
+    }
+
+    public void setPlayerCallingTheBluff(final Player playerCallingTheBluff) {
+        this.playerCallingTheBluff = playerCallingTheBluff;
+    }
+
+    public Player getTargetPlayer() {
+        return targetPlayer;
+    }
+
+    public void setTargetPlayer(final Player targetPlayer) {
+        this.targetPlayer = targetPlayer;
+    }
+
+    public int getCurrentPlayerPlaying() {
+        return currentPlayerPlaying;
+    }
+
+    public void setCurrentPlayerPlaying(final int currentPlayerPlaying) {
+        this.currentPlayerPlaying = currentPlayerPlaying;
+    }
 }
