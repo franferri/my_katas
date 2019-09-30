@@ -34,18 +34,16 @@ public final class Exchange extends Action {
     public void doActionInternal() {
 
         // We save the original hand, in case we get blocked, to rollback
-        setOriginalCardsInPlayerHand(new ArrayList<>(getGameEngine().getPlayerDoingTheAction().cards()));
-        originalDeck = new ArrayList<>(getGameEngine().deck().cards());
+        setOriginalCardsInPlayerHand(new ArrayList<>(getGameEngine().getPlayerDoingTheAction().influenceDeck()));
+        originalDeck = new ArrayList<>(getGameEngine().deck().cardsForTest());
 
         getGameEngine().dealCardsToThePlayer(getGameEngine().getPlayerDoingTheAction());
 
         getGameEngine().getPlayerDoingTheAction().shuffleCardsInHand();
-        getGameEngine().getPlayerDoingTheAction().shuffleCardsInHand();
-        getGameEngine().getPlayerDoingTheAction().shuffleCardsInHand();
-        getGameEngine().getPlayerDoingTheAction().shuffleCardsInHand();
 
-        getGameEngine().deck().cards().add(getGameEngine().getPlayerDoingTheAction().returnActiveCardToCourtDeck());
-        getGameEngine().deck().cards().add(getGameEngine().getPlayerDoingTheAction().returnActiveCardToCourtDeck());
+
+        getGameEngine().deck().receive(getGameEngine().getPlayerDoingTheAction().returnActiveCardToCourtDeck());
+        getGameEngine().deck().receive(getGameEngine().getPlayerDoingTheAction().returnActiveCardToCourtDeck());
 
     }
 
@@ -56,11 +54,11 @@ public final class Exchange extends Action {
 
     public void doBlockActionInternal() {
 
-        getGameEngine().getPlayerDoingTheAction().cards().clear();
-        getGameEngine().getPlayerDoingTheAction().cards().addAll(getOriginalCardsInPlayerHand());
+        getGameEngine().getPlayerDoingTheAction().influenceDeck().clear();
+        getGameEngine().getPlayerDoingTheAction().influenceDeck().addAll(getOriginalCardsInPlayerHand());
 
-        getGameEngine().deck().cards().clear();
-        getGameEngine().deck().cards().addAll(originalDeck);
+        getGameEngine().deck().cardsForTest().clear();
+        getGameEngine().deck().receive(originalDeck);
 
     }
 

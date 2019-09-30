@@ -30,7 +30,7 @@ public class ActionExchangeShould extends TestingActions {
 
         // then
         Assertions.assertEquals(46, gameEngine.treasury());
-        Assertions.assertEquals(11, gameEngine.deck().cards().size());
+        Assertions.assertEquals(11, gameEngine.deck().cards());
 
         Assertions.assertEquals(2, gameEngine.player(1).cardsInGame());
         Assertions.assertEquals(2, gameEngine.player(1).coins());
@@ -47,9 +47,9 @@ public class ActionExchangeShould extends TestingActions {
         gameEngine.setPlayerDoingTheAction(gameEngine.player(1));
         action.doAction();
 
-        gameEngine.player(1).cards().clear();// Needs to be here since the action will reshuffle the hand
-        gameEngine.player(1).cards().add(0, new TheDuke());
-        gameEngine.player(1).cards().add(0, new TheDuke());
+        gameEngine.player(1).influenceDeck().clear();// Needs to be here since the action will reshuffle the hand
+        gameEngine.player(1).influenceDeck().add(0, new TheDuke());
+        gameEngine.player(1).influenceDeck().add(0, new TheDuke());
 
         gameEngine.setPlayerCallingTheBluff(gameEngine.player(1));
 
@@ -61,9 +61,9 @@ public class ActionExchangeShould extends TestingActions {
     @Test
     void player_does_action_and_other_player_calls_the_bluff_and_wins_the_call() {
 
-        gameEngine.player(1).cards().clear();// Needs to be here since the action will reshuffle the hand
-        gameEngine.player(1).cards().add(0, new TheDuke());
-        gameEngine.player(1).cards().add(0, new TheDuke());
+        gameEngine.player(1).influenceDeck().clear();// Needs to be here since the action will reshuffle the hand
+        gameEngine.player(1).influenceDeck().add(0, new TheDuke());
+        gameEngine.player(1).influenceDeck().add(0, new TheDuke());
 
         // when
         gameEngine.setPlayerDoingTheAction(gameEngine.player(1));
@@ -87,9 +87,9 @@ public class ActionExchangeShould extends TestingActions {
     @Test
     void player_does_action_and_other_calls_the_bluff_and_lose_the_call() {
 
-        gameEngine.player(1).cards().clear(); // Needs to be here since the action will reshuffle the hand
-        gameEngine.player(1).cards().add(0, new TheAmbassador());
-        gameEngine.player(1).cards().add(0, new TheDuke());
+        gameEngine.player(1).influenceDeck().clear(); // Needs to be here since the action will reshuffle the hand
+        gameEngine.player(1).influenceDeck().add(0, new TheAmbassador());
+        gameEngine.player(1).influenceDeck().add(0, new TheDuke());
 
         // when
         gameEngine.setPlayerDoingTheAction(gameEngine.player(1));

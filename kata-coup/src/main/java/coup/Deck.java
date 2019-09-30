@@ -12,6 +12,9 @@ import java.util.List;
 
 public final class Deck {
 
+    private static final int MAX_CARDS = 15;
+    private static final int MIN_CARDS = 0;
+
     private final List<Card> cards = new ArrayList<>();
 
     public Deck() {
@@ -38,12 +41,53 @@ public final class Deck {
 
     }
 
-    public List<Card> cards() {
+    public int cards() {
+        return cards.size();
+    }
+
+    public List<Card> cardsForTest() {
         return cards;
     }
 
+    /**
+     * Shuffle the deck
+     */
     public void shuffle() {
         Collections.shuffle(cards);
+    }
+
+    /**
+     * Deal a card from the top of the deck
+     */
+    public Card deal() throws RuntimeException {
+
+        if (this.cards.size() - 1 < MIN_CARDS) {
+            throw new RuntimeException("MIN_CARDS breached");
+        }
+
+        return this.cards.remove(0);
+    }
+
+    /**
+     * Add a card to the deck
+     */
+    public void receive(final Card card) throws RuntimeException {
+
+        if (this.cards.size() + 1 > MAX_CARDS) {
+            throw new RuntimeException("MAX_CARDS breached");
+        }
+
+        this.cards.add(card);
+    }
+
+    /**
+     * Add cards to the deck
+     */
+    public void receive(final List<Card> cards) throws RuntimeException {
+
+        for (Card card : cards) {
+            receive(card);
+        }
     }
 
 }

@@ -55,9 +55,9 @@ public class ActionTaxShould extends TestingActions {
     @Test
     void player_does_action_and_other_player_calls_the_bluff_and_wins_the_call()  {
         // given
-        gameEngine.player(1).cards().clear();
-        gameEngine.player(1).cards().add(0, new TheAmbassador());
-        gameEngine.player(1).cards().add(0, new TheAmbassador());
+        gameEngine.player(1).influenceDeck().clear();
+        gameEngine.player(1).influenceDeck().add(0, new TheAmbassador());
+        gameEngine.player(1).influenceDeck().add(0, new TheAmbassador());
 
         // when
         gameEngine.setPlayerDoingTheAction(gameEngine.player(1));
@@ -81,9 +81,9 @@ public class ActionTaxShould extends TestingActions {
     @Test
     void player_does_action_and_other_calls_the_bluff_and_lose_the_call()  {
         // given
-        gameEngine.player(1).cards().clear();
-        gameEngine.player(1).cards().add(0, new TheDuke());
-        gameEngine.player(1).cards().add(0, new TheAmbassador());
+        gameEngine.player(1).influenceDeck().clear();
+        gameEngine.player(1).influenceDeck().add(0, new TheDuke());
+        gameEngine.player(1).influenceDeck().add(0, new TheAmbassador());
 
         // when
         gameEngine.setPlayerDoingTheAction(gameEngine.player(1));

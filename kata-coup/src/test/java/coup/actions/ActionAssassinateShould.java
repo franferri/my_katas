@@ -69,9 +69,9 @@ public class ActionAssassinateShould extends TestingActions {
     @Test
     void player_does_action_and_challenge_himself()  {
         // given
-        gameEngine.player(1).cards().clear();
-        gameEngine.player(1).cards().add(0, new TheAmbassador());
-        gameEngine.player(1).cards().add(0, new TheAmbassador());
+        gameEngine.player(1).influenceDeck().clear();
+        gameEngine.player(1).influenceDeck().add(0, new TheAmbassador());
+        gameEngine.player(1).influenceDeck().add(0, new TheAmbassador());
         gameEngine.player(1).gainCoin();
 
         // when
@@ -89,9 +89,9 @@ public class ActionAssassinateShould extends TestingActions {
     @Test
     void player_does_action_and_other_player_calls_the_bluff_and_wins_the_call()  {
         // given
-        gameEngine.player(1).cards().clear();
-        gameEngine.player(1).cards().add(0, new TheAmbassador());
-        gameEngine.player(1).cards().add(0, new TheAmbassador());
+        gameEngine.player(1).influenceDeck().clear();
+        gameEngine.player(1).influenceDeck().add(0, new TheAmbassador());
+        gameEngine.player(1).influenceDeck().add(0, new TheAmbassador());
         gameEngine.player(1).gainCoin();
 
         // when
@@ -117,9 +117,9 @@ public class ActionAssassinateShould extends TestingActions {
     @Test
     void player_does_action_and_other_calls_the_bluff_and_lose_the_call()  {
         // given
-        gameEngine.player(1).cards().clear();
-        gameEngine.player(1).cards().add(0, new TheAssassin());
-        gameEngine.player(1).cards().add(0, new TheAmbassador());
+        gameEngine.player(1).influenceDeck().clear();
+        gameEngine.player(1).influenceDeck().add(0, new TheAssassin());
+        gameEngine.player(1).influenceDeck().add(0, new TheAmbassador());
         gameEngine.player(1).gainCoin();
 
         // when
@@ -185,9 +185,9 @@ public class ActionAssassinateShould extends TestingActions {
         gameEngine.player(1).gainCoin();
 
         // given
-        gameEngine.player(2).cards().clear();
-        gameEngine.player(2).cards().add(0, new TheAmbassador());
-        gameEngine.player(2).cards().add(1, new TheAmbassador());
+        gameEngine.player(2).influenceDeck().clear();
+        gameEngine.player(2).influenceDeck().add(0, new TheAmbassador());
+        gameEngine.player(2).influenceDeck().add(1, new TheAmbassador());
 
         // when
         gameEngine.setPlayerDoingTheAction(gameEngine.player(1));
@@ -212,9 +212,9 @@ public class ActionAssassinateShould extends TestingActions {
         gameEngine.player(1).gainCoin();
 
         // given
-        gameEngine.player(2).cards().clear();
-        gameEngine.player(2).cards().add(0, new TheAmbassador());
-        gameEngine.player(2).cards().add(1, new TheAmbassador());
+        gameEngine.player(2).influenceDeck().clear();
+        gameEngine.player(2).influenceDeck().add(0, new TheAmbassador());
+        gameEngine.player(2).influenceDeck().add(1, new TheAmbassador());
 
         // when
         gameEngine.setPlayerDoingTheAction(gameEngine.player(1));
@@ -245,9 +245,9 @@ public class ActionAssassinateShould extends TestingActions {
         gameEngine.player(1).gainCoin();
 
         // given
-        gameEngine.player(2).cards().clear();
-        gameEngine.player(2).cards().add(0, new TheContessa());
-        gameEngine.player(2).cards().add(1, new TheAmbassador());
+        gameEngine.player(2).influenceDeck().clear();
+        gameEngine.player(2).influenceDeck().add(0, new TheContessa());
+        gameEngine.player(2).influenceDeck().add(1, new TheAmbassador());
 
         // when
         gameEngine.setPlayerDoingTheAction(gameEngine.player(1));

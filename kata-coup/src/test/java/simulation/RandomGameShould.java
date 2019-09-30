@@ -159,7 +159,7 @@ class RandomGameShould {
     private void checkGameStatus(Game game) {
         // Print the status
 
-        List<Card> cards = game.gameEngine().deck().cards();
+        List<Card> cards = game.gameEngine().deck().cardsForTest();
         List<Player> players = game.gameEngine().getPlayers();
 
         System.out.println("------------------------------------------");
@@ -177,7 +177,7 @@ class RandomGameShould {
         Player player;
         for (int i = 0; i < players.size(); i++) {
             player = players.get(i);
-            quantifyCards(player.cards(), quantifiedCards);
+            quantifyCards(player.influenceDeck(), quantifiedCards);
         }
         sb.append(", cards in players hands: ");
 

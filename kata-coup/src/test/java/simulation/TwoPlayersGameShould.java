@@ -24,13 +24,13 @@ class TwoPlayersGameShould {
     void simplePlay()  {
 
         // given
-        game.gameEngine().player(1).cards().clear();
-        game.gameEngine().player(1).cards().add(new TheAssassin());
-        game.gameEngine().player(1).cards().add(new TheCaptain());
+        game.gameEngine().player(1).influenceDeck().clear();
+        game.gameEngine().player(1).influenceDeck().add(new TheAssassin());
+        game.gameEngine().player(1).influenceDeck().add(new TheCaptain());
 
-        game.gameEngine().player(2).cards().clear();
-        game.gameEngine().player(2).cards().add(new TheContessa());
-        game.gameEngine().player(2).cards().add(new TheContessa());
+        game.gameEngine().player(2).influenceDeck().clear();
+        game.gameEngine().player(2).influenceDeck().add(new TheContessa());
+        game.gameEngine().player(2).influenceDeck().add(new TheContessa());
 
         // when
 
@@ -40,9 +40,9 @@ class TwoPlayersGameShould {
         // Player 2 hand
         game.playerExchangesCardsFromTheCourtDeck();
 
-        game.gameEngine().player(2).cards().clear();
-        game.gameEngine().player(2).cards().add(new TheAmbassador());
-        game.gameEngine().player(2).cards().add(new TheContessa());
+        game.gameEngine().player(2).influenceDeck().clear();
+        game.gameEngine().player(2).influenceDeck().add(new TheAmbassador());
+        game.gameEngine().player(2).influenceDeck().add(new TheContessa());
 
         // Player 1 hand
         game.playerAssassinates(2);
@@ -160,13 +160,13 @@ class TwoPlayersGameShould {
         // when
         // then
 
-        game.gameEngine().player(1).cards().clear();
-        game.gameEngine().player(1).cards().add(new TheDuke());
-        game.gameEngine().player(1).cards().add(new TheDuke());
+        game.gameEngine().player(1).influenceDeck().clear();
+        game.gameEngine().player(1).influenceDeck().add(new TheDuke());
+        game.gameEngine().player(1).influenceDeck().add(new TheDuke());
 
-        game.gameEngine().player(2).cards().clear();
-        game.gameEngine().player(2).cards().add(new TheAssassin());
-        game.gameEngine().player(2).cards().add(new TheAssassin());
+        game.gameEngine().player(2).influenceDeck().clear();
+        game.gameEngine().player(2).influenceDeck().add(new TheAssassin());
+        game.gameEngine().player(2).influenceDeck().add(new TheAssassin());
 
         game.playerTakesIncomeFromTreasury();
         assertGameSituation(45, 2, 3, 2, 2);
@@ -190,13 +190,13 @@ class TwoPlayersGameShould {
         // when
         // then
 
-        game.gameEngine().player(1).cards().clear();
-        game.gameEngine().player(1).cards().add(new TheContessa());
-        game.gameEngine().player(1).cards().add(new TheContessa());
+        game.gameEngine().player(1).influenceDeck().clear();
+        game.gameEngine().player(1).influenceDeck().add(new TheContessa());
+        game.gameEngine().player(1).influenceDeck().add(new TheContessa());
 
-        game.gameEngine().player(2).cards().clear();
-        game.gameEngine().player(2).cards().add(new TheContessa());
-        game.gameEngine().player(2).cards().add(new TheContessa());
+        game.gameEngine().player(2).influenceDeck().clear();
+        game.gameEngine().player(2).influenceDeck().add(new TheContessa());
+        game.gameEngine().player(2).influenceDeck().add(new TheContessa());
 
         game.playerTakesIncomeFromTreasury();
         assertGameSituation(45, 2, 3, 2, 2);
@@ -220,13 +220,13 @@ class TwoPlayersGameShould {
         // when
         // then
 
-        game.gameEngine().player(1).cards().clear();
-        game.gameEngine().player(1).cards().add(new TheAmbassador());
-        game.gameEngine().player(1).cards().add(new TheAmbassador());
+        game.gameEngine().player(1).influenceDeck().clear();
+        game.gameEngine().player(1).influenceDeck().add(new TheAmbassador());
+        game.gameEngine().player(1).influenceDeck().add(new TheAmbassador());
 
-        game.gameEngine().player(2).cards().clear();
-        game.gameEngine().player(2).cards().add(new TheCaptain());
-        game.gameEngine().player(2).cards().add(new TheCaptain());
+        game.gameEngine().player(2).influenceDeck().clear();
+        game.gameEngine().player(2).influenceDeck().add(new TheCaptain());
+        game.gameEngine().player(2).influenceDeck().add(new TheCaptain());
 
         game.playerTakesIncomeFromTreasury();
         assertGameSituation(45, 2, 3, 2, 2);
@@ -250,13 +250,13 @@ class TwoPlayersGameShould {
         // when
         // then
 
-        game.gameEngine().player(1).cards().clear();
-        game.gameEngine().player(1).cards().add(new TheContessa());
-        game.gameEngine().player(1).cards().add(new TheContessa());
+        game.gameEngine().player(1).influenceDeck().clear();
+        game.gameEngine().player(1).influenceDeck().add(new TheContessa());
+        game.gameEngine().player(1).influenceDeck().add(new TheContessa());
 
-        game.gameEngine().player(2).cards().clear();
-        game.gameEngine().player(2).cards().add(new TheContessa());
-        game.gameEngine().player(2).cards().add(new TheContessa());
+        game.gameEngine().player(2).influenceDeck().clear();
+        game.gameEngine().player(2).influenceDeck().add(new TheContessa());
+        game.gameEngine().player(2).influenceDeck().add(new TheContessa());
 
         game.playerTakesIncomeFromTreasury();
         assertGameSituation(45, 2, 3, 2, 2);
@@ -279,7 +279,7 @@ class TwoPlayersGameShould {
 
     void assertGameSituation(int treasury, int player1_cards, int player1_coins, int player2_cards, int player2_coins) {
         Assertions.assertEquals(treasury, game.gameEngine().treasury());
-        Assertions.assertEquals(11, game.gameEngine().deck().cards().size());
+        Assertions.assertEquals(11, game.gameEngine().deck().cards());
 
         Assertions.assertEquals(player1_cards, game.gameEngine().player(1).cardsInGame());
         Assertions.assertEquals(player1_coins, game.gameEngine().player(1).coins());

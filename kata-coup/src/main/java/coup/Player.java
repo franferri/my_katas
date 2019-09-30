@@ -11,9 +11,8 @@ public final class Player {
 
     private int coins = 0;
 
-    private final List<Card> cards = new ArrayList<>();
-
-    private int lastCardLost = -1;
+    private final List<Card> influenceDeck = new ArrayList<>();
+    private final List<Card> lostInfluenceDeck = new ArrayList<>();
 
     public void gainCoin() {
         ++coins;
@@ -27,15 +26,15 @@ public final class Player {
         return coins;
     }
 
-    public List<Card> cards() {
-        return cards;
+    public List<Card> influenceDeck() {
+        return influenceDeck;
+    }
+
+    public List<Card> lostInfluenceDeck() {
+        return lostInfluenceDeck;
     }
 
     private String name;
-
-    //public Player() {
-    //    this.name = System.nanoTime()+"";
-    //}
 
     public Player(final String name) {
         this.name = name;
@@ -49,31 +48,32 @@ public final class Player {
         return name;
     }
 
-    public void looseCard() { // What if there are no cards visible left?
+    public void looseCard() {
 
-        if (cardsInGame() > 1) {
-            int card = new Random().nextInt(2);
-            lastCardLost = card;
-            cards().get(card).setVisible(true);
-        } else {
+        if (influenceDeck().size() < 2) {
             dies();
+            return;
         }
+
+        int cardLost = new Random().nextInt(influenceDeck().size());
+        lostInfluenceDeck().add(influenceDeck().remove(cardLost));
+
     }
 
     public void restoreLostCard() {
-        if (lastCardLost < 0 || lastCardLost > 2) {
-            throw new RuntimeException("Card number/range is not valid");
-        }
-        cards().get(lastCardLost).setVisible(false);
+
+        int lastCardOfTheDeck = lostInfluenceDeck().size() - 1;
+        influenceDeck().add(lostInfluenceDeck().remove(lastCardOfTheDeck));
+
     }
 
     public void dies() {
-        cards().get(0).setVisible(true);
-        cards().get(1).setVisible(true);
+        lostInfluenceDeck().addAll(influenceDeck());
+        influenceDeck().clear();
     }
 
     public boolean isDead() {
-        return cards().get(0).isVisible() && cards().get(1).isVisible();
+        return lostInfluenceDeck().size() == 2;
     }
 
     public Card returnActiveCardToCourtDeck() {
@@ -81,31 +81,20 @@ public final class Player {
             throw new RuntimeException("Player is dead, don't have any visible cards");
         }
 
-        for (int i = 0; i < cards.size(); i++) {
-            if (!cards.get(i).isVisible()) {
-                return cards.remove(i);
-            }
+        for (int i = 0; i < influenceDeck.size(); i++) {
+            return influenceDeck.remove(i);
         }
 
         return null;
     }
 
     public int cardsInGame() {
-
-        int leftCards = 0;
-        if (!cards().get(0).isVisible()) {
-            ++leftCards;
-        }
-        if (!cards().get(1).isVisible()) {
-            ++leftCards;
-        }
-
-        return leftCards;
+        return influenceDeck().size();
     }
 
     public boolean canHeBlockTheAction(final Action action) {
 
-        for (Card card : cards) {
+        for (Card card : influenceDeck) {
 
             if (null == card.blocksAction()) {
                 continue;
@@ -128,7 +117,7 @@ public final class Player {
 
     public boolean canHeDoTheAction(final Action action) {
 
-        List<Card> cardsToCheck = cards();
+        List<Card> cardsToCheck = influenceDeck();
 
         if (action instanceof Exchange) {
             cardsToCheck = ((Exchange) action).getOriginalCardsInPlayerHand();
@@ -156,7 +145,7 @@ public final class Player {
     }
 
     public void shuffleCardsInHand() {
-        Collections.shuffle(cards);
+        Collections.shuffle(influenceDeck);
     }
 
 }

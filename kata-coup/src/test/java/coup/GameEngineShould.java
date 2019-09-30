@@ -26,7 +26,7 @@ class GameEngineShould {
     private GameEngine gameEngine;
 
     @BeforeEach
-    void before()  {
+    void before() {
 
         // given
         gameEngine = new GameEngine();
@@ -100,7 +100,7 @@ class GameEngineShould {
         Deck deck = gameEngine.deck();
 
         // then
-        Assertions.assertEquals(15, deck.cards().size());
+        Assertions.assertEquals(15, deck.cards());
 
     }
 
@@ -111,7 +111,7 @@ class GameEngineShould {
         Deck deck = new Deck();
 
         // when
-        List<Card> cards = deck.cards();
+        List<Card> cards = deck.cardsForTest();
 
         int ambassators = 0;
         int assasins = 0;
@@ -153,7 +153,7 @@ class GameEngineShould {
     // Shuffle all the characters cards and deal 2 to each player
 
     @Test
-    void a_game_starts_with_a_shuffled_deck()  {
+    void a_game_starts_with_a_shuffled_deck() {
 
         // when
         Deck deck = gameEngine.deck();
@@ -167,10 +167,10 @@ class GameEngineShould {
     }
 
     @Test
-    void a_new_game_starts_with_two_character_cards_per_player()  {
+    void a_new_game_starts_with_two_character_cards_per_player() {
 
         // given
-        int amountOfCardsAvailableInTheCourtDeck = gameEngine.deck().cards().size();
+        int amountOfCardsAvailableInTheCourtDeck = gameEngine.deck().cards();
         int cardsTakenFromTheDeck = gameEngine.getPlayers().size() * 2;
 
         // when
@@ -180,14 +180,14 @@ class GameEngineShould {
         Assertions.assertEquals(2, gameEngine.player(1).cardsInGame());
         Assertions.assertEquals(2, gameEngine.player(2).cardsInGame());
 
-        Assertions.assertEquals(amountOfCardsAvailableInTheCourtDeck - cardsTakenFromTheDeck, gameEngine.deck().cards().size());
+        Assertions.assertEquals(amountOfCardsAvailableInTheCourtDeck - cardsTakenFromTheDeck, gameEngine.deck().cards());
 
     }
 
     // Give each player 2 coins
 
     @Test
-    void a_new_game_starts_with_two_coins_per_player()  {
+    void a_new_game_starts_with_two_coins_per_player() {
 
         // when
         gameEngine.startGame();
@@ -203,7 +203,7 @@ class GameEngineShould {
     // To eliminate the influence of all other onlinePlayers and be the last survivor
 
     @Test
-    void a_player_wins_when_no_more_players_left_alive()  {
+    void a_player_wins_when_no_more_players_left_alive() {
 
         // when
         gameEngine.startGame();
@@ -219,22 +219,22 @@ class GameEngineShould {
 
     // Face down cards in front of a player represent who they influence at court
     @Test
-    void a_new_game_starts_with_two_non_visible_character_cards_per_player()  {
+    void a_new_game_starts_with_two_non_visible_character_cards_per_player() {
 
         // when
         gameEngine.startGame();
 
         // then
         for (Player player : gameEngine.getPlayers()) {
-            Assertions.assertFalse(player.cards().get(0).isVisible());
-            Assertions.assertFalse(player.cards().get(1).isVisible());
+            Assertions.assertEquals(2, player.influenceDeck().size());
+            Assertions.assertEquals(0, player.lostInfluenceDeck().size());
         }
 
     }
 
     // Every time a player loses an influence they have to turn over and reveal one of their face down cards
     @Test
-    void when_a_player_loses_influence_must_reveal_one_of_its_cards()  {
+    void when_a_player_loses_influence_must_reveal_one_of_its_cards() {
 
         // when
         gameEngine.startGame();
@@ -247,7 +247,7 @@ class GameEngineShould {
     // When a player has lost all their influence they are exiled and out of the gameEngine
 
     @Test
-    void a_player_dies_when_he_runs_out_of_cards()  {
+    void a_player_dies_when_he_runs_out_of_cards() {
 
         // when
         gameEngine.startGame();

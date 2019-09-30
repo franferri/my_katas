@@ -88,7 +88,7 @@ public final class GameEngine {
 
     public void dealCardsToThePlayer(final Player player) {
         for (int i = 0; i < 2; i++) {
-            player.cards().add(deck.cards().remove(0));
+            player.influenceDeck().add(deck.deal());
         }
     }
 

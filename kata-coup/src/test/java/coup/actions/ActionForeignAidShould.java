@@ -54,9 +54,9 @@ public class ActionForeignAidShould extends TestingActions {
 @Test
 void player_does_action_and_blocks_himself()  {
         // given
-        gameEngine.player(2).cards().clear();
-        gameEngine.player(2).cards().add(0, new TheDuke());
-        gameEngine.player(2).cards().add(0, new TheAmbassador());
+        gameEngine.player(2).influenceDeck().clear();
+        gameEngine.player(2).influenceDeck().add(0, new TheDuke());
+        gameEngine.player(2).influenceDeck().add(0, new TheAmbassador());
 
         // when
         gameEngine.setPlayerDoingTheAction(gameEngine.player(1));
@@ -71,9 +71,9 @@ void player_does_action_and_blocks_himself()  {
     @Test
     void player_does_action_and_gets_block()  {
         // given
-        gameEngine.player(2).cards().clear();
-        gameEngine.player(2).cards().add(0, new TheDuke());
-        gameEngine.player(2).cards().add(0, new TheAmbassador());
+        gameEngine.player(2).influenceDeck().clear();
+        gameEngine.player(2).influenceDeck().add(0, new TheDuke());
+        gameEngine.player(2).influenceDeck().add(0, new TheAmbassador());
 
         // when
         gameEngine.setPlayerDoingTheAction(gameEngine.player(1));
@@ -96,9 +96,9 @@ void player_does_action_and_blocks_himself()  {
     @Test
     void player_does_action_and_gets_block_then_the_player_blocking_challenge_himself()  {
         // given
-        gameEngine.player(2).cards().clear();
-        gameEngine.player(2).cards().add(0, new TheAmbassador());
-        gameEngine.player(2).cards().add(1, new TheAmbassador());
+        gameEngine.player(2).influenceDeck().clear();
+        gameEngine.player(2).influenceDeck().add(0, new TheAmbassador());
+        gameEngine.player(2).influenceDeck().add(1, new TheAmbassador());
 
         // when
         gameEngine.setPlayerDoingTheAction(gameEngine.player(1));
@@ -118,9 +118,9 @@ void player_does_action_and_blocks_himself()  {
     @Test
     void player_does_action_and_gets_block_but_a_player_calls_the_bluff_on_the_block_and_wins_the_call()  {
         // given
-        gameEngine.player(2).cards().clear();
-        gameEngine.player(2).cards().add(0, new TheAmbassador());
-        gameEngine.player(2).cards().add(1, new TheAmbassador());
+        gameEngine.player(2).influenceDeck().clear();
+        gameEngine.player(2).influenceDeck().add(0, new TheAmbassador());
+        gameEngine.player(2).influenceDeck().add(1, new TheAmbassador());
 
         // when
         gameEngine.setPlayerDoingTheAction(gameEngine.player(1));
@@ -152,9 +152,9 @@ void player_does_action_and_blocks_himself()  {
         action.doAction();
 
         // We make sure the player is bluffing
-        gameEngine.player(2).cards().clear();
-        gameEngine.player(2).cards().add(0, new TheDuke());
-        gameEngine.player(2).cards().add(1, new TheDuke());
+        gameEngine.player(2).influenceDeck().clear();
+        gameEngine.player(2).influenceDeck().add(0, new TheDuke());
+        gameEngine.player(2).influenceDeck().add(1, new TheDuke());
 
         gameEngine.setPlayerBlockingTheAction(gameEngine.player(2));
         action.doBlockAction();
