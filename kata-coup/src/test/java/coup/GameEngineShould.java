@@ -111,7 +111,7 @@ class GameEngineShould {
         Deck deck = new Deck();
 
         // when
-        List<Card> cards = deck.cardsForTest();
+        List<Card> cards = deck.cardsForTesting();
 
         int ambassators = 0;
         int assasins = 0;

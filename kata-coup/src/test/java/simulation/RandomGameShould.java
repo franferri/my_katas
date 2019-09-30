@@ -159,7 +159,7 @@ class RandomGameShould {
     private void checkGameStatus(Game game) {
         // Print the status
 
-        List<Card> cards = game.gameEngine().deck().cardsForTest();
+        List<Card> cards = game.gameEngine().deck().cardsForTesting();
         List<Player> players = game.gameEngine().getPlayers();
 
         System.out.println("------------------------------------------");

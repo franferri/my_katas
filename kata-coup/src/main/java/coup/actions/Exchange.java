@@ -35,7 +35,7 @@ public final class Exchange extends Action {
 
         // We save the original hand, in case we get blocked, to rollback
         setOriginalCardsInPlayerHand(new ArrayList<>(getGameEngine().getPlayerDoingTheAction().influenceDeck()));
-        originalDeck = new ArrayList<>(getGameEngine().deck().cardsForTest());
+        getGameEngine().deck().saveDeck();
 
         getGameEngine().dealCardsToThePlayer(getGameEngine().getPlayerDoingTheAction());
 
@@ -57,8 +57,7 @@ public final class Exchange extends Action {
         getGameEngine().getPlayerDoingTheAction().influenceDeck().clear();
         getGameEngine().getPlayerDoingTheAction().influenceDeck().addAll(getOriginalCardsInPlayerHand());
 
-        getGameEngine().deck().cardsForTest().clear();
-        getGameEngine().deck().receive(originalDeck);
+        getGameEngine().deck().restoreDeck();
 
     }
 

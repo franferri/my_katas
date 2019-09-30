@@ -16,6 +16,7 @@ public final class Deck {
     private static final int MIN_CARDS = 0;
 
     private final List<Card> cards = new ArrayList<>();
+    private List<Card> savedDeck = new ArrayList<>();
 
     public Deck() {
 
@@ -45,7 +46,7 @@ public final class Deck {
         return cards.size();
     }
 
-    public List<Card> cardsForTest() {
+    public List<Card> cardsForTesting() {
         return cards;
     }
 
@@ -88,6 +89,16 @@ public final class Deck {
         for (Card card : cards) {
             receive(card);
         }
+    }
+
+    public void saveDeck() {
+        savedDeck = new ArrayList<>(cards);
+    }
+
+    public void restoreDeck() {
+        cards.clear();
+        receive(savedDeck);
+        savedDeck.clear();
     }
 
 }
