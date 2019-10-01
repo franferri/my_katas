@@ -29,13 +29,13 @@ public class ActionForeignAidShould extends TestingActions {
         action.doAction();
 
         // then
-        Assertions.assertEquals(44, gameEngine.treasury());
+        Assertions.assertEquals(44, gameEngine.treasury().coins());
 
         Assertions.assertEquals(2, gameEngine.player(1).cardsInGame());
-        Assertions.assertEquals(4, gameEngine.player(1).coins());
+        Assertions.assertEquals(4, gameEngine.player(1).wallet().coins());
 
         Assertions.assertEquals(2, gameEngine.player(2).cardsInGame());
-        Assertions.assertEquals(2, gameEngine.player(2).coins());
+        Assertions.assertEquals(2, gameEngine.player(2).wallet().coins());
     }
 
     // Action cannot be challenged
@@ -54,9 +54,9 @@ public class ActionForeignAidShould extends TestingActions {
 @Test
 void player_does_action_and_blocks_himself()  {
         // given
-        gameEngine.player(2).influenceDeck().clear();
-        gameEngine.player(2).influenceDeck().add(0, new TheDuke());
-        gameEngine.player(2).influenceDeck().add(0, new TheAmbassador());
+        gameEngine.player(2).influenceDeck().cards().clear();
+        gameEngine.player(2).influenceDeck().receiveScrambled( new TheDuke());
+        gameEngine.player(2).influenceDeck().receiveScrambled( new TheAmbassador());
 
         // when
         gameEngine.setPlayerDoingTheAction(gameEngine.player(1));
@@ -71,9 +71,9 @@ void player_does_action_and_blocks_himself()  {
     @Test
     void player_does_action_and_gets_block()  {
         // given
-        gameEngine.player(2).influenceDeck().clear();
-        gameEngine.player(2).influenceDeck().add(0, new TheDuke());
-        gameEngine.player(2).influenceDeck().add(0, new TheAmbassador());
+        gameEngine.player(2).influenceDeck().cards().clear();
+        gameEngine.player(2).influenceDeck().receiveScrambled( new TheDuke());
+        gameEngine.player(2).influenceDeck().receiveScrambled( new TheAmbassador());
 
         // when
         gameEngine.setPlayerDoingTheAction(gameEngine.player(1));
@@ -83,22 +83,22 @@ void player_does_action_and_blocks_himself()  {
         action.doBlockAction();
 
         // then
-        Assertions.assertEquals(46, gameEngine.treasury());
+        Assertions.assertEquals(46, gameEngine.treasury().coins());
 
         Assertions.assertEquals(2, gameEngine.player(1).cardsInGame());
-        Assertions.assertEquals(2, gameEngine.player(1).coins());
+        Assertions.assertEquals(2, gameEngine.player(1).wallet().coins());
 
         Assertions.assertEquals(2, gameEngine.player(2).cardsInGame());
-        Assertions.assertEquals(2, gameEngine.player(2).coins());
+        Assertions.assertEquals(2, gameEngine.player(2).wallet().coins());
     }
 
     // BlockAction bluff can't be called over the player doing the BlockAction (Engine integrity test)
     @Test
     void player_does_action_and_gets_block_then_the_player_blocking_challenge_himself()  {
         // given
-        gameEngine.player(2).influenceDeck().clear();
-        gameEngine.player(2).influenceDeck().add(0, new TheAmbassador());
-        gameEngine.player(2).influenceDeck().add(1, new TheAmbassador());
+        gameEngine.player(2).influenceDeck().cards().clear();
+        gameEngine.player(2).influenceDeck().receiveScrambled( new TheAmbassador());
+        gameEngine.player(2).influenceDeck().receiveScrambled( new TheAmbassador());
 
         // when
         gameEngine.setPlayerDoingTheAction(gameEngine.player(1));
@@ -118,9 +118,9 @@ void player_does_action_and_blocks_himself()  {
     @Test
     void player_does_action_and_gets_block_but_a_player_calls_the_bluff_on_the_block_and_wins_the_call()  {
         // given
-        gameEngine.player(2).influenceDeck().clear();
-        gameEngine.player(2).influenceDeck().add(0, new TheAmbassador());
-        gameEngine.player(2).influenceDeck().add(1, new TheAmbassador());
+        gameEngine.player(2).influenceDeck().cards().clear();
+        gameEngine.player(2).influenceDeck().receiveScrambled( new TheAmbassador());
+        gameEngine.player(2).influenceDeck().receiveScrambled( new TheAmbassador());
 
         // when
         gameEngine.setPlayerDoingTheAction(gameEngine.player(1));
@@ -133,13 +133,13 @@ void player_does_action_and_blocks_himself()  {
         action.doCallTheBluffOnBlockAction();
 
         // then
-        Assertions.assertEquals(44, gameEngine.treasury());
+        Assertions.assertEquals(44, gameEngine.treasury().coins());
 
         Assertions.assertEquals(2, gameEngine.player(1).cardsInGame());
-        Assertions.assertEquals(4, gameEngine.player(1).coins());
+        Assertions.assertEquals(4, gameEngine.player(1).wallet().coins());
 
         Assertions.assertEquals(1, gameEngine.player(2).cardsInGame());
-        Assertions.assertEquals(2, gameEngine.player(2).coins());
+        Assertions.assertEquals(2, gameEngine.player(2).wallet().coins());
     }
 
     // Action can be blocked
@@ -152,9 +152,9 @@ void player_does_action_and_blocks_himself()  {
         action.doAction();
 
         // We make sure the player is bluffing
-        gameEngine.player(2).influenceDeck().clear();
-        gameEngine.player(2).influenceDeck().add(0, new TheDuke());
-        gameEngine.player(2).influenceDeck().add(1, new TheDuke());
+        gameEngine.player(2).influenceDeck().cards().clear();
+        gameEngine.player(2).influenceDeck().receiveScrambled( new TheDuke());
+        gameEngine.player(2).influenceDeck().receiveScrambled( new TheDuke());
 
         gameEngine.setPlayerBlockingTheAction(gameEngine.player(2));
         action.doBlockAction();
@@ -164,13 +164,13 @@ void player_does_action_and_blocks_himself()  {
 
         // then
 
-        Assertions.assertEquals(46, gameEngine.treasury());
+        Assertions.assertEquals(46, gameEngine.treasury().coins());
 
         Assertions.assertEquals(1, gameEngine.player(1).cardsInGame());
-        Assertions.assertEquals(2, gameEngine.player(1).coins());
+        Assertions.assertEquals(2, gameEngine.player(1).wallet().coins());
 
         Assertions.assertEquals(2, gameEngine.player(2).cardsInGame());
-        Assertions.assertEquals(2, gameEngine.player(2).coins());
+        Assertions.assertEquals(2, gameEngine.player(2).wallet().coins());
     }
 
 }

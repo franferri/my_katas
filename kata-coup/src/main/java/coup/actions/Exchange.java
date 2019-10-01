@@ -2,7 +2,7 @@ package coup.actions;
 
 import coup.Action;
 import coup.Card;
-import coup.GameEngine;
+import coup.TheTable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,8 +18,8 @@ public final class Exchange extends Action {
     public Exchange() {
     }
 
-    public Exchange(final GameEngine gameEngine) {
-        super(gameEngine);
+    public Exchange(final TheTable theTable) {
+        super(theTable);
     }
 
     private List<Card> originalCardsInPlayerHand;
@@ -34,16 +34,15 @@ public final class Exchange extends Action {
     public void doActionInternal() {
 
         // We save the original hand, in case we get blocked, to rollback
-        setOriginalCardsInPlayerHand(new ArrayList<>(getGameEngine().getPlayerDoingTheAction().influenceDeck()));
-        getGameEngine().deck().saveDeck();
+        setOriginalCardsInPlayerHand(new ArrayList<>(getTheTable().getPlayerDoingTheAction().influenceDeck().cards()));
+        getTheTable().courtDeck().saveDeck();
 
-        getGameEngine().dealCardsToThePlayer(getGameEngine().getPlayerDoingTheAction());
+        getTheTable().dealCardsToThePlayer(getTheTable().getPlayerDoingTheAction());
 
-        getGameEngine().getPlayerDoingTheAction().shuffleCardsInHand();
+        getTheTable().getPlayerDoingTheAction().shuffleCardsInHand();
 
-
-        getGameEngine().deck().receive(getGameEngine().getPlayerDoingTheAction().returnActiveCardToCourtDeck());
-        getGameEngine().deck().receive(getGameEngine().getPlayerDoingTheAction().returnActiveCardToCourtDeck());
+        getTheTable().courtDeck().receiveScrambled(getTheTable().getPlayerDoingTheAction().returnActiveCardToCourtDeck());
+        getTheTable().courtDeck().receiveScrambled(getTheTable().getPlayerDoingTheAction().returnActiveCardToCourtDeck());
 
     }
 
@@ -54,10 +53,10 @@ public final class Exchange extends Action {
 
     public void doBlockActionInternal() {
 
-        getGameEngine().getPlayerDoingTheAction().influenceDeck().clear();
-        getGameEngine().getPlayerDoingTheAction().influenceDeck().addAll(getOriginalCardsInPlayerHand());
+        getTheTable().getPlayerDoingTheAction().influenceDeck().cards().clear();
+        getTheTable().getPlayerDoingTheAction().influenceDeck().receiveScrambled(getOriginalCardsInPlayerHand());
 
-        getGameEngine().deck().restoreDeck();
+        getTheTable().courtDeck().restoreDeck();
 
     }
 
@@ -65,7 +64,7 @@ public final class Exchange extends Action {
         return originalCardsInPlayerHand;
     }
 
-    public void setOriginalCardsInPlayerHand(final List<Card> originalCardsInPlayerHand) {
+    private void setOriginalCardsInPlayerHand(final List<Card> originalCardsInPlayerHand) {
         this.originalCardsInPlayerHand = originalCardsInPlayerHand;
     }
 }

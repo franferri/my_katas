@@ -1,14 +1,18 @@
 package coup;
 
-import coup.cards.*;
+import coup.cards.TheAmbassador;
+import coup.cards.TheAssassin;
+import coup.cards.TheCaptain;
+import coup.cards.TheContessa;
+import coup.cards.TheDuke;
+import coup.decks.CourtDeck;
+import coup.decks.Deck;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static org.mockito.Mockito.spy;
 
 class GameEngineShould {
 
@@ -23,16 +27,16 @@ class GameEngineShould {
 
     // TODO: To cover 3 onlinePlayers or more, to choose who is doing the actions in the tests, we can just use random(), or the test repeats itself for all possible combinations in a loop (changing who does the action, who calls the bluff, who blocks the action, and who calls the bluff on the block action)
 
-    private GameEngine gameEngine;
+    private TheTable gameEngine;
 
     @BeforeEach
     void before() {
 
         // given
-        gameEngine = new GameEngine();
+        gameEngine = new TheTable();
 
-        gameEngine.addPlayer("TEST");
-        gameEngine.addPlayer("TEST");
+        gameEngine.addPlayer();
+        gameEngine.addPlayer();
 
     }
 
@@ -43,8 +47,8 @@ class GameEngineShould {
     @Test
     void a_game_needs_2_players_at_least() {
 
-        gameEngine = new GameEngine();
-        gameEngine.addPlayer("TEST");
+        gameEngine = new TheTable();
+        gameEngine.addPlayer();
 
         // then
         Assertions.assertThrows(Exception.class, () -> gameEngine.startGame());
@@ -54,14 +58,14 @@ class GameEngineShould {
     @Test
     void a_game_can_have_until_6_players() {
 
-        gameEngine = new GameEngine();
-        gameEngine.addPlayer("TEST");
-        gameEngine.addPlayer("TEST");
-        gameEngine.addPlayer("TEST");
-        gameEngine.addPlayer("TEST");
-        gameEngine.addPlayer("TEST");
-        gameEngine.addPlayer("TEST");
-        gameEngine.addPlayer("TEST");
+        gameEngine = new TheTable();
+        gameEngine.addPlayer();
+        gameEngine.addPlayer();
+        gameEngine.addPlayer();
+        gameEngine.addPlayer();
+        gameEngine.addPlayer();
+        gameEngine.addPlayer();
+        gameEngine.addPlayer();
 
         // then
         Assertions.assertThrows(Exception.class, () -> gameEngine.startGame());
@@ -73,7 +77,7 @@ class GameEngineShould {
     void a_new_game_has_a_treasury_of_50_coins() {
 
         // when
-        int treasury = gameEngine.treasury();
+        int treasury = gameEngine.treasury().coins();
 
         // then
         Assertions.assertEquals(50, treasury);
@@ -86,7 +90,7 @@ class GameEngineShould {
     void a_new_game_has_a_deck() {
 
         // when
-        Deck deck = gameEngine.deck();
+        Deck deck = gameEngine.courtDeck();
 
         // then
         Assertions.assertNotNull(deck);
@@ -97,21 +101,22 @@ class GameEngineShould {
     void a_new_game_has_a_deck_of_15_cards() {
 
         // when
-        Deck deck = gameEngine.deck();
+        Deck deck = gameEngine.courtDeck();
 
         // then
-        Assertions.assertEquals(15, deck.cards());
+        Assertions.assertEquals(15, deck.cards().size());
 
     }
 
+    // TODO this test is wrong, we need to do start game to evaluate the deck present in the game
     @Test
     void a_new_game_has_a_deck_that_consist_in_three_copies_of_each_characters_card() {
 
         // given
-        Deck deck = new Deck();
+        CourtDeck deck = new CourtDeck();
 
         // when
-        List<Card> cards = deck.cardsForTesting();
+        List<Card> cards = deck.cards();
 
         int ambassators = 0;
         int assasins = 0;
@@ -156,7 +161,7 @@ class GameEngineShould {
     void a_game_starts_with_a_shuffled_deck() {
 
         // when
-        Deck deck = gameEngine.deck();
+        Deck deck = gameEngine.courtDeck();
         List<Card> originalOrderCards = new ArrayList<>(deck.cards());
 
         gameEngine.startGame();
@@ -170,7 +175,7 @@ class GameEngineShould {
     void a_new_game_starts_with_two_character_cards_per_player() {
 
         // given
-        int amountOfCardsAvailableInTheCourtDeck = gameEngine.deck().cards();
+        int amountOfCardsAvailableInTheCourtDeck = gameEngine.courtDeck().cards().size();
         int cardsTakenFromTheDeck = gameEngine.getPlayers().size() * 2;
 
         // when
@@ -180,7 +185,7 @@ class GameEngineShould {
         Assertions.assertEquals(2, gameEngine.player(1).cardsInGame());
         Assertions.assertEquals(2, gameEngine.player(2).cardsInGame());
 
-        Assertions.assertEquals(amountOfCardsAvailableInTheCourtDeck - cardsTakenFromTheDeck, gameEngine.deck().cards());
+        Assertions.assertEquals(amountOfCardsAvailableInTheCourtDeck - cardsTakenFromTheDeck, gameEngine.courtDeck().cards().size());
 
     }
 
@@ -193,8 +198,8 @@ class GameEngineShould {
         gameEngine.startGame();
 
         // then
-        Assertions.assertEquals(2, gameEngine.player(1).coins());
-        Assertions.assertEquals(2, gameEngine.player(2).coins());
+        Assertions.assertEquals(2, gameEngine.player(1).wallet().coins());
+        Assertions.assertEquals(2, gameEngine.player(2).wallet().coins());
 
     }
 
@@ -226,8 +231,8 @@ class GameEngineShould {
 
         // then
         for (Player player : gameEngine.getPlayers()) {
-            Assertions.assertEquals(2, player.influenceDeck().size());
-            Assertions.assertEquals(0, player.lostInfluenceDeck().size());
+            Assertions.assertEquals(2, player.influenceDeck().cards().size());
+            Assertions.assertEquals(0, player.lostInfluenceDeck().cards().size());
         }
 
     }

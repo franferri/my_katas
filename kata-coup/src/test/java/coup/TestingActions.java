@@ -7,17 +7,17 @@ public class TestingActions {
 
     // TODO cuando un jugador tiene un challence y enseña la carta, tenemos q reshuflear y coger una nueva para ese player (player 1 si el challence es para la action, player 2 si el challence es para el blockeo de la acción)
 
-    protected GameEngine gameEngine;
+    protected TheTable gameEngine;
 
     protected Action action;
 
     protected void before()  {
 
         // given
-        gameEngine = new GameEngine();
+        gameEngine = new TheTable();
 
-        gameEngine.addPlayer("TEST");
-        gameEngine.addPlayer("TEST");
+        gameEngine.addPlayer();
+        gameEngine.addPlayer();
 
         gameEngine.startGame();
 

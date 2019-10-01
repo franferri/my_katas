@@ -1,7 +1,7 @@
 package coup.actions;
 
 import coup.Action;
-import coup.GameEngine;
+import coup.TheTable;
 
 public final class Coup7 extends Action {
 
@@ -11,8 +11,8 @@ public final class Coup7 extends Action {
     // Block: Cannot be blocked
     // -
 
-    public Coup7(final GameEngine gameEngine) {
-        super(gameEngine);
+    public Coup7(final TheTable theTable) {
+        super(theTable);
     }
 
     // Setup
@@ -26,8 +26,8 @@ public final class Coup7 extends Action {
 
     // Action
     public void doActionInternal() {
-        getGameEngine().playerReturnCoinsToTreasury(getGameEngine().getPlayerDoingTheAction(), SEVEN);
-        getGameEngine().getTargetPlayer().looseCard();
+        getTheTable().playerReturnCoinsToTreasury(getTheTable().getPlayerDoingTheAction(), SEVEN);
+        getTheTable().getTargetPlayer().looseCard();
     }
 
     // Block Action

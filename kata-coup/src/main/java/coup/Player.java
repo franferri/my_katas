@@ -1,79 +1,65 @@
 package coup;
 
 import coup.actions.Exchange;
+import coup.coins.Coins;
+import coup.coins.Wallet;
+import coup.decks.Deck;
+import coup.decks.InfluenceDeck;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
 public final class Player {
 
-    private int coins = 0;
+    private Wallet wallet;
 
-    private final List<Card> influenceDeck = new ArrayList<>();
-    private final List<Card> lostInfluenceDeck = new ArrayList<>();
+    private final InfluenceDeck influenceDeck;
+    private final InfluenceDeck lostInfluenceDeck;
 
-    public void gainCoin() {
-        ++coins;
+    public Player() {
+        wallet = new Wallet();
+        influenceDeck = new InfluenceDeck();
+        lostInfluenceDeck = new InfluenceDeck();
     }
 
-    public void looseCoin() {
-        --coins;
+    public Coins wallet() {
+        return wallet;
     }
 
-    public int coins() {
-        return coins;
-    }
-
-    public List<Card> influenceDeck() {
+    public Deck influenceDeck() {
         return influenceDeck;
     }
 
-    public List<Card> lostInfluenceDeck() {
+    public Deck lostInfluenceDeck() {
         return lostInfluenceDeck;
-    }
-
-    private String name;
-
-    public Player(final String name) {
-        this.name = name;
-    }
-
-    public void setName(final String name) {
-        this.name = name;
-    }
-
-    public String name() {
-        return name;
     }
 
     public void looseCard() {
 
-        if (influenceDeck().size() < 2) {
+        if (influenceDeck().cards().size() < 2) {
             dies();
             return;
         }
 
-        int cardLost = new Random().nextInt(influenceDeck().size());
-        lostInfluenceDeck().add(influenceDeck().remove(cardLost));
+        int cardLost = new Random().nextInt(influenceDeck().cards().size());
+        lostInfluenceDeck().receiveScrambled(influenceDeck().dealSpecific(cardLost));
 
     }
 
     public void restoreLostCard() {
 
-        int lastCardOfTheDeck = lostInfluenceDeck().size() - 1;
-        influenceDeck().add(lostInfluenceDeck().remove(lastCardOfTheDeck));
+        int lastCardOfTheDeck = lostInfluenceDeck().cards().size() - 1;
+        influenceDeck().receiveScrambled(lostInfluenceDeck().dealSpecific(lastCardOfTheDeck));
 
     }
 
     public void dies() {
-        lostInfluenceDeck().addAll(influenceDeck());
-        influenceDeck().clear();
+        lostInfluenceDeck().receiveScrambled(influenceDeck().cards());
+        influenceDeck().cards().clear();
     }
 
     public boolean isDead() {
-        return lostInfluenceDeck().size() == 2;
+        return lostInfluenceDeck().cards().size() == 2;
     }
 
     public Card returnActiveCardToCourtDeck() {
@@ -81,20 +67,20 @@ public final class Player {
             throw new RuntimeException("Player is dead, don't have any visible cards");
         }
 
-        for (int i = 0; i < influenceDeck.size(); i++) {
-            return influenceDeck.remove(i);
+        for (int i = 0; i < influenceDeck.cards().size(); i++) {
+            return influenceDeck.dealSpecific(i);
         }
 
         return null;
     }
 
     public int cardsInGame() {
-        return influenceDeck().size();
+        return influenceDeck().cards().size();
     }
 
     public boolean canHeBlockTheAction(final Action action) {
 
-        for (Card card : influenceDeck) {
+        for (Card card : influenceDeck.cards()) {
 
             if (null == card.blocksAction()) {
                 continue;
@@ -117,7 +103,7 @@ public final class Player {
 
     public boolean canHeDoTheAction(final Action action) {
 
-        List<Card> cardsToCheck = influenceDeck();
+        List<Card> cardsToCheck = influenceDeck().cards();
 
         if (action instanceof Exchange) {
             cardsToCheck = ((Exchange) action).getOriginalCardsInPlayerHand();
@@ -145,7 +131,7 @@ public final class Player {
     }
 
     public void shuffleCardsInHand() {
-        Collections.shuffle(influenceDeck);
+        influenceDeck.shuffle();
     }
 
 }

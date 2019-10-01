@@ -1,7 +1,7 @@
 package coup.actions;
 
 import coup.Action;
-import coup.GameEngine;
+import coup.TheTable;
 
 public final class Income extends Action {
 
@@ -14,8 +14,8 @@ public final class Income extends Action {
     public Income() {
     }
 
-    public Income(final GameEngine gameEngine) {
-        super(gameEngine);
+    public Income(final TheTable theTable) {
+        super(theTable);
     }
 
     // Setup
@@ -29,7 +29,7 @@ public final class Income extends Action {
 
     // Action
     public void doActionInternal() {
-        getGameEngine().playerTakeCoinsFromTreasury(getGameEngine().getPlayerDoingTheAction(), ONE);
+        getTheTable().playerTakeCoinsFromTreasury(getTheTable().getPlayerDoingTheAction(), ONE);
     }
 
     // Block Action

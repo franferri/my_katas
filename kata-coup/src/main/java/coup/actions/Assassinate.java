@@ -1,7 +1,7 @@
 package coup.actions;
 
 import coup.Action;
-import coup.GameEngine;
+import coup.TheTable;
 
 public final class Assassinate extends Action {
 
@@ -14,8 +14,8 @@ public final class Assassinate extends Action {
     public Assassinate() {
     }
 
-    public Assassinate(final GameEngine gameEngine) {
-        super(gameEngine);
+    public Assassinate(final TheTable theTable) {
+        super(theTable);
     }
 
     private boolean paid = false;
@@ -23,15 +23,15 @@ public final class Assassinate extends Action {
     // Action
     public void doActionInternal() {
         if (!paid) {
-            getGameEngine().playerReturnCoinsToTreasury(getGameEngine().getPlayerDoingTheAction(), THREE);
+            getTheTable().playerReturnCoinsToTreasury(getTheTable().getPlayerDoingTheAction(), THREE);
             paid = true;
         }
-        getGameEngine().getTargetPlayer().looseCard();
+        getTheTable().getTargetPlayer().looseCard();
     }
 
     // Block Action
     public void doBlockActionInternal() {
-        getGameEngine().getTargetPlayer().restoreLostCard();
+        getTheTable().getTargetPlayer().restoreLostCard();
     }
 
 }

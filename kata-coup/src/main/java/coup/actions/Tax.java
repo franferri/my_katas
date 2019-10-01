@@ -1,7 +1,7 @@
 package coup.actions;
 
 import coup.Action;
-import coup.GameEngine;
+import coup.TheTable;
 
 public final class Tax extends Action {
 
@@ -14,8 +14,8 @@ public final class Tax extends Action {
     public Tax() {
     }
 
-    public Tax(final GameEngine gameEngine) {
-        super(gameEngine);
+    public Tax(final TheTable theTable) {
+        super(theTable);
     }
 
     // Setup
@@ -25,7 +25,7 @@ public final class Tax extends Action {
 
     // Block Action
     public void doActionInternal() {
-        getGameEngine().playerTakeCoinsFromTreasury(getGameEngine().getPlayerDoingTheAction(), THREE);
+        getTheTable().playerTakeCoinsFromTreasury(getTheTable().getPlayerDoingTheAction(), THREE);
     }
 
     // Block Action
@@ -34,7 +34,7 @@ public final class Tax extends Action {
     }
 
     public void doBlockActionInternal() {
-        getGameEngine().playerReturnCoinsToTreasury(getGameEngine().getPlayerDoingTheAction(), THREE);
+        getTheTable().playerReturnCoinsToTreasury(getTheTable().getPlayerDoingTheAction(), THREE);
     }
 
 }

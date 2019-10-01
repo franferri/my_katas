@@ -9,29 +9,14 @@ public abstract class Action {
     public static final Integer THREE = 3;
     public static final Integer ONE = 1;
 
-    private GameEngine gameEngine;
+    private TheTable theTable;
     private boolean isBlocked;
-
-    private int actionNumber = -1;
 
     protected Action() {
     }
 
-    protected Action(final GameEngine gameEngine) {
-        this.setGameEngine(gameEngine);
-    }
-
-    private void mustCoup10(final GameEngine gameEngine) {
-        if (gameEngine.getPlayerDoingTheAction().coins() >= TEN && !(this instanceof Coup10)) {
-            throw new RuntimeException("Player must coup because has 10 or more coins");
-        }
-    }
-
-    private void isTheGameEnded(final GameEngine gameEngine) {
-        int winner = gameEngine.whoIsTheWinner();
-        if (winner > -1) {
-            throw new RuntimeException("The game is done, the winner was player " + winner);
-        }
+    protected Action(final TheTable theTable) {
+        this.setTheTable(theTable);
     }
 
     // Setup
@@ -41,15 +26,6 @@ public abstract class Action {
 
     public boolean canThisBlockActionBeChallenged() {
         return true;
-    }
-
-    // Action
-    public void doAction() {
-        actionCantBeDoneToHimself();
-        isTheGameEnded(getGameEngine());
-        mustCoup10(getGameEngine());
-        doActionInternal();
-        isBlocked = false;
     }
 
     protected abstract void doActionInternal();
@@ -65,17 +41,39 @@ public abstract class Action {
         throw new RuntimeException("method not overridden");
     }
 
+    private void mustCoup10(final TheTable theTable) {
+        if (theTable.getPlayerDoingTheAction().wallet().coins() >= TEN && !(this instanceof Coup10)) {
+            throw new RuntimeException("Player must coup because has 10 or more coins");
+        }
+    }
+
+    private void isTheGameEnded(final TheTable theTable) {
+        int winner = theTable.whoIsTheWinner();
+        if (winner > -1) {
+            throw new RuntimeException("The game is done, the winner was player " + winner);
+        }
+    }
+
+    // Action
+    public void doAction() {
+        actionCantBeDoneToHimself();
+        isTheGameEnded(getTheTable());
+        mustCoup10(getTheTable());
+        doActionInternal();
+        isBlocked = false;
+    }
+
     // Bluff
     public void doCallTheBluffOnAction() {
         cannotCallBluffOnHimself();
         if (!canThisActionBeChallenged()) {
             throw new RuntimeException("This action can't be challenged");
         }
-        if (getGameEngine().getPlayerDoingTheAction().canHeDoTheAction(this)) {
-            getGameEngine().getPlayerCallingTheBluff().looseCard();
+        if (getTheTable().getPlayerDoingTheAction().canHeDoTheAction(this)) {
+            getTheTable().getPlayerCallingTheBluff().looseCard();
         } else {
             doBlockActionInternal();
-            getGameEngine().getPlayerDoingTheAction().looseCard();
+            getTheTable().getPlayerDoingTheAction().looseCard();
         }
     }
 
@@ -84,11 +82,11 @@ public abstract class Action {
         if (!canThisBlockActionBeChallenged()) {
             throw new RuntimeException("This blockaction can't be challenged");
         }
-        if (getGameEngine().getPlayerBlockingTheAction().canHeBlockTheAction(this)) {
-            getGameEngine().getPlayerCallingTheBluff().looseCard();
+        if (getTheTable().getPlayerBlockingTheAction().canHeBlockTheAction(this)) {
+            getTheTable().getPlayerCallingTheBluff().looseCard();
         } else {
             doActionInternal();
-            getGameEngine().getPlayerBlockingTheAction().looseCard();
+            getTheTable().getPlayerBlockingTheAction().looseCard();
         }
     }
 
@@ -97,42 +95,35 @@ public abstract class Action {
     }
 
     private void actionCantBeDoneToHimself() {
-        if (getGameEngine().getPlayerDoingTheAction() == getGameEngine().getTargetPlayer()) {
+        if (getTheTable().getPlayerDoingTheAction() == getTheTable().getTargetPlayer()) {
             throw new RuntimeException("Action can't be done to himself");
         }
     }
 
     private void playerCantBlockHimself() {
-        if (getGameEngine().getPlayerDoingTheAction() == getGameEngine().getPlayerBlockingTheAction()) {
+        if (getTheTable().getPlayerDoingTheAction() == getTheTable().getPlayerBlockingTheAction()) {
             throw new RuntimeException("Player cant block himself");
         }
     }
 
     private void cannotCallBluffOnHimself() {
-        if (getGameEngine().getPlayerDoingTheAction() == getGameEngine().getPlayerCallingTheBluff()) {
+        if (getTheTable().getPlayerDoingTheAction() == getTheTable().getPlayerCallingTheBluff()) {
             throw new RuntimeException("Action bluff can't be called over himself");
         }
     }
 
     private void cannotBluffOnHisOwnBlockAction() {
-        if (getGameEngine().getPlayerBlockingTheAction() == getGameEngine().getPlayerCallingTheBluff()) {
+        if (getTheTable().getPlayerBlockingTheAction() == getTheTable().getPlayerCallingTheBluff()) {
             throw new RuntimeException("BlockAction bluff can't be called over the player doing the BlockAction");
         }
     }
 
-    public GameEngine getGameEngine() {
-        return gameEngine;
+    public TheTable getTheTable() {
+        return theTable;
     }
 
-    public void setGameEngine(final GameEngine gameEngine) {
-        this.gameEngine = gameEngine;
+    public void setTheTable(final TheTable theTable) {
+        this.theTable = theTable;
     }
 
-    public int getActionNumber() {
-        return actionNumber;
-    }
-
-    public void setActionNumber(final int actionNumber) {
-        this.actionNumber = actionNumber;
-    }
 }

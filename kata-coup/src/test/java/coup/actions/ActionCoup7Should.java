@@ -52,13 +52,13 @@ public class ActionCoup7Should extends TestingActions {
         action.doAction();
 
         // then
-        Assertions.assertEquals(48, gameEngine.treasury());
+        Assertions.assertEquals(48, gameEngine.treasury().coins());
 
         Assertions.assertEquals(2, gameEngine.player(1).cardsInGame());
-        Assertions.assertEquals(0, gameEngine.player(1).coins());
+        Assertions.assertEquals(0, gameEngine.player(1).wallet().coins());
 
         Assertions.assertEquals(1, gameEngine.player(2).cardsInGame());
-        Assertions.assertEquals(2, gameEngine.player(2).coins());
+        Assertions.assertEquals(2, gameEngine.player(2).wallet().coins());
     }
 
     // Action cannot be challenged

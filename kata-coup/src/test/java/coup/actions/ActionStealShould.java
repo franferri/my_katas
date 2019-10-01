@@ -55,13 +55,13 @@ public class ActionStealShould extends TestingActions {
         action.doAction();
 
         // then
-        Assertions.assertEquals(46, gameEngine.treasury());
+        Assertions.assertEquals(46, gameEngine.treasury().coins());
 
         Assertions.assertEquals(2, gameEngine.player(1).cardsInGame());
-        Assertions.assertEquals(4, gameEngine.player(1).coins());
+        Assertions.assertEquals(4, gameEngine.player(1).wallet().coins());
 
         Assertions.assertEquals(2, gameEngine.player(2).cardsInGame());
-        Assertions.assertEquals(0, gameEngine.player(2).coins());
+        Assertions.assertEquals(0, gameEngine.player(2).wallet().coins());
     }
 
     // Player cant challenge himself (Engine integrity test)
@@ -82,9 +82,9 @@ public class ActionStealShould extends TestingActions {
     @Test
     void player_does_action_and_other_player_calls_the_bluff_and_wins_the_call()  {
         // given
-        gameEngine.player(1).influenceDeck().clear();
-        gameEngine.player(1).influenceDeck().add(0, new TheAmbassador());
-        gameEngine.player(1).influenceDeck().add(0, new TheAmbassador());
+        gameEngine.player(1).influenceDeck().cards().clear();
+        gameEngine.player(1).influenceDeck().receiveScrambled( new TheAmbassador());
+        gameEngine.player(1).influenceDeck().receiveScrambled( new TheAmbassador());
 
         // when
         gameEngine.setPlayerDoingTheAction(gameEngine.player(1));
@@ -95,13 +95,13 @@ public class ActionStealShould extends TestingActions {
         action.doCallTheBluffOnAction();
 
         // then
-        Assertions.assertEquals(46, gameEngine.treasury());
+        Assertions.assertEquals(46, gameEngine.treasury().coins());
 
         Assertions.assertEquals(1, gameEngine.player(1).cardsInGame());
-        Assertions.assertEquals(2, gameEngine.player(1).coins());
+        Assertions.assertEquals(2, gameEngine.player(1).wallet().coins());
 
         Assertions.assertEquals(2, gameEngine.player(2).cardsInGame());
-        Assertions.assertEquals(2, gameEngine.player(2).coins());
+        Assertions.assertEquals(2, gameEngine.player(2).wallet().coins());
     }
 
     // Action can be challenged
@@ -109,9 +109,9 @@ public class ActionStealShould extends TestingActions {
     @Test
     void player_does_action_and_other_calls_the_bluff_and_lose_the_call()  {
         // given
-        gameEngine.player(1).influenceDeck().clear();
-        gameEngine.player(1).influenceDeck().add(0, new TheCaptain());
-        gameEngine.player(1).influenceDeck().add(0, new TheAmbassador());
+        gameEngine.player(1).influenceDeck().cards().clear();
+        gameEngine.player(1).influenceDeck().receiveScrambled( new TheCaptain());
+        gameEngine.player(1).influenceDeck().receiveScrambled( new TheAmbassador());
 
         // when
         gameEngine.setPlayerDoingTheAction(gameEngine.player(1));
@@ -122,22 +122,22 @@ public class ActionStealShould extends TestingActions {
         action.doCallTheBluffOnAction();
 
         // then
-        Assertions.assertEquals(46, gameEngine.treasury());
+        Assertions.assertEquals(46, gameEngine.treasury().coins());
 
         Assertions.assertEquals(2, gameEngine.player(1).cardsInGame());
-        Assertions.assertEquals(4, gameEngine.player(1).coins());
+        Assertions.assertEquals(4, gameEngine.player(1).wallet().coins());
 
         Assertions.assertEquals(1, gameEngine.player(2).cardsInGame());
-        Assertions.assertEquals(0, gameEngine.player(2).coins());
+        Assertions.assertEquals(0, gameEngine.player(2).wallet().coins());
     }
 
     // Player cant block himself (Engine integrity test)
     @Test
     void player_does_action_and_blocks_himself()  {
         // given
-        gameEngine.player(2).influenceDeck().clear();
-        gameEngine.player(2).influenceDeck().add(0, new TheCaptain());
-        gameEngine.player(2).influenceDeck().add(1, new TheDuke());
+        gameEngine.player(2).influenceDeck().cards().clear();
+        gameEngine.player(2).influenceDeck().receiveScrambled( new TheCaptain());
+        gameEngine.player(2).influenceDeck().receiveScrambled( new TheDuke());
 
         // when
         gameEngine.setPlayerDoingTheAction(gameEngine.player(1));
@@ -153,9 +153,9 @@ public class ActionStealShould extends TestingActions {
     @Test
     void player_does_action_and_gets_block_by_captain()  {
         // given
-        gameEngine.player(2).influenceDeck().clear();
-        gameEngine.player(2).influenceDeck().add(0, new TheCaptain());
-        gameEngine.player(2).influenceDeck().add(1, new TheDuke());
+        gameEngine.player(2).influenceDeck().cards().clear();
+        gameEngine.player(2).influenceDeck().receiveScrambled( new TheCaptain());
+        gameEngine.player(2).influenceDeck().receiveScrambled( new TheDuke());
 
         // when
         gameEngine.setPlayerDoingTheAction(gameEngine.player(1));
@@ -166,22 +166,22 @@ public class ActionStealShould extends TestingActions {
         action.doBlockAction();
 
         // then
-        Assertions.assertEquals(46, gameEngine.treasury());
+        Assertions.assertEquals(46, gameEngine.treasury().coins());
 
         Assertions.assertEquals(2, gameEngine.player(1).cardsInGame());
-        Assertions.assertEquals(2, gameEngine.player(1).coins());
+        Assertions.assertEquals(2, gameEngine.player(1).wallet().coins());
 
         Assertions.assertEquals(2, gameEngine.player(2).cardsInGame());
-        Assertions.assertEquals(2, gameEngine.player(2).coins());
+        Assertions.assertEquals(2, gameEngine.player(2).wallet().coins());
     }
 
     // BlockAction bluff can't be called over the player doing the BlockAction (Engine integrity test)
     @Test
     void player_does_action_and_gets_block_then_the_player_blocking_challenge_himself()  {
         // given
-        gameEngine.player(2).influenceDeck().clear();
-        gameEngine.player(2).influenceDeck().add(0, new TheDuke());
-        gameEngine.player(2).influenceDeck().add(1, new TheDuke());
+        gameEngine.player(2).influenceDeck().cards().clear();
+        gameEngine.player(2).influenceDeck().receiveScrambled( new TheDuke());
+        gameEngine.player(2).influenceDeck().receiveScrambled( new TheDuke());
 
         // when
         gameEngine.setPlayerDoingTheAction(gameEngine.player(1));
@@ -202,9 +202,9 @@ public class ActionStealShould extends TestingActions {
     @Test
     void player_does_action_and_gets_block_by_captain_but_a_player_calls_the_bluff_on_the_block_and_wins_the_call()  {
         // given
-        gameEngine.player(2).influenceDeck().clear();
-        gameEngine.player(2).influenceDeck().add(0, new TheDuke());
-        gameEngine.player(2).influenceDeck().add(1, new TheDuke());
+        gameEngine.player(2).influenceDeck().cards().clear();
+        gameEngine.player(2).influenceDeck().receiveScrambled( new TheDuke());
+        gameEngine.player(2).influenceDeck().receiveScrambled( new TheDuke());
 
         // when
         gameEngine.setPlayerDoingTheAction(gameEngine.player(1));
@@ -218,13 +218,13 @@ public class ActionStealShould extends TestingActions {
         action.doCallTheBluffOnBlockAction();
 
         // then
-        Assertions.assertEquals(46, gameEngine.treasury());
+        Assertions.assertEquals(46, gameEngine.treasury().coins());
 
         Assertions.assertEquals(2, gameEngine.player(1).cardsInGame());
-        Assertions.assertEquals(4, gameEngine.player(1).coins());
+        Assertions.assertEquals(4, gameEngine.player(1).wallet().coins());
 
         Assertions.assertEquals(1, gameEngine.player(2).cardsInGame());
-        Assertions.assertEquals(0, gameEngine.player(2).coins());
+        Assertions.assertEquals(0, gameEngine.player(2).wallet().coins());
     }
 
     // Action can be blocked (by Captain)
@@ -233,9 +233,9 @@ public class ActionStealShould extends TestingActions {
     @Test
     void player_does_action_and_gets_block_by_captain_but_a_player_calls_the_bluff_on_the_block_and_lose_the_call()  {
         // given
-        gameEngine.player(2).influenceDeck().clear();
-        gameEngine.player(2).influenceDeck().add(0, new TheCaptain());
-        gameEngine.player(2).influenceDeck().add(1, new TheDuke());
+        gameEngine.player(2).influenceDeck().cards().clear();
+        gameEngine.player(2).influenceDeck().receiveScrambled( new TheCaptain());
+        gameEngine.player(2).influenceDeck().receiveScrambled( new TheDuke());
 
         // when
         gameEngine.setPlayerDoingTheAction(gameEngine.player(1));
@@ -249,13 +249,13 @@ public class ActionStealShould extends TestingActions {
         action.doCallTheBluffOnBlockAction();
 
         // then
-        Assertions.assertEquals(46, gameEngine.treasury());
+        Assertions.assertEquals(46, gameEngine.treasury().coins());
 
         Assertions.assertEquals(1, gameEngine.player(1).cardsInGame());
-        Assertions.assertEquals(2, gameEngine.player(1).coins());
+        Assertions.assertEquals(2, gameEngine.player(1).wallet().coins());
 
         Assertions.assertEquals(2, gameEngine.player(2).cardsInGame());
-        Assertions.assertEquals(2, gameEngine.player(2).coins());
+        Assertions.assertEquals(2, gameEngine.player(2).wallet().coins());
 
     }
 
@@ -263,9 +263,9 @@ public class ActionStealShould extends TestingActions {
     @Test
     void player_does_action_and_gets_block_by_ambassador()  {
         // given
-        gameEngine.player(2).influenceDeck().clear();
-        gameEngine.player(2).influenceDeck().add(0, new TheAmbassador());
-        gameEngine.player(2).influenceDeck().add(1, new TheDuke());
+        gameEngine.player(2).influenceDeck().cards().clear();
+        gameEngine.player(2).influenceDeck().receiveScrambled( new TheAmbassador());
+        gameEngine.player(2).influenceDeck().receiveScrambled( new TheDuke());
 
         // when
         gameEngine.setPlayerDoingTheAction(gameEngine.player(1));
@@ -276,13 +276,13 @@ public class ActionStealShould extends TestingActions {
         action.doBlockAction();
 
         // then
-        Assertions.assertEquals(46, gameEngine.treasury());
+        Assertions.assertEquals(46, gameEngine.treasury().coins());
 
         Assertions.assertEquals(2, gameEngine.player(1).cardsInGame());
-        Assertions.assertEquals(2, gameEngine.player(1).coins());
+        Assertions.assertEquals(2, gameEngine.player(1).wallet().coins());
 
         Assertions.assertEquals(2, gameEngine.player(2).cardsInGame());
-        Assertions.assertEquals(2, gameEngine.player(2).coins());
+        Assertions.assertEquals(2, gameEngine.player(2).wallet().coins());
     }
 
     // Action can be blocked (by Ambassador)
@@ -291,9 +291,9 @@ public class ActionStealShould extends TestingActions {
     @Test
     void player_does_action_and_gets_block_by_ambassador_but_a_player_calls_the_bluff_on_the_block_and_wins_the_call()  {
         // given
-        gameEngine.player(2).influenceDeck().clear();
-        gameEngine.player(2).influenceDeck().add(0, new TheAmbassador());
-        gameEngine.player(2).influenceDeck().add(1, new TheDuke());
+        gameEngine.player(2).influenceDeck().cards().clear();
+        gameEngine.player(2).influenceDeck().receiveScrambled( new TheAmbassador());
+        gameEngine.player(2).influenceDeck().receiveScrambled( new TheDuke());
 
         // when
         gameEngine.setPlayerDoingTheAction(gameEngine.player(1));
@@ -307,13 +307,13 @@ public class ActionStealShould extends TestingActions {
         action.doCallTheBluffOnBlockAction();
 
         // then
-        Assertions.assertEquals(46, gameEngine.treasury());
+        Assertions.assertEquals(46, gameEngine.treasury().coins());
 
         Assertions.assertEquals(1, gameEngine.player(1).cardsInGame());
-        Assertions.assertEquals(2, gameEngine.player(1).coins());
+        Assertions.assertEquals(2, gameEngine.player(1).wallet().coins());
 
         Assertions.assertEquals(2, gameEngine.player(2).cardsInGame());
-        Assertions.assertEquals(2, gameEngine.player(2).coins());
+        Assertions.assertEquals(2, gameEngine.player(2).wallet().coins());
     }
 
 }

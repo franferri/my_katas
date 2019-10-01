@@ -1,7 +1,7 @@
 package coup.actions;
 
 import coup.Action;
-import coup.GameEngine;
+import coup.TheTable;
 
 public final class Steal extends Action {
 
@@ -18,18 +18,18 @@ public final class Steal extends Action {
     public Steal() {
     }
 
-    public Steal(final GameEngine gameEngine) {
-        super(gameEngine);
+    public Steal(final TheTable theTable) {
+        super(theTable);
     }
 
     // Action
     public void doActionInternal()  {
-        getGameEngine().playerTakesCoinsFromOtherPlayer(getGameEngine().getPlayerDoingTheAction(), getGameEngine().getTargetPlayer(), 2);
+        getTheTable().playerTakesCoinsFromOtherPlayer(getTheTable().getPlayerDoingTheAction(), getTheTable().getTargetPlayer(), 2);
     }
 
     // Block Action
     public void doBlockActionInternal()  {
-        getGameEngine().playerTakesCoinsFromOtherPlayer(getGameEngine().getTargetPlayer(), getGameEngine().getPlayerDoingTheAction(), 2);
+        getTheTable().playerTakesCoinsFromOtherPlayer(getTheTable().getTargetPlayer(), getTheTable().getPlayerDoingTheAction(), 2);
     }
 
 }

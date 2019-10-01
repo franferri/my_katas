@@ -1,7 +1,7 @@
 package coup.actions;
 
 import coup.Action;
-import coup.GameEngine;
+import coup.TheTable;
 
 public final class ForeignAid extends Action {
 
@@ -14,8 +14,8 @@ public final class ForeignAid extends Action {
     public ForeignAid() {
     }
 
-    public ForeignAid(final GameEngine gameEngine) {
-        super(gameEngine);
+    public ForeignAid(final TheTable theTable) {
+        super(theTable);
     }
 
     // Setup
@@ -25,12 +25,12 @@ public final class ForeignAid extends Action {
 
     // Action
     public void doActionInternal() {
-        getGameEngine().playerTakeCoinsFromTreasury(getGameEngine().getPlayerDoingTheAction(), 2);
+        getTheTable().playerTakeCoinsFromTreasury(getTheTable().getPlayerDoingTheAction(), 2);
     }
 
     // Block Action
     public void doBlockActionInternal() {
-        getGameEngine().playerReturnCoinsToTreasury(getGameEngine().getPlayerDoingTheAction(), 2);
+        getTheTable().playerReturnCoinsToTreasury(getTheTable().getPlayerDoingTheAction(), 2);
     }
 
 }

@@ -17,7 +17,7 @@ public class ActionAssassinateShould extends TestingActions {
     // Block can be challenged
 
     @BeforeEach
-    protected void before()  {
+    protected void before() {
         super.before();
         action = new Assassinate(gameEngine);
     }
@@ -36,7 +36,7 @@ public class ActionAssassinateShould extends TestingActions {
     @Test
     void player_does_action_to_himself() {
         // given
-        gameEngine.player(1).gainCoin();
+        gameEngine.player(1).wallet().receive(1);
 
         // when
         gameEngine.setPlayerDoingTheAction(gameEngine.player(1));
@@ -47,9 +47,9 @@ public class ActionAssassinateShould extends TestingActions {
 
     // Action
     @Test
-    void player_does_action()  {
+    void player_does_action() {
         // given
-        gameEngine.player(1).gainCoin();
+        gameEngine.player(1).wallet().receive(1);
 
         // when
         gameEngine.setPlayerDoingTheAction(gameEngine.player(1));
@@ -59,20 +59,20 @@ public class ActionAssassinateShould extends TestingActions {
 
         // then
         Assertions.assertEquals(2, gameEngine.player(1).cardsInGame());
-        Assertions.assertEquals(0, gameEngine.player(1).coins());
+        Assertions.assertEquals(0, gameEngine.player(1).wallet().coins());
 
         Assertions.assertEquals(1, gameEngine.player(2).cardsInGame());
-        Assertions.assertEquals(2, gameEngine.player(2).coins());
+        Assertions.assertEquals(2, gameEngine.player(2).wallet().coins());
     }
 
     // Player cant challenge himself (Engine integrity test)
     @Test
-    void player_does_action_and_challenge_himself()  {
+    void player_does_action_and_challenge_himself() {
         // given
-        gameEngine.player(1).influenceDeck().clear();
-        gameEngine.player(1).influenceDeck().add(0, new TheAmbassador());
-        gameEngine.player(1).influenceDeck().add(0, new TheAmbassador());
-        gameEngine.player(1).gainCoin();
+        gameEngine.player(1).influenceDeck().cards().clear();
+        gameEngine.player(1).influenceDeck().receiveScrambled( new TheAmbassador());
+        gameEngine.player(1).influenceDeck().receiveScrambled( new TheAmbassador());
+        gameEngine.player(1).wallet().receive(1);
 
         // when
         gameEngine.setPlayerDoingTheAction(gameEngine.player(1));
@@ -87,12 +87,12 @@ public class ActionAssassinateShould extends TestingActions {
     // Action can be challenged
     // Challenger (wins)
     @Test
-    void player_does_action_and_other_player_calls_the_bluff_and_wins_the_call()  {
+    void player_does_action_and_other_player_calls_the_bluff_and_wins_the_call() {
         // given
-        gameEngine.player(1).influenceDeck().clear();
-        gameEngine.player(1).influenceDeck().add(0, new TheAmbassador());
-        gameEngine.player(1).influenceDeck().add(0, new TheAmbassador());
-        gameEngine.player(1).gainCoin();
+        gameEngine.player(1).influenceDeck().cards().clear();
+        gameEngine.player(1).influenceDeck().receiveScrambled( new TheAmbassador());
+        gameEngine.player(1).influenceDeck().receiveScrambled( new TheAmbassador());
+        gameEngine.player(1).wallet().receive(1);
 
         // when
         gameEngine.setPlayerDoingTheAction(gameEngine.player(1));
@@ -103,24 +103,24 @@ public class ActionAssassinateShould extends TestingActions {
         action.doCallTheBluffOnAction();
 
         // then
-        Assertions.assertEquals(49, gameEngine.treasury());
+        Assertions.assertEquals(49, gameEngine.treasury().coins());
 
         Assertions.assertEquals(1, gameEngine.player(1).cardsInGame());
-        Assertions.assertEquals(0, gameEngine.player(1).coins());
+        Assertions.assertEquals(0, gameEngine.player(1).wallet().coins());
 
         Assertions.assertEquals(2, gameEngine.player(2).cardsInGame());
-        Assertions.assertEquals(2, gameEngine.player(2).coins());
+        Assertions.assertEquals(2, gameEngine.player(2).wallet().coins());
     }
 
     // Action can be challenged
     // Challenger (lose)
     @Test
-    void player_does_action_and_other_calls_the_bluff_and_lose_the_call()  {
+    void player_does_action_and_other_calls_the_bluff_and_lose_the_call() {
         // given
-        gameEngine.player(1).influenceDeck().clear();
-        gameEngine.player(1).influenceDeck().add(0, new TheAssassin());
-        gameEngine.player(1).influenceDeck().add(0, new TheAmbassador());
-        gameEngine.player(1).gainCoin();
+        gameEngine.player(1).influenceDeck().cards().clear();
+        gameEngine.player(1).influenceDeck().receiveScrambled( new TheAssassin());
+        gameEngine.player(1).influenceDeck().receiveScrambled( new TheAmbassador());
+        gameEngine.player(1).wallet().receive(1);
 
         // when
         gameEngine.setPlayerDoingTheAction(gameEngine.player(1));
@@ -131,10 +131,10 @@ public class ActionAssassinateShould extends TestingActions {
         action.doCallTheBluffOnAction();
 
         // then
-        Assertions.assertEquals(49, gameEngine.treasury());
+        Assertions.assertEquals(49, gameEngine.treasury().coins());
 
         Assertions.assertEquals(2, gameEngine.player(1).cardsInGame());
-        Assertions.assertEquals(0, gameEngine.player(1).coins());
+        Assertions.assertEquals(0, gameEngine.player(1).wallet().coins());
 
         Assertions.assertEquals(0, gameEngine.player(2).cardsInGame());
         Assertions.assertTrue(gameEngine.player(2).isDead());
@@ -142,9 +142,9 @@ public class ActionAssassinateShould extends TestingActions {
 
     // Player cant block himself (Engine integrity test)
     @Test
-    void player_does_action_and_blocks_himself()  {
+    void player_does_action_and_blocks_himself() {
         // given
-        gameEngine.player(1).gainCoin();
+        gameEngine.player(1).wallet().receive(1);
 
         // when
         gameEngine.setPlayerDoingTheAction(gameEngine.player(1));
@@ -158,9 +158,9 @@ public class ActionAssassinateShould extends TestingActions {
 
     // Action can be blocked
     @Test
-    void player_does_action_and_gets_block()  {
+    void player_does_action_and_gets_block() {
         // given
-        gameEngine.player(1).gainCoin();
+        gameEngine.player(1).wallet().receive(1);
 
         // when
         gameEngine.setPlayerDoingTheAction(gameEngine.player(1));
@@ -172,22 +172,22 @@ public class ActionAssassinateShould extends TestingActions {
 
         // then
         Assertions.assertEquals(2, gameEngine.player(1).cardsInGame());
-        Assertions.assertEquals(0, gameEngine.player(1).coins());
+        Assertions.assertEquals(0, gameEngine.player(1).wallet().coins());
 
         Assertions.assertEquals(2, gameEngine.player(2).cardsInGame());
-        Assertions.assertEquals(2, gameEngine.player(2).coins());
+        Assertions.assertEquals(2, gameEngine.player(2).wallet().coins());
     }
 
     // BlockAction bluff can't be called over the player doing the BlockAction (Engine integrity test)
     @Test
-    void player_does_action_and_gets_block_then_the_player_blocking_challenge_himself()  {
+    void player_does_action_and_gets_block_then_the_player_blocking_challenge_himself() {
         // given
-        gameEngine.player(1).gainCoin();
+        gameEngine.player(1).wallet().receive(1);
 
         // given
-        gameEngine.player(2).influenceDeck().clear();
-        gameEngine.player(2).influenceDeck().add(0, new TheAmbassador());
-        gameEngine.player(2).influenceDeck().add(1, new TheAmbassador());
+        gameEngine.player(2).influenceDeck().cards().clear();
+        gameEngine.player(2).influenceDeck().receiveScrambled( new TheAmbassador());
+        gameEngine.player(2).influenceDeck().receiveScrambled( new TheAmbassador());
 
         // when
         gameEngine.setPlayerDoingTheAction(gameEngine.player(1));
@@ -207,14 +207,14 @@ public class ActionAssassinateShould extends TestingActions {
     // Block can be challenged
     // Challenger wins
     @Test
-    void player_does_action_and_gets_block_but_a_player_calls_the_bluff_on_the_block_and_wins_the_call()  {
+    void player_does_action_and_gets_block_but_a_player_calls_the_bluff_on_the_block_and_wins_the_call() {
         // given
-        gameEngine.player(1).gainCoin();
+        gameEngine.player(1).wallet().receive(1);
 
         // given
-        gameEngine.player(2).influenceDeck().clear();
-        gameEngine.player(2).influenceDeck().add(0, new TheAmbassador());
-        gameEngine.player(2).influenceDeck().add(1, new TheAmbassador());
+        gameEngine.player(2).influenceDeck().cards().clear();
+        gameEngine.player(2).influenceDeck().receiveScrambled( new TheAmbassador());
+        gameEngine.player(2).influenceDeck().receiveScrambled( new TheAmbassador());
 
         // when
         gameEngine.setPlayerDoingTheAction(gameEngine.player(1));
@@ -230,7 +230,7 @@ public class ActionAssassinateShould extends TestingActions {
 
         // then
         Assertions.assertEquals(2, gameEngine.player(1).cardsInGame());
-        Assertions.assertEquals(0, gameEngine.player(1).coins());
+        Assertions.assertEquals(0, gameEngine.player(1).wallet().coins());
 
         Assertions.assertEquals(0, gameEngine.player(2).cardsInGame());
         Assertions.assertTrue(gameEngine.player(2).isDead());
@@ -240,14 +240,14 @@ public class ActionAssassinateShould extends TestingActions {
     // Block can be challenged
     // Challenger lose
     @Test
-    void player_does_action_and_gets_block_but_a_player_calls_the_bluff_on_the_block_and_lose_the_call()  {
+    void player_does_action_and_gets_block_but_a_player_calls_the_bluff_on_the_block_and_lose_the_call() {
         // given
-        gameEngine.player(1).gainCoin();
+        gameEngine.player(1).wallet().receive(1);
 
         // given
-        gameEngine.player(2).influenceDeck().clear();
-        gameEngine.player(2).influenceDeck().add(0, new TheContessa());
-        gameEngine.player(2).influenceDeck().add(1, new TheAmbassador());
+        gameEngine.player(2).influenceDeck().cards().clear();
+        gameEngine.player(2).influenceDeck().receiveScrambled(new TheContessa());
+        gameEngine.player(2).influenceDeck().receiveScrambled(new TheAmbassador());
 
         // when
         gameEngine.setPlayerDoingTheAction(gameEngine.player(1));
@@ -263,10 +263,10 @@ public class ActionAssassinateShould extends TestingActions {
 
         // then
         Assertions.assertEquals(1, gameEngine.player(1).cardsInGame());
-        Assertions.assertEquals(0, gameEngine.player(1).coins());
+        Assertions.assertEquals(0, gameEngine.player(1).wallet().coins());
 
         Assertions.assertEquals(2, gameEngine.player(2).cardsInGame());
-        Assertions.assertEquals(2, gameEngine.player(2).coins());
+        Assertions.assertEquals(2, gameEngine.player(2).wallet().coins());
 
     }
 

@@ -1,7 +1,7 @@
 package simulation;
 
 import coup.Card;
-import coup.Game;
+import coup.COUP;
 import coup.Player;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class RandomGameShould {
 
-    private Game game;
+    private COUP game;
 
     private int actions = 7;
     Random random = new Random();
@@ -28,32 +28,32 @@ class RandomGameShould {
         int targetedPlayer;
         switch (randomAction) {
             case 0:
-                game.playerTakesIncomeFromTreasury();
+                game.actionPlayerTakesIncomeFromTreasury();
                 break;
             case 1:
-                game.playerTakesForeignAidFromTreasury();
+                game.actionPlayerTakesForeignAidFromTreasury();
                 break;
             case 2:
-                targetedPlayer = random.nextInt(game.gameEngine().playersStillInTheGame());
-                game.playerCoups7(targetedPlayer + 1);
+                targetedPlayer = random.nextInt(game.theTable().playersStillInTheGame());
+                game.actionPlayerCoups7(targetedPlayer + 1);
                 break;
             case 3:
-                targetedPlayer = random.nextInt(game.gameEngine().playersStillInTheGame());
-                game.playerCoups10(targetedPlayer + 1);
+                targetedPlayer = random.nextInt(game.theTable().playersStillInTheGame());
+                game.actionPlayerCoups10(targetedPlayer + 1);
                 break;
             case 4:
-                game.playerTakesTaxesFromTreasury();
+                game.actionPlayerTakesTaxesFromTreasury();
                 break;
             case 5:
-                targetedPlayer = random.nextInt(game.gameEngine().playersStillInTheGame());
-                game.playerAssassinates(targetedPlayer + 1);
+                targetedPlayer = random.nextInt(game.theTable().playersStillInTheGame());
+                game.actionPlayerAssassinates(targetedPlayer + 1);
                 break;
             case 6:
-                game.playerExchangesCardsFromTheCourtDeck();
+                game.actionPlayerExchangesCardsFromTheCourtDeck();
                 break;
             case 7:
-                targetedPlayer = random.nextInt(game.gameEngine().playersStillInTheGame());
-                game.playerStealsFrom(targetedPlayer + 1);
+                targetedPlayer = random.nextInt(game.theTable().playersStillInTheGame());
+                game.actionPlayerStealsFrom(targetedPlayer + 1);
                 break;
 
             default:
@@ -61,7 +61,7 @@ class RandomGameShould {
         }
 
         assertGame(game);
-        weHaveAWinner = game.gameEngine().whoIsTheWinner();
+        weHaveAWinner = game.theTable().whoIsTheWinner();
         if (weHaveAWinner > -1) return weHaveAWinner;
 
         int randomChallenge = random.nextInt(2);
@@ -69,10 +69,10 @@ class RandomGameShould {
         int playerBlocking;
         if (randomChallenge == 1) {
             checkGameStatus(game);
-            playerCallingTheBluff = random.nextInt(game.gameEngine().playersStillInTheGame());
-            game.playerCallsTheBluff(playerCallingTheBluff + 1);
+            playerCallingTheBluff = random.nextInt(game.theTable().playersStillInTheGame());
+            game.actionPlayerCallsTheBluff(playerCallingTheBluff + 1);
             assertGame(game);
-            weHaveAWinner = game.gameEngine().whoIsTheWinner();
+            weHaveAWinner = game.theTable().whoIsTheWinner();
             if (weHaveAWinner > -1) return weHaveAWinner;
 
         } else {
@@ -80,10 +80,10 @@ class RandomGameShould {
             int randomBlock = random.nextInt(2);
             if (randomBlock == 1) {
                 checkGameStatus(game);
-                playerBlocking = random.nextInt(game.gameEngine().playersStillInTheGame());
-                game.playerBlocks(playerBlocking + 1);
+                playerBlocking = random.nextInt(game.theTable().playersStillInTheGame());
+                game.actionPlayerBlocks(playerBlocking + 1);
                 assertGame(game);
-                weHaveAWinner = game.gameEngine().whoIsTheWinner();
+                weHaveAWinner = game.theTable().whoIsTheWinner();
                 if (weHaveAWinner > -1) return weHaveAWinner;
 
             } else {
@@ -91,10 +91,10 @@ class RandomGameShould {
                 randomChallenge = random.nextInt(2);
                 if (randomChallenge == 1) {
                     checkGameStatus(game);
-                    playerCallingTheBluff = random.nextInt(game.gameEngine().playersStillInTheGame());
-                    game.playerCallsTheBluff(playerCallingTheBluff + 1);
+                    playerCallingTheBluff = random.nextInt(game.theTable().playersStillInTheGame());
+                    game.actionPlayerCallsTheBluff(playerCallingTheBluff + 1);
                     assertGame(game);
-                    weHaveAWinner = game.gameEngine().whoIsTheWinner();
+                    weHaveAWinner = game.theTable().whoIsTheWinner();
                     if (weHaveAWinner > -1) return weHaveAWinner;
 
                 }
@@ -120,13 +120,13 @@ class RandomGameShould {
             int players = random.nextInt(5);
 
             // given
-            game = new Game();
+            game = new COUP();
 
             for (int j = 0; j < players + 2; j++) {
-                game.gameEngine().addPlayer("TEST");
+                game.theTable().addPlayer();
             }
 
-            game.gameEngine().startGame();
+            game.theTable().startGame();
 
             int weHaveAWinner = -1;
             while (weHaveAWinner < 0) {
@@ -156,11 +156,11 @@ class RandomGameShould {
 
     }
 
-    private void checkGameStatus(Game game) {
+    private void checkGameStatus(COUP game) {
         // Print the status
 
-        List<Card> cards = game.gameEngine().deck().cardsForTesting();
-        List<Player> players = game.gameEngine().getPlayers();
+        List<Card> cards = game.theTable().courtDeck().cards();
+        List<Player> players = game.theTable().getPlayers();
 
         System.out.println("------------------------------------------");
 
@@ -177,7 +177,7 @@ class RandomGameShould {
         Player player;
         for (int i = 0; i < players.size(); i++) {
             player = players.get(i);
-            quantifyCards(player.influenceDeck(), quantifiedCards);
+            quantifyCards(player.influenceDeck().cards(), quantifiedCards);
         }
         sb.append(", cards in players hands: ");
 
@@ -193,24 +193,24 @@ class RandomGameShould {
 
         sb = new StringBuilder();
         int totalCoinsInGame = 0;
-        totalCoinsInGame += game.gameEngine().treasury();
-        sb.append("   Treasury coins: " + game.gameEngine().treasury());
+        totalCoinsInGame += game.theTable().treasury().coins();
+        sb.append("   Treasury coins: " + game.theTable().treasury().coins());
         for (int i = 0; i < players.size(); i++) {
             player = players.get(i);
-            totalCoinsInGame += player.coins();
-            sb.append(", player " + i + ": " + player.coins());
+            totalCoinsInGame += player.wallet().coins();
+            sb.append(", player " + i + ": " + player.wallet().coins());
         }
         sb.append(", total coins in game: " + totalCoinsInGame);
         System.out.println(sb.toString());
 
-        System.out.println("   Current player playing: " + game.gameEngine().getCurrentPlayerPlaying());
+        System.out.println("   Current player playing: " + game.theTable().getCurrentPlayerPlaying());
         //System.out.println("   Player doing the action: " + game.gameEngine().playerDoingTheAction.name());
         //System.out.println("   Player blocking the action: " + game.gameEngine().playerBlockingTheAction.name());
         //System.out.println("   Player challenging the action: " + game.gameEngine().playerCallingTheBluff.name());
 
     }
 
-    private boolean assertGame(Game game) {
+    private boolean assertGame(COUP game) {
 
         // We need to assert, before and after the action:
 

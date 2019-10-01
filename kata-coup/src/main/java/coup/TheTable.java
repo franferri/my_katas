@@ -1,18 +1,22 @@
 package coup;
 
+import coup.coins.Coins;
+import coup.coins.Treasury;
+import coup.decks.CourtDeck;
+import coup.decks.Deck;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public final class GameEngine {
+public final class TheTable {
 
-    private static final int FIFTY = 50;
-    private static final int SIX = 6;
-    private static final int TWO = 2;
+    private static final int MAX_PLAYERS = 6;
+    private static final int MIN_PLAYERS = 2;
+
+    private Treasury treasury;
+    private CourtDeck courtDeck;
 
     private final List<Player> players = new ArrayList<>();
-
-    private int treasury;
-    private Deck deck;
 
     private Player playerDoingTheAction;
     private Player playerBlockingTheAction;
@@ -20,26 +24,27 @@ public final class GameEngine {
 
     private Player targetPlayer;
 
-    public GameEngine() {
-        treasury = FIFTY;
-        this.deck = new Deck();
-        this.deck.shuffle();
+    public TheTable() {
+        treasury = new Treasury();
+
+        courtDeck = new CourtDeck();
+        courtDeck.shuffle();
     }
 
-    public int treasury() {
+    public Coins treasury() {
         return treasury;
     }
 
-    public Deck deck() {
-        return deck;
+    public Deck courtDeck() {
+        return courtDeck;
     }
 
     public void startGame() {
 
-        if (getPlayers().size() < TWO) {
+        if (getPlayers().size() < MIN_PLAYERS) {
             throw new RuntimeException("Need more onlinePlayers");
         }
-        if (getPlayers().size() > SIX) {
+        if (getPlayers().size() > MAX_PLAYERS) {
             throw new RuntimeException("Only 6 onlinePlayers allowed");
         }
 
@@ -50,45 +55,45 @@ public final class GameEngine {
 
     }
 
-    public Player addPlayer(final String playerName) {
-        Player player = new Player(playerName);
+    public Player addPlayer() {
+        Player player = new Player();
         this.getPlayers().add(player);
         return player;
     }
 
     public void playerReturnCoinsToTreasury(final Player player, final int coins) {
-        if (player.coins() < coins) {
+        if (player.wallet().coins() < coins) {
             throw new RuntimeException("Player don't have enough coins");
         }
         for (int i = 0; i < coins; i++) {
-            player.looseCoin();
-            ++treasury;
+            player.wallet().deal(1);
+            treasury.receive(1);
         }
     }
 
     public void playerTakeCoinsFromTreasury(final Player player, final int coins) {
-        if (treasury < coins) {
+        if (treasury.coins() < coins) {
             throw new RuntimeException("Treasury depleted");
         }
         for (int i = 0; i < coins; i++) {
-            --treasury;
-            player.gainCoin();
+            treasury.deal(1);
+            player.wallet().receive(1);
         }
     }
 
     public void playerTakesCoinsFromOtherPlayer(final Player playerTaking, final Player playerLosing, final int coins) {
-        if (playerLosing.coins() < coins) {
+        if (playerLosing.wallet().coins() < coins) {
             throw new RuntimeException("Player is broke and we can't take more coins from it");
         }
         for (int i = 0; i < coins; i++) {
-            playerLosing.looseCoin();
-            playerTaking.gainCoin();
+            playerLosing.wallet().deal(1);
+            playerTaking.wallet().receive(1);
         }
     }
 
     public void dealCardsToThePlayer(final Player player) {
         for (int i = 0; i < 2; i++) {
-            player.influenceDeck().add(deck.deal());
+            player.influenceDeck().receiveScrambled(courtDeck.dealFromTheTop());
         }
     }
 
@@ -152,6 +157,22 @@ public final class GameEngine {
         return playersAlive;
     }
 
+    public void nextPlay() {
+        nextPlay(null);
+    }
+
+    public void nextPlay(final Integer targetedPlayer) {
+        resetStatus();
+
+        calculatePlayerPlaying();
+        setPlayerDoingTheAction(player(getCurrentPlayerPlaying()));
+
+        if (null != targetedPlayer) {
+            setTargetPlayer(player(targetedPlayer));
+        }
+
+    }
+
     public void resetStatus() {
         setPlayerDoingTheAction(null);
         setPlayerBlockingTheAction(null);
@@ -202,4 +223,5 @@ public final class GameEngine {
     public void setCurrentPlayerPlaying(final int currentPlayerPlaying) {
         this.currentPlayerPlaying = currentPlayerPlaying;
     }
+
 }
