@@ -2,7 +2,7 @@ package coup.coins;
 
 public class Coins {
 
-    protected static final int MAX_COINS = 50;
+    static final int MAX_COINS = 50;
     private static final int MIN_COINS = 0;
 
     protected int coins;

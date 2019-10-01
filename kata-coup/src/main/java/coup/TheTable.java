@@ -4,19 +4,22 @@ import coup.coins.Coins;
 import coup.coins.Treasury;
 import coup.decks.CourtDeck;
 import coup.decks.Deck;
+import coup.players.Player;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public final class TheTable {
 
+    private Treasury treasury;
+
+    private CourtDeck courtDeck;
+
     private static final int MAX_PLAYERS = 6;
     private static final int MIN_PLAYERS = 2;
 
-    private Treasury treasury;
-    private CourtDeck courtDeck;
-
-    private final List<Player> players = new ArrayList<>();
+    private final List<Player> livePlayers = new ArrayList<>();
+    private final List<Player> deadPlayers = new ArrayList<>();
 
     private Player playerDoingTheAction;
     private Player playerBlockingTheAction;
@@ -39,16 +42,20 @@ public final class TheTable {
         return courtDeck;
     }
 
+    public List<Player> livePlayers() {
+        return livePlayers;
+    }
+
     public void startGame() {
 
-        if (getPlayers().size() < MIN_PLAYERS) {
+        if (livePlayers().size() < MIN_PLAYERS) {
             throw new RuntimeException("Need more onlinePlayers");
         }
-        if (getPlayers().size() > MAX_PLAYERS) {
+        if (livePlayers().size() > MAX_PLAYERS) {
             throw new RuntimeException("Only 6 onlinePlayers allowed");
         }
 
-        for (Player player : getPlayers()) {
+        for (Player player : livePlayers()) {
             playerTakeCoinsFromTreasury(player, 2);
             dealCardsToThePlayer(player);
         }
@@ -57,7 +64,7 @@ public final class TheTable {
 
     public Player addPlayer() {
         Player player = new Player();
-        this.getPlayers().add(player);
+        this.livePlayers().add(player);
         return player;
     }
 
@@ -98,13 +105,13 @@ public final class TheTable {
     }
 
     public Player player(final int player) {
-        return getPlayers().get(player - 1);
+        return livePlayers().get(player - 1);
     }
 
     public int whoIsTheWinner() {
-        int playersAlive = getPlayers().size();
+        int playersAlive = livePlayers().size();
         Player winner = null;
-        for (Player player : getPlayers()) {
+        for (Player player : livePlayers()) {
             if (player.isDead()) {
                 --playersAlive;
             } else {
@@ -113,7 +120,7 @@ public final class TheTable {
         }
 
         if (playersAlive == 1) {
-            return getPlayers().indexOf(winner) + 1;
+            return livePlayers().indexOf(winner) + 1;
         } else {
             return -1;
         }
@@ -125,16 +132,16 @@ public final class TheTable {
 
         int nextPlayer = getCurrentPlayerPlaying() + 1;
 
-        if (nextPlayer > getPlayers().size()) {
+        if (nextPlayer > livePlayers().size()) {
             nextPlayer = 1;
         }
 
-        for (int i = 0; i < getPlayers().size(); i++) {
+        for (int i = 0; i < livePlayers().size(); i++) {
 
             if (player(nextPlayer).isDead()) {
                 ++nextPlayer;
 
-                if (nextPlayer > getPlayers().size()) {
+                if (nextPlayer > livePlayers().size()) {
                     nextPlayer = 1;
                 }
 
@@ -148,8 +155,8 @@ public final class TheTable {
     }
 
     public int playersStillInTheGame() {
-        int playersAlive = getPlayers().size();
-        for (Player player : getPlayers()) {
+        int playersAlive = livePlayers().size();
+        for (Player player : livePlayers()) {
             if (player.isDead()) {
                 --playersAlive;
             }
@@ -180,9 +187,7 @@ public final class TheTable {
         setTargetPlayer(null);
     }
 
-    public List<Player> getPlayers() {
-        return players;
-    }
+
 
     public Player getPlayerDoingTheAction() {
         return playerDoingTheAction;

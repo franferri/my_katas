@@ -58,10 +58,10 @@ public class ActionAssassinateShould extends TestingActions {
         action.doAction();
 
         // then
-        Assertions.assertEquals(2, gameEngine.player(1).cardsInGame());
+        Assertions.assertEquals(2, gameEngine.player(1).influenceDeck().cards().size());
         Assertions.assertEquals(0, gameEngine.player(1).wallet().coins());
 
-        Assertions.assertEquals(1, gameEngine.player(2).cardsInGame());
+        Assertions.assertEquals(1, gameEngine.player(2).influenceDeck().cards().size());
         Assertions.assertEquals(2, gameEngine.player(2).wallet().coins());
     }
 
@@ -105,10 +105,10 @@ public class ActionAssassinateShould extends TestingActions {
         // then
         Assertions.assertEquals(49, gameEngine.treasury().coins());
 
-        Assertions.assertEquals(1, gameEngine.player(1).cardsInGame());
+        Assertions.assertEquals(1, gameEngine.player(1).influenceDeck().cards().size());
         Assertions.assertEquals(0, gameEngine.player(1).wallet().coins());
 
-        Assertions.assertEquals(2, gameEngine.player(2).cardsInGame());
+        Assertions.assertEquals(2, gameEngine.player(2).influenceDeck().cards().size());
         Assertions.assertEquals(2, gameEngine.player(2).wallet().coins());
     }
 
@@ -133,10 +133,10 @@ public class ActionAssassinateShould extends TestingActions {
         // then
         Assertions.assertEquals(49, gameEngine.treasury().coins());
 
-        Assertions.assertEquals(2, gameEngine.player(1).cardsInGame());
+        Assertions.assertEquals(2, gameEngine.player(1).influenceDeck().cards().size());
         Assertions.assertEquals(0, gameEngine.player(1).wallet().coins());
 
-        Assertions.assertEquals(0, gameEngine.player(2).cardsInGame());
+        Assertions.assertEquals(0, gameEngine.player(2).influenceDeck().cards().size());
         Assertions.assertTrue(gameEngine.player(2).isDead());
     }
 
@@ -171,10 +171,10 @@ public class ActionAssassinateShould extends TestingActions {
         action.doBlockAction();
 
         // then
-        Assertions.assertEquals(2, gameEngine.player(1).cardsInGame());
+        Assertions.assertEquals(2, gameEngine.player(1).influenceDeck().cards().size());
         Assertions.assertEquals(0, gameEngine.player(1).wallet().coins());
 
-        Assertions.assertEquals(2, gameEngine.player(2).cardsInGame());
+        Assertions.assertEquals(2, gameEngine.player(2).influenceDeck().cards().size());
         Assertions.assertEquals(2, gameEngine.player(2).wallet().coins());
     }
 
@@ -229,10 +229,10 @@ public class ActionAssassinateShould extends TestingActions {
         action.doCallTheBluffOnBlockAction();
 
         // then
-        Assertions.assertEquals(2, gameEngine.player(1).cardsInGame());
+        Assertions.assertEquals(2, gameEngine.player(1).influenceDeck().cards().size());
         Assertions.assertEquals(0, gameEngine.player(1).wallet().coins());
 
-        Assertions.assertEquals(0, gameEngine.player(2).cardsInGame());
+        Assertions.assertEquals(0, gameEngine.player(2).influenceDeck().cards().size());
         Assertions.assertTrue(gameEngine.player(2).isDead());
     }
 
@@ -262,10 +262,10 @@ public class ActionAssassinateShould extends TestingActions {
         action.doCallTheBluffOnBlockAction();
 
         // then
-        Assertions.assertEquals(1, gameEngine.player(1).cardsInGame());
+        Assertions.assertEquals(1, gameEngine.player(1).influenceDeck().cards().size());
         Assertions.assertEquals(0, gameEngine.player(1).wallet().coins());
 
-        Assertions.assertEquals(2, gameEngine.player(2).cardsInGame());
+        Assertions.assertEquals(2, gameEngine.player(2).influenceDeck().cards().size());
         Assertions.assertEquals(2, gameEngine.player(2).wallet().coins());
 
     }

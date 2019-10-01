@@ -1,6 +1,5 @@
 package coup.actions;
 
-import coup.Action;
 import coup.TheTable;
 
 public final class Income extends Action {

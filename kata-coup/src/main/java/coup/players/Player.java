@@ -1,6 +1,8 @@
-package coup;
+package coup.players;
 
+import coup.actions.Action;
 import coup.actions.Exchange;
+import coup.cards.Card;
 import coup.coins.Coins;
 import coup.coins.Wallet;
 import coup.decks.Deck;
@@ -9,7 +11,7 @@ import coup.decks.InfluenceDeck;
 import java.util.List;
 import java.util.Random;
 
-public final class Player {
+public class Player {
 
     private Wallet wallet;
 
@@ -42,15 +44,13 @@ public final class Player {
         }
 
         int cardLost = new Random().nextInt(influenceDeck().cards().size());
-        lostInfluenceDeck().receiveScrambled(influenceDeck().dealSpecific(cardLost));
+        lostInfluenceDeck().receiveAtTheTop(influenceDeck().dealSpecific(cardLost));
 
     }
 
+    // TODO we need a test to check if the returned card is actually the lost one
     public void restoreLostCard() {
-
-        int lastCardOfTheDeck = lostInfluenceDeck().cards().size() - 1;
-        influenceDeck().receiveScrambled(lostInfluenceDeck().dealSpecific(lastCardOfTheDeck));
-
+        influenceDeck().receiveScrambled(lostInfluenceDeck().dealFromTheTop());
     }
 
     public void dies() {
@@ -62,7 +62,8 @@ public final class Player {
         return lostInfluenceDeck().cards().size() == 2;
     }
 
-    public Card returnActiveCardToCourtDeck() {
+    // This method is specific for the action Exchange
+    public Card returnCards() {
         if (isDead()) {
             throw new RuntimeException("Player is dead, don't have any visible cards");
         }
@@ -74,11 +75,7 @@ public final class Player {
         return null;
     }
 
-    public int cardsInGame() {
-        return influenceDeck().cards().size();
-    }
-
-    public boolean canHeBlockTheAction(final Action action) {
+    public boolean canBlockTheAction(final Action action) {
 
         for (Card card : influenceDeck.cards()) {
 
@@ -101,7 +98,7 @@ public final class Player {
 
     }
 
-    public boolean canHeDoTheAction(final Action action) {
+    public boolean canDoTheAction(final Action action) {
 
         List<Card> cardsToCheck = influenceDeck().cards();
 
@@ -128,10 +125,6 @@ public final class Player {
 
         return false;
 
-    }
-
-    public void shuffleCardsInHand() {
-        influenceDeck.shuffle();
     }
 
 }

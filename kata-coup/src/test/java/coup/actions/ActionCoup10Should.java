@@ -55,10 +55,10 @@ public class ActionCoup10Should extends TestingActions {
         // then
         Assertions.assertEquals(48, gameEngine.treasury().coins());
 
-        Assertions.assertEquals(2, gameEngine.player(1).cardsInGame());
+        Assertions.assertEquals(2, gameEngine.player(1).influenceDeck().cards().size());
         Assertions.assertEquals(0, gameEngine.player(1).wallet().coins());
 
-        Assertions.assertEquals(1, gameEngine.player(2).cardsInGame());
+        Assertions.assertEquals(1, gameEngine.player(2).influenceDeck().cards().size());
         Assertions.assertEquals(2, gameEngine.player(2).wallet().coins());
     }
 

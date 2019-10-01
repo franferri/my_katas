@@ -31,10 +31,10 @@ public class ActionForeignAidShould extends TestingActions {
         // then
         Assertions.assertEquals(44, gameEngine.treasury().coins());
 
-        Assertions.assertEquals(2, gameEngine.player(1).cardsInGame());
+        Assertions.assertEquals(2, gameEngine.player(1).influenceDeck().cards().size());
         Assertions.assertEquals(4, gameEngine.player(1).wallet().coins());
 
-        Assertions.assertEquals(2, gameEngine.player(2).cardsInGame());
+        Assertions.assertEquals(2, gameEngine.player(2).influenceDeck().cards().size());
         Assertions.assertEquals(2, gameEngine.player(2).wallet().coins());
     }
 
@@ -85,10 +85,10 @@ void player_does_action_and_blocks_himself()  {
         // then
         Assertions.assertEquals(46, gameEngine.treasury().coins());
 
-        Assertions.assertEquals(2, gameEngine.player(1).cardsInGame());
+        Assertions.assertEquals(2, gameEngine.player(1).influenceDeck().cards().size());
         Assertions.assertEquals(2, gameEngine.player(1).wallet().coins());
 
-        Assertions.assertEquals(2, gameEngine.player(2).cardsInGame());
+        Assertions.assertEquals(2, gameEngine.player(2).influenceDeck().cards().size());
         Assertions.assertEquals(2, gameEngine.player(2).wallet().coins());
     }
 
@@ -135,10 +135,10 @@ void player_does_action_and_blocks_himself()  {
         // then
         Assertions.assertEquals(44, gameEngine.treasury().coins());
 
-        Assertions.assertEquals(2, gameEngine.player(1).cardsInGame());
+        Assertions.assertEquals(2, gameEngine.player(1).influenceDeck().cards().size());
         Assertions.assertEquals(4, gameEngine.player(1).wallet().coins());
 
-        Assertions.assertEquals(1, gameEngine.player(2).cardsInGame());
+        Assertions.assertEquals(1, gameEngine.player(2).influenceDeck().cards().size());
         Assertions.assertEquals(2, gameEngine.player(2).wallet().coins());
     }
 
@@ -166,10 +166,10 @@ void player_does_action_and_blocks_himself()  {
 
         Assertions.assertEquals(46, gameEngine.treasury().coins());
 
-        Assertions.assertEquals(1, gameEngine.player(1).cardsInGame());
+        Assertions.assertEquals(1, gameEngine.player(1).influenceDeck().cards().size());
         Assertions.assertEquals(2, gameEngine.player(1).wallet().coins());
 
-        Assertions.assertEquals(2, gameEngine.player(2).cardsInGame());
+        Assertions.assertEquals(2, gameEngine.player(2).influenceDeck().cards().size());
         Assertions.assertEquals(2, gameEngine.player(2).wallet().coins());
     }
 

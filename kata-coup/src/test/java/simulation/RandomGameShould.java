@@ -1,8 +1,8 @@
 package simulation;
 
-import coup.Card;
+import coup.cards.Card;
 import coup.COUP;
-import coup.Player;
+import coup.players.Player;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -160,7 +160,7 @@ class RandomGameShould {
         // Print the status
 
         List<Card> cards = game.theTable().courtDeck().cards();
-        List<Player> players = game.theTable().getPlayers();
+        List<Player> players = game.theTable().livePlayers();
 
         System.out.println("------------------------------------------");
 

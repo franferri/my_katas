@@ -1,6 +1,5 @@
 package coup.cards;
 
-import coup.Card;
 import coup.actions.ForeignAid;
 import coup.actions.Tax;
 

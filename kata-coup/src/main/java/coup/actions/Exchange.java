@@ -1,7 +1,6 @@
 package coup.actions;
 
-import coup.Action;
-import coup.Card;
+import coup.cards.Card;
 import coup.TheTable;
 
 import java.util.ArrayList;
@@ -23,7 +22,6 @@ public final class Exchange extends Action {
     }
 
     private List<Card> originalCardsInPlayerHand;
-    private List<Card> originalDeck;
 
     // Setup
     public boolean canThisBlockActionBeChallenged() {
@@ -39,10 +37,10 @@ public final class Exchange extends Action {
 
         getTheTable().dealCardsToThePlayer(getTheTable().getPlayerDoingTheAction());
 
-        getTheTable().getPlayerDoingTheAction().shuffleCardsInHand();
+        getTheTable().getPlayerDoingTheAction().influenceDeck().shuffle();
 
-        getTheTable().courtDeck().receiveScrambled(getTheTable().getPlayerDoingTheAction().returnActiveCardToCourtDeck());
-        getTheTable().courtDeck().receiveScrambled(getTheTable().getPlayerDoingTheAction().returnActiveCardToCourtDeck());
+        getTheTable().courtDeck().receiveScrambled(getTheTable().getPlayerDoingTheAction().returnCards());
+        getTheTable().courtDeck().receiveScrambled(getTheTable().getPlayerDoingTheAction().returnCards());
 
     }
 

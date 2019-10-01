@@ -1,5 +1,6 @@
 package coup;
 
+import coup.actions.Action;
 import coup.actions.Assassinate;
 import coup.actions.Coup10;
 import coup.actions.Coup7;
@@ -8,6 +9,7 @@ import coup.actions.ForeignAid;
 import coup.actions.Income;
 import coup.actions.Steal;
 import coup.actions.Tax;
+import coup.players.Player;
 
 import java.util.ArrayList;
 import java.util.List;

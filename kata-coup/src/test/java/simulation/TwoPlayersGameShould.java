@@ -281,10 +281,10 @@ class TwoPlayersGameShould {
         Assertions.assertEquals(treasury, game.theTable().treasury().coins());
         Assertions.assertEquals(11, game.theTable().courtDeck().cards().size());
 
-        Assertions.assertEquals(player1_cards, game.theTable().player(1).cardsInGame());
+        Assertions.assertEquals(player1_cards, game.theTable().player(1).influenceDeck().cards().size());
         Assertions.assertEquals(player1_coins, game.theTable().player(1).wallet().coins());
 
-        Assertions.assertEquals(player2_cards, game.theTable().player(2).cardsInGame());
+        Assertions.assertEquals(player2_cards, game.theTable().player(2).influenceDeck().cards().size());
         Assertions.assertEquals(player2_coins, game.theTable().player(2).wallet().coins());
     }
 

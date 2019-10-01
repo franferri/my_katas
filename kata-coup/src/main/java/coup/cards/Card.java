@@ -1,4 +1,6 @@
-package coup;
+package coup.cards;
+
+import coup.actions.Action;
 
 public abstract class Card {
     

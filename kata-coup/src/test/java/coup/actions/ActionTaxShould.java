@@ -31,10 +31,10 @@ public class ActionTaxShould extends TestingActions {
         // then
         Assertions.assertEquals(43, gameEngine.treasury().coins());
 
-        Assertions.assertEquals(2, gameEngine.player(1).cardsInGame());
+        Assertions.assertEquals(2, gameEngine.player(1).influenceDeck().cards().size());
         Assertions.assertEquals(5, gameEngine.player(1).wallet().coins());
 
-        Assertions.assertEquals(2, gameEngine.player(2).cardsInGame());
+        Assertions.assertEquals(2, gameEngine.player(2).influenceDeck().cards().size());
         Assertions.assertEquals(2, gameEngine.player(2).wallet().coins());
     }
 
@@ -69,10 +69,10 @@ public class ActionTaxShould extends TestingActions {
         // then
         Assertions.assertEquals(46, gameEngine.treasury().coins());
 
-        Assertions.assertEquals(1, gameEngine.player(1).cardsInGame());
+        Assertions.assertEquals(1, gameEngine.player(1).influenceDeck().cards().size());
         Assertions.assertEquals(2, gameEngine.player(1).wallet().coins());
 
-        Assertions.assertEquals(2, gameEngine.player(2).cardsInGame());
+        Assertions.assertEquals(2, gameEngine.player(2).influenceDeck().cards().size());
         Assertions.assertEquals(2, gameEngine.player(2).wallet().coins());
     }
 
@@ -95,10 +95,10 @@ public class ActionTaxShould extends TestingActions {
         // then
         Assertions.assertEquals(43, gameEngine.treasury().coins());
 
-        Assertions.assertEquals(2, gameEngine.player(1).cardsInGame());
+        Assertions.assertEquals(2, gameEngine.player(1).influenceDeck().cards().size());
         Assertions.assertEquals(5, gameEngine.player(1).wallet().coins());
 
-        Assertions.assertEquals(1, gameEngine.player(2).cardsInGame());
+        Assertions.assertEquals(1, gameEngine.player(2).influenceDeck().cards().size());
         Assertions.assertEquals(2, gameEngine.player(2).wallet().coins());
     }
 

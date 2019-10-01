@@ -28,10 +28,10 @@ public class ActionIncomeShould extends TestingActions {
         // then
         Assertions.assertEquals(45, gameEngine.treasury().coins());
 
-        Assertions.assertEquals(2, gameEngine.player(1).cardsInGame());
+        Assertions.assertEquals(2, gameEngine.player(1).influenceDeck().cards().size());
         Assertions.assertEquals(3, gameEngine.player(1).wallet().coins());
 
-        Assertions.assertEquals(2, gameEngine.player(2).cardsInGame());
+        Assertions.assertEquals(2, gameEngine.player(2).influenceDeck().cards().size());
         Assertions.assertEquals(2, gameEngine.player(2).wallet().coins());
     }
 

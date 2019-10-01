@@ -1,6 +1,6 @@
 package coup.decks;
 
-import coup.Card;
+import coup.cards.Card;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -30,9 +30,7 @@ public class Deck {
      * Deal a card from the top of the deck
      */
     public Card dealFromTheTop() {
-        if (this.cards.size() - 1 < MIN_CARDS) {
-            throw new RuntimeException("Not enough cards");
-        }
+        checkMinimums();
         return this.cards.remove(0);
     }
 
@@ -40,19 +38,23 @@ public class Deck {
      * Deal a specific card from the deck
      */
     public Card dealSpecific(final int position) {
-        if (this.cards.size() - 1 < MIN_CARDS) {
-            throw new RuntimeException("Not enough cards");
-        }
+        checkMinimums();
         return this.cards.remove(position);
+    }
+
+    /**
+     * Add a card at the top of the deck
+     */
+    public void receiveAtTheTop(final Card card) {
+        checkMaximums();
+        this.cards.add(0, card);
     }
 
     /**
      * Add a card to the deck scrambled
      */
     public void receiveScrambled(final Card card) {
-        if (this.cards.size() + 1 > MAX_CARDS) {
-            throw new RuntimeException("Too many cards in play");
-        }
+        checkMaximums();
 
         int scrambledPosition = 0;
         if (this.cards.size() > 0) {
@@ -65,7 +67,6 @@ public class Deck {
      * Add cards to the deck scrambled
      */
     public void receiveScrambled(final List<Card> cards) {
-
         for (Card card : cards) {
             receiveScrambled(card);
         }
@@ -79,6 +80,18 @@ public class Deck {
         cards.clear();
         receiveScrambled(savedDeck);
         savedDeck.clear();
+    }
+
+    private void checkMinimums() {
+        if (this.cards.size() - 1 < MIN_CARDS) {
+            throw new RuntimeException("Not enough cards");
+        }
+    }
+
+    private void checkMaximums() {
+        if (this.cards.size() + 1 > MAX_CARDS) {
+            throw new RuntimeException("Too many cards in play");
+        }
     }
 
 }

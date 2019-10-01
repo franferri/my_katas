@@ -1,5 +1,6 @@
-package coup;
+package coup.actions;
 
+import coup.TheTable;
 import coup.actions.Coup10;
 
 public abstract class Action {
@@ -69,7 +70,7 @@ public abstract class Action {
         if (!canThisActionBeChallenged()) {
             throw new RuntimeException("This action can't be challenged");
         }
-        if (getTheTable().getPlayerDoingTheAction().canHeDoTheAction(this)) {
+        if (getTheTable().getPlayerDoingTheAction().canDoTheAction(this)) {
             getTheTable().getPlayerCallingTheBluff().looseCard();
         } else {
             doBlockActionInternal();
@@ -82,7 +83,7 @@ public abstract class Action {
         if (!canThisBlockActionBeChallenged()) {
             throw new RuntimeException("This blockaction can't be challenged");
         }
-        if (getTheTable().getPlayerBlockingTheAction().canHeBlockTheAction(this)) {
+        if (getTheTable().getPlayerBlockingTheAction().canBlockTheAction(this)) {
             getTheTable().getPlayerCallingTheBluff().looseCard();
         } else {
             doActionInternal();

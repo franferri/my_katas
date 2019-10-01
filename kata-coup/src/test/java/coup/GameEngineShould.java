@@ -1,5 +1,6 @@
 package coup;
 
+import coup.cards.Card;
 import coup.cards.TheAmbassador;
 import coup.cards.TheAssassin;
 import coup.cards.TheCaptain;
@@ -7,6 +8,7 @@ import coup.cards.TheContessa;
 import coup.cards.TheDuke;
 import coup.decks.CourtDeck;
 import coup.decks.Deck;
+import coup.players.Player;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -176,14 +178,14 @@ class GameEngineShould {
 
         // given
         int amountOfCardsAvailableInTheCourtDeck = gameEngine.courtDeck().cards().size();
-        int cardsTakenFromTheDeck = gameEngine.getPlayers().size() * 2;
+        int cardsTakenFromTheDeck = gameEngine.livePlayers().size() * 2;
 
         // when
         gameEngine.startGame();
 
         // then
-        Assertions.assertEquals(2, gameEngine.player(1).cardsInGame());
-        Assertions.assertEquals(2, gameEngine.player(2).cardsInGame());
+        Assertions.assertEquals(2, gameEngine.player(1).influenceDeck().cards().size());
+        Assertions.assertEquals(2, gameEngine.player(2).influenceDeck().cards().size());
 
         Assertions.assertEquals(amountOfCardsAvailableInTheCourtDeck - cardsTakenFromTheDeck, gameEngine.courtDeck().cards().size());
 
@@ -230,7 +232,7 @@ class GameEngineShould {
         gameEngine.startGame();
 
         // then
-        for (Player player : gameEngine.getPlayers()) {
+        for (Player player : gameEngine.livePlayers()) {
             Assertions.assertEquals(2, player.influenceDeck().cards().size());
             Assertions.assertEquals(0, player.lostInfluenceDeck().cards().size());
         }
@@ -246,7 +248,7 @@ class GameEngineShould {
         gameEngine.player(1).looseCard();
 
         // then
-        Assertions.assertEquals(1, gameEngine.player(1).cardsInGame());
+        Assertions.assertEquals(1, gameEngine.player(1).influenceDeck().cards().size());
 
     }
     // When a player has lost all their influence they are exiled and out of the gameEngine
