@@ -115,3 +115,6 @@ https://realpython.com/
 
 ## Simplify your installable with PEP 518
 https://www.python.org/dev/peps/pep-0518/
+
+## Interesting library to create cli's
+https://click.palletsprojects.com/en/7.x/
