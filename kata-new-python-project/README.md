@@ -112,3 +112,6 @@ Advanced read: https://martinfowler.com/articles/mocksArentStubs.html
 
 ## Where to continue with your idea?
 https://realpython.com/
+
+## Simplify your installable with PEP 518
+https://www.python.org/dev/peps/pep-0518/
